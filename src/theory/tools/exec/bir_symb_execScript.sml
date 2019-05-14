@@ -65,6 +65,27 @@ val bir_symb_state_is_terminated_def = Define `
     bir_symb_state_is_terminated st = 
       (st.bsst_status <> BST_Running)`;
 
+
+
+val bir_symb_state_cstr_def = Define `
+    bir_symb_state_cstr bst pred =
+      <|
+	bsst_pc      := bst.bst_pc;
+	bsst_environ := bir_symb_env_cstr bst.bst_environ;
+	bsst_pred    := pred;
+	bsst_status  := bst.bst_status;
+       |>
+    `;
+
+val bir_symb_state_dstr_def = Define `
+    bir_symb_state_dstr bsst =
+      <|
+	bst_pc       := bsst.bsst_pc;
+	bst_environ  := bir_symb_env_dstr bsst.bsst_environ;
+	bst_status   := bsst.bsst_status;
+       |>
+    `;
+
 (* ------------------------------------------------------------------------- *)
 (* Eval certain expressions                                                  *)
 (* Different from concrete Execution, this returns a BIR Expression          *)        
@@ -385,6 +406,27 @@ val bir_symb_exec_step_def = Define `
 	| NONE     => [(NONE, bir_symb_state_set_failed state)]
 	| SOME stm => (bir_symb_exec_stmt p stm state)
     `;
+
+
+(* ------------------------------------------------------- *)
+(* connection between bir_symb_exec_step and bir_exec_step *)
+(* ------------------------------------------------------- *)
+
+(* connecting the states after one step *)
+val bir_symb_exec_step_THM = prove(``
+  (bsst = bir_symb_state_cstr bst pred) ==>
+
+  ((oo,bst') = bir_exec_step p bst) ==>
+  (MEM (soo,bsst') (bir_symb_exec_step p bsst)) ==>
+
+  (bir_eval_exp (bsst'.bsst_pred) (bst.bst_environ) = bir_val_true) ==>
+
+  (bir_symb_state_dstr bsst' = bst')
+``,
+cheat
+);
+
+
 
 (*
 (* ----------------------------------------------------- *)

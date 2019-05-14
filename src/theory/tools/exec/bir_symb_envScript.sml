@@ -61,12 +61,25 @@ val bir_symb_env_write_def = Define `
       else
         NONE`;
 
-(*
+
+
+val bir_valopt_to_const_def = Define `
+    (bir_valopt_to_const (NONE) = NONE) /\
+    (bir_valopt_to_const (SOME BVal_Unknown) = NONE) /\
+    (bir_valopt_to_const (SOME (BVal_Imm n)) = SOME (BExp_Const n)) /\
+    (bir_valopt_to_const (SOME (BVal_Mem aty vty mmap)) = SOME (BExp_MemConst aty vty mmap))
+    `;
+
 val bir_symb_env_cstr_def = Define `
     bir_symb_env_cstr (BEnv env) =
-      BEnv (FMAP_MAP2 (\(x,y). y) env)
+      BSEnv (FMAP_MAP2 (\(x,(ty,y)). (ty, bir_valopt_to_const y)) env)
     `;
-*)
+
+val bir_symb_env_dstr_def = Define `
+    bir_symb_env_dstr (BSEnv env) =
+      BEnv (FMAP_MAP2 (\(x,(ty,y)). (ty, OPTION_MAP (\y. bir_eval_exp y (BEnv FEMPTY)) y)) env)
+    `;
+
 
 
 (*
