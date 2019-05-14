@@ -5,7 +5,7 @@ DEPENDENCIES   = ../../bir ../../bir-support
 
 # configuration
 # ----------------------------------
-HOLHEAP        = ../lifter/HolBATheory_Tools_Lifter-heap
+HOLHEAP        = ../exec/HolBATheory_Tools_Exec-heap
 NEWHOLHEAP     = HolBATheory_Tools_Wp-heap
 
 HEAPINC_EXTRA  = 
