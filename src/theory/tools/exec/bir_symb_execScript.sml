@@ -200,12 +200,15 @@ val bir_symb_esubst_exp_def = Define `
 		(bir_symb_esubst_exp v_e env))`;
 
 
-val bir_symb_eval_exp_def = Define `
-    bir_symb_eval_exp e env =
-      case bir_symb_esubst_exp e env of
+val bir_symb_eval_exp_o_def = Define `
+    bir_symb_eval_exp_o eo =
+      case eo of
         | SOME ex => bir_eval_exp ex (BEnv (K NONE))
-	| NONE    => NONE (* if some variables are not in env *)
+        | NONE    => NONE (* if some variables are not in env *)
     `;
+
+val bir_symb_eval_exp_def = Define `
+    bir_symb_eval_exp e env = bir_symb_eval_exp_o (bir_symb_esubst_exp e env)`;
 
 
 (* ------------------------------------------------------------------------- *)
@@ -346,13 +349,11 @@ val bir_symb_exec_stmt_assume_def = Define `
 
 
 val bir_symb_obs_cstr_def = Define `
-    bir_symb_obs_cstr el obf env =
-      (obf, (MAP (\e. bir_symb_esubst_exp e env) el))
+    bir_symb_obs_cstr el obf env = (obf, (MAP (\e. bir_symb_esubst_exp e env) el))
     `;
 
 val bir_symb_obs_dstr_def = Define `
-    bir_symb_obs_dstr (obf, es) =
-      (obf (MAP (\e. THE (OPTION_MAP (\y. bir_eval_exp y (BEnv FEMPTY)) e)) es))
+    bir_symb_obs_dstr (obf, es) = (obf (MAP bir_symb_eval_exp_o es))
     `;
 
 

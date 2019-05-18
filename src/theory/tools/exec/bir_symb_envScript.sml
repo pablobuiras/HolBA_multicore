@@ -65,9 +65,13 @@ val bir_symb_env_write_def = Define `
 
 val bir_valopt_to_const_def = Define `
     (bir_valopt_to_const (NONE) = NONE) /\
-    (bir_valopt_to_const (SOME BVal_Unknown) = NONE) /\
     (bir_valopt_to_const (SOME (BVal_Imm n)) = SOME (BExp_Const n)) /\
-    (bir_valopt_to_const (SOME (BVal_Mem aty vty mmap)) = SOME (BExp_MemConst aty vty mmap))
+    (bir_valopt_to_const (SOME (BVal_Mem aty vty mmap)) = SOME (BExp_MemConst aty vty mmap)) /\
+
+    (* we don't encode this in the symbolic environment:
+          - either encode it using an expression with type error
+          - or require well-typed environments in theorems *)
+    (bir_valopt_to_const (SOME BVal_Unknown) = ARB)
     `;
 
 val bir_symb_env_cstr_def = Define `
