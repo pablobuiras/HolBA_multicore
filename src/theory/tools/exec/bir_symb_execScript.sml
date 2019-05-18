@@ -345,13 +345,24 @@ val bir_symb_exec_stmt_assume_def = Define `
         )`;
 
 
+val bir_symb_obs_cstr_def = Define `
+    bir_symb_obs_cstr el obf env =
+      (obf, (MAP (\e. bir_symb_esubst_exp e env) el))
+    `;
+
+val bir_symb_obs_dstr_def = Define `
+    bir_symb_obs_dstr (obf, es) =
+      (obf (MAP (\e. THE (OPTION_MAP (\y. bir_eval_exp y (BEnv FEMPTY)) e)) es))
+    `;
+
+
 val bir_symb_exec_stmt_observe_def = Define `
     bir_symb_exec_stmt_observe ec el (obf:bir_val_t list -> 'a) st =
     case bir_symb_esubst_exp ec st.bsst_environ of
       | NONE => [(NONE, bir_symb_state_set_failed st)]
       | SOME ex_subst => (
 	  [
-	    (SOME (obf, (MAP (\e. bir_symb_esubst_exp e st.bsst_environ) el)),
+	    (SOME (bir_symb_obs_cstr el obf st.bsst_environ),
               st with bsst_pred :=
 	        (BExp_BinExp BIExp_And ex_subst st.bsst_pred))
 	   ;
@@ -413,15 +424,17 @@ val bir_symb_exec_step_def = Define `
 (* ------------------------------------------------------- *)
 
 (* connecting the states after one step *)
-val bir_symb_exec_step_THM = prove(``
+val bir_symb_exec_step_THM = store_thm("bir_symb_exec_step_THM", ``
   (bsst = bir_symb_state_cstr bst pred) ==>
 
   ((oo,bst') = bir_exec_step p bst) ==>
   (MEM (soo,bsst') (bir_symb_exec_step p bsst)) ==>
 
   (bir_eval_exp (bsst'.bsst_pred) (bst.bst_environ) = bir_val_true) ==>
-
-  (bir_symb_state_dstr bsst' = bst')
+  (
+    (bir_symb_state_dstr bsst' = bst') /\
+    (OPTION_MAP bir_symb_obs_dstr soo = so)
+  )
 ``,
 cheat
 );
