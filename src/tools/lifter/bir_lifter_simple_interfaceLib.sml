@@ -367,7 +367,7 @@ fun lift_sections arch_str sections idx =
                             else if is_BStmt_Assume s then
                                [(dest_BStmt_Assume) s]
                             else if is_BStmt_Observe s then
-                               let val (oe,oes,_) = (dest_BStmt_Observe) s; in
+                               let val (_,oe,oes,_) = (dest_BStmt_Observe) s; in
                                  (oe::((fst o dest_list) oes))
                                end
                             else raise ERR "lift_file" "unknown statement type"
@@ -412,7 +412,7 @@ fun lift_sections arch_str sections idx =
                        let
                          val nonstd_exp = List.concat (List.map bir_exp_nonstandards exps);
                        in
-                         if nonstd_exp = [] then ()
+                         if List.null nonstd_exp then ()
                          else (
                            print_l "something is fishy! non standard expressions found\n";
                            List.map ((K (print_l "\n")) o print_l o term_to_string) nonstd_exp;
@@ -483,7 +483,7 @@ fun lift_file arch_str da_file =
 
 
     (* print out only the failing instructions *)
-    val _ = if errors <> [] then
+    val _ = if not (List.null errors) then
       let
         val _ = print_l "\n\n";
         val _ = print_log_with_style [Bold, Underline] true ("There are " ^ (Int.toString (length errors)) ^ " failing instruction(s)\n");

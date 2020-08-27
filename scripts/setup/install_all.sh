@@ -49,11 +49,28 @@ echo "-----------------------------------------------"
 echo
 
 
+# install gcc_arm
+echo "-----------------------------------------------"
+echo "------------ installing gcc_arm ---------------"
+echo "-----------------------------------------------"
+"${SETUP_DIR}/install_gcc_arm.sh"
+echo
+
+
+# install gcc_riscv64
+echo "-----------------------------------------------"
+echo "---------- installing gcc_riscv64 -------------"
+echo "-----------------------------------------------"
+"${SETUP_DIR}/install_gcc_riscv64.sh"
+echo
+
+
 # install embexp
 echo "-----------------------------------------------"
 echo "------------- installing embexp ---------------"
 echo "-----------------------------------------------"
-"${SETUP_DIR}/install_embexp.sh"
+"${SETUP_DIR}/install_embexp_opt.sh"
+"${SETUP_DIR}/install_embexp_logs.sh"
 echo
 
 

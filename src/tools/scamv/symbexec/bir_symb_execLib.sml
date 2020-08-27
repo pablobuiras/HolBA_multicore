@@ -79,7 +79,7 @@ fun symb_is_BST_AssertionViolated state =
   let 
     val (pc, env, pres, status, obs) = dest_bir_symb_state state;
   in
-    status = ``BST_AssertionViolated``
+    identical status ``BST_AssertionViolated``
   end;
 
 (* We represent an Execution as a tree, where branches
@@ -148,9 +148,12 @@ val bir_program = ``BirProgram
                           (\x. x)];
          bb_last_statement := BStmt_Halt (BExp_Const (Imm64 4w))|>]``;
 *)
-fun symb_exec_program depth precond bir_program pd =
+fun symb_exec_program depth precond bir_program pd envupdate_o =
   let 
-    val env = init_env ();
+    val env_ = init_env bir_program;
+    val env = case envupdate_o of
+                 NONE   => env_
+               | SOME f => f env_;
     val state = (rhs o concl o EVAL)
                   ``bir_symb_state_init ^bir_program ^env ^precond``;
     val tree  = symb_exec_run depth bir_program pd state;

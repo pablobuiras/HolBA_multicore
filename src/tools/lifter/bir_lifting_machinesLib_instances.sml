@@ -7,6 +7,8 @@ open bir_lifting_machinesLib;
 open bir_nzcv_introsTheory bir_arm8_extrasTheory bir_m0_extrasTheory
 open arm8_stepLib m0_stepLib
 
+val ERR = mk_HOL_ERR "bir_lifting_machinesLib_instances"
+
 (**************************)
 (* Instantiation for ARM8 *)
 (**************************)
@@ -285,6 +287,10 @@ val m0_extra_ss = rewrites m0_REWRS;
   val endian_fl = false
   val sel_fl = true
 
+  val vn = ``ms:m0_state``
+
+  val hex_code = "D001";
+
   val res = m0_step_hex' (endian_fl, sel_fl) vn hex_code
 
 *)
@@ -455,7 +461,11 @@ val m0_mod_extra_ss = rewrites m0_mod_REWRS;
   val endian_fl = false
   val sel_fl = true
 
-  val res = m0_step_hex' (endian_fl, sel_fl) vn hex_code
+  val vn = ``ms:m0_mod_state``
+  val hex_code = "41C8"
+  val hex_code = "D001";
+
+  val res = m0_mod_step_hex' (endian_fl, sel_fl) vn hex_code
 
 *)
 
