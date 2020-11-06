@@ -1,4 +1,4 @@
-structure tutorial_backliftingLib =
+structure bir_backlifterLib =
 struct
 (* For debugging add_reg example:
   val bir_ct = bir_add_reg_ct;
@@ -15,18 +15,40 @@ struct
 *)
 
   local
-    open tutorial_bir_to_armSupportTheory;
-    open tutorial_compositionLib;
+
+(* these dependencies probably need cleanup *)
+(* ================================================ *)
+open HolKernel boolLib liteLib simpLib Parse bossLib;
+open bir_inst_liftingTheory
+open bir_lifting_machinesTheory
+open bir_lifting_machinesLib bir_lifting_machinesLib_instances;
+open bir_interval_expTheory bir_update_blockTheory
+open bir_exp_liftingLib bir_typing_expSyntax
+open bir_typing_expTheory
+open bir_extra_expsTheory
+open bir_lifter_general_auxTheory
+open bir_programSyntax bir_interval_expSyntax
+open bir_program_labelsTheory
+open bir_immTheory
+open intel_hexLib
+open bir_inst_liftingLibTypes
+open PPBackEnd Parse
+
+open bir_inst_liftingHelpersLib;
+(* ================================================ *)
+
+    open bir_backlifterTheory;
+    open bir_compositionLib;
   in
 
 fun get_arm8_contract_sing bir_ct prog_bin arm8_pre arm8_post bir_prog_def bir_pre_defs bir_pre1_def arm8_pre_imp_bir_pre_thm bir_post_defs arm8_post_imp_bir_post_thm bir_is_lifted_prog_thm = 
   let
     val word_from_address = bir_immSyntax.dest_Imm64 o bir_programSyntax.dest_BL_Address
 
-    val bir_prog = get_bir_map_triple_prog bir_ct
+    val bir_prog = get_bir_simp_jgmt_prog bir_ct
     val l =
-      word_from_address (get_bir_map_triple_start_label bir_ct)
-    val ls = pred_setSyntax.mk_set (map word_from_address (pred_setSyntax.strip_set (get_bir_map_triple_wlist bir_ct)))
+      word_from_address (get_bir_simp_jgmt_start_label bir_ct)
+    val ls = pred_setSyntax.mk_set (map word_from_address (pred_setSyntax.strip_set (get_bir_simp_jgmt_wlist bir_ct)))
     (* TODO: Note that the proof below assumes ls is a singleton *)
     val ls_sing = el 1 (pred_setSyntax.strip_set ls)
 
@@ -37,8 +59,8 @@ fun get_arm8_contract_sing bir_ct prog_bin arm8_pre arm8_post bir_prog_def bir_p
 	      ls,
 	      (((el 2) o snd o strip_comb o concl) bir_is_lifted_prog_thm),
 	      arm8_pre, arm8_post,
-	      get_bir_map_triple_pre bir_ct,
-	      get_bir_map_triple_post bir_ct] tutorial_bir_to_armSupportTheory.lift_contract_thm;
+	      get_bir_simp_jgmt_pre bir_ct,
+	      get_bir_simp_jgmt_post bir_ct] lift_contract_thm;
 
     (* Prove the ARM triple by supplying the antecedents of lift_contract_thm *)
     val arm8_contract_thm = prove(
@@ -56,7 +78,7 @@ fun get_arm8_contract_sing bir_ct prog_bin arm8_pre arm8_post bir_prog_def bir_p
 
       (* 2. Starting address exists in program *)
       FULL_SIMP_TAC std_ss
-	[EVAL ``MEM (^(get_bir_map_triple_start_label bir_ct))
+	[EVAL ``MEM (^(get_bir_simp_jgmt_start_label bir_ct))
 		    (bir_labels_of_program ^(bir_prog))``],
 
       (* 3. Provide translation of the ARM8 precondition to the BIR precondition *)
