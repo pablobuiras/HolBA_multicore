@@ -31,7 +31,7 @@ val _ = Datatype `bir_exp_t =
   | BExp_Load              bir_exp_t bir_exp_t bir_endian_t bir_immtype_t
   | BExp_Store             bir_exp_t bir_exp_t bir_endian_t bir_exp_t
 (*  | BExp_TAS               bir_exp_t bir_exp_t bir_endian_t bir_exp_t bir_exp_t *)
-                           `;
+`;
 
 
 (* ------------------------------------------------------------------------- *)
