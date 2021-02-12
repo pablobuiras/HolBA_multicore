@@ -26,104 +26,37 @@ val stmt_is_fence_def = Define `
   (stmt_is_fence _ = F)
 `;
 
+(* TODO: Check all expressions for loads and stores better *)
 val stmt_is_memop_def = Define `
   (stmt_is_memop (BStmtB BStmt_Fence) = T) /\
   (stmt_is_memop (BStmtB (BStmt_Assign var exp)) = ((is_mem var) \/ (exp_is_load exp))) /\
   (stmt_is_memop _ = F)
 `;
 
-val pipe_is_empty_def = Define `
-  (pipe_is_empty st = (st.bst_inflight = []))
+val block_is_atomic_def = Define `block_is_atomic p s =
+  case (bir_get_program_block_info_by_label p (s.bst_pc.bpc_label)) of
+      NONE => F
+    | SOME (i,blk) => blk.bb_atomic
 `;
-
 
 (* ------------------------------------------------------------------------- *)
 (*  Nondeterministic step relation with pipelining                           *)
 (* ------------------------------------------------------------------------- *)
 
-val next_stmt_def = Define `next_stmt s =
-  case s.bst_inflight of
-      [] => NONE
-    | ((BirInflight t0 stm)::stms) => SOME (t0,stm)
-`;
-
-(* Pipelined steps for a single core. *)
-(* TODO: Wildcard oo? *)
+(* Single core steps. *)
+(* TODO: Forbid memory operations *)
 val (bir_pstep_rules, bir_pstep_ind, bir_pstep_cases) = Hol_reln `
-  (* Execution of pending statement in pipeline *)
-  (* Only statements which do not assign to, or read from, memory
-   * can be directly executed by a single core. *)
-  (!p st st' stm oo.
-   ((next_stmt st = SOME (t0, stm)) /\
-    (bir_exec_stmt p stm s = (oo, st')) /\
-    ~(stmt_is_memop stm)
-   ) ==>
-   pstep p st (st' with bst_inflight updated_by (remove_inflight t0))
-  ) /\
-  (* Execution of conditional jump *)
-  (!p st st' oo exp l1 l2.
-   ((pipe_is_empty s) /\
-    (bir_get_current_statement p st.bst_pc = SOME (BStmtE (BStmt_CJmp exp l1 l2))) /\
-    (bir_exec_stmt p (BStmtE (BStmt_CJmp exp l1 l2)) st = (oo, st'))
-   ) ==>
+  (* Regular execution of statements without memory operations *)
+  (* Note that this cannot be used inside atomic blocks *)
+  (!p st st' oo stmt.
+   ((bir_get_current_statement p st.bst_pc = SOME stmt) /\
+    (bir_exec_stmt p stmt st = (oo, st')) /\
+    (~(block_is_atomic p st)) ∧
+    ~(stmt_is_memop stmt)
+   ) ⇒
    pstep p st st'
-  ) /\
-  (* Execution of computed jump *)
-  (!p st st' oo lexp.
-   ((pipe_is_empty st) /\
-    (bir_get_current_statement p st.bst_pc = SOME (BStmtE (BStmt_Jmp (BLE_Exp lexp)))) /\
-    (bir_exec_stmt p (BStmtE (BStmt_Jmp (BLE_Exp lexp))) st = (oo, st'))
-   ) ==>
-   pstep p st st'
-  ) /\
-  (* Put current statement in pipeline, case within a BIR block *)
-  (!p st bstm istm.
-   ((bir_get_current_statement p st.bst_pc = SOME (BStmtB bstm)) /\
-    (istm = BirInflight (fresh st) (BStmtB bstm))) ==>
-   pstep p st (st with <| bst_inflight updated_by (APPEND [istm]);
-                          bst_pc updated_by bir_pc_next;
-                          bst_counter updated_by (\n:num.n+1) |>)
-  ) /\
-  (* Put current statement in pipeline, case unconditional jump *)
-  (* NOTE: "BStmt_Jmp (BLE_Label lbl)" forbids computed jump targets. *)
-  (!p st istm lbl.
-   ((bir_get_current_statement p st.bst_pc = SOME (BStmtE (BStmt_Jmp (BLE_Label lbl)))) /\
-    (istm = BirInflight (fresh st) (BStmtE (BStmt_Jmp (BLE_Label lbl))))) ==>
-   pstep p st (st with <| bst_inflight updated_by (APPEND [istm]);
-                          bst_pc := (bir_block_pc lbl);
-                          bst_counter updated_by (\n:num.n+1) |>)
   )
 `;
-
-val bir_next_fetch_def = Define `bir_next_fetch p s =
-  case bir_get_current_statement p s.bst_pc of
-      NONE => []
-    | SOME stm =>
-      [s with <| bst_inflight updated_by (APPEND [BirInflight (fresh s) stm]);
-       bst_pc updated_by bir_pc_next; bst_counter updated_by (\n:num.n+1) |>]
-`;
-
-val bir_next_exec_def = Define `bir_next_exec p s =
-  case next_stmt s of
-      NONE => []
-    | SOME (t0,stm) => [SND (bir_exec_stmt p stm s) with
-                        <| bst_inflight updated_by (remove_inflight t0); |>]
-`;
-
-val bir_compute_next_def = Define `bir_compute_next p s =
-  bir_next_fetch p s ++ bir_next_exec p s
-`;
-
-val bir_compute_steps_defn = Hol_defn "bir_compute_steps" `bir_compute_steps (n:num) p s =
-  if n = 0
-  then [s]
-  else LIST_BIND (bir_compute_next p s) (\s2. bir_compute_steps (n-1) p s2)
-`;
-
-(* Defn.tgoal bir_compute_steps_defn *)
-val (bir_compute_steps_def, bir_compute_steps_ind) = Defn.tprove (bir_compute_steps_defn,
-  WF_REL_TAC `measure (\ (n,_,_). n)`
-);
 
 val bir_next_states_def = Define `bir_next_states p s =
   { s2 | pstep p s s2 }
@@ -160,99 +93,10 @@ val sys_st_def = Datatype `sys_st =
   | mem mem_state_t 
 `;
 
-val next_is_atomic_def = Define `next_is_atomic p s =
-  case (bir_get_program_block_info_by_label p (s.bst_pc.bpc_label)) of
-      NONE => F
-    | SOME (i,blk) => blk.bb_atomic
-`;
-
-val pstep_flush_defn = Hol_defn "pstep_flush" `pstep_flush p s =
-  if NULL s.bst_inflight
-  then s
-  else pstep_flush p (HD (bir_next_exec p s))
-`;
-
 (* TODO: Move these to programScript *)
-val bir_inflight_ss = rewrites ((type_rws ``:'a bir_inflight_stmt_t``));
-
-val nonempty_pipeline_next_stmt = prove(
-``!s. ~NULL s.bst_inflight ==> ~(next_stmt s = NONE)``,
-
-REPEAT STRIP_TAC >>
-FULL_SIMP_TAC std_ss [next_stmt_def] >>
-Cases_on `s.bst_inflight` >| [
-  FULL_SIMP_TAC std_ss [NULL_EQ],
-
-  Cases_on `h` >>
-  FULL_SIMP_TAC (list_ss++bir_inflight_ss) []
-]
-);
 
 val bir_state_ss = rewrites (type_rws ``:bir_state_t``);
 val bir_status_ss = rewrites (type_rws ``:bir_status_t``);
-
-val bir_exec_stmt_inflight_unchanged = store_thm("bir_exec_stmt_inflight_unchanged",
-``!p r s.
-  (bir_exec_stmt_state p r s).bst_inflight = s.bst_inflight``,
-
-REPEAT STRIP_TAC >>
-Cases_on `r` >> Cases_on `b` >> (
-  FULL_SIMP_TAC std_ss [bir_exec_stmt_state_REWRS, LET_DEF,
-                        bir_exec_stmtB_state_REWRS, bir_exec_stmt_assign_def,
-                        bir_exec_stmt_assert_def, bir_exec_stmt_assume_def,
-                        bir_exec_stmt_observe_state_def,
-                        bir_exec_stmt_fence_state_def,
-                        bir_exec_stmtE_def, bir_exec_stmt_jmp_def,
-                        bir_exec_stmt_jmp_to_label_def,
-                        bir_exec_stmt_cjmp_def, bir_exec_stmt_halt_def] >>
-  REPEAT CASE_TAC >> (
-    FULL_SIMP_TAC (std_ss++bir_state_ss) [bir_state_set_typeerror_def]
-  )
-)
-);
-
-val bir_next_exec_NONNULL_decreasing = prove(
-``!p s.
-  ~NULL s.bst_inflight ==>
-  LENGTH (HD (bir_next_exec p s)).bst_inflight < LENGTH s.bst_inflight``,
-
-REPEAT STRIP_TAC >>
-FULL_SIMP_TAC list_ss [bir_next_exec_def, nonempty_pipeline_next_stmt] >>
-IMP_RES_TAC nonempty_pipeline_next_stmt >>
-Cases_on `next_stmt s` >| [
-  FULL_SIMP_TAC std_ss [],
-
-  Cases_on `x` >>
-  FULL_SIMP_TAC std_ss [pairTheory.pair_case_thm] >>
-  Cases_on `bir_exec_stmt p r s` >>
-  Cases_on `q'` >> (
-    FULL_SIMP_TAC std_ss [] >>
-    rename1 `s' with bst_inflight updated_by remove_inflight q` >>
-    subgoal `s.bst_inflight = s'.bst_inflight` >- (
-      subgoal `bir_exec_stmt_state p r s = s'` >- (
-	FULL_SIMP_TAC std_ss [bir_exec_stmt_state_def]
-      ) >>
-      METIS_TAC [bir_exec_stmt_inflight_unchanged]
-    ) >>
-    FULL_SIMP_TAC (std_ss++bir_state_ss) [remove_inflight_def, listTheory.HD] >>
-    irule rich_listTheory.LENGTH_FILTER_LESS >>
-    FULL_SIMP_TAC std_ss [next_stmt_def] >>
-    Cases_on `s'.bst_inflight` >| [
-      FULL_SIMP_TAC std_ss [NULL_EQ],
-
-      Cases_on `h` >>
-      REV_FULL_SIMP_TAC (list_ss++bir_inflight_ss) []
-    ]
-  )
-]
-);
-
-(* Defn.tgoal pstep_flush_defn *)
-val (pstep_flush_def, pstep_flush_ind) = Defn.tprove(pstep_flush_defn,
-
-WF_REL_TAC `measure (\arg. LENGTH ((SND arg).bst_inflight))` >>
-FULL_SIMP_TAC std_ss [bir_next_exec_NONNULL_decreasing]
-);
 
 (* The write buffer of memory m does not contain any pending writes from
  * core with core ID cid *)
@@ -274,42 +118,56 @@ val buffer_bypass_read_def = Define`
   )
 `;
 
-val lock_held_or_free_def = Define`
-  (lock_held_or_free m cid =
-    (!cid'. m.bmst_lock = SOME cid' ==> cid = cid'))
+val lock_held_def = Define`
+  (lock_held m cid =
+    (m.bmst_lock = SOME cid))
 `;
 
+val lock_free_def = Define`
+  (lock_free m =
+    (m.bmst_lock = NONE))
+`;
+
+
 val (parstep_rules, parstep_ind, parstep_cases) = Hol_reln`
-  (* Obtain a memory core lock for some core.
+  (* Obtain a memory core lock for some core, when you have entered
+   * (but not started executing) an atomic block.
    * This can only be done if no other core holds the lock,
-   * and if in-flight list of the memory does not contain any
-   * statement associated with the current core. *)
-  (* TODO: This also needs to execute one core step *)
+   * and if store buffer does not contain any
+   * operations associated with the current core. *)
   (!cid p st m m' system.
    (core cid p st) IN system /\
    (mem m) IN system /\
-   next_is_atomic p st /\
+   block_is_atomic p st /\
    m.bmst_lock = NONE /\
    buffer_is_empty m cid /\
    m' = m with <| bmst_lock := SOME cid |> ==>
    parstep system (system DIFF {mem m} UNION {mem m'})
   ) /\
-  (* Release a memory core lock.
-   * This can only be done if next statement of the core
-   * holding the lock is an End statement,
-   * and if in-flight list of the memory does not contain any
-   * statement associated with the current core.. *)
-  (!cid p st m m' system t0 stm.
+  (* Take a regular, non-memory basic statement step while holding lock. *)
+  (* NOTE: You are implicitly in an atomic block in this and the below rule. *)
+  (!cid p st st' system bstmt.
+   (core cid p st) IN system /\
+   (mem m) IN system /\
+   m.bmst_lock = SOME cid /\
+   (bir_get_current_statement p st.bst_pc = SOME (BStmtB bstmt)) /\
+   ~(stmt_is_memop (BStmtB bstmt)) ∧
+   (bir_exec_stmt p (BStmtB bstmt) st = (oo, st')) ⇒
+   parstep system (system DIFF {core cid p st} UNION {core cid p st'})
+  ) /\
+  (* Exiting a block with the lock releases the memory core lock. *)
+  (!cid p st m m' system end_stmt.
    (core cid p st) IN system /\
    (mem m) IN system /\
    m.bmst_lock = SOME cid /\
    buffer_is_empty m cid /\
-   (next_stmt st = SOME (t0,stm)) /\
-   (?end_stmt. stm = BStmtE end_stmt) /\
+   (bir_get_current_statement p st.bst_pc = SOME (BStmtE end_stmt)) /\
+   (bir_exec_stmt p (BStmtE end_stmt) st = (oo, st')) /\
    m' = m with <| bmst_lock := NONE |> ==>
-   parstep system (system DIFF {mem m} UNION {mem m'})
+   parstep system ((system DIFF {mem m} UNION {mem m'})
+                   DIFF {core cid p st} UNION {core cid p st'})
   ) /\
-  (* Perform a pipelined step for a single core. *)
+  (* Perform an execution step for a single core. *)
   (!cid p st st' system.
    pstep p st st' /\
    (core cid p st) IN system ==>
@@ -317,29 +175,29 @@ val (parstep_rules, parstep_ind, parstep_cases) = Hol_reln`
   ) /\
   (* Perform a step for a memory - note that with the
    * current definition of memstep this is identical with committing
-   * something from the memory in-flight list. *)
+   * something from the write buffer. *)
   (!m m' system.
    memstep m m' /\
    (mem m) IN system ==>
    parstep system (system DIFF {mem m} UNION {mem m'})
   ) /\
   (* Perform a fence step for a single core and a single memory.
-   * This can only be done if in-flight list of the memory does
+   * This can only be done if write buffer does
    * not contain any statement associated with the current core.. *)
   (* TODO: Note that this is done in relation to an arbitrary memory.
    *       In its current formulation, this is nonsensical for
    *       systems with multiple memories. *)
-  (!cid p st st' m m' system system' t0 stm.
+  (!cid p st st' m m' system system'.
    ((core cid p st) IN system /\
     (mem m) IN system /\
-    (next_stmt st = SOME (t0, stm)) /\
-    (stm = BStmtB BStmt_Fence) /\
     (* This would force the core to flush its in-flight set
     /\ s' = pstep_flush p s *)
     (* This would force a memory to flush its in-flight set
     /\ m' = memflush cid m.bmst_inflight m *)
     (* This forces a memory to have an empty in-flight set *)
     buffer_is_empty m cid /\
+    (bir_get_current_statement p st.bst_pc = SOME (BStmtB BStmt_Fence)) /\
+    (bir_exec_stmt p (BStmtB BStmt_Fence) st = (oo, st')) /\
     system' = (system DIFF {core cid p st} UNION {core cid p st'})
 		DIFF {mem m} UNION {mem m'}) ==>
    parstep system system'
@@ -349,12 +207,12 @@ val (parstep_rules, parstep_ind, parstep_cases) = Hol_reln`
   (* TODO: Note that this is done in relation to an arbitrary memory.
    *       In its current formulation, this is nonsensical for
    *       systems with multiple memories. *)
-  (!cid p st st' m m' system t0 var mem_ex addr_ex en val_ex addr value.
+  (!cid p st st' m m' system var mem_ex addr_ex en val_ex addr value.
    ((core cid p st) IN system /\
     (mem m) IN system /\
-    (lock_held_or_free m cid) /\
+    ((lock_held m cid) ∨ (~(block_is_atomic p st) ∧ lock_free m)) /\
     (* TODO: Implicit assumption that mem_ex is main memory *)
-    (next_stmt st = SOME (t0, (BStmtB (BStmt_Assign var (BExp_Store mem_ex addr_ex en val_ex))))) /\
+    (bir_get_current_statement p st.bst_pc = SOME (BStmtB (BStmt_Assign var (BExp_Store mem_ex addr_ex en val_ex)))) /\
     (?t. var = BVar "MEM" t) /\
     (SOME addr = bir_eval_exp addr_ex st.bst_environ) /\
     (SOME value = bir_eval_exp val_ex st.bst_environ) /\
@@ -363,7 +221,7 @@ val (parstep_rules, parstep_ind, parstep_cases) = Hol_reln`
     (m' = m with <|bmst_buffer updated_by
 		     (APPEND [(cid, BEv_Write (memfresh m) var addr en value)]);
 		     bmst_counter updated_by (\n:num. n+1)|>) /\
-    (st' = st with bst_inflight updated_by (remove_inflight t0))) ==>
+    (st' = st with bst_pc updated_by bir_pc_next)) ==>
    parstep system ((system DIFF {mem m} UNION {mem m'})
                      DIFF {core cid p st} UNION {core cid p st'})
   ) /\
@@ -375,37 +233,35 @@ val (parstep_rules, parstep_ind, parstep_cases) = Hol_reln`
   (* TODO: Note that this is done in relation to an arbitrary memory.
    *       In its current formulation, this is nonsensical for
    *       systems with multiple memories. *)
-  (!cid p st st' m system t0 var mem_var addr_ex en it addr mem_val value env'.
+  (!cid p st st' m system var mem_var addr_ex en it addr mem_val value env'.
    ((core cid p st) IN system /\
     (mem m) IN system /\
-    (lock_held_or_free m cid) /\
-    (next_stmt st = SOME (t0, BStmtB (BStmt_Assign var (BExp_Load (BExp_Den mem_var) addr_ex en it)))) /\
+    ((lock_held m cid) ∨ (~(block_is_atomic p st) ∧ lock_free m)) /\
+    (bir_get_current_statement p st.bst_pc = SOME (BStmtB (BStmt_Assign var (BExp_Load (BExp_Den mem_var) addr_ex en it)))) /\
     (SOME addr = bir_eval_exp addr_ex st.bst_environ) /\
     (buffer_bypass_read m cid addr = NONE) /\
     (* TODO: Implicitly assumed that ex1 actually evaluates to "MEM" *)
     (SOME mem_val = bir_eval_exp (BExp_Den mem_var) m.bmst_environ) /\
     (SOME value = bir_eval_load (SOME mem_val) (SOME addr) en it) /\
     (SOME env' = bir_env_write var value st.bst_environ) /\
-    (st' = st with <|bst_environ := env';
-                     bst_inflight updated_by (remove_inflight t0)|>)) ==>
+    (st' = st with <|bst_environ := env'; bst_pc := (bir_pc_next st.bst_pc)|>)) ==>
    parstep system (system DIFF {core cid p st} UNION {core cid p st'})) /\
   (* Load from write buffer *)
   (* TODO: Note that this is done in relation to an arbitrary memory.
    *       In its current formulation, this is nonsensical for
    *       systems with multiple memories. *)
-  (!cid p st st' m system t0 var mem_ex addr_ex en it addr wcid wid mem_var value env'.
+  (!cid p st st' m system var mem_ex addr_ex en it addr wcid wid mem_var value env'.
    ((core cid p st) IN system /\
     (mem m) IN system /\
-    (lock_held_or_free m cid) /\
-    (next_stmt st = SOME (t0, BStmtB (BStmt_Assign var (BExp_Load mem_ex addr_ex en it)))) /\
+    ((lock_held m cid) ∨ (~(block_is_atomic p st) ∧ lock_free m)) /\
+    (bir_get_current_statement p st.bst_pc = SOME (BStmtB (BStmt_Assign var (BExp_Load mem_ex addr_ex en it)))) /\
     (* TODO: Currently, we don't care about the value of mem_ex, since we only deal
      * with one main memory. *)
     (SOME addr = bir_eval_exp addr_ex st.bst_environ) /\
     (* TODO: Endianness currently ignored, but must be matched... *)
     (buffer_bypass_read m cid addr = SOME (wcid, BEv_Write wid mem_var addr en value)) /\
     (SOME env' = bir_env_write var value st.bst_environ) /\
-    (st' = st with <|bst_environ := env';
-                   bst_inflight updated_by (remove_inflight t0)|>)) ==>
+    (st' = st with <|bst_environ := env'; bst_pc := (bir_pc_next st.bst_pc)|>)) ==>
    parstep system (system DIFF {core cid p st} UNION {core cid p st'}))
 `;
 
@@ -414,7 +270,7 @@ val par_traces_def = Define `par_traces system =
 `;
 
 val compute_next_par_single_def = Define `compute_next_par_single (core cid p s) m =
-  LIST_BIND (bir_compute_next p s) (\s'. [(core cid p s', m)])
+  LIST_BIND ([bir_exec_step_state p s]) (\s'. [(core cid p s', m)])
 `;
 val compute_next_par_mem_def = Define `compute_next_par_mem c (mem m) =
   LIST_BIND (mem_compute_next m) (\m'. [(c, mem m')])

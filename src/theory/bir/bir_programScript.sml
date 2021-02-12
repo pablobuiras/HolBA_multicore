@@ -77,18 +77,7 @@ val _ = Datatype `bir_state_t = <|
   bst_pc       : bir_programcounter_t;
   bst_environ  : bir_var_environment_t;
   bst_status   : bir_status_t;
-  bst_inflight : (string bir_inflight_stmt_t) list;
-  bst_counter  : num
 |>`;
-
-val remove_inflight_def = Define`
-remove_inflight t l =
-    FILTER (\bi . case bi of BirInflight t0 _ => (t <> t0)) l
-`;
-
-val fresh_def = Define`
-fresh s = STRCAT "t" (n2s s.bst_counter)
-`;
 
 val bir_state_t_component_equality = DB.fetch "-" "bir_state_t_component_equality";
 val bir_programcounter_t_component_equality = DB.fetch "-" "bir_programcounter_t_component_equality";
@@ -183,8 +172,6 @@ val bir_state_init_def = Define `bir_state_init p = <|
     bst_pc       := bir_pc_first p
   ; bst_environ  := bir_env_default (bir_envty_of_vs {}) (* TODO: add vars of program here *)
   ; bst_status := BST_Running
-  ; bst_inflight := []
-  ; bst_counter := 0
 |>`;
 
 
