@@ -667,15 +667,20 @@ val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
 
 (* cstep_seq invariant *)
 
-Theorem bir_exec_stmt_jmp_bst_prom:
-  !st p lbl. st.bst_prom = (bir_exec_stmt_jmp p lbl st).bst_prom
-Proof
-  rw[bir_exec_stmt_jmp_def]
-  >> CASE_TAC
-  >> fs[bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def]
-  >> CASE_TAC
-  >> fs[]
-QED
+(* system step *)
+val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
+(!p cid s s' M M' cores prom.
+   (Core cid p s ∈ cores
+    /\ cstep p cid s M prom s' M'
+    /\ is_certified p cid s' M')
+==>
+   parstep cores M (cores DIFF {Core cid p s} UNION {Core cid p s'}) M')
+`;
+
+val env_update_cast64_def = Define‘
+  env_update_cast64 varname (BVal_Imm v) vartype env =
+    bir_env_update varname (BVal_Imm (n2bs (b2n v) Bit64)) vartype env
+’;
 
 Theorem clstep_bst_prom_EQ:
 !p cid st M st'. 
