@@ -400,13 +400,21 @@ End
 
 Definition is_fulfil_xcl_def:
   is_fulfil_xcl cid t sys1 sys2 <=>
-    is_fulfil cid t sys1 sys2
-  /\ ?st st' p.
+  ?st st' p.
     Core cid p st IN sys1
     /\ Core cid p st' IN sys2
+    /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
+    /\ MEM t st.bst_prom
     /\ st.bst_pc = bir_pc_next st'.bst_pc
     /\ is_xcl_write p st
 End
+
+Theorem is_fulfil_xcl_is_fulfil:
+  !cid t sys1 sys2. is_fulfil_xcl cid t sys1 sys2 ==> is_fulfil cid t sys1 sys2
+Proof
+  rw[is_fulfil_xcl_def,is_fulfil_def]
+  >> rpt $ goal_assum $ drule_at Any
+QED
 
 (* only exclusive loads set the exclusive bank *)
 
