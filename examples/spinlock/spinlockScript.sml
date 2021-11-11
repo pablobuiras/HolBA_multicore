@@ -416,7 +416,20 @@ Theorem is_fulfil_same:
   /\ SUC i < LENGTH tr
   ==> cid = cid' /\ t = t'
 Proof
-  cheat
+  rpt gen_tac >> strip_tac
+  >> conj_asm1_tac
+  >- (
+    ntac 2 $ drule_then (drule_then $ dxrule_then assume_tac) is_fulfil_parstep_nice_imp
+    >> dxrule_at_then Any irule parstep_nice_parstep_nice
+    >> drule_then (irule_at Any) wf_trace_wf_sys_monotone
+    >> fs[]
+  )
+  >> gvs[is_fulfil_def]
+  >> ntac 2 $ drule_then (dxrule_then drule) wf_trace_wf_sys
+  >> rw[]
+  >> qhdtm_x_assum `FILTER` $ fs o single o GSYM
+  >> dxrule_at_then Any (dxrule_at Any) FILTER_FILTER_MEM_EQ
+  >> fs[EQ_SYM_EQ]
 QED
 
 (* only one promise happens at a time *)
@@ -428,7 +441,15 @@ Theorem is_promise_same:
   /\ SUC i < LENGTH tr
   ==> cid = cid' /\ t = t'
 Proof
-  cheat
+  rpt gen_tac >> strip_tac
+  >> conj_asm1_tac
+  >- (
+    ntac 2 $ drule_then (drule_then $ dxrule_then assume_tac) is_promise_parstep_nice_imp
+    >> dxrule_at_then Any irule parstep_nice_parstep_nice
+    >> drule_then (irule_at Any) wf_trace_wf_sys_monotone
+    >> fs[]
+  )
+  >> gvs[is_promise_def]
 QED
 
 (*
