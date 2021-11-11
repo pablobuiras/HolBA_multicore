@@ -566,7 +566,7 @@ QED
 (* any exiting core must have fulfiled exclusively *)
 
 Theorem core_runs_spinlock_IS_NONE_bst_pc_is_fulfil_xcl:
-  !tr cid p st. wf_trace tr
+  !tr cid p st l. wf_trace tr
   /\ core_runs_spinlock cid (FST $ HD tr)
   /\ Core cid p st IN (FST $ LAST tr)
   /\ st.bst_status = BST_JumpOutside l
@@ -579,7 +579,7 @@ QED
 (* distinct exclusive fulfils enforce an ordering on their timestamps *)
 (* TODO replace "is_fulfil_xcl" assumptions with t and t' have same address *)
 Theorem core_runs_spinlock_is_fulfil_xcl_timestamp_order:
-  !tr cid cid' t t' i j i' j' t t'. wf_trace tr
+  !tr cid cid' t t' i j i' j'. wf_trace tr
   /\ core_runs_spinlock cid (FST $ HD tr)
   /\ core_runs_spinlock cid' (FST $ HD tr)
   /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
@@ -590,7 +590,6 @@ Theorem core_runs_spinlock_is_fulfil_xcl_timestamp_order:
   ==> ~(t < t')
 Proof
   rpt strip_tac
-  >> drule_all_then assume_tac wf_trace_parstep_EL
   >> drule_then (rev_drule_then $ drule_then assume_tac)
     cores_run_spinlock_is_fulfil_xcl_initial_xclb
   >> drule_then (drule_then $ drule_then assume_tac)
@@ -599,7 +598,6 @@ Proof
   (* contradiction with atomic predicate and exclusivity bank *)
   >> cheat
 QED
-
 
 (* Theorem 5 only one core can leave the lock region *)
 Theorem core_runs_spinlock_correct:
@@ -620,27 +618,27 @@ Proof
   >> drule_then rev_drule core_runs_spinlock_IS_NONE_bst_pc_is_fulfil_xcl
   >> rpt $ disch_then $ dxrule
   >> rw[]
+  >> imp_res_tac is_fulfil_xcl_is_fulfil
   >> Cases_on `i = i'`
   >- (
-    gvs[is_fulfil_xcl_def]
-    >> dxrule is_fulfil_same
+    dxrule is_fulfil_same
+    >> gvs[]
     >> rpt $ disch_then dxrule
     >> fs[]
   )
   >> Cases_on `t = t'`
   >- (
     Cases_on `i < i'`
-    >> gvs[is_fulfil_xcl_def]
     >> dxrule is_fulfil_once
     >> disch_then $ dxrule_at_then (Pos $ el 2) assume_tac >> gs[LESS_EQ]
   )
-  >> rev_drule_then assume_tac $ cj 1 $ iffLR is_fulfil_xcl_def
-  >> drule_then assume_tac $ cj 1 $ iffLR is_fulfil_xcl_def
   >> ntac 2 $ drule_then (dxrule_at Any) is_fulfil_is_promise
   >> rw[]
-  >> qmatch_assum_rename_tac `j' < i'`
+  >> qmatch_assum_rename_tac `is_promise cid' t' (EL jj tr) _`
+  >> qmatch_assum_rename_tac `is_promise cid t (EL j tr) _`
+  >> qmatch_assum_rename_tac `jj < ii`
   >> qmatch_assum_rename_tac `j < i`
-  >> Cases_on `j' = j`
+  >> Cases_on `jj = j`
   >- (
     gvs[]
     >> dxrule is_promise_same
