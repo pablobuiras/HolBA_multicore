@@ -15,6 +15,22 @@ val (bir_spinlock_progbin_def, bir_spinlock_prog_def, bir_is_lifted_prog_spinloc
 open bir_promisingTheory rich_listTheory listTheory arithmeticTheory tracesTheory;
 
 (*
+ * general lemmata
+ *)
+
+Theorem FILTER_FILTER_MEM_EQ:
+  FILTER ($<> t) s = FILTER ($<> t') s
+  /\ MEM t s /\ MEM t' s ==> t = t'
+Proof
+  rpt strip_tac
+  >> qmatch_assum_abbrev_tac `rhs = lhs`
+  >> `EVERY ($<> t) lhs` by (
+    fs[Once EQ_SYM_EQ,Abbr`rhs`,EVERY_FILTER]
+  )
+  >> fs[EVERY_FILTER,EVERY_MEM,Abbr`lhs`]
+QED
+
+(*
  * characterisation of fulfil and promise rules
  *)
 
@@ -77,28 +93,6 @@ Proof
   >> gvs[]
 QED
 
-(* parstep and fulfil transitions have same ids *)
-
-Theorem is_fulfil_parstep_nice:
-  !tr i cid cid'. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
-  ==> cid = cid'
-Proof
-  cheat
-QED
-
-(* parstep and promise transitions have same ids *)
-
-Theorem is_promise_parstep_nice:
-  !tr i cid cid'. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
-  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
-  ==> cid = cid'
-Proof
-  cheat
-QED
-
 (* fulfil steps affect only the promising core *)
 
 Theorem is_fulfil_inv:
@@ -143,6 +137,50 @@ Proof
   )
   >>  drule_then (drule_then irule) wf_trace_unchanged
   >> rpt $ goal_assum $ drule_at Any
+QED
+
+(* parstep and fulfil transitions have same ids *)
+
+Theorem is_fulfil_parstep_nice:
+  !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
+  ==> cid = cid'
+Proof
+  cheat
+QED
+
+Theorem is_fulfil_parstep_nice_imp:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> drule_all is_fulfil_parstep_nice
+  >> fs[]
+QED
+
+(* parstep and promise transitions have same ids *)
+
+Theorem is_promise_parstep_nice:
+  !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
+  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
+  ==> cid = cid'
+Proof
+  cheat
+QED
+
+Theorem is_promise_parstep_nice_imp:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
+  ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> drule_all is_promise_parstep_nice
+  >> fs[]
 QED
 
 (* a promise entails lower bound of future memory length *)
