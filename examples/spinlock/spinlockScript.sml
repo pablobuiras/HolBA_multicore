@@ -391,15 +391,23 @@ Proof
   ==> ~is_fulfil cid' t (FST $ EL j tr) (FST $ EL (SUC j) tr) ` by (
     cheat
   )
-  >> cheat
-  (* TODO prove
-  wlog_tac ``i < j`` [``i``,``j``]
-  >> fs[NOT_NUM_EQ] THEN_LT USE_SG_THEN ASSUME_TAC 1 2
-  DB.match["arithmetic"]``_:num <> _ <=> _`` *)
+  >> rpt gen_tac >> strip_tac
+  >> gvs[NOT_NUM_EQ]
+  >- (
+    first_x_assum irule
+    >> fs[]
+    >> goal_assum $ drule_at Any
+    >> fs[]
+  )
+  >> qhdtm_x_assum `is_fulfil` mp_tac
+  >> rw[Once MONO_NOT_EQ]
+  >> first_x_assum irule
+  >> fs[]
+  >> goal_assum $ drule_at Any
+  >> fs[]
 QED
 
 (* only one fulfil happens at a time *)
-
 
 Theorem is_fulfil_same:
   !tr cid cid' t t' i. wf_trace tr
