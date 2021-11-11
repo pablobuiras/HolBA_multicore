@@ -107,7 +107,6 @@ Proof
   >> rw[]
 QED
 
-(* TODO *)
 Theorem parstep_nice_parstep_nice:
   !s1 s2 cid cid'. wf_sys $ FST s1
   /\ parstep_nice cid s1 s2 /\ parstep_nice cid' s1 s2
@@ -118,7 +117,7 @@ Proof
   >> fs[parstep_nice_def,parstep_cases,wf_sys_def]
   >> last_x_assum drule
   >> PRED_ASSUM is_forall mp_tac
-  >> cheat
+  >> cheat (* change sets to fmaps *)
 QED
 
 Theorem parstep_nice_cid:
@@ -130,7 +129,6 @@ Proof
   >> dsimp[] >> disj2_tac >> goal_assum $ drule_at Any
 QED
 
-(* TODO *)
 Theorem parstep_nice_cid':
   !cid s1 s2. parstep_nice cid s1 s2
   ==> ?p st st'. Core cid p st IN FST s1
@@ -142,7 +140,7 @@ Proof
   >> dsimp[]
   >> disj2_tac >> goal_assum $ drule_at Any
   (* bst_prom changes or bst_pc changes? *)
-  >> cheat
+  >> cheat (* change sets to fmaps *)
 QED
 
 Definition empty_prom_def:
@@ -341,7 +339,7 @@ Theorem wf_trace_cid_NOT_EQ:
   /\ cid <> cid'
   ==> st = st'
 Proof
-  cheat
+  cheat (* change sets to fmaps *)
 QED
 
 Theorem wf_trace_cid_NOT_EQ_bst_prom:
@@ -353,8 +351,7 @@ Theorem wf_trace_cid_NOT_EQ_bst_prom:
   /\ cid <> cid'
   ==> st.bst_prom = st'.bst_prom
 Proof
-  (* using wf_trace_cid_NOT_EQ or clstep_bst_prom_EQ *)
-  cheat
+  cheat (* change sets to fmaps *)
 QED
 
 (* set of promises contains only elements smaller then the memory *)
