@@ -13,48 +13,35 @@ val (bir_spinlock_progbin_def, bir_spinlock_prog_def, bir_is_lifted_prog_spinloc
           ((Arbnum.fromInt 0), (Arbnum.fromInt 0x1000000));
 
 open bir_promisingTheory rich_listTheory listTheory arithmeticTheory tracesTheory;
-
-(*
- * general lemmata
- *)
-
-Theorem FILTER_FILTER_MEM_EQ:
-  FILTER ($<> t) s = FILTER ($<> t') s
-  /\ MEM t s /\ MEM t' s ==> t = t'
-Proof
-  rpt strip_tac
-  >> qmatch_assum_abbrev_tac `rhs = lhs`
-  >> `EVERY ($<> t) lhs` by (
-    fs[Once EQ_SYM_EQ,Abbr`rhs`,EVERY_FILTER]
-  )
-  >> fs[EVERY_FILTER,EVERY_MEM,Abbr`lhs`]
-QED
+open finite_mapTheory;
 
 (*
  * characterisation of fulfil and promise rules
  *)
 
 Definition is_fulfil_def:
-  is_fulfil cid t system1 system2 =
-  ?st st' p p'.
-    Core cid p st IN system1
-    /\ Core cid p' st' IN system2
+  is_fulfil cid t sys1 sys2 =
+  ?st st' p var e.
+    FLOOKUP sys1 cid = SOME $ Core cid p st
+    /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
+    /\ bir_get_current_statement p st.bst_pc =
+        SOME $ BStmtB $ BStmt_Assign var e
 End
 
 Theorem is_fulfil_MEM_bst_prom:
-  is_fulfil cid t system1 system2
-  ==> ?p st. Core cid p st IN system1  /\ MEM t st.bst_prom
+  !cid t sys1 sys2. is_fulfil cid t sys1 sys2
+  ==> ?p st. FLOOKUP sys1 cid = SOME $ Core cid p st /\ MEM t st.bst_prom
 Proof
-  fs[is_fulfil_def] >> metis_tac[]
+  fs[is_fulfil_def,PULL_EXISTS]
 QED
 
 Definition is_promise_def:
   is_promise cid t sys1 sys2 =
-  ?st st' p p' v l.
-    Core cid p st IN FST sys1
-    /\ Core cid p' st' IN FST sys2
+  ?st st' p v l.
+    FLOOKUP (FST sys1) cid = SOME $ Core cid p st
+    /\ FLOOKUP (FST sys2) cid = SOME $ Core cid p st'
     /\ t = LENGTH (SND sys1) + 1
     /\ (SND sys2) = (SND sys1) ++ [<| loc := l; val := v; cid := cid  |>]
     /\ st'.bst_prom = st.bst_prom ++ [t]
@@ -63,17 +50,15 @@ End
 (* fulfil steps change the state *)
 
 Theorem is_fulfil_state_changed:
-  !tr cid t p p' st st' i. wf_trace tr /\ SUC i < LENGTH tr
+  !tr cid t p st st' i. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ Core cid p st IN (FST $ EL i tr)
-  /\ Core cid p' st' IN (FST $ EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   ==> st <> st'
 Proof
-  rpt strip_tac >> gvs[is_fulfil_def,wf_sys_def]
+  rpt strip_tac >> gvs[is_fulfil_def]
   >> qpat_x_assum `MEM _ _` mp_tac
-  >> drule_then (dxrule_then $ drule_then assume_tac) wf_trace_wf_sys
-  >> drule_then (rev_dxrule_then $ drule_then assume_tac) wf_trace_wf_sys
-  >> gvs[]
+  >> fs[]
   >> qpat_x_assum `FILTER _ _ = _` $ ONCE_REWRITE_TAC o single o GSYM
   >> fs[MEM_FILTER]
 QED
@@ -81,28 +66,95 @@ QED
 (* promising steps change the state *)
 
 Theorem is_promise_state_changed:
-  !tr cid t p p' st st' i. wf_trace tr /\ SUC i < LENGTH tr
+  !tr cid t p st st' i. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
-  /\ Core cid p st IN (FST $ EL i tr)
-  /\ Core cid p' st' IN (FST $ EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   ==> st <> st'
 Proof
-  rpt strip_tac >> gvs[is_promise_def,wf_sys_def]
-  >> drule_then (dxrule_then $ drule_then assume_tac) wf_trace_wf_sys
-  >> drule_then (rev_dxrule_then $ drule_then assume_tac) wf_trace_wf_sys
-  >> gvs[]
+  rpt strip_tac
+  >> gvs[is_promise_def]
 QED
 
-(* fulfil steps affect only the promising core *)
+(* parstep and fulfil transitions have same ids *)
+
+Theorem is_fulfil_parstep_nice:
+  !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
+  ==> cid = cid'
+Proof
+  rpt strip_tac
+  >> `parstep_nice cid (EL i tr) (EL (SUC i) tr)` by (
+    CCONTR_TAC
+    >> fs[is_fulfil_def]
+    >> drule_at Any wf_trace_NOT_parstep_nice_state_EQ'
+    >> rpt $ disch_then drule
+    >> disch_then $ fs o single
+    >> drule_at Any FILTER_NEQ_NOT_MEM
+    >> fs[EQ_SYM_EQ]
+  )
+  >> dxrule_at_then Any (drule_at Any) parstep_nice_parstep_nice
+  >> fs[]
+QED
+
+Theorem is_fulfil_parstep_nice_imp:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> drule_all is_fulfil_parstep_nice
+  >> fs[]
+QED
+
+Theorem is_fulfil_memory:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  ==> SND $ EL i tr = SND $ EL (SUC i) tr
+Proof
+  rpt strip_tac
+  >> imp_res_tac is_fulfil_parstep_nice_imp
+  >> gvs[parstep_nice_def,parstep_cases,cstep_cases,FLOOKUP_UPDATE,is_fulfil_def]
+  >> `MEM t $ FILTER ($<> t) s.bst_prom` by fs[EQ_SYM_EQ]
+  >> fs[MEM_FILTER]
+QED
+
+(* parstep and promise transitions have same ids *)
+
+Theorem is_promise_parstep_nice:
+  !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
+  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
+  ==> cid = cid'
+Proof
+  rpt strip_tac
+  >> fs[parstep_nice_def,parstep_cases,cstep_cases,clstep_cases,is_promise_def]
+  >> imp_res_tac is_xcl_read_is_xcl_write >> gvs[]
+QED
+
+Theorem is_promise_parstep_nice_imp:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
+  ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> drule_all is_promise_parstep_nice
+  >> fs[]
+QED
+
+(* fulfil steps affect only the fulfiling core *)
 
 Theorem is_fulfil_inv:
-  !tr cid cid' t p p' p2 p2' st st' st2 st2' i.
+  !tr cid cid' t p p2 p2' st st' st2 st2' i.
   wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ Core cid p st IN (FST $ EL i tr)
-  /\ Core cid p' st' IN (FST $ EL (SUC i) tr)
-  /\ Core cid' p2 st2 IN FST (EL i tr)
-  /\ Core cid' p2' st2' IN FST (EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
+  /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p2 st2
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p2' st2'
   /\ cid <> cid'
   ==> st <> st' /\ p2 = p2' /\ st2 = st2'
 Proof
@@ -119,13 +171,13 @@ QED
 (* promise steps affect only the promising core *)
 
 Theorem is_promise_inv:
-  !tr cid cid' t p p' p2 p2' st st' st2 st2' i.
+  !tr cid cid' t p p2 p2' st st' st2 st2' i.
   wf_trace tr /\ SUC i < LENGTH tr
   /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
-  /\ Core cid p st IN (FST $ EL i tr)
-  /\ Core cid p' st' IN (FST $ EL (SUC i) tr)
-  /\ Core cid' p2 st2 IN FST (EL i tr)
-  /\ Core cid' p2' st2' IN FST (EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
+  /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p2 st2
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p2' st2'
   /\ cid <> cid'
   ==> st <> st' /\ p2 = p2' /\ st2 = st2'
 Proof
@@ -137,50 +189,6 @@ Proof
   )
   >>  drule_then (drule_then irule) wf_trace_unchanged
   >> rpt $ goal_assum $ drule_at Any
-QED
-
-(* parstep and fulfil transitions have same ids *)
-
-Theorem is_fulfil_parstep_nice:
-  !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
-  ==> cid = cid'
-Proof
-  cheat
-QED
-
-Theorem is_fulfil_parstep_nice_imp:
-  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
-Proof
-  rpt strip_tac
-  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
-  >> drule_all is_fulfil_parstep_nice
-  >> fs[]
-QED
-
-(* parstep and promise transitions have same ids *)
-
-Theorem is_promise_parstep_nice:
-  !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
-  /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
-  ==> cid = cid'
-Proof
-  cheat
-QED
-
-Theorem is_promise_parstep_nice_imp:
-  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
-  ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
-Proof
-  rpt strip_tac
-  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
-  >> drule_all is_promise_parstep_nice
-  >> fs[]
 QED
 
 (* a promise entails lower bound of future memory length *)
@@ -226,34 +234,38 @@ QED
 (* a fulfil has an earlier promise *)
 
 Theorem NOT_is_promise_NOT_MEM_bst_prom:
-  !i tr cid p st p' st' t. wf_trace tr
+  !i tr cid p st st' t. wf_trace tr
   /\ ~is_promise cid t (EL i tr) (EL (SUC i) tr)
   /\ SUC i < LENGTH tr
-  /\ Core cid p st IN FST $ EL i tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ ~MEM t st.bst_prom
-  /\ Core cid p' st' IN FST $ EL (SUC i) tr
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   ==> ~MEM t st'.bst_prom
 Proof
   rw[]
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
-  >> fs[parstep_nice_def,parstep_cases]
   >> Cases_on `cid = cid'`
   >- (
-    pop_assum $ fs o single
-    >> drule_then (dxrule_then drule) wf_trace_wf_sys
-    >> rw[]
+    BasicProvers.VAR_EQ_TAC
     >> fs[is_promise_def,DISJ_EQ_IMP]
-    >> first_x_assum drule
-    >> fs[AND_IMP_INTRO,AC CONJ_ASSOC CONJ_COMM,cstep_cases]
-    >- (dxrule_then assume_tac clstep_bst_prom_EQ >> fs[])
-    >> rpt strip_tac
+    >> fs[AND_IMP_INTRO,AC CONJ_ASSOC CONJ_COMM,cstep_cases,parstep_nice_def,parstep_cases]
+    (* execute *)
+    >- (
+      imp_res_tac clstep_LENGTH_prom
+      >> gvs[FLOOKUP_UPDATE]
+      >- (imp_res_tac clstep_bst_prom_EQ >> fs[])
+      >> gvs[clstep_cases,MEM_FILTER,FLOOKUP_UPDATE]
+      >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
+    )
+    (* promises *)
+    >> spose_not_then assume_tac
+    >> gvs[FLOOKUP_UPDATE]
+    >> first_x_assum $ qspecl_then [`msg.val`,`msg.loc`] mp_tac
     >> Cases_on `msg`
-    >> gvs[AND_IMP_INTRO,mem_msg_t_val,mem_msg_t_loc,mem_msg_t_cid]
+    >> fs[mem_msg_t_val,mem_msg_t_loc,mem_msg_t_cid]
     >> cheat
   )
-  >> `Core cid p st IN FST $ EL (SUC i) tr` by fs[EQ_SYM_EQ]
-  >> dxrule wf_trace_wf_sys
-  >> ntac 2 $ disch_then dxrule >> strip_tac >> gs[]
+  >> gs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
 QED
 
 Theorem is_fulfil_is_promise:
@@ -264,7 +276,8 @@ Proof
   rpt strip_tac
   >> CCONTR_TAC
   >> fs[DISJ_EQ_IMP]
-  >> `!j p st. j <= i /\ Core cid p st IN FST $ EL j tr ==> ~MEM t st.bst_prom` by (
+  >> `!j p st. j <= i /\ FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st
+    ==> ~MEM t st.bst_prom` by (
     Induct
     >- (
       rw[] >> fs[wf_trace_def,empty_prom_def]
@@ -292,27 +305,24 @@ QED
 Theorem NOT_is_fulfil_MEM_bst_prom:
   !i tr cid p st p' st' t. wf_trace tr /\ SUC i < LENGTH tr
   /\ ~is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ Core cid p st IN FST $ EL i tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ MEM t st.bst_prom
-  /\ Core cid p' st' IN FST $ EL (SUC i) tr
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   ==> MEM t st'.bst_prom
 Proof
   rw[]
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
   >> fs[parstep_nice_def,parstep_cases,is_fulfil_def,DISJ_EQ_IMP]
   >> Cases_on `cid = cid'`
-  >- (
-    pop_assum $ fs o single
-    >> drule_then (dxrule_then drule) wf_trace_wf_sys
-    >> rw[]
-    >> fs[cstep_cases]
-    >> drule_then assume_tac clstep_bst_prom_EQ
-    >> fs[]
-  )
-  >> first_x_assum $ rev_drule_then drule
-  >> `Core cid p st IN FST $ EL (SUC i) tr` by fs[EQ_SYM_EQ]
-  >> dxrule wf_trace_wf_sys
-  >> ntac 2 $ disch_then dxrule >> strip_tac >> gs[]
+  >> gvs[FLOOKUP_UPDATE,is_promise_def,DISJ_EQ_IMP]
+  >> fs[AND_IMP_INTRO,AC CONJ_ASSOC CONJ_COMM,cstep_cases,parstep_nice_def,parstep_cases]
+  >> imp_res_tac clstep_LENGTH_prom
+  >> gvs[FLOOKUP_UPDATE]
+  >- (imp_res_tac clstep_bst_prom_EQ >> fs[])
+  >> gvs[clstep_cases,MEM_FILTER,FLOOKUP_UPDATE]
+  >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
+  >> spose_not_then assume_tac
+  >> gvs[]
 QED
 
 Theorem is_promise_is_fulfil:
@@ -325,21 +335,19 @@ Proof
   >> CCONTR_TAC
   >> fs[DISJ_EQ_IMP]
   >> `!j p st. i <= j /\ SUC j < LENGTH tr
-    /\ Core cid p st IN FST $ EL (SUC j) tr ==> MEM t st.bst_prom` by (
+    /\ FLOOKUP (FST $ EL (SUC j) tr) cid = SOME $ Core cid p st
+    ==> MEM t st.bst_prom` by (
     Induct_on `j - i`
     >- (
-      rw[] >> gvs[LESS_OR_EQ,is_promise_def]
-      >> drule_then (dxrule_then drule) wf_trace_wf_sys
-      >> rw[]
+      rw[] >> gvs[LESS_OR_EQ,is_promise_def,FLOOKUP_UPDATE]
     )
     >> rw[SUB_LEFT_EQ] >> fs[]
     >> first_x_assum $ qspecl_then [`i + v`,`i`] mp_tac
     >> fs[]
-    >> `?st. Core cid p st IN FST $ EL (SUC $ i + v) tr` by (
+    >> `?st. FLOOKUP (FST $ EL (SUC $ i + v) tr) cid = SOME $ Core cid p st` by (
       irule wf_trace_cid_backward1
       >> `SUC $ i + SUC v = SUC $ SUC $ i + v` by fs[]
       >> pop_assum $ fs o single
-      >> goal_assum drule
     )
     >> disch_then $ drule_then assume_tac
     >> drule NOT_is_fulfil_MEM_bst_prom
@@ -348,9 +356,8 @@ Proof
     >> fs[]
     >> `SUC $ i + SUC v = SUC $ SUC $ i + v` by fs[]
     >> pop_assum $ fs o single
-    >> goal_assum drule
   )
-  >> `?p st. Core cid p st IN FST $ LAST tr` by (
+  >> `?p st. FLOOKUP (FST $ LAST tr) cid = SOME $ Core cid p st` by (
     fs[is_promise_def,GSYM LENGTH_NOT_NULL,GSYM NULL_EQ,LAST_EL]
     >> qexists_tac `p`
     >> drule_then irule wf_trace_cid_forward
@@ -361,17 +368,12 @@ Proof
   >> drule_all wf_trace_LAST_NULL_bst_prom
   >> gs[GSYM LENGTH_NOT_NULL,GSYM NULL_EQ,LAST_EL]
   >> Cases_on `SUC i = PRE $ LENGTH tr`
-  >- (
-    fs[is_promise_def]
-    >> drule_then (dxrule_then drule) wf_trace_wf_sys
-    >> rw[]
-  )
+  >- fs[is_promise_def]
   >> gs[NOT_NUM_EQ]
   >> `i <= PRE $ PRE $ LENGTH tr` by fs[]
   >> first_x_assum dxrule
   >> `0 < PRE $ LENGTH tr` by fs[]
   >> fs[iffLR SUC_PRE]
-  >> disch_then drule
   >> rw[LENGTH_NOT_NULL,MEM_SPLIT,NOT_NULL_MEM]
   >> goal_assum drule
 QED
@@ -421,14 +423,11 @@ Proof
   >- (
     ntac 2 $ drule_then (drule_then $ dxrule_then assume_tac) is_fulfil_parstep_nice_imp
     >> dxrule_at_then Any irule parstep_nice_parstep_nice
-    >> drule_then (irule_at Any) wf_trace_wf_sys_monotone
     >> fs[]
   )
   >> gvs[is_fulfil_def]
-  >> ntac 2 $ drule_then (dxrule_then drule) wf_trace_wf_sys
-  >> rw[]
   >> qhdtm_x_assum `FILTER` $ fs o single o GSYM
-  >> dxrule_at_then Any (dxrule_at Any) FILTER_FILTER_MEM_EQ
+  >> dxrule_at_then Any (dxrule_at Any) FILTER_NEQ_MEM_EQ
   >> fs[EQ_SYM_EQ]
 QED
 
@@ -446,10 +445,43 @@ Proof
   >- (
     ntac 2 $ drule_then (drule_then $ dxrule_then assume_tac) is_promise_parstep_nice_imp
     >> dxrule_at_then Any irule parstep_nice_parstep_nice
-    >> drule_then (irule_at Any) wf_trace_wf_sys_monotone
     >> fs[]
   )
-  >> gvs[is_promise_def]
+  >> fs[is_promise_def]
+QED
+
+(* the timestamp of a fulfil is coupled to the fulfiled core *)
+
+Theorem is_fulfil_to_memory:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  ==> t < LENGTH $ SND $ EL (SUC i) tr /\ (EL t $ SND $ EL (SUC i) tr).cid = cid
+Proof
+  cheat
+QED
+
+(* For a thread cid, the coh(l) of an address l fulfiled to is strictly larger than t *)
+Theorem is_fulfil_bst_coh:
+  !tr i j cid t p st. wf_trace tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ i < j /\ j < LENGTH tr
+  /\ FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st
+  ==> t < st.bst_coh((EL t $ SND $ EL (SUC i) tr).loc)
+Proof
+  ntac 3 gen_tac
+  >> Induct_on `j - i` >> fs[]
+  >> rw[SUB_LEFT_EQ]
+  >> first_x_assum $ qspecl_then [`v + i`,`i`] assume_tac
+  >> Cases_on `0 < v`
+  >> gs[]
+  >- (
+    first_x_assum drule
+    >> cheat
+  )
+  >> drule_at_then (Pos $ el 3) assume_tac is_fulfil_parstep_nice_imp
+  >> drule_at_then (Pos $ el 3) assume_tac is_fulfil_to_memory
+  >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
+  >> cheat
 QED
 
 (*
@@ -458,22 +490,25 @@ QED
 
 Definition is_read_xcl_def:
   is_read_xcl cid t sys1 sys2 <=>
-  ?st st' p.
-    Core cid p st IN sys1
-    /\ Core cid p st' IN sys2
-    /\ st.bst_pc = bir_pc_next st'.bst_pc
+  ?st st' p var e.
+    FLOOKUP sys1 cid = SOME $ Core cid p st
+    /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ is_xcl_read p st
+    /\ bir_get_current_statement p st.bst_pc =
+        SOME $ BStmtB $ BStmt_Assign var e
 End
 
 Definition is_fulfil_xcl_def:
   is_fulfil_xcl cid t sys1 sys2 <=>
-  ?st st' p.
-    Core cid p st IN sys1
-    /\ Core cid p st' IN sys2
+  ?st st' p var e.
+    FLOOKUP sys1 cid = SOME $ Core cid p st
+    /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
-    /\ st.bst_pc = bir_pc_next st'.bst_pc
     /\ is_xcl_write p st
+    /\ IS_SOME st.bst_xclb
+    /\ bir_get_current_statement p st.bst_pc =
+        SOME $ BStmtB $ BStmt_Assign var e
 End
 
 Theorem is_fulfil_xcl_is_fulfil:
@@ -483,33 +518,87 @@ Proof
   >> rpt $ goal_assum $ drule_at Any
 QED
 
+(* TODO revise theorem statement to address (EL t $ SND $ EL (SUC i) tr).loc *)
+
+Theorem is_fulfil_xcl_atomic:
+  !tr i cid t p st.  wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  ==> ?l. fulfil_atomic_ok (SND $ EL i tr) l cid st t
+Proof
+  rpt strip_tac
+  >> imp_res_tac is_fulfil_xcl_is_fulfil
+  >> drule_at Any is_fulfil_parstep_nice_imp
+  >> rw[]
+  >> gvs[parstep_nice_def,parstep_cases,is_fulfil_xcl_def,FLOOKUP_UPDATE]
+  >> gvs[cstep_cases,parstep_nice_def,parstep_cases,clstep_cases,FLOOKUP_UPDATE,bir_programTheory.bir_state_t_accfupds]
+  >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
+  >> gvs[FLOOKUP_UPDATE,stmt_generic_step_def]
+  >- (
+    drule_at Any FILTER_NEQ_NOT_MEM
+    >> fs[EQ_SYM_EQ]
+  )
+  >- (
+    dxrule_at_then Any (drule_at Any) FILTER_NEQ_MEM_EQ
+    >> impl_tac
+    >- (
+      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
+      >> CONV_TAC $ RAND_CONV $ ONCE_DEPTH_CONV SYM_CONV
+      >> fs[]
+    )
+    >> rw[]
+    >> goal_assum drule
+  )
+  >> drule_then (drule_then assume_tac) is_fulfil_memory
+  >> gs[]
+QED
+
 (* only exclusive loads set the exclusive bank *)
 
 Theorem xclb_NONE_SOME_is_read_xclb:
-  !t v cid p p' st st' i tr. wf_trace tr /\ SUC i < LENGTH tr
-  /\ Core cid p st IN FST $ EL i tr
-  /\ Core cid p' st' IN FST $ EL (SUC i) tr
-  /\ st'.bst_xclb = SOME <| xclb_time := t; xclb_view := v |>
+  !cid p p' st st' i tr. wf_trace tr /\ SUC i < LENGTH tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
+  /\ IS_SOME st'.bst_xclb
   /\ st.bst_xclb = NONE
   ==> ?t. is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
 Proof
-  cheat
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> fs[parstep_nice_def,parstep_cases,DISJ_EQ_IMP]
+  >> Cases_on `cid = cid'`
+  >> gvs[FLOOKUP_UPDATE,clstep_cases,cstep_cases,parstep_nice_def,parstep_cases,is_read_xcl_def,optionTheory.IS_SOME_EXISTS]
+  >- (
+    fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def]
+    >> BasicProvers.every_case_tac
+    >> fs[Once EQ_SYM_EQ]
+  )
+  >> qmatch_assum_rename_tac `stmt_generic_step stmt`
+  >> Cases_on `stmt`
+  >- (
+    qmatch_assum_rename_tac `stmt_generic_step $ BStmtB b`
+    >> Cases_on `b`
+    >> fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_programTheory.bir_state_is_terminated_def,bir_programTheory.bir_exec_stmtB_def]
+    >> BasicProvers.every_case_tac
+    >> fs[Once EQ_SYM_EQ]
+    >> cheat
+  )
+  >> cheat
 QED
 
-(* an exclusive store has an earlier exclusive load *)
-
+(* a successful exclusive store has an earlier exclusive load *)
+(* TODO encode success *)
 Theorem is_fulfil_xcl_is_read_xcl:
   !i tr cid p st t. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ Core cid p st IN FST $ EL (SUC i) tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> ?j. j < i
     /\ is_read_xcl cid t (FST $ EL j tr) (FST $ EL (SUC j) tr)
-    /\ !k p' st'. j < k /\ k <= i /\ Core cid p' st' IN FST $ EL k tr
-    ==> st.bst_xclb = st'.bst_xclb
+    /\ !k p' st'. j < k /\ k <= i
+      /\ FLOOKUP (FST $ EL k tr) cid = SOME $ Core cid p st'
+      ==> st.bst_xclb = st'.bst_xclb
 Proof
   rpt strip_tac
-  (* TODO there is a (last) process that sets the exclusive bank *)
-  (* TODO by xclb_NONE_SOME_is_read_xclb, this is an exclusive load *)
   >> cheat
 QED
 
@@ -519,7 +608,7 @@ QED
 
 Definition core_runs_prog_def:
   core_runs_prog cid s prog =
-    ?st. Core cid prog st IN s
+    ?st. FLOOKUP s cid = SOME $ Core cid prog st
     /\ st = <|
       bst_pc      := bir_program$bir_pc_first prog
     ; bst_environ  := bir_env_default $ bir_envty_of_vs $
@@ -547,7 +636,7 @@ End
 
 Definition cores_run_spinlock_def:
   cores_run_spinlock s =
-    !cid p st. Core cid p st IN s
+    !cid p st. FLOOKUP s cid = SOME $ Core cid p st
       ==> core_runs_spinlock cid s
 End
 
@@ -557,7 +646,7 @@ Theorem cores_run_spinlock_is_fulfil_xcl_initial_xclb:
   !tr cid t i s p st. wf_trace tr
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ is_fulfil_xcl cid t (FST $ EL i tr) s
-  /\ Core cid p st IN (FST $ EL i tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> IS_SOME st.bst_xclb /\ (THE st.bst_xclb).xclb_time = 0
 Proof
   cheat
@@ -568,16 +657,25 @@ QED
 Theorem core_runs_spinlock_IS_NONE_bst_pc_is_fulfil_xcl:
   !tr cid p st l. wf_trace tr
   /\ core_runs_spinlock cid (FST $ HD tr)
-  /\ Core cid p st IN (FST $ LAST tr)
+  /\ FLOOKUP (FST $ LAST tr) cid = SOME $ Core cid p st
   /\ st.bst_status = BST_JumpOutside l
   ==> ?i t. SUC i < LENGTH tr
     /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
 Proof
-  cheat
+  rpt strip_tac
+  >> spose_not_then assume_tac
+  >> imp_res_tac wf_trace_NOT_NULL
+  >> fs[GSYM LENGTH_NOT_NULL,GSYM NULL_EQ,LAST_EL]
+  >> cheat
 QED
 
+(*
+TODO formulate theorem: (forward reasoning)
+any core running the spinlock can only have one is_fulfil_xcl transition
+*)
+
 (* distinct exclusive fulfils enforce an ordering on their timestamps *)
-(* TODO replace "is_fulfil_xcl" assumptions with t and t' have same address *)
+(* TODO replace "_xcl" assumptions with t and t' have same address *)
 Theorem core_runs_spinlock_is_fulfil_xcl_timestamp_order:
   !tr cid cid' t t' i j i' j'. wf_trace tr
   /\ core_runs_spinlock cid (FST $ HD tr)
@@ -594,7 +692,12 @@ Proof
     cores_run_spinlock_is_fulfil_xcl_initial_xclb
   >> drule_then (drule_then $ drule_then assume_tac)
     cores_run_spinlock_is_fulfil_xcl_initial_xclb
-  >> gvs[parstep_nice_def,parstep_cases]
+  >> `cid <> cid'` by (
+    cheat
+  )
+  >> fs[is_fulfil_xcl_def]
+  >> ntac 2 $ first_x_assum $ drule_then strip_assume_tac
+  >> gvs[]
   (* contradiction with atomic predicate and exclusivity bank *)
   >> cheat
 QED
@@ -605,8 +708,8 @@ Theorem core_runs_spinlock_correct:
   /\ cores_run_spinlock $ FST $ HD tr
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ core_runs_spinlock cid' $ FST $ HD tr
-  /\ Core cid p st IN (FST $ LAST tr)
-  /\ Core cid' p' st' IN (FST $ LAST tr)
+  /\ FLOOKUP (FST $ LAST tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ LAST tr) cid' = SOME $ Core cid' p' st'
   /\ st.bst_status = BST_JumpOutside l
   /\ st'.bst_status = BST_JumpOutside l'
   ==> cid = cid'
