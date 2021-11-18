@@ -12,5 +12,5 @@
    c:	1003a2af 	lr.w 	x5, (x7)
   10:	fe028ee3 	beq 	x5, x0, -2
   14:	1803a32f 	sc.w	x6, x0, (x7)
-  18:	fe031ae3 	bne	x6, x0, c
+  18:	fe031ae3 	bne		x6, x0, -c
 
