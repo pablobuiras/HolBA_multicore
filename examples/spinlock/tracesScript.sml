@@ -42,12 +42,11 @@ QED
 (* properties about exclusive reads and writes *)
 
 Theorem is_xcl_read_thm:
-  !p s. is_xcl_read p s <=>
-    ?m. IS_SOME $ bir_get_current_statement p (bir_pc_next s.bst_pc) /\
+  !p s a_e. is_xcl_read p s a_e <=>
     bir_get_current_statement p (bir_pc_next s.bst_pc) =
       SOME $ BStmtB $ BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
         $ BExp_Store (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8)))
-          (BExp_Den (BVar m (BType_Imm Bit64))) BEnd_LittleEndian
+          a_e BEnd_LittleEndian
           (BExp_Const (Imm32 0x1010101w))
 Proof
   rw[is_xcl_read_def,EQ_IMP_THM,optionTheory.IS_SOME_EXISTS]
@@ -69,7 +68,7 @@ Proof
 QED
 
 Theorem is_xcl_read_is_xcl_write:
-  !p s. is_xcl_read p s /\ is_xcl_write p s ==> F
+  !p s a_e. is_xcl_read p s a_e /\ is_xcl_write p s ==> F
 Proof
   REWRITE_TAC[is_xcl_write_thm,is_xcl_read_thm]
   >> rpt strip_tac
@@ -114,14 +113,6 @@ Theorem clstep_EVERY_LENGTH_bst_prom_inv:
 Proof
   rw[clstep_cases]
   >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
-  >- (
-    qhdtm_x_assum `EVERY` mp_tac
-    >> fs[EVERY_FILTER]
-    >> match_mp_tac EVERY_MONOTONIC
-    >> fs[]
-  )
-  >- (drule_all_then assume_tac bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ >> fs[])
-  >- (drule_all_then assume_tac stmt_generic_step_bst_prom_EQ >> fs[])
   >- (
     qhdtm_x_assum `EVERY` mp_tac
     >> fs[EVERY_FILTER]

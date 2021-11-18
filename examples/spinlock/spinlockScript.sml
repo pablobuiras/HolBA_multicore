@@ -490,10 +490,10 @@ QED
 
 Definition is_read_xcl_def:
   is_read_xcl cid t sys1 sys2 <=>
-  ?st st' p var e.
+  ?st st' p var e a_e.
     FLOOKUP sys1 cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
-    /\ is_xcl_read p st
+    /\ is_xcl_read p st a_e
     /\ bir_get_current_statement p st.bst_pc =
         SOME $ BStmtB $ BStmt_Assign var e
 End
@@ -568,6 +568,7 @@ Proof
   >> fs[parstep_nice_def,parstep_cases,DISJ_EQ_IMP]
   >> Cases_on `cid = cid'`
   >> gvs[FLOOKUP_UPDATE,clstep_cases,cstep_cases,parstep_nice_def,parstep_cases,is_read_xcl_def,optionTheory.IS_SOME_EXISTS]
+  >- goal_assum $ drule_at Any
   >- (
     fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def]
     >> BasicProvers.every_case_tac

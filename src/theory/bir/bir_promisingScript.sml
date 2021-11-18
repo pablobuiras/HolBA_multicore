@@ -210,12 +210,12 @@ val fulfil_update_viewenv_def = Define`
  * Load-type instruction, checks if the block is trying to model
  * an exclusive-load *)
 val is_xcl_read_def = Define‘
-  is_xcl_read p s =
+  is_xcl_read p s a_e =
     case bir_get_current_statement p (bir_pc_next s.bst_pc) of
       SOME (BStmtB (BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
 		     (BExp_Store (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8)))
-                       (BExp_Den (BVar varname (BType_Imm Bit64))) BEnd_LittleEndian
-		       (BExp_Const (Imm32 0x1010101w))))) => T
+                       var BEnd_LittleEndian
+		       (BExp_Const (Imm32 0x1010101w))))) => var = a_e
      | _ => F
 ’;
 
@@ -243,7 +243,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  /\ get_read_args e = SOME (a_e, cast_opt)
  (* If next statement is the dummy exclusive-load statement,
   * we are dealing with an exclusive load *)
- /\ xcl = is_xcl_read p s
+ /\ xcl = is_xcl_read p s a_e
  /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX v_addr s.bst_v_rNew
@@ -394,16 +394,6 @@ Proof
   >> qmatch_assum_rename_tac `stmt_generic_step stm`
   >> Cases_on `stm`
   (* 4 subgoals *)
-  >~ [`stmt_generic_step $ BStmtB _`]
-  >-  (
-    qmatch_assum_rename_tac `stmt_generic_step $ BStmtB b`
-    >> Cases_on `b`
-    >> fs[AllCaseEqs(),stmt_generic_step_def,bir_exec_stmt_def,pairTheory.ELIM_UNCURRY]
-    >> BasicProvers.every_case_tac
-    >> fs[bir_exec_stmtB_def,bir_exec_stmt_assert_def,bir_exec_stmt_assume_def,bir_exec_stmt_observe_def]
-    >> BasicProvers.every_case_tac
-    >> gvs[bir_state_set_typeerror_def,CaseEq"option"]
-  )
   >~ [`stmt_generic_step $ BStmtB _`]
   >-  (
     qmatch_assum_rename_tac `stmt_generic_step $ BStmtB b`
@@ -628,7 +618,7 @@ val eval_clstep_def = Define‘
       SOME (BStmtB (BStmt_Assign var e)) =>
       (case get_read_args e of
          SOME (a_e, cast_opt) =>
-         eval_clstep_read s M var a_e (is_xcl_read p s)
+         eval_clstep_read s M var a_e (is_xcl_read p s a_e)
        | NONE =>
          (case get_fulfil_args e of
             SOME (a_e, v_e) =>
