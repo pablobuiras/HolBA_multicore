@@ -501,7 +501,6 @@ val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
 `;
 
 (* Core-local execution *)
-(* TODO: Something nicer than FLAT o MAP? *)
 val eval_clstep_read_def = Define‘
   eval_clstep_read s M var a_e xcl =
     let
@@ -514,7 +513,7 @@ val eval_clstep_read_def = Define‘
           t_max = MAX v_pre (s.bst_coh l);
 	  ts = FILTER (\t. EVERY (\t'. ((EL (t'-1) M).loc ≠ l)) [(t+1) .. t_max]) (0::mem_timestamps l M)
 	in
-	  FLAT (MAP (\t.
+	  LIST_BIND ts (\t.
 		 let
                    v_opt = mem_read M l t;
 		   v_post = MAX v_pre (mem_read_view 0 0 (s.bst_fwdb(l)) t);
@@ -538,11 +537,9 @@ val eval_clstep_read_def = Define‘
                                                 else bir_pc_next s.bst_pc |>]
 		        | _ => [])
 		   | _ => [])
-	      ts)
       | _ => []
 ’;
 
-(* TODO: Something nicer than FLAT o MAP? *)
 val eval_clstep_fulfil_def = Define‘
   eval_clstep_fulfil p cid s M a_e v_e xcl =
     let
@@ -556,7 +553,7 @@ val eval_clstep_fulfil_def = Define‘
             ts = FILTER (\t. (EL (t-1) M = <| loc := l; val := v; cid := cid  |>)
                              /\ (MAX v_pre (s.bst_coh l) < t)) (s.bst_prom);
           in
-            FLAT (MAP (\v_post.
+            LIST_BIND ts (\v_post.
               if (xcl ==> fulfil_atomic_ok M l cid s v_post)
               then
                 case fulfil_update_env p s xcl of
@@ -585,7 +582,6 @@ val eval_clstep_fulfil_def = Define‘
                       | _ => [])
                  | _ => []
               else [])
-                ts)
           | _ => []
 ’;
 
