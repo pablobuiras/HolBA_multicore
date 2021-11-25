@@ -261,9 +261,7 @@ Proof
     >> spose_not_then assume_tac
     >> gvs[FLOOKUP_UPDATE]
     >> first_x_assum $ qspecl_then [`msg.val`,`msg.loc`] mp_tac
-    >> Cases_on `msg`
-    >> fs[mem_msg_t_val,mem_msg_t_loc,mem_msg_t_cid]
-    >> cheat
+    >> fs[mem_msg_t_component_equality]
   )
   >> gs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
 QED
