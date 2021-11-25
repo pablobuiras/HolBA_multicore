@@ -68,7 +68,6 @@ val mem_every_def = Define‘
 ’;
 
 
-
 (* Returns pairs (timestamp * message) satisfying P *)
 val mem_filter_def = Define‘
   mem_filter P M = FILTER P (ZIP (M, [1 .. LENGTH M]))
@@ -182,7 +181,7 @@ val contains_dummy_mem_def = Define`
   (contains_dummy_mem _ = F)
 `;
 *)
-        
+
 (* Obtains an option type that contains the load arguments
  * needed to apply the read rule (can look inside one cast) *)
 val get_read_args_def = Define`
