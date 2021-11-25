@@ -378,6 +378,40 @@ Proof
   >> goal_assum drule
 QED
 
+(* the timestamp of a fulfil is coupled to the fulfiled core *)
+
+Theorem is_fulfil_to_memory:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  ==> t < LENGTH $ SND $ EL i tr /\ (EL t $ SND $ EL i tr).cid = cid
+Proof
+  rpt gen_tac >> strip_tac
+  >> drule_all_then assume_tac is_fulfil_parstep_nice_imp
+  >> reverse $ gvs[FLOOKUP_UPDATE,parstep_cases,parstep_nice_def,is_fulfil_def,cstep_cases]
+  >- (
+    qmatch_assum_abbrev_tac `FILTER _ _ = rhs`
+    >> `MEM t rhs` by fs[Abbr`rhs`,MEM_APPEND]
+    >> qhdtm_x_assum `FILTER` $ fs o single o GSYM
+    >> fs[MEM_FILTER]
+  )
+  >> gvs[clstep_cases,FLOOKUP_UPDATE]
+  >- (
+    dxrule_at_then Any assume_tac FILTER_NEQ_NOT_MEM
+    >> fs[EQ_SYM_EQ]
+  )
+  >- (
+    drule_at_then Any (rev_drule_at Any) FILTER_NEQ_MEM_EQ
+    >> impl_tac
+    >- (
+      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
+      >> CONV_TAC $ RAND_CONV $ ONCE_DEPTH_CONV SYM_CONV
+      >> fs[]
+    )
+    >> rw[] >> fs[]
+  )
+  >> fs[stmt_generic_step_def]
+QED
+
 (* a fulfil is only fulfilled once *)
 
 Theorem is_fulfil_once:
@@ -391,7 +425,40 @@ Proof
   /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
   /\ SUC j < LENGTH tr /\ i < j
   ==> ~is_fulfil cid' t (FST $ EL j tr) (FST $ EL (SUC j) tr) ` by (
-    cheat
+    rpt strip_tac
+    >> qmatch_assum_rename_tac `is_fulfil cid t (FST $ EL i tr) _`
+    >> qmatch_assum_rename_tac `is_fulfil cid' t (FST $ EL j tr) _`
+    >> drule_at (Pos $ el 3) is_fulfil_to_memory
+    >> rev_drule_at (Pos $ el 3) is_fulfil_to_memory
+    >> drule_at (Pos $ el 3) is_fulfil_memory
+    >> rev_drule_at (Pos $ el 3) is_fulfil_memory
+    >> rpt strip_tac >> gs[]
+    >> `cid = cid'` by (
+      drule_then (qspecl_then [`SUC i`,`SUC j`] mp_tac) wf_trace_IS_PREFIX_SND_EL
+      >> rw[IS_PREFIX_APPEND]
+      >> fs[EL_APPEND1]
+    )
+    >> ntac 2 $ qpat_x_assum `_.cid = _` kall_tac
+    >> gvs[]
+    >> Cases_on `j = SUC i`
+    >> gvs[FLOOKUP_UPDATE,is_fulfil_def]
+    >> drule_then (rev_drule_then $ drule_at Any) wf_trace_cid
+    >> disch_then strip_assume_tac
+    >> gvs[]
+    >- (
+      ntac 2 $ qhdtm_x_assum `FILTER` $ fs o single o GSYM
+      >> fs[MEM_FILTER]
+    )
+    >> qspecl_then [`SUC i`,`j`,`tr`,`cid`] assume_tac
+      wf_trace_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
+    >> gs[EVERY_MEM,AND_IMP_INTRO]
+    >> first_x_assum drule
+    >> impl_tac
+    >- (
+      ntac 2 $ qhdtm_x_assum `FILTER` $ fs o single o GSYM
+      >> fs[MEM_FILTER]
+    )
+    >> fs[NOT_LESS]
   )
   >> rpt gen_tac >> strip_tac
   >> gvs[NOT_NUM_EQ]
@@ -448,16 +515,6 @@ Proof
     >> fs[]
   )
   >> fs[is_promise_def]
-QED
-
-(* the timestamp of a fulfil is coupled to the fulfiled core *)
-
-Theorem is_fulfil_to_memory:
-  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  ==> t < LENGTH $ SND $ EL (SUC i) tr /\ (EL t $ SND $ EL (SUC i) tr).cid = cid
-Proof
-  cheat
 QED
 
 (* For a thread cid, the coh(l) of an address l fulfiled to is strictly larger than t *)

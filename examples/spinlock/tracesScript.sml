@@ -173,6 +173,25 @@ Proof
   >> irule_at Any EQ_REFL
 QED
 
+(* future promises are larger than current memory size *)
+
+Theorem parstep_nice_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom:
+  !cid cid' sys1 sys2 p p' st st'. parstep_nice cid sys1 sys2
+  /\ FLOOKUP (FST sys1) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST sys2) cid = SOME $ Core cid p st'
+  ==> EVERY (λx. ~MEM x st.bst_prom ==> LENGTH (SND $ sys1) < x) st'.bst_prom
+Proof
+  rpt strip_tac
+  >> reverse $ gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases]
+  >- fs[EVERY_MEM]
+  >> imp_res_tac clstep_LENGTH_prom >> gvs[]
+  >- (
+    imp_res_tac clstep_bst_prom_EQ
+    >> fs[EVERY_MEM]
+  )
+  >> fs[clstep_cases,EVERY_MEM,MEM_FILTER]
+QED
+
 (* set of all traces *)
 Definition par_traces_def:
   par_traces = gen_traces (λs1 s2. ?cid. parstep_nice cid s1 s2)
@@ -311,6 +330,29 @@ Proof
   >> fs[]
 QED
 
+Theorem wf_trace_LENGTH_SND:
+  !tr i. wf_trace tr /\ SUC i < LENGTH tr
+  ==> LENGTH (SND $ EL i tr) <= LENGTH (SND $ EL (SUC i) tr)
+Proof
+  rw[]
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> imp_res_tac parstep_nice_memory_imp
+  >> fs[]
+QED
+
+Theorem wf_trace_LENGTH_SND':
+  !tr i j. wf_trace tr /\ i + j < LENGTH tr
+  ==> LENGTH (SND $ EL i tr) <= LENGTH (SND $ EL (i + j) tr)
+Proof
+  ntac 2 gen_tac >> Induct >> rw[]
+  >> fs[]
+  >> dxrule_then irule LESS_EQ_TRANS
+  >> `i + SUC j = SUC $ i + j` by fs[]
+  >> pop_assum $ fs o single
+  >> irule wf_trace_LENGTH_SND
+  >> fs[]
+QED
+
 (* same core id occurs in next step in the trace *)
 
 Theorem wf_trace_cid_forward1:
@@ -417,6 +459,26 @@ Proof
   >> gvs[]
   >> match_mp_tac EVERY_MONOTONIC
   >> fs[]
+QED
+
+(* memory only ever increases *)
+
+Theorem wf_trace_IS_PREFIX_SND_EL:
+  !tr i j. wf_trace tr /\ i < j /\ j < LENGTH tr
+  ==> IS_PREFIX (SND $ EL j tr) (SND $ EL i tr)
+Proof
+  rpt gen_tac
+  >> Induct_on `j - i`
+  >> rw[SUB_LEFT_EQ] >> fs[PULL_FORALL,AND_IMP_INTRO]
+  >> `i + SUC v = SUC $ i + v` by fs[]
+  >> pop_assum $ fs o single
+  >> first_x_assum $ qspecl_then [`v+i`,`i`] assume_tac
+  >> `i + v < LENGTH tr` by fs[]
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> imp_res_tac parstep_nice_memory_imp
+  >> Cases_on `v=0`
+  >> gvs[]
+  >> fs[IS_PREFIX_APPEND]
 QED
 
 (* only one core changes in a transition *)
@@ -579,6 +641,55 @@ Proof
   >> disch_then $ fs o single
   >> fs[wf_trace_def,empty_prom_def,LENGTH_NOT_NULL]
   >> res_tac
+QED
+
+(* new later promises are strictly larger than memory length *)
+
+Theorem wf_trace_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom:
+  !i j tr cid p st st'. wf_trace tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ i < j /\ j < LENGTH tr
+  /\ FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st'
+  ==> EVERY (λx. ~MEM x st.bst_prom ==> LENGTH (SND $ EL i tr) < x) st'.bst_prom
+Proof
+  ntac 2 gen_tac
+  >> Induct_on `j - i`
+  >> rw[SUB_LEFT_EQ]
+  >> qmatch_asmsub_rename_tac `SUC v`
+  >> Cases_on `v = 0`
+  >- (
+    fs[GSYM ADD1]
+    >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+    >> Cases_on `cid = cid'`
+    >- (
+      dxrule_then assume_tac parstep_nice_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
+      >> fs[]
+    )
+    >> drule_then (rev_drule_then assume_tac) parstep_nice_FLOOKUP'
+    >> gvs[EVERY_MEM]
+  )
+  >> `i + SUC v = SUC $ i + v` by fs[]
+  >> pop_assum $ fs o single
+  >> drule_all_then strip_assume_tac wf_trace_cid_backward1
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> fs[AND_IMP_INTRO,PULL_FORALL,SUB_LEFT_EQ]
+  >> first_x_assum $ drule_at_then (Pos $ el 4) assume_tac
+  >> gs[]
+  >> Cases_on `cid = cid'`
+  >- (
+    drule_then assume_tac parstep_nice_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
+    >> gvs[EVERY_MEM,AND_IMP_INTRO]
+    >> rw[]
+    >> ntac 2 $ first_x_assum $ drule_at_then Any assume_tac
+    >> qmatch_assum_abbrev_tac `A ==> LENGTH _ < _`
+    >> Cases_on `A`
+    >> fs[]
+    >> dxrule_at_then Any irule LESS_EQ_LESS_TRANS
+    >> irule wf_trace_LENGTH_SND'
+    >> fs[]
+  )
+  >> drule_then (rev_drule_then assume_tac) parstep_nice_FLOOKUP'
+  >> gvs[]
 QED
 
 val _ = export_theory();
