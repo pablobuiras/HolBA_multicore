@@ -3,7 +3,7 @@ open bir_promisingTheory;
 open wordsTheory;
 open computeLib;
 open bslSyntax;
-open herdLitmusRegLib;
+open herdLitmusValuesLib;
 
 fun term_EVAL tm = (rand o concl) (EVAL tm);
 
@@ -94,7 +94,7 @@ fun run_litmus_2thread filename =
        val cores = “[(Core 0 ^prog1 ^st1);
                      (Core 1 ^prog2 ^st2)]”;
        val _ = extend_compset ();
-       val final_states = term_EVAL “eval_promising 16 (^cores, [])”;
+       val final_states = term_EVAL “eval_promising 32 (^cores, [])”;
        val TS = term_EVAL “MAP (^get_TS o FST) ^final_states”
        val M = term_EVAL “MAP (^get_M o SND) ^final_states”
        val final = #final test
@@ -105,14 +105,14 @@ fun run_litmus_2thread filename =
 (* 
 fun find_tests () =
     let
-	val proc = Unix.execute("/usr/bin/find", ["-iname", "*.litmus.json"])
+	val proc = Unix.execute("/usr/bin/find", ["-iname", "*.json"])
 	val inStream = Unix.textInstreamOf proc
     in
 	String.tokens Char.isSpace (TextIO.inputAll inStream) before TextIO.closeIn inStream
     end
 
 val filenames = find_tests ()
-val basic = List.filter (String.isSubstring "size/BASIC") filenames
+val basic = List.filter (String.isSubstring "BASIC") filenames
 val res = map run_litmus_2thread basic;
 
 val filename = "./tests/non-mixed-size/BASIC_2_THREAD/S+fence.rw.rws.litmus.json"
