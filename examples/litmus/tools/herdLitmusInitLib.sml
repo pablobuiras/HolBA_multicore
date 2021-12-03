@@ -3,7 +3,7 @@ sig
     include Abbrev
     (* Arguments: Init section, registers used by each program
        Returns: BIR environments for memory and threads *)
-    val parse_init : string -> (string * int) list list -> term * term list
+    val parse_init : string -> (string * int) list list -> term list
 end
 
 
@@ -100,6 +100,6 @@ fun parse_init init_sec progs_regs =
 	val mem_env = mk_mem_env mem
 	val thd_envs = map mk_thd_env (zip grouped_regs progs_regs)
     in
-	(mem_env, thd_envs)
+	thd_envs
     end
 end

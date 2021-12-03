@@ -30,7 +30,7 @@ type litmus = herdLitmusLib.litmus
 
 val lift_herd_litmus = herdLitmusLib.parse o bir_fileLib.read_from_file
 
-fun save_litmus (filename,l:litmus) =
+fun save_litmus (filename, l:litmus) =
     let
 	(* Set line width temporarily to avoid newlines in serialised terms *)
 	val tmp = !Globals.linewidth
@@ -39,7 +39,7 @@ fun save_litmus (filename,l:litmus) =
 		("arch", STRING (#arch l)),
 		("name", STRING (#name l)),
 		("info", ARRAY (map STRING (#info l))),
-		("inits", ARRAY (map (STRING o term_to_string) (op:: (#inits l)))),
+		("inits", ARRAY (map (STRING o term_to_string) (#inits l))),
 		("progs", ARRAY (map (STRING o term_to_string) (#progs l))),
 		("final", (STRING o term_to_string) (#final l))]
 	val _ = Globals.linewidth := tmp
@@ -47,12 +47,18 @@ fun save_litmus (filename,l:litmus) =
     in
 	bir_fileLib.write_to_file filename (serialised)
     end
-
+	
+local
+    fun init_of_string s = Term [QUOTE s, 
+				 QUOTE ":string -> bir_val_t option"];
+    fun prog_of_string s = Term [QUOTE s, QUOTE ":string bir_program_t"];
+    val final_type = 
+	":((bir_val_t -> bir_val_t option) " 
+	^ "# ((string -> bir_val_t option) list)) list -> bool";
+    fun final_of_string s = Term [QUOTE s, QUOTE final_type]
+in
 fun load_litmus (filename: string) =
     let
-	fun term_of_string s = Term [QUOTE s]
-	fun final_of_string s = Term [QUOTE s,
-				     QUOTE ":((bir_val_t -> bir_val_t option) # ((string -> bir_val_t option) list)) list -> bool"]
 	val json = case Json.parse (bir_fileLib.read_from_file filename)
 		    of OK json => json
 		     | ERROR e => raise ERR "load_litmus" e
@@ -60,22 +66,25 @@ fun load_litmus (filename: string) =
 	val arch = asString (lookup "arch")
 	val name = asString (lookup "name")
 	val info = arrayMap asString (lookup "info")
-	val inits = arrayMap (term_of_string o asString) (lookup "inits")
-	val progs = arrayMap (term_of_string o asString) (lookup "progs")
+	val inits = arrayMap (init_of_string o asString) (lookup "inits")
+	val progs = arrayMap (prog_of_string o asString) (lookup "progs")
 	val final = (final_of_string o asString) (lookup "final")
     in
 	{
 	  arch=arch,
 	  name=name,
 	  info=info,
-	  inits=(hd inits,tl inits),
+	  inits=inits,
 	  progs=progs,
 	  final=final
 	} : litmus
     end
 end
+end
 
 (*
 open litmusInterfaceLib
-val x = lift_herd_litmus "S.litmus"
+val x = lift_herd_litmus "example.litmus"
+val a = load_litmus "../tests/BASIC_2_THREAD/S.json"
+#inits a
 *) 

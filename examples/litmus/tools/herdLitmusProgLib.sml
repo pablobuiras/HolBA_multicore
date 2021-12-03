@@ -4,7 +4,6 @@ sig
     (* Argument: Program section
        Returns: List of BIR programs *)
     val parse_prog : string -> term list
-    exception WrongType;
 end
 
 
@@ -68,68 +67,47 @@ fun tokens p s =
 	    else tok i (j+1)
     in tok 0 0 end
 
-local
-  val count = ref 0;
-in
-fun reset_var () = (count := 0)
-fun fresh_var ty =
-    let val v = bvar ("TMP"^(PolyML.makestring (!count))) ty;
-    in (count := !count + 1; v)
-    end;
-end
-
-exception WrongType;
-val term_EVAL = rhs o concl o EVAL
-
-fun bir_type exp =
-    let open bir_typing_expTheory optionSyntax;
-        val ty = term_EVAL “type_of_bir_exp ^exp”;
+fun findSubstring ss s =
+    let
+	val s' = ref (Substring.full s)
+	fun P s ss = String.size ss <= Substring.size s
     in
-      if is_some ty
-      then dest_some ty
-      else raise WrongType
+	while (P (!s') ss andalso not (Substring.isPrefix ss (!s'))) do 
+	      s' := Substring.triml 1 (!s');
+	if P (!s') ss 
+	then SOME (String.size s - Substring.size (!s'))
+	else NONE
     end;
 
+fun replaceSubstring (ss, ss') s =
+    case findSubstring ss s of
+	SOME idx =>
+	let
+	    val len = String.size s
+	    val idx' = idx + String.size ss
+	in 
+	    String.substring(s, 0, idx) 
+	    ^ ss'
+	    ^ String.substring(s, idx', len - idx')
+	end
+      | NONE => s;
+    
 
-fun canonicalise_prog prog =
-    let 
-	val (block_list,ty) = dest_list (dest_BirProgram prog);
-	fun fix_cast stmt =
-	    if is_BStmt_Assign stmt
-	    then let val (var,body) = dest_BStmt_Assign stmt;
-		 in
-		     if is_BExp_Cast body
-		     then let val (cast, exp, ty) = dest_BExp_Cast body;
-			      val tmp_var = fresh_var “BType_Imm Bit64”;
-			  in
-			      [mk_BStmt_Assign (var, exp)]
-			      (*
-			      [mk_BStmt_Assign (tmp_var,exp), 
-			       mk_BStmt_Assign(var, mk_BExp_Cast (cast, bden tmp_var, ty))] *)
-			  end
-		     else [stmt]
-		 end
-	    else  [stmt];
-	fun fix_block block =
-	    let val (lbl,is_atomic,stmts,last_stmt) = dest_bir_block block;
-		val (stmt_list,stmt_ty) = dest_list stmts;
-		val new_stmts = mk_list (List.concat (List.map fix_cast stmt_list), stmt_ty);
-	    in
-		mk_bir_block (lbl,is_atomic,new_stmts,last_stmt)
-	    end;
-    in
-	reset_var ();
-	mk_BirProgram (mk_list (List.map fix_block block_list,ty))
-    end;
 
-fun typed_prog p = inst [“:'observation_type” |-> Type`:'a`] p;
+fun fix_atomic_aqrl s =
+  if String.isSubstring "aq.rl" s 
+  then replaceSubstring ("aq.rl", "aqrl") s
+  else s
+
+fun typed_prog p = inst [“:'observation_type” |-> Type`:string`] p;
 
 fun parse_prog prog_sec =
     let
 	fun split c = tokens (eq c)
 	val stmts = transpose (map (split #"|") (tl (split #";" prog_sec))) ""
+	val stmts = map (map fix_atomic_aqrl) stmts
 	val progs = map (String.concatWith "\n") stmts
-	val bir_progs = map (canonicalise_prog o typed_prog o lift_prog) progs
+	val bir_progs = map (typed_prog o lift_prog) progs
     in bir_progs end
 end
 
@@ -138,7 +116,8 @@ open listSyntax bir_programSyntax;
 val example = 
  "P0          | P1          ;"^
  "sw x5,0(x6) | sw x5,0(x6) ;"^
- "sw x5,0(x7) | lw x7,0(x8) ;"
-val prog2 = tl $ parse_prog example
+ "sw x5,0(x7) | bnez x5, 1f ;"^
+ "            | 1:xor x7,x5,x5;"
+val prog2 = last $ parse_prog example
 
 *)

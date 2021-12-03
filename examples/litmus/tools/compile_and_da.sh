@@ -3,6 +3,7 @@ DIR=$(dirname "${BASH_SOURCE[0]}")
 source $DIR/../../../config.env.sh
 
 CROSS=${HOLBA_GCC_RISCV64_CROSS}
+#CROSS=riscv64-elf-
 AS=${CROSS}as
 OBJDUMP=${CROSS}objdump
 

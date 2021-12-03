@@ -1,10 +1,10 @@
-    signature herdLitmusLib =
+signature herdLitmusLib =
 sig
     include Abbrev
     type litmus = {arch:string,
 		   name:string,
 		   info:string list,
-		   inits: term * term list,
+		   inits: term list,
 		   progs: term list,
 		   final: term}
 
@@ -19,16 +19,16 @@ structure herdLitmusLib : herdLitmusLib =
 struct
 open HolKernel Parse boolLib bossLib;
 open stringSyntax;
-open bir_execLib bir_valuesSyntax bir_immSyntax;
+open bir_execLib;
+open bir_valuesSyntax bir_immSyntax;
 
-open UtilLib
-
-open herdLitmusProgLib herdLitmusInitLib herdLitmusFinalLib
+open herdLitmusProgLib herdLitmusInitLib herdLitmusFinalLib;
+open UtilLib;
 
 type litmus = {arch:string,
 	       name:string,
 	       info:string list,
-	       inits: term * term list,
+	       inits: term list,
 	       progs: term list,
 	       final: term}
 
@@ -84,15 +84,13 @@ fun split_to_sections text =
 end; (* local *)
 
 
-val term_EVAL = rhs o concl o EVAL
-
-
 fun regs_of_prog prog =
     let
+	val term_EVAL = rhs o concl o EVAL
 	val bvars = strip_set $ term_EVAL “bir_varset_of_program ^prog”
 	val regs = filter (is_BType_Imm o snd)$ map dest_BVar bvars
 	fun f (x,y) = (fromHOLstring x, size_of_bir_immtype_t $ dest_BType_Imm y)
-    in map f regs end
+    in map f regs end;
 
 fun parse text =
     let
