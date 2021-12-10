@@ -115,10 +115,11 @@ QED
 
     
 Theorem promise_step_non_interference:
- ~(cid = msg.cid) /\ parstep cid T1 M (T1 |+ (cid,core cid p' s')) M
- /\ FLOOKUP (T1 |+ (cid,Core cid p' s')) msg.cid = SOME (core msg.cid p s)
+! cid T1 M p p' s s' msg M1.
+         ~(cid = msg.cid) /\ parstep cid T1 M (T1 |+ (cid,Core cid p' s')) M
+ /\ FLOOKUP (T1 |+ (cid,Core cid p' s')) msg.cid = SOME (Core msg.cid p s)
 ==>
-parstep cid (T1 |+ (msg.cid, core msg.cid p (s' with bst_prom updated_by (λpr. pr ⧺ [LENGTH M1 + 1])))) (M1 ++ [msg]) (T1 |+ (cid, Core cid p' s) |+ (msg.cid, core msg.cid p (s with bst_prom updated_by (\pr. pr ++ [LENGTH M1 + 1])))) (M1 ++ [msg])
+parstep cid (T1 |+ (msg.cid, Core msg.cid p (s' with bst_prom updated_by (λpr. pr ⧺ [LENGTH M1 + 1])))) (M1 ++ [msg]) (T1 |+ (cid, Core cid p' s) |+ (msg.cid, Core msg.cid p (s with bst_prom updated_by (\pr. pr ++ [LENGTH M1 + 1])))) (M1 ++ [msg])
 Proof
   fs[parstep_cases, parstep_rules] >> rpt strip_tac
 >> cheat
@@ -141,7 +142,7 @@ Proof
 >> rw[]
 >> dxrule execute_inversion
 >> rw[]
->> Q.EXISTS_TAC ‘FUPDATE T1 (msg.cid, core msg.cid p (s' with bst_prom updated_by (λpr. pr ⧺ [LENGTH M1 + 1])))’
+>> Q.EXISTS_TAC ‘FUPDATE T1 (msg.cid, Core msg.cid p (s' with bst_prom updated_by (λpr. pr ⧺ [LENGTH M1 + 1])))’
 >> Cases_on ‘cid = msg.cid’
 (*>| [
     ‘p = p'’ by cheat
