@@ -470,9 +470,10 @@ clstep p cid s M [] s')
  /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
  /\ (xcl ==> fulfil_atomic_ok M l cid s t)
+ /\ 0 < t
  /\ MEM t s.bst_prom
- /\ EL t M = <| loc := l; val := v; cid := cid  |>
- /\ t < LENGTH M
+ /\ EL (PRE t) M = <| loc := l; val := v; cid := cid  |>
+ /\ t < LENGTH M + 1
  (* TODO: Use get_xclb_view or separate conjunct to extract option type? *)
  /\ v_pre = MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
                 (if xcl
@@ -585,7 +586,7 @@ val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
 
 Theorem cstep_fulfil_to_memory:
   !p cid s M t s'. cstep p cid s M [t] s' M
-  ==> t < LENGTH M /\ (EL t M).cid = cid
+  ==> 0 < t /\ t < LENGTH M + 1 /\ (EL (PRE t) M).cid = cid
 Proof
   fs[bir_cstep_cases,bir_clstep_cases,PULL_EXISTS]
 QED
@@ -673,8 +674,8 @@ QED
 
 Theorem clstep_EVERY_LENGTH_bst_prom_inv:
   !p cid s M prom s'. clstep p cid s M prom s'
-  /\ EVERY (λx. x <= LENGTH $ M) s.bst_prom
-  ==> EVERY (λx. x <= LENGTH $ M) s'.bst_prom
+  /\ EVERY (λx. 0 < x /\ x <= LENGTH M) s.bst_prom
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH M) s'.bst_prom
 Proof
   rw[bir_clstep_cases]
   >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
@@ -743,8 +744,8 @@ QED
 
 Theorem cstep_seq_bst_prom_EQ:
   !p cid sM sM'. cstep_seq p cid sM sM'
-  /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
-  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom
+  /\ EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM) (FST sM).bst_prom
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM') (FST sM').bst_prom
     /\ (FST sM).bst_prom = (FST sM').bst_prom
 Proof
   fs[GSYM AND_IMP_INTRO]
@@ -758,7 +759,7 @@ Proof
     >> match_mp_tac EVERY_MONOTONIC
     >> fs[]
   )
-  >> gvs[bir_clstep_cases,bir_cstep_cases,bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,bir_state_set_typeerror_def,stmt_generic_step_def,bir_exec_stmt_jmp_bst_prom,rich_listTheory.FILTER_APPEND]
+  >> gvs[bir_clstep_cases,bir_cstep_cases,bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,bir_state_set_typeerror_def,stmt_generic_step_def,bir_exec_stmt_jmp_bst_prom,rich_listTheory.FILTER_APPEND,rich_listTheory.EL_APPEND1]
   >> fs[Once EQ_SYM_EQ,FILTER_EQ_ID]
   >> qpat_x_assum `EVERY _ _.bst_prom` mp_tac
   >> match_mp_tac EVERY_MONOTONIC
@@ -767,8 +768,8 @@ QED
 
 Theorem cstep_seq_rtc_bst_prom_EQ:
   !p cid sM sM'. cstep_seq_rtc p cid sM sM'
-  /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
-  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom
+  /\ EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM) (FST sM).bst_prom
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM') (FST sM').bst_prom
     /\ (FST sM).bst_prom = (FST sM').bst_prom
 Proof
   fs[GSYM AND_IMP_INTRO,cstep_seq_rtc_def]
