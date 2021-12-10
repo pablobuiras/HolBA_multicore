@@ -121,6 +121,67 @@ Proof
   >> fs[MEM_FILTER]
 QED
 
+Theorem is_fulfil_parstep_nice_eq:
+  !tr cid t i. wf_trace tr /\ SUC i < LENGTH tr
+    /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+    ==> ?new_viewenv new_env p s v v_data v_addr l e a_e v_e var.
+    SOME new_viewenv = fulfil_update_viewenv p s (is_xcl_write p s.bst_pc) t
+    /\ SOME new_env = fulfil_update_env p s (is_xcl_write p s.bst_pc)
+    /\ s.bst_coh l < t
+    /\ (if is_xcl_write p s.bst_pc then get_xclb_view s.bst_xclb else 0) < t
+    /\ s.bst_v_CAP < t
+    /\ s.bst_v_wNew < t
+    /\ v_data < t
+    /\ v_addr < t
+    /\ 0 < t
+    /\ t < LENGTH (SND (EL (SUC i) tr)) + 1
+    /\ EL (PRE t) (SND (EL (SUC i) tr)) = <|loc := l; val := v; cid := cid|>
+    /\ (is_xcl_write p s.bst_pc ==> fulfil_atomic_ok (SND (EL (SUC i) tr)) l cid s t)
+    /\ (SOME v,v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
+    /\ (SOME l,v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+    /\ get_fulfil_args e = SOME (a_e,v_e)
+    /\ bir_get_current_statement p s.bst_pc = SOME (BStmtB (BStmt_Assign var e))
+    /\ atomicity_ok cid (FST (EL i tr))
+    /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
+    /\ FST (EL (SUC i) tr) = FST (EL i tr) |+
+        (cid,
+         Core cid p
+           (s with
+            <|bst_pc :=
+                if is_xcl_write p s.bst_pc
+                then bir_pc_next (bir_pc_next (bir_pc_next s.bst_pc))
+                else bir_pc_next s.bst_pc; bst_environ := new_env;
+              bst_viewenv := new_viewenv;
+              bst_coh :=
+                (λlo. if lo = l then MAX (s.bst_coh l) t else s.bst_coh lo);
+              bst_v_wOld := MAX s.bst_v_wOld t;
+              bst_v_CAP := MAX s.bst_v_CAP v_addr;
+              bst_prom updated_by FILTER (λt'. t' <> t);
+              bst_fwdb :=
+                (λlo.
+                     if lo = l then
+                       <|fwdb_time := t; fwdb_view := MAX v_addr v_data;
+                         fwdb_xcl := is_xcl_write p s.bst_pc |>
+                     else s.bst_fwdb lo);
+              bst_xclb := if is_xcl_write p s.bst_pc then NONE else s.bst_xclb|>))
+    /\ SND (EL i tr) = SND (EL (SUC i) tr)
+Proof
+  rpt strip_tac
+  >> drule_all_then assume_tac is_fulfil_parstep_nice_imp
+  >> drule_all_then assume_tac is_fulfil_memory
+  >> gvs[parstep_nice_def,parstep_cases,clstep_cases,cstep_cases,is_fulfil_def,FLOOKUP_UPDATE,bir_programTheory.bir_state_t_accfupds,stmt_generic_step_def,bir_get_stmt_branch,bir_get_stmt_generic,FILTER_EQ_ID,EVERY_MEM,bir_get_stmt_write]
+  >> dxrule_at_then Any (drule_at Any) FILTER_NEQ_MEM_EQ
+  >> impl_tac
+  >- (
+    CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
+    >> CONV_TAC $ RAND_CONV $ ONCE_DEPTH_CONV SYM_CONV
+    >> fs[]
+  )
+  >> disch_then $ fs o single
+  >> rpt $ goal_assum $ drule_at Any
+  >> fs[]
+QED
+
 (* parstep and promise transitions have same ids *)
 
 Theorem is_promise_parstep_nice:
@@ -400,34 +461,31 @@ Proof
   >> goal_assum drule
 QED
 
+(* every addition to memory is a promise *)
+
+Theorem wf_trace_EL_SND_is_promise:
+  !i tr k cid. wf_trace tr /\ i < LENGTH tr
+  /\ k < LENGTH $ SND $ EL i tr
+  /\ (EL k $ SND $ EL i tr).cid = cid
+  ==> ?j. j < i /\ is_promise cid (SUC k) (EL j tr) (EL (SUC j) tr)
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_adds_to_memory
+  >> goal_assum drule
+  >> gs[is_promise_def,FLOOKUP_UPDATE,parstep_nice_def,parstep_cases,cstep_cases,mem_msg_t_component_equality]
+QED
+
 (* the timestamp of a fulfil is coupled to the fulfiled core *)
 
 Theorem is_fulfil_to_memory:
   !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  ==> t < LENGTH $ SND $ EL i tr /\ (EL t $ SND $ EL i tr).cid = cid
+  ==> 0 < t /\ t < (LENGTH $ SND $ EL i tr) + 1
+    /\ (EL (PRE t) $ SND $ EL i tr).cid = cid
 Proof
   rpt gen_tac >> strip_tac
-  >> drule_all_then assume_tac is_fulfil_parstep_nice_imp
-  >> reverse $ gvs[FLOOKUP_UPDATE,parstep_cases,parstep_nice_def,is_fulfil_def,cstep_cases]
-  >- (
-    qmatch_assum_abbrev_tac `FILTER _ _ = rhs`
-    >> `MEM t rhs` by fs[Abbr`rhs`,MEM_APPEND]
-    >> qhdtm_x_assum `FILTER` $ fs o single o GSYM
-    >> fs[MEM_FILTER]
-  )
-  >> gvs[clstep_cases,FLOOKUP_UPDATE,FILTER_EQ_ID,EVERY_MEM]
-  >- (
-    drule_at_then Any (rev_drule_at Any) FILTER_NEQ_MEM_EQ
-    >> impl_tac
-    >- (
-      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
-      >> CONV_TAC $ RAND_CONV $ ONCE_DEPTH_CONV SYM_CONV
-      >> fs[]
-    )
-    >> rw[] >> fs[]
-  )
-  >> gvs[bir_get_stmt_branch,bir_get_stmt_generic,stmt_generic_step_def,AllCaseEqs()]
+  >> drule_all_then strip_assume_tac is_fulfil_parstep_nice_eq
+  >> fs[]
 QED
 
 (* a fulfil is only fulfilled once *)
@@ -576,13 +634,12 @@ Proof
   >> rpt $ goal_assum $ drule_at Any
 QED
 
-(* TODO revise theorem statement to address (EL t $ SND $ EL (SUC i) tr).loc *)
-
 Theorem is_fulfil_xcl_atomic:
   !tr i cid t p st.  wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
-  ==> ?l. fulfil_atomic_ok (SND $ EL i tr) l cid st t
+  ==> fulfil_atomic_ok (SND $ EL i tr) ((EL (PRE t) $ SND $ EL i tr).loc) cid st t
+    /\ is_xcl_write p st.bst_pc
 Proof
   rpt strip_tac
   >> imp_res_tac is_fulfil_xcl_is_fulfil
@@ -614,7 +671,7 @@ Proof
       >> fs[]
     )
     >> rw[]
-    >> goal_assum drule
+    >> fs[]
   )
   >- (
     drule_at Any FILTER_NEQ_NOT_MEM
@@ -785,17 +842,16 @@ Proof
   rpt strip_tac
   >> drule_then (rev_drule_then $ drule_then assume_tac)
     cores_run_spinlock_is_fulfil_xcl_initial_xclb
-  >> drule_then (drule_then $ drule_then assume_tac)
+  >> drule_then (rev_drule_at_then Any assume_tac)
     cores_run_spinlock_is_fulfil_xcl_initial_xclb
   >> `cid <> cid'` by (
     spose_not_then assume_tac
-    >> imp_res_tac is_fulfil_xcl_is_fulfil
-    >> dxrule_at Any is_fulfil_once
     >> gvs[]
+    >> first_x_assum $ rev_drule_at_then Any assume_tac
+    >> last_x_assum $ drule_at_then Any assume_tac
+    >> cheat
   )
   >> fs[is_fulfil_xcl_def]
-  >> ntac 2 $ first_x_assum $ drule_then strip_assume_tac
-  >> gvs[]
   (* contradiction with atomic predicate and exclusivity bank *)
   >> cheat
 QED

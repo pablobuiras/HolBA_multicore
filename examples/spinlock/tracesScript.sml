@@ -284,7 +284,7 @@ Proof
     >> rpt $ goal_assum $ drule_at Any
     >> fs[]
   )
-  >> fs[prim_recTheory.LESS_THM,GSYM ADD1,EL_APPEND2]
+  >> gvs[prim_recTheory.LESS_THM,GSYM ADD1,EL_APPEND2]
   >> dsimp[]
   >> first_x_assum drule
   >> fs[]
@@ -382,7 +382,7 @@ Theorem wf_trace_EVERY_LENGTH_bst_prom_inv:
   !i tr cid p st.
   wf_trace tr /\ i < LENGTH tr
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
-  ==> EVERY (λx. x <= LENGTH $ SND $ EL i tr) st.bst_prom
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH $ SND $ EL i tr) st.bst_prom
 Proof
   Induct
   >- (
