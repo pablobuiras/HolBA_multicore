@@ -145,6 +145,31 @@ Proof
   >> fs[]
 QED
 
+Theorem is_promise_parstep_nice_eq:
+  !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
+  ==> ?msg p s. cid = msg.cid
+    /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
+    /\  SND (EL (SUC i) tr) = SND (EL i tr) ⧺ [msg]
+    /\  FST (EL (SUC i) tr) =
+        FST (EL i tr) |+
+        (cid,
+          Core cid p
+            (s with
+            bst_prom updated_by (λpr. pr ⧺ [LENGTH (SND (EL i tr)) + 1])))
+    /\  atomicity_ok cid (FST (EL i tr))
+    /\  is_certified p cid
+          (s with
+            bst_prom updated_by (λpr. pr ⧺ [LENGTH (SND (EL i tr)) + 1]))
+          (SND (EL i tr) ⧺ [msg])
+Proof
+  rpt strip_tac
+  >> imp_res_tac is_promise_parstep_nice_imp
+  >> fs[parstep_nice_def,parstep_cases,cstep_cases,clstep_cases,is_promise_def]
+  >> imp_res_tac is_xcl_read_is_xcl_write
+  >> gvs[]
+QED
+
 (* fulfil steps affect only the fulfiling core *)
 
 Theorem is_fulfil_inv:
@@ -260,7 +285,6 @@ Proof
     (* promises *)
     >> spose_not_then assume_tac
     >> gvs[FLOOKUP_UPDATE]
-    >> first_x_assum $ qspecl_then [`msg.val`,`msg.loc`] mp_tac
     >> fs[mem_msg_t_component_equality]
   )
   >> gs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
@@ -326,7 +350,7 @@ QED
 Theorem is_promise_is_fulfil:
   !i j tr cid t. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
-  ==> ?j. i < j
+  ==> ?j. i < j /\ SUC j < LENGTH tr
     /\ is_fulfil cid t (FST $ EL j tr) (FST $ EL (SUC j) tr)
 Proof
   rpt strip_tac
@@ -415,59 +439,42 @@ Theorem is_fulfil_once:
   /\ SUC j < LENGTH tr /\ i <> j
   ==> ~is_fulfil cid' t (FST $ EL j tr) (FST $ EL (SUC j) tr)
 Proof
-  `!tr i j t cid cid'. wf_trace tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ SUC j < LENGTH tr /\ i < j
-  ==> ~is_fulfil cid' t (FST $ EL j tr) (FST $ EL (SUC j) tr) ` by (
-    rpt strip_tac
-    >> qmatch_assum_rename_tac `is_fulfil cid t (FST $ EL i tr) _`
-    >> qmatch_assum_rename_tac `is_fulfil cid' t (FST $ EL j tr) _`
-    >> drule_at (Pos $ el 3) is_fulfil_to_memory
-    >> rev_drule_at (Pos $ el 3) is_fulfil_to_memory
-    >> drule_at (Pos $ el 3) is_fulfil_memory
-    >> rev_drule_at (Pos $ el 3) is_fulfil_memory
-    >> rpt strip_tac >> gs[]
-    >> `cid = cid'` by (
-      drule_then (qspecl_then [`SUC i`,`SUC j`] mp_tac) wf_trace_IS_PREFIX_SND_EL
-      >> rw[IS_PREFIX_APPEND]
-      >> fs[EL_APPEND1]
-    )
-    >> ntac 2 $ qpat_x_assum `_.cid = _` kall_tac
-    >> gvs[]
-    >> Cases_on `j = SUC i`
-    >> gvs[FLOOKUP_UPDATE,is_fulfil_def]
-    >> drule_then (rev_drule_then $ drule_at Any) wf_trace_cid
-    >> disch_then strip_assume_tac
-    >> gvs[]
-    >- (
-      ntac 2 $ qhdtm_x_assum `FILTER` $ fs o single o GSYM
-      >> fs[MEM_FILTER]
-    )
-    >> qspecl_then [`SUC i`,`j`,`tr`,`cid`] assume_tac
-      wf_trace_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
-    >> gs[EVERY_MEM,AND_IMP_INTRO]
-    >> first_x_assum drule
-    >> impl_tac
-    >- (
-      ntac 2 $ qhdtm_x_assum `FILTER` $ fs o single o GSYM
-      >> fs[MEM_FILTER]
-    )
-    >> fs[NOT_LESS]
+  rpt strip_tac
+  >> wlog_tac `i < j` [`i`,`j`,`cid`,`cid'`]
+  >- metis_tac[NOT_NUM_EQ,LESS_EQ]
+  >> qmatch_assum_rename_tac `is_fulfil cid t (FST $ EL i tr) _`
+  >> qmatch_assum_rename_tac `is_fulfil cid' t (FST $ EL j tr) _`
+  >> drule_at (Pos $ el 3) is_fulfil_to_memory
+  >> rev_drule_at (Pos $ el 3) is_fulfil_to_memory
+  >> drule_at (Pos $ el 3) is_fulfil_memory
+  >> rev_drule_at (Pos $ el 3) is_fulfil_memory
+  >> rpt strip_tac >> gs[]
+  >> `cid = cid'` by (
+    drule_then (qspecl_then [`SUC i`,`SUC j`] mp_tac) wf_trace_IS_PREFIX_SND_EL
+    >> rw[IS_PREFIX_APPEND]
+    >> fs[EL_APPEND1]
   )
-  >> rpt gen_tac >> strip_tac
-  >> gvs[NOT_NUM_EQ]
+  >> ntac 2 $ qpat_x_assum `_.cid = _` kall_tac
+  >> gvs[]
+  >> Cases_on `j = SUC i`
+  >> gvs[FLOOKUP_UPDATE,is_fulfil_def]
+  >> drule_then (rev_drule_then $ drule_at Any) wf_trace_cid
+  >> disch_then strip_assume_tac
+  >> gvs[]
   >- (
-    first_x_assum irule
-    >> fs[]
-    >> goal_assum $ drule_at Any
-    >> fs[]
+    ntac 2 $ qhdtm_x_assum `FILTER` $ fs o single o GSYM
+    >> fs[MEM_FILTER]
   )
-  >> qhdtm_x_assum `is_fulfil` mp_tac
-  >> rw[Once MONO_NOT_EQ]
-  >> first_x_assum irule
-  >> fs[]
-  >> goal_assum $ drule_at Any
-  >> fs[]
+  >> qspecl_then [`SUC i`,`j`,`tr`,`cid`] assume_tac
+    wf_trace_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
+  >> gs[EVERY_MEM,AND_IMP_INTRO]
+  >> first_x_assum drule
+  >> impl_tac
+  >- (
+    ntac 2 $ qhdtm_x_assum `FILTER` $ fs o single o GSYM
+    >> fs[MEM_FILTER]
+  )
+  >> fs[NOT_LESS]
 QED
 
 (* only one fulfil happens at a time *)
@@ -714,12 +721,26 @@ Definition cores_run_spinlock_def:
       ==> core_runs_spinlock cid s
 End
 
+(* the core runs the spinlock program at any time *)
+
+Theorem wf_trace_core_runs_spinlock_FLOOKUP:
+  !tr i cid p s. wf_trace tr
+  /\ i < LENGTH tr
+  /\ core_runs_spinlock cid $ FST $ HD tr
+  /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
+  ==> p = (bir_spinlock_prog:string bir_program_t)
+Proof
+  rpt strip_tac
+  >> drule_at_then Any (qspec_then `0` assume_tac) wf_trace_cid_backward
+  >> gs[core_runs_spinlock_def,core_runs_prog_def]
+QED
+
 (* Theorem 4 : any exclusive fulfil reads from timestamp 0 onwards *)
 
 Theorem cores_run_spinlock_is_fulfil_xcl_initial_xclb:
-  !tr cid t i s p st. wf_trace tr
+  !tr cid t i s p st. wf_trace tr /\ SUC i < LENGTH tr
   /\ core_runs_spinlock cid $ FST $ HD tr
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) s
+  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> IS_SOME st.bst_xclb /\ (THE st.bst_xclb).xclb_time = 0
 Proof
@@ -767,7 +788,10 @@ Proof
   >> drule_then (drule_then $ drule_then assume_tac)
     cores_run_spinlock_is_fulfil_xcl_initial_xclb
   >> `cid <> cid'` by (
-    cheat
+    spose_not_then assume_tac
+    >> imp_res_tac is_fulfil_xcl_is_fulfil
+    >> dxrule_at Any is_fulfil_once
+    >> gvs[]
   )
   >> fs[is_fulfil_xcl_def]
   >> ntac 2 $ first_x_assum $ drule_then strip_assume_tac
