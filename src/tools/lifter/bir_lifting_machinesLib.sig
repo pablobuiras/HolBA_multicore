@@ -155,9 +155,14 @@ sig
          a step theorem. *)
       bmr_mc_lift_instr           : ((Arbnum.num * Arbnum.num) -> Arbnum.num -> string -> (thm option)) option,
 
-      (* Function evaluationg an instruction given as a hex string and returns
+      (* Function evaluating an instruction given as a hex string and returns
          a set of step theorems. *)
       bmr_step_hex           : term -> string -> thm list,
+
+      (* Function evaluationg an instruction given as a hex string and returns
+         a set of step theorems, taking care not to simplify away syntactic
+         dependencies relevant in a multicore setting. *)
+      bmr_mc_step_hex           : (term -> string -> thm list) option,
 
       (* To add data blocks, a function that encode a memory address and a hex-code
          as a memory-contains tuple *)
