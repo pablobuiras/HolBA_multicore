@@ -14,6 +14,7 @@ open bir_program_labelsSyntax bir_programSyntax
 (* Local function libraries: *)
 open bir_lifting_machinesLib bir_inst_liftingHelpersLib
      bir_exp_liftingLib;
+open bir_lifterSimps;
 (* Function libraries from examples/l3-machine-code: *)
 open arm8_stepLib m0_stepLib riscv_stepLib;
 
@@ -221,7 +222,8 @@ val arm8_bmr_rec : bmr_rec = {
   bmr_dest_mem             = arm8_dest_mem,
   bmr_extra_ss             = arm8_extra_ss,
   bmr_step_hex             = arm8_step_hex',
-  bmr_mc_lift_instr           = NONE,
+  bmr_mc_step_hex          = NONE,
+  bmr_mc_lift_instr        = NONE,
   bmr_mk_data_mm           = arm8_mk_data_mm,
   bmr_hex_code_size        = (fn hc => Arbnum.fromInt ((String.size hc) div 2)),
   bmr_ihex_param           = SOME (4, true)
@@ -431,6 +433,7 @@ in
   bmr_dest_mem             = m0_dest_mem,
   bmr_extra_ss             = m0_extra_ss,
   bmr_step_hex             = m0_step_hex' (endian_fl, sel_fl),
+  bmr_mc_step_hex          = NONE,
   bmr_mc_lift_instr           = NONE,
   bmr_mk_data_mm           = m0_mk_data_mm endian_fl,
   bmr_hex_code_size        = (fn hc => Arbnum.fromInt ((String.size hc) div 2)),
@@ -601,6 +604,7 @@ in
   bmr_dest_mem             = m0_dest_mem,
   bmr_extra_ss             = m0_mod_extra_ss,
   bmr_step_hex             = m0_mod_step_hex' (endian_fl, sel_fl),
+  bmr_mc_step_hex          = NONE,
   bmr_mc_lift_instr           = NONE,
   bmr_mk_data_mm           = m0_mod_mk_data_mm endian_fl,
   bmr_hex_code_size        = (fn hc => Arbnum.fromInt ((String.size hc) div 2)),
@@ -640,12 +644,12 @@ local
   val next_state_tm =
     prim_mk_const{Name="NextRISCV", Thy="riscv_step"}
 
-  val simp_conv = SIMP_CONV std_ss [riscv_extra_FOLDS]
+  fun simp_conv simpsets = SIMP_CONV (fst simpsets) [riscv_extra_FOLDS]
 
-  val simp_conv2 =
-    (SIMP_CONV arith_ss []
+  fun simp_conv2 simpsets =
+    (SIMP_CONV (snd simpsets) []
     ) THENC
-    (SIMP_CONV std_ss
+    (SIMP_CONV (fst simpsets)
                [bir_riscv_extrasTheory.word_add_to_sub_TYPES,
                 alignmentTheory.aligned_numeric,
                 wordsTheory.WORD_SUB_INTRO,
@@ -704,13 +708,30 @@ local
      val thm = hd step_thms0 
 
   *)
-  fun process_riscv_thm vn pc_mem_thms thm = let
+  fun process_riscv_thm is_multicore vn pc_mem_thms thm = let
     val thm0 = bmr_normalise_step_thm next_state_tm vn thm
     val thm1 =
 	UNDISCH_ALL (SIMP_RULE (empty_ss++bitstringLib.v2w_n2w_ss++bitstringLib.BITSTRING_GROUND_ss) [] (DISCH_ALL thm0))
           handle UNCHANGED => thm0
+(*  ORIGINAL:
     val thm2 =
 	SIMP_RULE (std_ss++riscv_extra_ss) [riscvTheory.Skip_def] thm1
+          handle UNCHANGED => thm1
+    SLIGHTLY MORE DELICATE VERSION:
+    val thm2 =
+	SIMP_RULE (bool_ss++riscv_extra_ss) [riscvTheory.Skip_def] thm1
+          handle UNCHANGED => thm1
+    PRECISE VERSION:
+    val thm2 =
+	SIMP_RULE (test_ss++riscv_extra_ss) [riscvTheory.Skip_def] thm1
+          handle UNCHANGED => thm1
+
+open bir_lifterSimps;
+
+*)
+    val simpsets = if is_multicore then (std_multicore_ss, arith_multicore_ss) else (std_ss, arith_ss)
+    val thm2 =
+	SIMP_RULE ((fst simpsets)++riscv_extra_ss) [riscvTheory.Skip_def] thm1
           handle UNCHANGED => thm1
     val thm3 = instantiate_riscv_thm thm2
     val thm4 = foldl (fn (pre_thm, thm) => PROVE_HYP pre_thm thm)
@@ -724,7 +745,7 @@ local
      * the program. In other words, remove the last conversion when you start lifting system
      * registers. *)
     val thm6 =
-      CONV_RULE (simp_conv THENC simp_conv2 THENC (SIMP_CONV std_ss (riscv_extra_THMS vn))) thm5
+      CONV_RULE ((simp_conv simpsets) THENC (simp_conv2 simpsets) THENC (SIMP_CONV (fst simpsets) (riscv_extra_THMS vn))) thm5
     val thm7 = UNDISCH_ALL thm6
   in
     thm7
@@ -737,17 +758,19 @@ in
   val vn = mk_var ("ms", ms_ty);
   val hex_code = "FCE14083" (* "lbu x1,x2,-50" *)
 
-  val hex_code = "0052C3B3" (* "xor x7,x5,x5" *)
-
   val hex_code = "340090F3" (* "csrrw x1,mscratch, x1" *)
 
+  val hex_code = "0052C3B3" (* "xor x7,x5,x5" *)
+
+  val hex_code = "00029263" (* "bne x5, x0, 4" *)
+
 *)
-  fun riscv_step_hex' vn hex_code = let
+  fun riscv_step_hex' is_multicore vn hex_code = let
     val pc_mem_thms = prepare_mem_contains_thms vn hex_code
 
     val step_thms0 = [(riscv_step_rem_ss_hex ["word arith", "word ground", "word logic", "word shift", "word subtract"]) hex_code]
     val step_thms1 =
-      List.map (process_riscv_thm vn pc_mem_thms) step_thms0
+      List.map (process_riscv_thm is_multicore vn pc_mem_thms) step_thms0
   in
     step_thms1
   end
@@ -1300,7 +1323,8 @@ val riscv_bmr_rec : bmr_rec = {
   bmr_label_thm            = riscv_bmr_label_thm,
   bmr_dest_mem             = riscv_dest_mem,
   bmr_extra_ss             = riscv_extra_ss,
-  bmr_step_hex             = riscv_step_hex',
+  bmr_step_hex             = (riscv_step_hex' false),
+  bmr_mc_step_hex          = SOME (riscv_step_hex' true),
   bmr_mc_lift_instr        = SOME riscv_mc_lift_instr,
   bmr_mk_data_mm           = riscv_mk_data_mm,
   bmr_hex_code_size        =

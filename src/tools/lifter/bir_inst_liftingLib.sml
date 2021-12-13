@@ -22,6 +22,7 @@ open bir_immTheory
 open intel_hexLib
 open bir_inst_liftingLibTypes
 open bir_inst_liftingHelpersLib;
+open bir_lifterSimps;
 (* ================================================ *)
 
   (* For debugging RISC-V (first open all in bir_lifting_machinesLib_instances):
@@ -318,12 +319,18 @@ val patched_thms_ = [
 
 val patched_thms = List.foldr (fn ((a, b, c), l) => if a then (b,c)::l else l) [] patched_thms_;
 
-fun get_patched_step_hex ms_v hex_code =
+fun get_patched_step_hex ms_v hex_code is_multicore =
   let
     val strToLower = implode o (List.map Char.toLower) o explode;
     val patch = List.find (fn (b, c) => strToLower b = strToLower hex_code) patched_thms;
   in
-    if isSome patch then snd (valOf patch) else (#bmr_step_hex mr) ms_v hex_code
+    if isSome patch
+    then snd (valOf patch)
+    else if is_multicore
+         then if isSome (#bmr_mc_step_hex mr)
+              then (valOf (#bmr_mc_step_hex mr)) ms_v hex_code
+              else raise (bir_inst_liftingAuxExn (BILED_msg "trying to use multicore step_hex without multicore functionality for current bmr_rec"))
+         else (#bmr_step_hex mr) ms_v hex_code
   end;
 
   (*******************************************************)
@@ -344,10 +351,10 @@ fun get_patched_step_hex ms_v hex_code =
      The list of resulting theorems, the computed memory mapping and the
      label corresponding to the given PC are returned. *)
 
-  fun mk_inst_lifting_theorems hex_code hex_code_desc =
+  fun mk_inst_lifting_theorems hex_code hex_code_desc is_multicore =
   let
      val lifted_thms_raw = let
-       val res = get_patched_step_hex ms_v hex_code
+       val res = get_patched_step_hex ms_v hex_code is_multicore
        val _ = assert (not o List.null) res
        val _ = assert (List.all (fn thm => not (bir_eq_utilLib.mem_with (fn (a,b) => identical a b) F (hyp thm)))) res
      in res end handle HOL_ERR _ =>
@@ -447,9 +454,10 @@ fun get_patched_step_hex ms_v hex_code =
   in
 (* For debugging RISC-V:
 
+  val is_multicore = false
   val hex_code = String.map Char.toUpper "00E13423";
   val hex_code_desc = hex_code;
-  val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc
+  val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc is_multicore
   val (lb, ms_case_cond_t, next_thm) = el 1 (preprocess_next_thms label_tm next_thms)
   val next_thm0 = REWRITE_RULE [ASSUME ms_case_cond_t] next_thm
 
@@ -506,7 +514,7 @@ fun get_patched_step_hex ms_v hex_code =
           (#bmr_const mr))
   in
 
-  fun compute_imm_ups ms'_t =
+  fun compute_imm_ups ms'_t is_multicore =
   let
     fun compute_single_up lf_ms = let
       val lf_ms'_tm = subst [ms_v |-> ms'_t] lf_ms
@@ -536,8 +544,11 @@ fun get_patched_step_hex ms_v hex_code =
     val thm_tm = let
        val t0 = bir_is_lifted_inst_block_COMPUTE_imm_ups_COND_NO_UPDATES_tm'
        val t1 = list_mk_comb (t0, [ms_v, ms'_t, imm_ups_tm])
+       val simpset = if is_multicore
+                     then bool_multicore_ss
+                     else bool_ss
 
-       val thm1 = SIMP_CONV bool_ss ([
+       val thm1 = SIMP_CONV simpset ([
          bir_is_lifted_inst_block_COMPUTE_imm_ups_COND_NO_UPDATES_EVAL, bmr_eval_REWRS,
          bir_is_lifted_inst_block_COMPUTE_imm_ups_COND_NO_UPDATES_CHECK_def] @ eval_thms)
          t1
@@ -562,7 +573,7 @@ fun get_patched_step_hex ms_v hex_code =
           (#bmr_const mr))
   in
 
-  fun compute_mem_up ms'_t =
+  fun compute_mem_up ms'_t is_multicore =
   let
      val lf_ms'_tm = subst [ms_v |-> ms'_t] mr_mem_lf_of_ms
      val lf_ms'_thm = lf_ms'_CONV  lf_ms'_tm handle UNCHANGED => REFL lf_ms'_tm
@@ -576,8 +587,11 @@ fun get_patched_step_hex ms_v hex_code =
      val thm_tm = let
        val t0 = bir_is_lifted_inst_block_COMPUTE_mem_COND_NO_UPDATES_tm'
        val t1 = list_mk_comb (t0, [ms_v, ms'_t, upd_tm])
+       val simpset = if is_multicore
+                     then bool_multicore_ss
+                     else bool_ss
 
-       val thm0 = SIMP_CONV bool_ss ([lf_ms'_thm, bmr_eval_REWRS,
+       val thm0 = SIMP_CONV simpset ([lf_ms'_thm, bmr_eval_REWRS,
            bir_is_lifted_inst_block_COMPUTE_mem_COND_NO_UPDATES_EVAL])
            t1
        val thm1 = EQT_ELIM thm0
@@ -785,14 +799,17 @@ fun get_patched_step_hex ms_v hex_code =
        val thm1 = UNDISCH (MP thm0 (#bmr_ok_thm mr))
     in thm1 end;
 
-    val lf_ms'_CONV = SIMP_CONV (std_ss++(#bmr_extra_ss mr)++wordsLib.SIZES_ss) [bmr_eval_REWRS,
+    fun lf_ms'_CONV simpset = SIMP_CONV (simpset++(#bmr_extra_ss mr)++wordsLib.SIZES_ss) [bmr_eval_REWRS,
       cond_lift_fields_thm, PROTECTED_COND_ID, updateTheory.APPLY_UPDATE_THM] THENC
       PURE_REWRITE_CONV [PROTECTED_COND_def]
   in
-  fun compute_eup ms'_t =
+  fun compute_eup ms'_t is_multicore =
   let
      val lf_ms'_tm = list_mk_icomb bmr_pc_lf_tm [(#bmr_const mr), ms'_t];
-     val lf_ms'_thm = lf_ms'_CONV lf_ms'_tm handle UNCHANGED => REFL lf_ms'_tm
+     val simpset = if is_multicore
+                   then std_multicore_ss
+                   else std_ss
+     val lf_ms'_thm = (lf_ms'_CONV simpset) lf_ms'_tm handle UNCHANGED => REFL lf_ms'_tm
      val res_imm = rhs (concl lf_ms'_thm)
 
      (* There are 3 cases supported:
@@ -974,6 +991,8 @@ fun get_patched_step_hex ms_v hex_code =
 
   val (mu_thm:thm, mm_precond_thm:thm) = test_RISCV.bir_lift_instr_prepare_mu_thms (mu_b, mu_e)
   val hex_code = String.map Char.toUpper "FCE14083"; (* "lbu x1,x2,-50" *)
+  val hex_code = String.map Char.toUpper "00029263"; (* "bne x5, x0, 4" *)	
+
   val hex_code_desc = hex_code;
   val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc
     val bir_is_lifted_inst_block_COMPUTE_precond_tm_mr =
@@ -1163,9 +1182,10 @@ fun get_patched_step_hex ms_v hex_code =
 (* For debugging RISC-V:
 
   val (mu_thm:thm, mm_precond_thm:thm) = test_RISCV.bir_lift_instr_prepare_mu_thms (mu_b, mu_e)
-  val hex_code = String.map Char.toUpper "007302B3";
+  val hex_code = String.map Char.toUpper "00029263"; (* "bne x5, x0, 4" *)
+  val is_multicore = true;
   val hex_code_desc = hex_code;
-  val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc
+  val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc is_multicore
     val bir_is_lifted_inst_block_COMPUTE_precond_tm_mr =
       list_mk_comb (
         mk_icomb ( bir_is_lifted_inst_block_COMPUTE_precond_tm, #bmr_const mr),
@@ -1202,7 +1222,7 @@ fun get_patched_step_hex ms_v hex_code =
      instantiate inst_thm to generate a block mimicking this next_thm. The
      block should use label "lb" and extra condition "ms_case_cond_t" can be assumed. *)
   fun lift_single_block inst_lift_thm0 bir_is_lifted_inst_block_COMPUTE_precond_tm0
-     mu_thm (lb, ms_case_cond_t, next_thm) = let
+     mu_thm is_multicore (lb, ms_case_cond_t, next_thm) = let
      val next_thm0 = REWRITE_RULE [ASSUME ms_case_cond_t] next_thm
      fun raiseErr s = raise (bir_inst_liftingAuxExn (BILED_msg s));
 
@@ -1211,15 +1231,15 @@ fun get_patched_step_hex ms_v hex_code =
        handle HOL_ERR _ => raiseErr "computing al_step and ms' failed";
 
      (* next compute imm_ups *)
-     val (imm_ups_t, imm_ups_thm) = compute_imm_ups ms'_t
+     val (imm_ups_t, imm_ups_thm) = compute_imm_ups ms'_t is_multicore
        handle HOL_ERR _ => raiseErr "computing imm_ups failed";
 
      (* compute eup *)
-     val (eup_t, eup_THM) = compute_eup ms'_t
+     val (eup_t, eup_THM) = compute_eup ms'_t is_multicore
        handle HOL_ERR _ => raiseErr "computing eup failed";
 
      (* compute mem_up *)
-     val (mem_up_t, real_mem_up_opt, mem_up_thm, mem_ms'_thm) = compute_mem_up ms'_t
+     val (mem_up_t, real_mem_up_opt, mem_up_thm, mem_ms'_thm) = compute_mem_up ms'_t is_multicore
        handle HOL_ERR _ => raiseErr "computing mem_up failed";
 
      (* compute al_mem *)
@@ -1372,10 +1392,10 @@ fun get_patched_step_hex ms_v hex_code =
   val hex_code_desc = hex_code;
 
 *)
-  fun bir_lift_instr_mu_gen_pc_compute (mu_thm:thm, mm_precond_thm : thm) hex_code hex_code_desc =
+  fun bir_lift_instr_mu_gen_pc_compute (mu_thm:thm, mm_precond_thm : thm) hex_code hex_code_desc is_multicore =
   let
      (* call step lib to generate step theorems, compute mm and label *)
-     val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc
+     val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc is_multicore
 
      (* instantiate inst theorem *)
      val inst_lift_thm0 =
@@ -1408,7 +1428,7 @@ fun get_patched_step_hex ms_v hex_code =
        handle HOL_ERR _ =>
          raise bir_inst_liftingAuxExn (BILED_msg ("preprocessing next theorems failed"));
 
-     val sub_block_thms = map (lift_single_block inst_lift_thm0 bir_is_lifted_inst_block_COMPUTE_precond_tm0 mu_thm) sub_block_work_list
+     val sub_block_thms = map (lift_single_block inst_lift_thm0 bir_is_lifted_inst_block_COMPUTE_precond_tm0 mu_thm is_multicore) sub_block_work_list
      (* TODO: For the case of multicore instructions which have sequential behaviour defined in L3 and step library,
       *       we would like verified transformation of sub_block_thms to the desired multicore semantics here  *)
      val prog_thm = merge_block_thms sub_block_thms handle HOL_ERR _ =>
@@ -1428,10 +1448,10 @@ fun get_patched_step_hex ms_v hex_code =
   val hex_code_desc = hex_code;
 
 *)
-  fun bir_lift_instr_mu_gen_pc (mu_thm:thm, mm_precond_thm : thm) (cache : lift_inst_cache) hex_code hex_code_desc =
+  fun bir_lift_instr_mu_gen_pc (mu_thm:thm, mm_precond_thm : thm) (cache : lift_inst_cache) hex_code hex_code_desc is_multicore =
     (Redblackmap.find (cache, hex_code), cache, true) handle NotFound =>
   let
-    val thm0 = bir_lift_instr_mu_gen_pc_compute (mu_thm, mm_precond_thm) hex_code hex_code_desc
+    val thm0 = bir_lift_instr_mu_gen_pc_compute (mu_thm, mm_precond_thm) hex_code hex_code_desc is_multicore
     val cache' = Redblackmap.insert (cache, hex_code, thm0)
   in (thm0, cache', false) end
 
@@ -1466,10 +1486,10 @@ val cache = lift_inst_cache_empty;
              in
                if isSome thm_opt
                then (valOf thm_opt, cache, false)
-               else bir_lift_instr_mu_gen_pc (mu_thm, mm_precond_thm) cache hex_code hex_code_desc
+               else bir_lift_instr_mu_gen_pc (mu_thm, mm_precond_thm) cache hex_code hex_code_desc true
              end
            else raise (bir_inst_liftingAuxExn (BILED_msg "trying to use multicore lifting without multicore functionality for current bmr_rec"))
-      else bir_lift_instr_mu_gen_pc (mu_thm, mm_precond_thm) cache hex_code hex_code_desc
+      else bir_lift_instr_mu_gen_pc (mu_thm, mm_precond_thm) cache hex_code hex_code_desc false
 
     (* instantiate PC *)
     val thm1 = INST [pc_num_var |-> numSyntax.mk_numeral pc] thm0
