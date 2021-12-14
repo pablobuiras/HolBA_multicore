@@ -15,6 +15,16 @@ val (bir_spinlock_progbin_def, bir_spinlock_prog_def, bir_is_lifted_prog_spinloc
 open bir_promisingTheory rich_listTheory listTheory arithmeticTheory tracesTheory;
 open finite_mapTheory;
 
+Theorem LT3 =
+  (REWRITE_CONV [GSYM rich_listTheory.COUNT_LIST_COUNT,
+    GSYM pred_setTheory.IN_COUNT]
+    THENC EVAL) ``n < 3n``
+
+Theorem LT5 =
+  (REWRITE_CONV [GSYM rich_listTheory.COUNT_LIST_COUNT,
+    GSYM pred_setTheory.IN_COUNT]
+    THENC EVAL) ``n < 5n``
+
 (*
  * characterisation of fulfil and promise rules
  *)
@@ -124,47 +134,73 @@ QED
 Theorem is_fulfil_parstep_nice_eq:
   !tr cid t i. wf_trace tr /\ SUC i < LENGTH tr
     /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-    ==> ?new_viewenv new_env p s v v_data v_addr l e a_e v_e var.
-    SOME new_viewenv = fulfil_update_viewenv p s (is_xcl_write p s.bst_pc) t
-    /\ SOME new_env = fulfil_update_env p s (is_xcl_write p s.bst_pc)
-    /\ s.bst_coh l < t
-    /\ (if is_xcl_write p s.bst_pc then get_xclb_view s.bst_xclb else 0) < t
-    /\ s.bst_v_CAP < t
-    /\ s.bst_v_wNew < t
-    /\ v_data < t
-    /\ v_addr < t
-    /\ 0 < t
-    /\ t < LENGTH (SND (EL (SUC i) tr)) + 1
-    /\ EL (PRE t) (SND (EL (SUC i) tr)) = <|loc := l; val := v; cid := cid|>
-    /\ (is_xcl_write p s.bst_pc ==> fulfil_atomic_ok (SND (EL (SUC i) tr)) l cid s t)
-    /\ (SOME v,v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
-    /\ (SOME l,v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
-    /\ get_fulfil_args e = SOME (a_e,v_e)
-    /\ bir_get_current_statement p s.bst_pc = SOME (BStmtB (BStmt_Assign var e))
-    /\ atomicity_ok cid (FST (EL i tr))
-    /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
-    /\ FST (EL (SUC i) tr) = FST (EL i tr) |+
+    ==>  ?p s var xcl e v_e v_data v_addr v l new_viewenv new_env a_e.
+    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl
+    /\ xcl = is_xcl_write p s.bst_pc
+    /\  MEM t s.bst_prom
+    /\  is_certified p cid
+          (s with
+           <|bst_pc :=
+               if xcl then
+                 bir_pc_next (bir_pc_next (bir_pc_next s.bst_pc))
+               else bir_pc_next s.bst_pc; bst_environ := new_env;
+             bst_viewenv := new_viewenv;
+             bst_coh :=
+               (λlo. if lo = l then MAX (s.bst_coh l) t else s.bst_coh lo);
+             bst_v_wOld := MAX s.bst_v_wOld t;
+             bst_v_CAP := MAX s.bst_v_CAP v_addr;
+             bst_prom updated_by FILTER (λt'. t' ≠ t);
+             bst_fwdb :=
+               (λlo.
+                    if lo = l then
+                      <|fwdb_time := t; fwdb_view := MAX v_addr v_data;
+                        fwdb_xcl := xcl |>
+                    else s.bst_fwdb lo);
+             bst_xclb := if xcl then NONE else s.bst_xclb|>)
+          (SND (EL (SUC i) tr))
+    /\  SOME new_viewenv =
+        fulfil_update_viewenv p s xcl t
+    /\  SOME new_env = fulfil_update_env p s xcl
+    /\  s.bst_coh l < t
+    /\  (if xcl then get_xclb_view s.bst_xclb else 0) < t
+    /\  s.bst_v_CAP < t
+    /\  s.bst_v_wNew < t
+    /\  v_data < t
+    /\  v_addr < t
+    /\  t < LENGTH (SND (EL (SUC i) tr)) + 1
+    /\  EL (PRE t) (SND (EL (SUC i) tr)) = <|loc := l; val := v; cid := cid|>
+    /\  (xcl ==> fulfil_atomic_ok (SND (EL (SUC i) tr)) l cid s t)
+    /\  (SOME v,v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
+    /\  (SOME l,v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+    /\  get_fulfil_args e = SOME (a_e,v_e)
+    /\  bir_get_current_statement p s.bst_pc =
+        SOME (BStmtB (BStmt_Assign var e))
+    /\  atomicity_ok cid (FST (EL i tr))
+    /\  FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
+    /\  FST (EL (SUC i) tr) =
+        FST (EL i tr) |+
         (cid,
          Core cid p
            (s with
             <|bst_pc :=
-                if is_xcl_write p s.bst_pc
-                then bir_pc_next (bir_pc_next (bir_pc_next s.bst_pc))
+                if xcl then
+                  bir_pc_next (bir_pc_next (bir_pc_next s.bst_pc))
                 else bir_pc_next s.bst_pc; bst_environ := new_env;
               bst_viewenv := new_viewenv;
               bst_coh :=
                 (λlo. if lo = l then MAX (s.bst_coh l) t else s.bst_coh lo);
               bst_v_wOld := MAX s.bst_v_wOld t;
               bst_v_CAP := MAX s.bst_v_CAP v_addr;
-              bst_prom updated_by FILTER (λt'. t' <> t);
+              bst_prom updated_by FILTER (λt'. t' ≠ t);
               bst_fwdb :=
                 (λlo.
                      if lo = l then
                        <|fwdb_time := t; fwdb_view := MAX v_addr v_data;
-                         fwdb_xcl := is_xcl_write p s.bst_pc |>
+                         fwdb_xcl := xcl |>
                      else s.bst_fwdb lo);
-              bst_xclb := if is_xcl_write p s.bst_pc then NONE else s.bst_xclb|>))
-    /\ SND (EL i tr) = SND (EL (SUC i) tr)
+              bst_xclb :=
+                if xcl then NONE else s.bst_xclb|>))
+    /\  SND (EL i tr) = SND (EL (SUC i) tr)
 Proof
   rpt strip_tac
   >> drule_all_then assume_tac is_fulfil_parstep_nice_imp
@@ -192,7 +228,7 @@ Theorem is_promise_parstep_nice:
 Proof
   rpt strip_tac
   >> fs[parstep_nice_def,parstep_cases,cstep_cases,clstep_cases,is_promise_def]
-  >> imp_res_tac is_xcl_read_is_xcl_write >> gvs[]
+  >> gvs[]
 QED
 
 Theorem is_promise_parstep_nice_imp:
@@ -227,7 +263,6 @@ Proof
   rpt strip_tac
   >> imp_res_tac is_promise_parstep_nice_imp
   >> fs[parstep_nice_def,parstep_cases,cstep_cases,clstep_cases,is_promise_def]
-  >> imp_res_tac is_xcl_read_is_xcl_write
   >> gvs[]
 QED
 
@@ -341,12 +376,10 @@ Proof
       >> gvs[FLOOKUP_UPDATE]
       >- (imp_res_tac clstep_bst_prom_EQ >> fs[])
       >> gvs[clstep_cases,MEM_FILTER,FLOOKUP_UPDATE]
-      >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
     )
     (* promises *)
     >> spose_not_then assume_tac
-    >> gvs[FLOOKUP_UPDATE]
-    >> fs[mem_msg_t_component_equality]
+    >> gvs[FLOOKUP_UPDATE,mem_msg_t_component_equality]
   )
   >> gs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
 QED
@@ -403,9 +436,11 @@ Proof
   >> gvs[FLOOKUP_UPDATE]
   >- (imp_res_tac clstep_bst_prom_EQ >> fs[])
   >> gvs[clstep_cases,MEM_FILTER,FLOOKUP_UPDATE]
-  >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
   >> spose_not_then assume_tac
-  >> gvs[bir_get_stmt_def,AllCaseEqs()]
+  >> gvs[]
+  >> imp_res_tac $ iffLR bir_get_stmt_write
+  >> imp_res_tac $ iffLR bir_get_stmt_read
+  >> fs[]
 QED
 
 Theorem is_promise_is_fulfil:
@@ -464,13 +499,16 @@ QED
 (* every addition to memory is a promise *)
 
 Theorem wf_trace_EL_SND_is_promise:
-  !i tr k cid. wf_trace tr /\ i < LENGTH tr
+  !i tr k. wf_trace tr /\ i < LENGTH tr
   /\ k < LENGTH $ SND $ EL i tr
-  /\ (EL k $ SND $ EL i tr).cid = cid
-  ==> ?j. j < i /\ is_promise cid (SUC k) (EL j tr) (EL (SUC j) tr)
+  ==> ?j. j < i /\ is_promise (EL k $ SND $ EL i tr).cid (SUC k) (EL j tr) (EL (SUC j) tr)
 Proof
   rpt strip_tac
-  >> drule_all_then strip_assume_tac wf_trace_adds_to_memory
+  >> qmatch_goalsub_abbrev_tac `is_promise cid _ _`
+  >> drule wf_trace_adds_to_memory
+  >> rpt $ disch_then drule
+  >> disch_then $ qspec_then `cid` assume_tac
+  >> fs[Abbr`cid`]
   >> goal_assum drule
   >> gs[is_promise_def,FLOOKUP_UPDATE,parstep_nice_def,parstep_cases,cstep_cases,mem_msg_t_component_equality]
 QED
@@ -606,31 +644,27 @@ QED
 
 Definition is_read_xcl_def:
   is_read_xcl cid t sys1 sys2 <=>
-  ?st st' p var e a_e.
+  ?st st' p var a_e cast_opt.
     FLOOKUP sys1 cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
-    /\ is_xcl_read p st.bst_pc a_e
-    /\ bir_get_current_statement p st.bst_pc =
-        SOME $ BStmtB $ BStmt_Assign var e
+    /\ bir_get_stmt p st.bst_pc = BirStmt_Read var a_e cast_opt T
 End
 
 Definition is_fulfil_xcl_def:
   is_fulfil_xcl cid t sys1 sys2 <=>
-  ?st st' p var e.
+  ?st st' p a_e v_e.
     FLOOKUP sys1 cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
-    /\ is_xcl_write p st.bst_pc
+    /\ bir_get_stmt p st.bst_pc = BirStmt_Write a_e v_e T
     /\ IS_SOME st.bst_xclb
-    /\ bir_get_current_statement p st.bst_pc =
-        SOME $ BStmtB $ BStmt_Assign var e
 End
 
 Theorem is_fulfil_xcl_is_fulfil:
   !cid t sys1 sys2. is_fulfil_xcl cid t sys1 sys2 ==> is_fulfil cid t sys1 sys2
 Proof
-  rw[is_fulfil_xcl_def,is_fulfil_def]
+  rw[is_fulfil_xcl_def,is_fulfil_def,bir_get_stmt_write]
   >> rpt $ goal_assum $ drule_at Any
 QED
 
@@ -641,49 +675,10 @@ Theorem is_fulfil_xcl_atomic:
   ==> fulfil_atomic_ok (SND $ EL i tr) ((EL (PRE t) $ SND $ EL i tr).loc) cid st t
     /\ is_xcl_write p st.bst_pc
 Proof
-  rpt strip_tac
+  rpt gen_tac >> strip_tac
   >> imp_res_tac is_fulfil_xcl_is_fulfil
-  >> drule_at Any is_fulfil_parstep_nice_imp
-  >> rw[]
-  >> gvs[parstep_nice_def,parstep_cases,is_fulfil_xcl_def,FLOOKUP_UPDATE]
-  >> gvs[cstep_cases,parstep_nice_def,parstep_cases,clstep_cases,FLOOKUP_UPDATE,bir_programTheory.bir_state_t_accfupds]
-  >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
-  >> gvs[FLOOKUP_UPDATE,stmt_generic_step_def,bir_get_stmt_def,AllCaseEqs()]
-  >- (
-    drule_at Any FILTER_NEQ_NOT_MEM
-    >> fs[EQ_SYM_EQ]
-  )
-  >- (
-    drule_at Any FILTER_NEQ_NOT_MEM
-    >> impl_tac
-    >- (
-      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
-      >> fs[]
-    )
-    >> fs[]
-  )
-  >- (
-    dxrule_at_then Any (drule_at Any) FILTER_NEQ_MEM_EQ
-    >> impl_tac
-    >- (
-      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
-      >> CONV_TAC $ RAND_CONV $ ONCE_DEPTH_CONV SYM_CONV
-      >> fs[]
-    )
-    >> rw[]
-    >> fs[]
-  )
-  >- (
-    drule_at Any FILTER_NEQ_NOT_MEM
-    >> impl_tac
-    >- (
-      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
-      >> fs[]
-    )
-    >> fs[]
-  )
-  >> drule_then (drule_then assume_tac) is_fulfil_memory
-  >> gs[]
+  >> drule_at_then Any assume_tac is_fulfil_parstep_nice_eq
+  >> gs[is_fulfil_xcl_def,bir_get_stmt_write]
 QED
 
 (* only exclusive loads set the exclusive bank *)
@@ -702,21 +697,14 @@ Proof
   >> Cases_on `cid = cid'`
   >> gvs[FLOOKUP_UPDATE,clstep_cases,cstep_cases,parstep_nice_def,parstep_cases,is_read_xcl_def,optionTheory.IS_SOME_EXISTS]
   >- (
-    gvs[bir_get_stmt_def,AllCaseEqs()]
-    >> gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def]
-    >> goal_assum $ drule_at Any
-  )
-  >- (
-    fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def]
-    >> BasicProvers.every_case_tac
-    >> fs[Once EQ_SYM_EQ]
+    gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs()]
   )
   >> qmatch_assum_rename_tac `bir_exec_stmt p stmt s = _`
   >> Cases_on `stmt`
   >- (
     qmatch_assum_rename_tac `bir_exec_stmt p (BStmtB b) s = _`
     >> Cases_on `b`
-    >> fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_programTheory.bir_state_is_terminated_def,bir_programTheory.bir_exec_stmtB_def]
+    >> fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_programTheory.bir_state_is_terminated_def,bir_programTheory.bir_exec_stmtB_def,bir_get_stmt_generic]
     >> BasicProvers.every_case_tac
     >> fs[Once EQ_SYM_EQ]
     >> cheat
@@ -743,6 +731,20 @@ QED
 (*
  * correctness of spinlock
  *)
+
+Theorem varset_of_spinlock_prog =
+  EVAL ``bir_varset_of_program $ bir_spinlock_prog:string bir_program_t``
+
+Definition spinlock_var_def:
+  spinlock_var = BExp_Den $ BVar "x7" $ BType_Imm Bit64
+End
+
+Theorem spinlock_var_in_varset_of_spinlock_prog:
+  spinlock_var IN IMAGE BExp_Den $
+    bir_varset_of_program $ bir_spinlock_prog:string bir_program_t
+Proof
+  fs[varset_of_spinlock_prog,spinlock_var_def]
+QED
 
 Definition core_runs_prog_def:
   core_runs_prog cid s prog =
@@ -792,6 +794,108 @@ Proof
   >> gs[core_runs_spinlock_def,core_runs_prog_def]
 QED
 
+(* the labels of the spinlock program *)
+
+Theorem bir_spinlock_prog_labels:
+  !l. IS_SOME $ bir_get_program_block_info_by_label bir_spinlock_prog l
+  ==> ?c. l = BL_Address $ Imm64 c /\ c IN {0w; 4w; 8w; 12w; 16w; 20w; 24w}
+Proof
+  EVAL_TAC
+  >> dsimp[]
+  >> rw[]
+QED
+
+Theorem bir_get_program_block_info_by_label' =
+  LIST_CONJ $ List.map
+    (fn x => EVAL ``bir_get_program_block_info_by_label bir_spinlock_prog $ BL_Address $ Imm64 ^(Term x)``)
+    [`0w:word64`, `4w:word64`, `8w:word64`, `12w:word64`, `16w:word64`, `20w:word64`, `24w:word64`]
+
+(* all reads in the spinlock program *)
+
+Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ:
+  !st var a_e opt_cast xcl.
+  bir_get_stmt (bir_spinlock_prog:string bir_program_t) st.bst_pc
+  = BirStmt_Read var a_e opt_cast xcl
+  <=> st.bst_pc = <| bpc_index := 1; bpc_label := BL_Address $ Imm64 12w|>
+    /\ var = BVar "x5" $ BType_Imm Bit64
+    /\ opt_cast = SOME (BIExp_SignedCast,Bit64)
+    /\ a_e = spinlock_var
+    /\ xcl
+Proof
+  fs[EQ_IMP_THM]
+  >> rpt gen_tac >> ntac 2 strip_tac
+  >- (
+    fs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def]
+    >> BasicProvers.every_case_tac
+    >> fs[]
+    >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] bir_spinlock_prog_labels
+    >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
+    >> gs[bir_programTheory.bir_programcounter_t_component_equality,LT5,LT3,get_read_args_def,bir_auxiliaryTheory.NUM_LSONE_EQZ]
+    >> gs[is_xcl_read_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label']
+  )
+  >> fs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_read_args_def,is_xcl_read_thm,bir_programTheory.bir_pc_next_def]
+QED
+
+(* all writes in the spinlock program *)
+
+Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ:
+  !st a_e v_e xcl.
+  bir_get_stmt (bir_spinlock_prog:string bir_program_t) st.bst_pc
+  = BirStmt_Write a_e v_e xcl
+  <=> (
+    st.bst_pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 12w|>
+    /\ a_e = spinlock_var
+    /\ v_e = BExp_Const (Imm32 0x1010101w)
+    /\ ~xcl
+  ) \/ (
+    st.bst_pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 20w|>
+    /\ a_e = spinlock_var
+    /\ v_e = BExp_Cast BIExp_LowCast (BExp_Den $ BVar "x0" $ BType_Imm Bit64) Bit32
+    /\ xcl
+  )
+Proof
+  fs[EQ_IMP_THM]
+  >> rpt gen_tac >> ntac 2 strip_tac
+  >- (
+    fs[bir_get_stmt_write,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def]
+    >> BasicProvers.every_case_tac
+    >> fs[]
+    >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] bir_spinlock_prog_labels
+    >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
+    >> gs[bir_programTheory.bir_programcounter_t_component_equality,LT5,LT3,get_fulfil_args_def,bir_auxiliaryTheory.NUM_LSONE_EQZ]
+    >> gs[is_xcl_write_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label']
+  )
+  >> fs[bir_get_stmt_write,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_fulfil_args_def,is_xcl_write_thm,bir_programTheory.bir_pc_next_def]
+QED
+
+Theorem core_runs_spinlock_is_fulfil_xcl_memory_location:
+  !tr i cid t p st. wf_trace tr /\ SUC i < LENGTH tr
+  /\ core_runs_spinlock cid $ FST $ HD tr
+  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  ==> bir_eval_exp spinlock_var st.bst_environ
+    = SOME $ (EL (PRE t) $ SND $ EL i tr).loc
+    /\ ?v. (EL (PRE t) $ SND $ EL i tr).val = BVal_Imm v
+Proof
+  rpt gen_tac >> strip_tac
+  >> drule_all_then assume_tac is_fulfil_xcl_is_fulfil
+  >> dxrule_at_then (Pat `is_fulfil _ _ _`) assume_tac is_fulfil_parstep_nice_eq
+  >> drule_at Any wf_trace_core_runs_spinlock_FLOOKUP
+  >> disch_then $ drule_at_then Any assume_tac
+  >> gvs[is_fulfil_xcl_def,FLOOKUP_UPDATE,bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ,bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ]
+  >> qhdtm_x_assum `is_certified` kall_tac
+  >> qpat_x_assum `FST _ = _` kall_tac
+  >> fs[bir_expTheory.bir_eval_exp_def,bir_eval_exp_view_def,bir_envTheory.bir_env_read_def]
+  >> BasicProvers.every_case_tac
+  >> fs[bir_expTheory.bir_eval_cast_def,bir_envTheory.bir_env_lookup_type_def,bir_envTheory.bir_var_name_def]
+  >> qmatch_asmsub_rename_tac `bir_env_lookup "x0" st.bst_environ`
+  >> Cases_on `bir_env_lookup "x0" st.bst_environ`
+  >> gs[bir_expTheory.bir_eval_cast_def,bir_envTheory.bir_env_lookup_type_def,bir_envTheory.bir_var_name_def]
+  >> qmatch_asmsub_rename_tac `bir_eval_cast BIExp_LowCast (SOME x')`
+  >> Cases_on `x'`
+  >> fs[bir_expTheory.bir_eval_cast_def]
+QED
+
 (* Theorem 4 : any exclusive fulfil reads from timestamp 0 onwards *)
 
 Theorem cores_run_spinlock_is_fulfil_xcl_initial_xclb:
@@ -836,22 +940,13 @@ Theorem core_runs_spinlock_is_fulfil_xcl_timestamp_order:
   /\ is_fulfil_xcl cid' t' (FST $ EL i' tr) (FST $ EL (SUC i') tr)
   /\ is_promise cid t (EL j tr) (EL (SUC j) tr)
   /\ is_promise cid' t' (EL j' tr) (EL (SUC j') tr)
-  /\ i <> i' /\ j < i /\ j' < i' /\ SUC i' < LENGTH tr
+  /\ i <> i' /\ j < i /\ j' < i' /\ SUC i' < LENGTH tr /\ SUC i < LENGTH tr
   ==> ~(t < t')
 Proof
   rpt strip_tac
-  >> drule_then (rev_drule_then $ drule_then assume_tac)
-    cores_run_spinlock_is_fulfil_xcl_initial_xclb
-  >> drule_then (rev_drule_at_then Any assume_tac)
-    cores_run_spinlock_is_fulfil_xcl_initial_xclb
-  >> `cid <> cid'` by (
-    spose_not_then assume_tac
-    >> gvs[]
-    >> first_x_assum $ rev_drule_at_then Any assume_tac
-    >> last_x_assum $ drule_at_then Any assume_tac
-    >> cheat
-  )
-  >> fs[is_fulfil_xcl_def]
+  >> drule_at_then (Pos $ el 4) assume_tac cores_run_spinlock_is_fulfil_xcl_initial_xclb
+  >> rev_drule_at_then (Pos $ el 4) assume_tac cores_run_spinlock_is_fulfil_xcl_initial_xclb
+  >> gs[is_fulfil_xcl_def]
   (* contradiction with atomic predicate and exclusivity bank *)
   >> cheat
 QED

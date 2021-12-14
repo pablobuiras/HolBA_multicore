@@ -322,16 +322,6 @@ Proof
   >> rpt (BasicProvers.PURE_TOP_CASE_TAC >> fs[])
 QED
 
-Theorem is_xcl_read_is_xcl_write:
-  !p s a_e. is_xcl_read p s a_e /\ is_xcl_write p s ==> F
-Proof
-  REWRITE_TAC[is_xcl_write_thm,is_xcl_read_thm]
-  >> rpt strip_tac
-  >> fs[]
-  >> cheat
-QED
-
-
 val bir_get_stmt_def = Define‘
   bir_get_stmt p pc =
   case bir_get_current_statement p pc of
@@ -642,7 +632,36 @@ Proof
   >> gvs[rich_listTheory.IS_PREFIX_APPEND]
 QED
 
-(* set of promises contains only elements smaller then the memory *)
+(* bir_exec_stmt invariants *)
+
+Theorem bir_exec_stmt_BStmtE_BStmt_CJmp_bst_xclb_EQ:
+  !p cond_e lbl1 lbl2 s oo s'.
+  bir_exec_stmt p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s = (oo,s')
+  ==> s.bst_xclb = s'.bst_xclb
+Proof
+  EVAL_TAC
+  >> rw[AllCaseEqs()]
+  >> fs[]
+QED
+
+Theorem bir_exec_stmt_stmt_generic_step_bst_xclb_EQ:
+  !stm p s oo s'. bir_exec_stmt p stm s = (oo,s')
+  /\ stmt_generic_step stm
+  ==> s.bst_xclb = s'.bst_xclb
+Proof
+  Cases >> rpt strip_tac
+  >> (qmatch_asmsub_rename_tac `BStmtE stm`
+    ORELSE qmatch_asmsub_rename_tac `BStmtB stm`)
+  >> Cases_on `stm`
+  >> gs[bir_get_stmt_generic,stmt_generic_step_def,bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_exec_stmt_def]
+  >> BasicProvers.every_case_tac
+  >> gvs[bir_exec_stmtB_def,bir_state_is_terminated_def,bir_exec_stmt_assign_def,
+    bir_exec_stmtB_def,bir_exec_stmt_assert_def,AllCaseEqs(),
+    bir_state_set_typeerror_def,bir_exec_stmt_assume_def,bir_exec_stmt_assume_def,
+    bir_exec_stmt_observe_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,
+    bir_exec_stmt_jmp_to_label_def,bir_exec_stmtE_def,bir_exec_stmt_halt_def]
+  >> BasicProvers.every_case_tac >> fs[]
+QED
 
 Theorem stmt_generic_step_bst_prom_EQ:
   !stm p s oo s'. stmt_generic_step stm
@@ -659,7 +678,14 @@ Proof
   )
   >> qmatch_asmsub_rename_tac `BStmtE b`
   >> Cases_on `b`
-  >> gvs[stmt_generic_step_def,bir_programTheory.bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,AllCaseEqs(),bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_programTheory.bir_exec_stmt_halt_def]
+  >> gvs[AllCaseEqs(),bir_exec_stmtB_def,bir_exec_stmtE_def,
+    bir_exec_stmt_assert_def,bir_exec_stmt_assign_def,bir_exec_stmt_assume_def,
+    bir_exec_stmt_cjmp_def,bir_exec_stmt_def,bir_exec_stmt_fence_def,
+    bir_exec_stmt_halt_def,bir_exec_stmt_jmp_def,bir_exec_stmt_jmp_to_label_def,
+    bir_exec_stmt_observe_def,bir_state_is_terminated_def,
+    bir_state_set_typeerror_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def]
+  >> BasicProvers.every_case_tac
+  >> fs[]
 QED
 
 Theorem bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ:
@@ -672,26 +698,21 @@ Proof
   >> fs[]
 QED
 
+(* set of promises contains only elements smaller then the memory *)
+
 Theorem clstep_EVERY_LENGTH_bst_prom_inv:
   !p cid s M prom s'. clstep p cid s M prom s'
   /\ EVERY (λx. 0 < x /\ x <= LENGTH M) s.bst_prom
   ==> EVERY (λx. 0 < x /\ x <= LENGTH M) s'.bst_prom
 Proof
-  rw[bir_clstep_cases]
-  >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
-  >- (
-    qhdtm_x_assum `EVERY` mp_tac
-    >> fs[EVERY_FILTER]
-    >> match_mp_tac EVERY_MONOTONIC
-    >> fs[]
-  )
-  >- (drule_all_then assume_tac bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ >> fs[])
-  >> qmatch_assum_rename_tac `EVERY _ s.bst_prom`
-  >> qmatch_goalsub_abbrev_tac `EVERY _ s'.bst_prom`
-  >> qsuff_tac `s.bst_prom = s'.bst_prom` >- (rw[] >> gs[])
-  >> irule stmt_generic_step_bst_prom_EQ
-  >> goal_assum $ drule_at Any
-  >> gvs[stmt_generic_step_def,bir_get_stmt_def,AllCaseEqs()]
+  rw[bir_clstep_cases,bir_get_stmt_generic]
+  >> imp_res_tac bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ
+  >> imp_res_tac stmt_generic_step_bst_prom_EQ
+  >> fs[]
+  >> qhdtm_x_assum `EVERY` mp_tac
+  >> fs[EVERY_FILTER]
+  >> match_mp_tac EVERY_MONOTONIC
+  >> fs[]
 QED
 
 Theorem clstep_bst_prom_NOT_EQ:
