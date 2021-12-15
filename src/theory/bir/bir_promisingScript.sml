@@ -77,7 +77,7 @@ val mem_atomic_def = Define‘
 
 val mem_readable_def = Define‘
   mem_readable M l t_max t =
-  mem_every (λ(t',m). t < t' ∧ t' ≤ t_max ⇒ m.loc = l) M
+  mem_every (λ(t',m). (t < t' ∧ t' ≤ t_max) ⇒ m.loc ≠ l) M
 ’;
 
 val mem_read_view_def = Define‘
@@ -85,8 +85,12 @@ val mem_read_view_def = Define‘
 ’;
 
 val bir_eval_view_of_exp = Define‘
-  (bir_eval_view_of_exp (BExp_BinExp et e1 e2) viewenv =
+  (bir_eval_view_of_exp (BExp_BinExp op e1 e2) viewenv =
    MAX (bir_eval_view_of_exp e1 viewenv) (bir_eval_view_of_exp e2 viewenv))
+/\ (bir_eval_view_of_exp (BExp_BinPred pred e1 e2) viewenv =
+   MAX (bir_eval_view_of_exp e1 viewenv) (bir_eval_view_of_exp e2 viewenv))
+/\ (bir_eval_view_of_exp (BExp_UnaryExp op e) viewenv =
+    bir_eval_view_of_exp e viewenv)
 /\ (bir_eval_view_of_exp (BExp_Cast cty e ity) viewenv =
     bir_eval_view_of_exp e viewenv)
 /\ (bir_eval_view_of_exp (BExp_Den v) viewenv =
@@ -827,7 +831,7 @@ val eval_psteps_def = Define ‘
 (*** Combined Promising and Non-Promising executions. ***)
 val eval_promising_def = Define‘
   eval_promising fuel (cores, M) =
-  LIST_BIND (eval_psteps fuel fuel (cores, M))
+  LIST_BIND (eval_psteps (fuel * (LENGTH cores)) fuel (cores, M))
             (eval_clsteps fuel)
 ’;
 
