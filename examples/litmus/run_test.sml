@@ -65,7 +65,7 @@ fun run_litmus simplify filename =
 		   else (#progs test);
        val prog_envs = zip (#progs test) (#inits test);
        val cores = term_EVAL $ mk_list (mk_cores 0 prog_envs, “:core_t”);
-       val final_states = term_EVAL “eval_promising 11 (^cores, [])”;
+       val final_states = term_EVAL “eval_promising 12 (^cores, [])”;
        val TS = term_EVAL “MAP (^get_TS o FST) ^final_states”
        val M = term_EVAL “MAP (^get_M o SND) ^final_states”
        val final = #final test
@@ -90,20 +90,8 @@ fun main () =
 
 
 (* 
-fun find_tests () =
-    let
-	val proc = Unix.execute("/usr/bin/find", ["-iname", "*.json"])
-	val inStream = Unix.textInstreamOf proc
-    in
-	String.tokens Char.isSpace (TextIO.inputAll inStream) before TextIO.closeIn inStream
-    end
 
-
-val filenames = find_tests ()
-val basic = List.filter (String.isSubstring "X0") filenames
+val filename = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.json"
 val simplify = true;
-val filename = hd basic;
-val res = run_litmus true (hd basic);
-val pp = zip basic (map term_to_string res)
+val res = run_litmus true filename;
 *)
-

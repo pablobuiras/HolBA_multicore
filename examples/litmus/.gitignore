@@ -1,4 +1,7 @@
-*.json
-*.litmus
 lift_test
 run_test
+tests
+*.o
+*.ui
+*.ou
+Holmake
