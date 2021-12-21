@@ -572,8 +572,6 @@ val riscv_expected_failed_hexcodes:string list =
    (* Base *)
    "00000073" (* ECALL *),
    "00100073" (* EBREAK *),
-   (* Zifencei *)
-   "0000100F" (* FENCE.I *),
    (* Zicsr *)
    "340110F3" (* CSRRW x1, mscratch(0x340), x2 *),
    "340120F3" (* CSRRS x1, mscratch(0x340), x2 *),

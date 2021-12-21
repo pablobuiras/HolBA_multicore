@@ -2050,9 +2050,8 @@ Instructions FAILED: 8/98
    "00000073" (* bmr_step_hex failed *)
 ]
 
-Instructions FIXED: 1
+Instructions FIXED: 0
 
-   0000100F
 
 
 Instructions BROKEN: 0
