@@ -884,7 +884,15 @@ SRAW x5, x6, x7: 407352BB @ 0x10030 - OK
 
 RV64 Zifencei Standard Extension
 
-FENCE.I x0, x0, 0: 0000100F @ 0x10030 - FAILED
+FENCE.I x0, x0, 0: 0000100F @ 0x10030 - OK - cheat
+ []
+|- bir_is_lifted_inst_prog riscv_bmr (Imm64 0x10030w) (WI_end 0w 0x1000000w)
+     (0x10030w,[0w; 0w; 16w; 15w])
+     (BirProgram
+        [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0000100F";
+           bb_atomic := T; bb_statements := [];
+           bb_last_statement :=
+             BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
 
 RV64 Zicsr Standard Extension
@@ -2030,7 +2038,7 @@ AMOMAXU.D x1, x3, (x2): E03130AF @ 0x10030 - OK - cheat
 SUMMARY FAILING HEXCODES RISC-V
 
 
-Instructions FAILED: 9/98
+Instructions FAILED: 8/98
 
    "3400F0F3" (* bmr_step_hex failed *),
    "3400E0F3" (* bmr_step_hex failed *),
@@ -2038,13 +2046,13 @@ Instructions FAILED: 9/98
    "340130F3" (* bmr_step_hex failed *),
    "340120F3" (* bmr_step_hex failed *),
    "340110F3" (* bmr_step_hex failed *),
-   "0000100F",
    "00100073" (* bmr_step_hex failed *),
    "00000073" (* bmr_step_hex failed *)
 ]
 
-Instructions FIXED: 0
+Instructions FIXED: 1
 
+   0000100F
 
 
 Instructions BROKEN: 0

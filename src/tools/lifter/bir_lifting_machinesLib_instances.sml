@@ -866,8 +866,6 @@ fun is_fence hex_code =
                                (sr = "1") andalso
                                (sw = "1"))
       then true
-      else if (funct3 = "001")
-      then raise ERR "is_fence" ("Fence instruction "^hex_code^" is unsupported FENCE.I")
       else raise ERR "is_fence" ("Fence instruction "^hex_code^" is unknown fence type")
     else false
   end
@@ -919,10 +917,11 @@ fun is_lrsc hex_code =
 (* Gets the Fence bstmts from hex-format instruction. *)
 fun get_fence_bstmts hex_code =
   let
-    val (fm, pi, po, pr, pw, si, so, sr, sw, _, _, _, _) = parse_fence hex_code
+    val (fm, pi, po, pr, pw, si, so, sr, sw, _, funct3, _, _) = parse_fence hex_code
   in
     if (fm = "0000")
-    then
+    then if funct3 = "000"
+     then
       [mk_BStmt_Fence
 	 (if pr = "1"
 	  then if pw = "1"
@@ -939,6 +938,9 @@ fun get_fence_bstmts hex_code =
 	       then BM_Write_tm
 	       else raise ERR "get_fence_args" ("Fence instruction "^hex_code^" has no successor R/W bits set")
 	    )]
+      else if funct3 = "001"
+      then [] (* Instruction-fetch fence *)
+      else raise ERR "get_fence_args" ("Fence instruction "^hex_code^" has unknown funct3 bits: "^funct3)
     else if (fm = "1000")
     then (* TSO fence *)
       [mk_BStmt_Fence (BM_Read_tm, BM_ReadWrite_tm), mk_BStmt_Fence (BM_Write_tm, BM_Write_tm)]
