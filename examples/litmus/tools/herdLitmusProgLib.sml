@@ -113,11 +113,14 @@ end
 
 (*
 open listSyntax bir_programSyntax;
-val example = 
- "P0          | P1          ;"^
- "sw x5,0(x6) | sw x5,0(x6) ;"^
- "sw x5,0(x7) | bnez x5, 1f ;"^
- "            | 1:xor x7,x5,x5;"
+val prog_sec = 
+ "P0          | P1            | P2          | P3             ;"^
+ "sw x5,0(x6) | lw x5,0(x6)   | sw x5,0(x6) | lw x5,0(x6)    ;"^
+ "            | xor x7,x5,x5  |             | bne x5,x0,LC00 ;"^
+ "            | add x10,x9,x7 |             | LC00:          ;"^
+ "            | sw x8,0(x10)  |             | fence.i        ;"^
+ "            |               |             | sw x7,0(x8)    ;";
+
 val prog2 = last $ parse_prog example
 
 *)

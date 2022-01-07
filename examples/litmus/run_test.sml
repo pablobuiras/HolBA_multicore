@@ -65,7 +65,7 @@ fun run_litmus simplify filename =
 		   else (#progs test);
        val prog_envs = zip (#progs test) (#inits test);
        val cores = term_EVAL $ mk_list (mk_cores 0 prog_envs, “:core_t”);
-       val final_states = term_EVAL “eval_promising 12 (^cores, [])”;
+       val final_states = term_EVAL “eval_promising 20 (^cores, [])”;
        val TS = term_EVAL “MAP (^get_TS o FST) ^final_states”
        val M = term_EVAL “MAP (^get_M o SND) ^final_states”
        val final = #final test
