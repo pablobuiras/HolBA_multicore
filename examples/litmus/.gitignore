@@ -1,8 +1,7 @@
 lift_test
 run_test
-tests
+*.litmus
 *.o
 *.ui
 *.ou
-Holmake
-!*.json
+Holmakefile
