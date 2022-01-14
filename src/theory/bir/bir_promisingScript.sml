@@ -97,7 +97,7 @@ val mem_timestamps_def = Define‘
 val mem_atomic_def = Define‘
   mem_atomic M l cid t_r t_w =
   ((EL (t_r - 1) M).loc = l ⇒
-     mem_every (λ(m,t'). t_r < t' ∧ t' < t_w ∧ m.loc = l ⇒ m.cid = cid) M)
+     mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
 ’;
 
 (* Checks 
@@ -460,7 +460,7 @@ clstep p cid s M [] s')
                                then NONE
                                else s.bst_xclb;
                    bst_pc := if xcl
-                             then (bir_pc_next o bir_pc_next) s.bst_pc
+                             then (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc
                              else bir_pc_next s.bst_pc |>
  ==>
   clstep p cid s M [t] s')
@@ -713,7 +713,7 @@ val eval_clstep_fulfil_def = Define‘
                                                                         fwdb_view := MAX v_addr v_data;
                                                                         fwdb_xcl := F |>);
                                          bst_pc     updated_by if xcl
-                                                               then (bir_pc_next o bir_pc_next)
+                                                               then (bir_pc_next o bir_pc_next o bir_pc_next)
                                                                else bir_pc_next;
                                          bst_xclb := if xcl then NONE else s.bst_xclb |>]
                           | _ => []))
@@ -962,5 +962,4 @@ val cores = “[(Core 0 ^core1_prog ^core1_st);
 val term_EVAL = rand o concl o EVAL;
 
 val final_states = term_EVAL “eval_psteps 4 (^cores, [])”;
-
 val _ = export_theory();
