@@ -6,8 +6,12 @@ all: lift_test run_test
 clean:
 	rm -f lift_test run_test *.o
 
-%.o: %.sml
-	$(HOL) -q $< <<< "val _ = PolyML.export(\"$*\", main)"
+.PHONY: heap
+heap:
+	../../opt/hol_k14/bin/Holmake
+
+%.o: %.sml heap
+	$(HOL) -q $< <<< "val _ = PolyML.export(\"$*\", main)" >/dev/null
 
 lift_test: lift_test.o 
 	$(POLYC) $< -o $@

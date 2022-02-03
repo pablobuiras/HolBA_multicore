@@ -22,7 +22,7 @@ fi
 EXPECTED=$(herd7 $LITMUS | grep -oE "(Ok|No)")
 
 if [ "$EXPECTED" = "$ACTUAL" ]; then
-        echo $1 Ok
+        echo "$1 Ok (expected $EXPECTED, found $ACTUAL)"
 else
-        echo $1 No
+        echo "$1 No (expected $EXPECTED, found $ACTUAL)"
 fi

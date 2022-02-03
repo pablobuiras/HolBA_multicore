@@ -1,5 +1,5 @@
-open bir_promisingTheory
 open wordsTheory
+open bir_promisingTheory;
 
 open bslSyntax pairSyntax numSyntax listSyntax
 open bir_programSyntax
@@ -8,90 +8,110 @@ open computeLib
 open herdLitmusValuesLib
 open litmusInterfaceLib
 	 
-open wordsLib;
+open wordsLib stringLib;
 
 
 val _ = add_thms (CONJUNCTS LITMUS_CONSTANT_THM) the_compset;
 val _ = add_words_compset true the_compset;
 
-	 
-
 val term_EVAL = rhs o concl o EVAL
 
-(* Get thread registers *)
-val get_TS = “\ts.
-	      MAP (\t. case t of (Core cid p s) => 
-				 case s.bst_environ of BEnv f => f) ts
-	      ”;
-(* Get writes to the memory *)
-val get_M = “\m.
-	     FOLDL (\t m. t (|m.loc |-> SOME m.val|)) (K NONE) m
-	     ”;
-
-(* Removes asserts *)
-fun simplify_prog prog =
-    let 
-	val (block_list,ty) = dest_list (dest_BirProgram prog);
-	fun fix_stmt stmt =
-	    if is_BStmt_Assert stmt
-	    then []
-	    else  [stmt];
-	fun fix_block block =
-	    let val (lbl,is_atomic,stmts,last_stmt) = dest_bir_block block;
-		val (stmt_list,stmt_ty) = dest_list stmts;
-		val new_stmts = mk_list (List.concat (List.map fix_stmt stmt_list), stmt_ty);
-	    in
-		mk_bir_block (lbl,is_atomic,new_stmts,last_stmt)
-	    end;
-    in
-	mk_BirProgram (mk_list (List.map fix_block block_list,ty))
-    end;
-
-
-fun mk_cores _ [] = []
-  | mk_cores n ((p,e)::pes) = 
+(* Make cores *)
+ fun mk_cores programs environs =
     let
-	val cid = term_of_int n;
-	val s = “bir_state_init ^p with <| bst_environ := BEnv ^e |>”;
+	fun loop n [] = []
+	  | loop n ((p,e)::l) = 
+	    let val cid = term_of_int n;
+		val s = “bir_state_init ^p with <| bst_environ := BEnv ^e |>”;
+		val core = term_EVAL “Core ^cid ^p ^s”
+	    in core::loop (n+1) l end;
+	val cores = loop 0 (zip programs environs)
+    in mk_list (cores, “:core_t”) end;
+
+(* Promise mode execution *)
+fun promiseRun fuel coresAndMemory =
+    let
+	val newCoresAndMemory = term_EVAL “eval_pmstepO1 ^fuel ^coresAndMemory”;
+	val (l, ty) = dest_list newCoresAndMemory;
     in
-	“Core ^cid ^p ^s” :: mk_cores (n + 1) pes
+	if null l then (* No more promises *)
+	    [coresAndMemory]
+	else
+	    List.concat (List.map (promiseRun fuel) l)
     end;
 
-fun run_litmus simplify filename =
+local
+    fun nonPromiseRunAux fuel memory core =
+	let val term = “eval_clsteps_coreO1 ^fuel ^core ^memory”
+	in fst (dest_list(term_EVAL term)) end;
+
+    (* Cartesian product *)
+    fun cartProd [] = []
+      | cartProd [h] = map (fn e => [e]) h
+      | cartProd (h::l) = 
+	let val l' = cartProd l in 
+	    List.concat $ map (fn x => map (fn y => y::x) h) l'
+        end;
+in
+(* Non-promise mode execution *)
+fun nonPromiseRun fuel coresAndMemory =
+    let
+	val (cores, memory) = dest_pair coresAndMemory;
+	val (cores', core_ty) = dest_list cores;
+	val coress = map (nonPromiseRunAux fuel memory) cores';
+	val coress' = map (fn cs => mk_list(cs,core_ty)) (cartProd coress)
+    in map (fn cs => mk_pair(cs,memory)) coress' end;
+end
+
+fun getRegistersAndMemory coresAndMemory =
+    let
+	val (cores, memory) = dest_pair coresAndMemory
+	val regs = “MAP (\t. case t of (Core cid p s) => case s.bst_environ of BEnv f => f) ^cores”
+	val memory' = “FOLDL (\t m. t (|m.loc |-> SOME m.val|)) (K NONE) ^memory”;
+    in term_EVAL $ mk_pair (memory', regs) end;
+
+fun run_litmus fuel filename =
    let 
-       val test  = load_litmus filename;
-       val progs = if simplify 
-		   then (map simplify_prog (#progs test)) 
-		   else (#progs test);
-       val prog_envs = zip (#progs test) (#inits test);
-       val cores = term_EVAL $ mk_list (mk_cores 0 prog_envs, “:core_t”);
-       val final_states = term_EVAL “eval_promising 20 (^cores, [])”;
-       val TS = term_EVAL “MAP (^get_TS o FST) ^final_states”
-       val M = term_EVAL “MAP (^get_M o SND) ^final_states”
-       val final = #final test
-       val finals = term_EVAL “ZIP (^M, ^TS)”
-       val res = term_EVAL “^final ^finals”
+       (* Load litmus test *)
+       (*
+       val testRecord  = lift_herd_litmus filename;
+       *)
+       val testRecord  = load_litmus filename;
+       (* Fuel used for promise and non-promise execution *)
+       val fuelTerm = term_of_int fuel;
+       (* Set default state *)
+       val cores = mk_cores (#progs testRecord) (#inits testRecord);
+       val coresAndEmptyMemory = mk_pair(cores,mk_list([],“:mem_msg_t”));
+       (* Make promise only run *)
+       val coresAndPromises = promiseRun fuelTerm coresAndEmptyMemory;
+       (* Make non-promising runs *)
+       val coresAndPromisesFinal = List.concat (map (nonPromiseRun fuelTerm) coresAndPromises);
+       (* Get the final states of registers and memory *)
+       val finalStates = map getRegistersAndMemory coresAndPromisesFinal
+       val finalStatesTerm = mk_list(finalStates, 
+				     “:(bir_val_t -> bir_val_t option) # ((string -> bir_val_t option) list)”);
+       (* Get the post-condition *)
+       val finalPredicate = #final testRecord;
+       (* Testing of post-condition *)
+       val finalTest = term_EVAL “^(#final testRecord) ^finalStatesTerm”
     in 
-       case dest_list finals of
-	    ([], ty) => "ExecError"
-	  |  _ => (case term_to_string res of
-		 "T" => "Ok"
-	       | "F" => "No")
+	if null coresAndPromises orelse null coresAndPromisesFinal then
+	    (* If we have no states, exit *)
+	    "ExecError"
+	else
+	    fromHOLstring $ term_EVAL “if ^finalTest then "Ok" else "No"”
     end;
 
 fun main () =
     let
 	val arguments = CommandLine.arguments ();
 	val inputfile = List.last arguments;
-	val result    = run_litmus true inputfile
-    in
-	print $ inputfile ^ " " ^ result ^ "\n"
-    end
-
+	val result    = run_litmus 64 inputfile
+    in print $ inputfile ^ " " ^ result ^ "\n" end;
 
 (* 
-
-val filename = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.json"
-val simplify = true;
-val res = run_litmus true filename;
+val filename = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.litmus";
+val fuel = 20;
+val res = run_litmus fuel filename;
+val filename = "tests/AMO_X0_2_THREAD/LB+popars+NEW.json"
 *)
