@@ -943,7 +943,7 @@ fun get_fence_bstmts hex_code =
       else raise ERR "get_fence_args" ("Fence instruction "^hex_code^" has unknown funct3 bits: "^funct3)
     else if (fm = "1000")
     then (* TSO fence *)
-      [mk_BStmt_Fence (BM_Read_tm, BM_ReadWrite_tm), mk_BStmt_Fence (BM_Write_tm, BM_Write_tm)]
+      [mk_BStmt_Fence (BM_Read_tm, BM_Read_tm), mk_BStmt_Fence (BM_ReadWrite_tm, BM_Write_tm)]
     else raise ERR "get_fence_args" ("Fence instruction "^hex_code^" has unknown fm bits: "^fm)
   end
 
