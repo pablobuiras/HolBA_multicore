@@ -5,9 +5,4 @@ run_test
 *.ui
 *.ou
 Holmakefile
-@all
-*.conf
-tests/AUTHORS
-tests/CO/build.sh
-tests/Makefile
 
