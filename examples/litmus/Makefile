@@ -1,6 +1,8 @@
 HOL=../../opt/hol_k14/bin/hol
 POLYC=../../opt/polyml_v5.8.1/bin/polyc
 
+SHELL=/bin/bash
+
 .PHONY: all clean
 all: lift_test run_test
 clean:

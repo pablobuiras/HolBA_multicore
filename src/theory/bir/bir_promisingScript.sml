@@ -109,8 +109,9 @@ val mem_readable_def = Define‘
   mem_every (λ(m,t'). (t < t' ∧ t' ≤ t_max) ⇒ m.loc ≠ l) M
 ’;
 
+(* Note that this currently does not take into account ARM *)
 val mem_read_view_def = Define‘
-  mem_read_view a rk (f:fwdb_t) t = if f.fwdb_time = t ∧ ~f.fwdb_xcl then f.fwdb_view else t
+  mem_read_view (f:fwdb_t) t = if f.fwdb_time = t ∧ ~f.fwdb_xcl then f.fwdb_view else t
 ’;
 
 val bir_eval_view_of_exp = Define‘
@@ -387,22 +388,19 @@ QED
 (* core-local steps that don't affect memory *)
 val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 (* read *)
-(!p s s' v a_e xcl M l (t:num) v_pre v_post v_addr var (a:num) (rk:num) new_env cid opt_cast. (*TODO fix type of a and rk *)
+(!p s s' v a_e xcl M l (t:num) v_pre v_post v_addr var new_env cid opt_cast.
    bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast xcl
  /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX v_addr s.bst_v_rNew
  ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL t' M).loc ≠ l)
- ∧ v_post = MAX v_pre (mem_read_view a rk (s.bst_fwdb(l)) t)
+ ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
  (* TODO: Update viewenv by v_addr or v_post? *)
  ∧ s' = s with <| bst_viewenv updated_by (\env. FUPDATE env (var, v_post));
                   bst_environ := new_env;
                   bst_coh := (λlo. if lo = l
-                                   then MAX
-
-                                        (s.bst_coh l) v_post
-
+                                   then MAX (s.bst_coh l) v_post
                                    else s.bst_coh(lo));
                   bst_v_rOld := MAX s.bst_v_rOld v_post;
                   bst_v_CAP := MAX s.bst_v_CAP v_addr;
@@ -422,7 +420,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  /\  s' = s with <| bst_environ := new_env;
                     bst_viewenv := new_viewenv;
                     bst_xclb := NONE;
-                    bst_pc := (bir_pc_next o bir_pc_next) s.bst_pc |>
+                    bst_pc := (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc |>
  ==>
 clstep p cid s M [] s')
 /\ (* fulfil *)
@@ -649,7 +647,7 @@ val eval_clstep_read_def = Define‘
 	  LIST_BIND ts (\t.
 		 let
                    v_opt  = mem_read M l t;
-		   v_post = MAX v_pre (mem_read_view 0 0 (s.bst_fwdb(l)) t);
+		   v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t);
 		 in
 		   case v_opt of
 		     SOME v =>
@@ -713,7 +711,7 @@ val eval_clstep_fulfil_def = Define‘
                                          bst_v_CAP  updated_by MAX v_addr;
                                          bst_fwdb   updated_by (l =+ <| fwdb_time := v_post;
                                                                         fwdb_view := MAX v_addr v_data;
-                                                                        fwdb_xcl := F |>);
+                                                                        fwdb_xcl := xcl |>);
                                          bst_pc     updated_by if xcl
                                                                then (bir_pc_next o bir_pc_next o bir_pc_next)
                                                                else bir_pc_next;
@@ -972,7 +970,7 @@ Definition eval_clstep_fulfilO1_def:
                                        bst_v_CAP  updated_by MAX v_addr;
                                        bst_fwdb   updated_by (l =+ <| fwdb_time := v_post;
                                                                       fwdb_view := MAX v_addr v_data;
-                                                                      fwdb_xcl := F |>);
+                                                                      fwdb_xcl := xcl |>);
                                        bst_pc     updated_by if xcl
                                                              then (bir_pc_next o bir_pc_next o bir_pc_next)
                                                              else bir_pc_next;
@@ -991,7 +989,7 @@ Definition eval_clstep_xclfailO1_def:
         [s with <| bst_environ := new_environ;
                    bst_viewenv := new_viewenv;
                    bst_xclb    := NONE;
-                   bst_pc updated_by (bir_pc_next o bir_pc_next) |>]
+                   bst_pc updated_by (bir_pc_next o bir_pc_next o bir_pc_next) |>]
     | _ => [])
  ∧
  eval_clstep_xclfailO1 p s F = []
