@@ -1,5 +1,9 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
 LITMUS=${1}.litmus
 JSON=${1}.json
 
@@ -22,7 +26,7 @@ fi
 EXPECTED=$(herd7 $LITMUS | grep -oE "(Ok|No)")
 
 if [ "$EXPECTED" = "$ACTUAL" ]; then
-        echo "$1 Ok (expected $EXPECTED, found $ACTUAL)"
+        echo -e "$1 ${GREEN}Ok${NC} (expected $EXPECTED, found $ACTUAL)"
 else
-        echo "$1 No (expected $EXPECTED, found $ACTUAL)"
+        echo -e "$1 ${RED}No${NC} (expected $EXPECTED, found $ACTUAL)"
 fi
