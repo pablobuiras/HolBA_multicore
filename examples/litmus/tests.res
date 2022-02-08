@@ -1,7091 +1,3149 @@
-./tests/ATOMICS/BASIC_2_THREAD/2+2W+poxxs Ok
-./tests/ATOMICS/BASIC_2_THREAD/LB+poxxs Ok
-./tests/ATOMICS/BASIC_2_THREAD/MP+poxxs Ok
-./tests/ATOMICS/BASIC_2_THREAD/R+poxxs Ok
-./tests/ATOMICS/BASIC_2_THREAD/SB+poxxs Ok
-./tests/ATOMICS/BASIC_2_THREAD/S+poxxs Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+pospx Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwspxs Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwsxp+pospx Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwsxp+posxp Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwsxps Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwsxx+posxx Ok
-./tests/ATOMICS/CO/2+2W+fence.rw.rwsxxs Ok
-./tests/ATOMICS/CO/2+2W+pos+pospx Ok
-./tests/ATOMICS/CO/2+2W+pos+posxp Ok
-./tests/ATOMICS/CO/2+2W+pos+posxx Ok
-./tests/ATOMICS/CO/2+2W+pospx+posxp Ok
-./tests/ATOMICS/CO/2+2W+pospxs Ok
-./tests/ATOMICS/CO/2+2W+posxps Ok
-./tests/ATOMICS/CO/2+2W+posxxs Ok
-./tests/ATOMICS/CO/CoRR+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/CoRR+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/CoRR+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/CoRR+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/CoRR+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/CoRR+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/CoRR+pospx Ok
-./tests/ATOMICS/CO/CoRR+pospx+X Ok
-./tests/ATOMICS/CO/CoRR+posxp Ok
-./tests/ATOMICS/CO/CoRR+posxp+X Ok
-./tests/ATOMICS/CO/CoRR+posxx Ok
-./tests/ATOMICS/CO/CoRR+X Ok
-./tests/ATOMICS/CO/CoRW1+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/CoRW1+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/CoRW1+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/CoRW1+pospx Ok
-./tests/ATOMICS/CO/CoRW1+posxp Ok
-./tests/ATOMICS/CO/CoRW1+posxx Ok
-./tests/ATOMICS/CO/CoRW2+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/CoRW2+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/CoRW2+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/CoRW2+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/CoRW2+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/CoRW2+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/CoRW2+pospx Ok
-./tests/ATOMICS/CO/CoRW2+pospx+X Ok
-./tests/ATOMICS/CO/CoRW2+posxp Ok
-./tests/ATOMICS/CO/CoRW2+posxp+X Ok
-./tests/ATOMICS/CO/CoRW2+posxx Ok
-./tests/ATOMICS/CO/CoRW2+X Ok
-./tests/ATOMICS/CO/CoWR0+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/CoWR0+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/CoWR0+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/CoWR0+pospx Ok
-./tests/ATOMICS/CO/CoWR0+posxp Ok
-./tests/ATOMICS/CO/CoWR0+posxx Ok
-./tests/ATOMICS/CO/CoWW+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/CoWW+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/CoWW+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/CoWW+pospx Ok
-./tests/ATOMICS/CO/CoWW+posxp Ok
-./tests/ATOMICS/CO/CoWW+posxx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/LB+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/LB+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwspx+pospx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwspxs Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwsxp+pospx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwsxp+posxp Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwsxps Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwsxx+posxx Ok
-./tests/ATOMICS/CO/LB+fence.rw.rwsxxs Ok
-./tests/ATOMICS/CO/LB+pos+pospx Ok
-./tests/ATOMICS/CO/LB+pos+posxp Ok
-./tests/ATOMICS/CO/LB+pos+posxx Ok
-./tests/ATOMICS/CO/LB+pospx+posxp Ok
-./tests/ATOMICS/CO/LB+pospxs Ok
-./tests/ATOMICS/CO/LB+posxps Ok
-./tests/ATOMICS/CO/LB+posxxs Ok
-./tests/ATOMICS/CO/MP+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/MP+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/MP+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/MP+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/MP+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/MP+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwsxp+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwsxp+pospx Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/MP+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/MP+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/MP+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/MP+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/MP+pos+pospx Ok
-./tests/ATOMICS/CO/MP+pos+posxp Ok
-./tests/ATOMICS/CO/MP+pos+posxx Ok
-./tests/ATOMICS/CO/MP+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/MP+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/MP+pospx+pos Ok
-./tests/ATOMICS/CO/MP+pospx+posxp Ok
-./tests/ATOMICS/CO/MP+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/MP+posxp+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/MP+posxp+pos Ok
-./tests/ATOMICS/CO/MP+posxp+pospx Ok
-./tests/ATOMICS/CO/MP+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/MP+posxx+pos Ok
-./tests/ATOMICS/CO/R+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/R+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/R+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/R+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/R+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/R+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/R+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/R+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/R+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/R+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/R+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/R+fence.rw.rwsxp+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/R+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/R+fence.rw.rwsxp+pospx Ok
-./tests/ATOMICS/CO/R+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/R+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/R+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/R+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/R+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/R+pos+pospx Ok
-./tests/ATOMICS/CO/R+pos+posxp Ok
-./tests/ATOMICS/CO/R+pos+posxx Ok
-./tests/ATOMICS/CO/R+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/R+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/R+pospx+pos Ok
-./tests/ATOMICS/CO/R+pospx+posxp Ok
-./tests/ATOMICS/CO/R+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/R+posxp+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/R+posxp+pos Ok
-./tests/ATOMICS/CO/R+posxp+pospx Ok
-./tests/ATOMICS/CO/R+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/R+posxx+pos Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+pospx+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+pos+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+posxp+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspx+fence.rw.rwsxx+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspx+pospx Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspx+posxx+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwspxs Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwss+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+pos+X Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/RWC+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/RWC+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/RWC+pos+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/RWC+pos+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/RWC+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/RWC+pos+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/RWC+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/RWC+pos+pospx Ok
-./tests/ATOMICS/CO/RWC+pos+pospx+X Ok
-./tests/ATOMICS/CO/RWC+pos+posxp Ok
-./tests/ATOMICS/CO/RWC+pos+posxp+X Ok
-./tests/ATOMICS/CO/RWC+pos+posxx Ok
-./tests/ATOMICS/CO/RWC+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/RWC+pospx+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/RWC+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/RWC+pospx+fence.rw.rwsxx+X Ok
-./tests/ATOMICS/CO/RWC+pospx+pos Ok
-./tests/ATOMICS/CO/RWC+pospx+posxp Ok
-./tests/ATOMICS/CO/RWC+pospx+posxx+X Ok
-./tests/ATOMICS/CO/RWC+pospxs Ok
-./tests/ATOMICS/CO/RWC+poss+X Ok
-./tests/ATOMICS/CO/RWC+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/RWC+posxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/RWC+posxp+pos Ok
-./tests/ATOMICS/CO/RWC+posxp+pos+X Ok
-./tests/ATOMICS/CO/RWC+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/RWC+posxx+pos Ok
-./tests/ATOMICS/CO/SB+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/SB+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/SB+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/SB+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/SB+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/SB+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwspx+pospx Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwspxs Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwsxp+pospx Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwsxp+posxp Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwsxps Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwsxx+posxx Ok
-./tests/ATOMICS/CO/SB+fence.rw.rwsxxs Ok
-./tests/ATOMICS/CO/SB+pos+pospx Ok
-./tests/ATOMICS/CO/SB+pos+posxp Ok
-./tests/ATOMICS/CO/SB+pos+posxx Ok
-./tests/ATOMICS/CO/SB+pospx+posxp Ok
-./tests/ATOMICS/CO/SB+pospxs Ok
-./tests/ATOMICS/CO/SB+posxps Ok
-./tests/ATOMICS/CO/SB+posxxs Ok
-./tests/ATOMICS/CO/S+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/S+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/S+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/S+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/S+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/S+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/S+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/S+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/S+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/S+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/S+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/S+fence.rw.rwsxp+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/S+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/S+fence.rw.rwsxp+pospx Ok
-./tests/ATOMICS/CO/S+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/S+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/S+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/S+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/S+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/S+pos+pospx Ok
-./tests/ATOMICS/CO/S+pos+posxp Ok
-./tests/ATOMICS/CO/S+pos+posxx Ok
-./tests/ATOMICS/CO/S+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/S+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/S+pospx+pos Ok
-./tests/ATOMICS/CO/S+pospx+posxp Ok
-./tests/ATOMICS/CO/S+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/S+posxp+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/S+posxp+pos Ok
-./tests/ATOMICS/CO/S+posxp+pospx Ok
-./tests/ATOMICS/CO/S+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/S+posxx+pos Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+pospx+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+pos+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwspx+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwspx+pos+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwss+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+pos+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+posxp Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxps Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+posxp+X Ok
-./tests/ATOMICS/CO/WRC+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRC+pos+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRC+pos+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRC+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRC+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRC+pos+pospx Ok
-./tests/ATOMICS/CO/WRC+pos+pospx+X Ok
-./tests/ATOMICS/CO/WRC+pos+posxp Ok
-./tests/ATOMICS/CO/WRC+pos+posxx Ok
-./tests/ATOMICS/CO/WRC+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRC+pospx+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRC+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRC+pospx+pos Ok
-./tests/ATOMICS/CO/WRC+pospx+pos+X Ok
-./tests/ATOMICS/CO/WRC+pospx+posxp Ok
-./tests/ATOMICS/CO/WRC+poss+X Ok
-./tests/ATOMICS/CO/WRC+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRC+posxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRC+posxp+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRC+posxp+pos Ok
-./tests/ATOMICS/CO/WRC+posxp+pos+X Ok
-./tests/ATOMICS/CO/WRC+posxps Ok
-./tests/ATOMICS/CO/WRC+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRC+posxx+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/WRC+posxx+pos Ok
-./tests/ATOMICS/CO/WRC+posxx+posxp+X Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+pospx+X Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+pos+X Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwss+X Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+pos+X Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRR+2W+pos+pospx Ok
-./tests/ATOMICS/CO/WRR+2W+pos+pospx+X Ok
-./tests/ATOMICS/CO/WRR+2W+pos+posxp Ok
-./tests/ATOMICS/CO/WRR+2W+pos+posxx Ok
-./tests/ATOMICS/CO/WRR+2W+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRR+2W+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRR+2W+pospx+pos Ok
-./tests/ATOMICS/CO/WRR+2W+pospx+posxp Ok
-./tests/ATOMICS/CO/WRR+2W+poss+X Ok
-./tests/ATOMICS/CO/WRR+2W+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRR+2W+posxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRR+2W+posxp+pos Ok
-./tests/ATOMICS/CO/WRR+2W+posxp+pos+X Ok
-./tests/ATOMICS/CO/WRR+2W+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRR+2W+posxx+pos Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+pospx+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+pos+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+posxp+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+fence.rw.rwsxx+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+pospx Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+posxx+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspxs Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwss+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+pos+X Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRW+2W+pos+pospx Ok
-./tests/ATOMICS/CO/WRW+2W+pos+pospx+X Ok
-./tests/ATOMICS/CO/WRW+2W+pos+posxp Ok
-./tests/ATOMICS/CO/WRW+2W+pos+posxp+X Ok
-./tests/ATOMICS/CO/WRW+2W+pos+posxx Ok
-./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rwsxx+X Ok
-./tests/ATOMICS/CO/WRW+2W+pospx+pos Ok
-./tests/ATOMICS/CO/WRW+2W+pospx+posxp Ok
-./tests/ATOMICS/CO/WRW+2W+pospx+posxx+X Ok
-./tests/ATOMICS/CO/WRW+2W+pospxs Ok
-./tests/ATOMICS/CO/WRW+2W+poss+X Ok
-./tests/ATOMICS/CO/WRW+2W+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+2W+posxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRW+2W+posxp+pos Ok
-./tests/ATOMICS/CO/WRW+2W+posxp+pos+X Ok
-./tests/ATOMICS/CO/WRW+2W+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+2W+posxx+pos Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+pospx+X Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+pos+X Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwss+X Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+pos+X Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WRW+WR+pos+pospx Ok
-./tests/ATOMICS/CO/WRW+WR+pos+pospx+X Ok
-./tests/ATOMICS/CO/WRW+WR+pos+posxp Ok
-./tests/ATOMICS/CO/WRW+WR+pos+posxx Ok
-./tests/ATOMICS/CO/WRW+WR+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+WR+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WRW+WR+pospx+pos Ok
-./tests/ATOMICS/CO/WRW+WR+pospx+posxp Ok
-./tests/ATOMICS/CO/WRW+WR+poss+X Ok
-./tests/ATOMICS/CO/WRW+WR+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+WR+posxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WRW+WR+posxp+pos Ok
-./tests/ATOMICS/CO/WRW+WR+posxp+pos+X Ok
-./tests/ATOMICS/CO/WRW+WR+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WRW+WR+posxx+pos Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+pospx Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+pospx+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+pos+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+posxp Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rws+posxx Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwspx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwspx+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwspx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwspx+pos Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwspx+pos+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwspx+posxp Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwspxs Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwss+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+pos Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+pos+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+posxp Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxps Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+pos Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+posxp+X Ok
-./tests/ATOMICS/CO/WWC+fence.rw.rwsxxs Ok
-./tests/ATOMICS/CO/WWC+pos+fence.rw.rwspx Ok
-./tests/ATOMICS/CO/WWC+pos+fence.rw.rwspx+X Ok
-./tests/ATOMICS/CO/WWC+pos+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WWC+pos+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WWC+pos+fence.rw.rwsxx Ok
-./tests/ATOMICS/CO/WWC+pos+pospx Ok
-./tests/ATOMICS/CO/WWC+pos+pospx+X Ok
-./tests/ATOMICS/CO/WWC+pos+posxp Ok
-./tests/ATOMICS/CO/WWC+pos+posxx Ok
-./tests/ATOMICS/CO/WWC+pospx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WWC+pospx+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WWC+pospx+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WWC+pospx+pos Ok
-./tests/ATOMICS/CO/WWC+pospx+pos+X Ok
-./tests/ATOMICS/CO/WWC+pospx+posxp Ok
-./tests/ATOMICS/CO/WWC+pospxs Ok
-./tests/ATOMICS/CO/WWC+poss+X Ok
-./tests/ATOMICS/CO/WWC+posxp+fence.rw.rws Ok
-./tests/ATOMICS/CO/WWC+posxp+fence.rw.rws+X Ok
-./tests/ATOMICS/CO/WWC+posxp+fence.rw.rwsxp Ok
-./tests/ATOMICS/CO/WWC+posxp+pos Ok
-./tests/ATOMICS/CO/WWC+posxp+pos+X Ok
-./tests/ATOMICS/CO/WWC+posxps Ok
-./tests/ATOMICS/CO/WWC+posxx+fence.rw.rws Ok
-./tests/ATOMICS/CO/WWC+posxx+fence.rw.rwsxp+X Ok
-./tests/ATOMICS/CO/WWC+posxx+pos Ok
-./tests/ATOMICS/CO/WWC+posxx+posxp+X Ok
-./tests/ATOMICS/CO/WWC+posxxs Ok
-./tests/ATOMICS/RELAX/PodRWPX/LB+addr+popx Ok
-./tests/ATOMICS/RELAX/PodRWPX/LB+ctrl+popx Ok
-./tests/ATOMICS/RELAX/PodRWPX/LB+data+popx Ok
-./tests/ATOMICS/RELAX/PodRWPX/LB+fence.rw.rw+popx Ok
-./tests/ATOMICS/RELAX/PodRWPX/LB+poprl+popx Error
-./tests/ATOMICS/RELAX/PodRWPX/LB+popx+poaqp Error
-./tests/ATOMICS/RELAX/PodRWPX/LB+popxs Ok
-./tests/ATOMICS/RELAX/PodRWPX/S+fence.rw.rw+popx Ok
-./tests/ATOMICS/RELAX/PodRWPX/S+poprl+popx Error
-./tests/ATOMICS/RELAX/PodRWXP/LB+addr+poxp Ok
-./tests/ATOMICS/RELAX/PodRWXP/LB+ctrl+poxp Ok
-./tests/ATOMICS/RELAX/PodRWXP/LB+data+poxp Ok
-./tests/ATOMICS/RELAX/PodRWXP/LB+fence.rw.rw+poxp Ok
-./tests/ATOMICS/RELAX/PodRWXP/LB+poaqp+poxp Error
-./tests/ATOMICS/RELAX/PodRWXP/LB+poprl+poxp Error
-./tests/ATOMICS/RELAX/PodRWXP/LB+poxps Ok
-./tests/ATOMICS/RELAX/PodRWXP/S+fence.rw.rw+poxp Ok
-./tests/ATOMICS/RELAX/PodRWXP/S+poprl+poxp Error
-./tests/ATOMICS/RELAX/PodRWXX/LB+addr+poxx Ok
-./tests/ATOMICS/RELAX/PodRWXX/LB+ctrl+poxx Ok
-./tests/ATOMICS/RELAX/PodRWXX/LB+data+poxx Ok
-./tests/ATOMICS/RELAX/PodRWXX/LB+fence.rw.rw+poxx Ok
-./tests/ATOMICS/RELAX/PodRWXX/LB+poaqp+poxx Error
-./tests/ATOMICS/RELAX/PodRWXX/LB+poprl+poxx Error
-./tests/ATOMICS/RELAX/PodRWXX/LB+poxxs Ok
-./tests/ATOMICS/RELAX/PodRWXX/S+fence.rw.rw+poxx Ok
-./tests/ATOMICS/RELAX/PodRWXX/S+poprl+poxx Error
-./tests/ATOMICS/SAFE_PosWRXAq/3.SB+fence.rw.rw+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.rw.rw+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.rw.rw+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.rw.rw+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.rw.w+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.rw.w+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.rw.w+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.w.w+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.w.w+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+fence.w.w+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+poprl+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+poprl+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/R+poprl+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+addr+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+addr+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+addr+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+ctrlfencei+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+ctrlfencei+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+ctrlfencei+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+fence.r.rw+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+fence.r.rw+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+fence.r.rw+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+fence.rw.rw+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+fence.rw.rw+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+fence.rw.rw+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+poaqp+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+poaqp+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/RWC+poaqp+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+fence.rw.rw+pospx-posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+fence.rw.rw+pospx-posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+fence.rw.rw+pospx-posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+fence.rw.rw+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+fence.rw.rw+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+fence.rw.rw+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+posxaq-addraqp+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+posxaq-addraqp+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+posxaq-addraqps Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+posxaq-ctrlfenceiaqp+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+posxaq-ctrlfenceiaqps Error
-./tests/ATOMICS/SAFE_PosWRXAq/SB+posxaq-poaqps Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.rw+addr+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.rw+ctrlfencei+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.rw+fence.r.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.rw+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.rw+poaqp+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.w+addr+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.w+ctrlfencei+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.w+fence.r.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.w+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.rw.w+poaqp+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.w.w+addr+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.w.w+ctrlfencei+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.w.w+fence.r.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.w.w+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+fence.w.w+poaqp+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+poprl+addr+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+poprl+ctrlfencei+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+poprl+fence.r.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+poprl+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/W+RWC+poprl+poaqp+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+addr+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+addr+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+addr+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+ctrlfencei+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+ctrlfencei+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+ctrlfencei+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+ctrl+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+ctrl+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+ctrl+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+data+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+data+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+data+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.r.rw+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.r.rw+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.r.rw+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.rw.rw+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.rw.rw+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.rw.rw+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.rw.w+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.rw.w+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+fence.rw.w+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+poaqp+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+poaqp+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+poaqp+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+poprl+posxaq-addraqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+poprl+posxaq-ctrlfenceiaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/WRW+WR+poprl+posxaq-poaqp Error
-./tests/ATOMICS/SAFE_PosWRXAq/Z6.4+fence.rw.rw+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/Z6.4+fence.rw.w+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/Z6.4+fence.w.w+fence.rw.rw+posxaq Error
-./tests/ATOMICS/SAFE_PosWRXAq/Z6.4+poprl+fence.rw.rw+posxaq Error
-./tests/BASIC_2_THREAD/2+2W+fence.rw.rw+po Ok
-./tests/BASIC_2_THREAD/2+2W+fence.rw.rws Ok
-./tests/BASIC_2_THREAD/2+2W Ok
-./tests/BASIC_2_THREAD/LB+ctrl+po Ok
-./tests/BASIC_2_THREAD/LB+ctrls Ok
-./tests/BASIC_2_THREAD/LB+data+ctrl Ok
-./tests/BASIC_2_THREAD/LB+data+po Ok
-./tests/BASIC_2_THREAD/LB+datas Ok
-./tests/BASIC_2_THREAD/LB+fence.rw.rw+ctrl Ok
-./tests/BASIC_2_THREAD/LB+fence.rw.rw+data Ok
-./tests/BASIC_2_THREAD/LB+fence.rw.rw+po Ok
-./tests/BASIC_2_THREAD/LB+fence.rw.rws Ok
-./tests/BASIC_2_THREAD/LB Ok
-./tests/BASIC_2_THREAD/MP+fence.rw.rw+addr Ok
-./tests/BASIC_2_THREAD/MP+fence.rw.rw+ctrl Ok
-./tests/BASIC_2_THREAD/MP+fence.rw.rw+po Ok
-./tests/BASIC_2_THREAD/MP+fence.rw.rws Ok
-./tests/BASIC_2_THREAD/MP Ok
-./tests/BASIC_2_THREAD/MP+po+addr Ok
-./tests/BASIC_2_THREAD/MP+po+ctrl Ok
-./tests/BASIC_2_THREAD/MP+po+fence.rw.rw Ok
-./tests/BASIC_2_THREAD/R+fence.rw.rw+po Ok
-./tests/BASIC_2_THREAD/R+fence.rw.rws Ok
-./tests/BASIC_2_THREAD/R Ok
-./tests/BASIC_2_THREAD/R+po+fence.rw.rw Ok
-./tests/BASIC_2_THREAD/SB+fence.rw.rw+po Ok
-./tests/BASIC_2_THREAD/SB+fence.rw.rws Ok
-./tests/BASIC_2_THREAD/SB Ok
-./tests/BASIC_2_THREAD/S+fence.rw.rw+ctrl Ok
-./tests/BASIC_2_THREAD/S+fence.rw.rw+data Ok
-./tests/BASIC_2_THREAD/S+fence.rw.rw+po Ok
-./tests/BASIC_2_THREAD/S+fence.rw.rws Ok
-./tests/BASIC_2_THREAD/S Ok
-./tests/BASIC_2_THREAD/S+po+ctrl Ok
-./tests/BASIC_2_THREAD/S+po+data Ok
-./tests/BASIC_2_THREAD/S+po+fence.rw.rw Ok
-./tests/CO/2+2W+fence.rw.rws+pos Ok
-./tests/CO/2+2W+fence.rw.rwss Ok
-./tests/CO/2+2W+poss Ok
-./tests/CO/CoRR+fence.rw.rws Ok
-./tests/CO/CoRR Ok
-./tests/CO/CoRW1+fence.rw.rws Ok
-./tests/CO/CoRW1 Ok
-./tests/CO/CoRW2+fence.rw.rws Ok
-./tests/CO/CoRW2 Ok
-./tests/CO/CO-SBI Ok
-./tests/CO/CoWR0+fence.rw.rws Ok
-./tests/CO/CoWR0 Ok
-./tests/CO/CoWW+fence.rw.rws Ok
-./tests/CO/CoWW Ok
-./tests/CO/LB+fence.rw.rws+pos Ok
-./tests/CO/LB+fence.rw.rwss Ok
-./tests/CO/LB+poss Ok
-./tests/CO/MP+fence.rw.rws+pos Ok
-./tests/CO/MP+fence.rw.rwss Ok
-./tests/CO/MP+pos+fence.rw.rws Ok
-./tests/CO/MP+poss Ok
-./tests/CO/R+fence.rw.rws+pos Ok
-./tests/CO/R+fence.rw.rwss Ok
-./tests/CO/R+pos+fence.rw.rws Ok
-./tests/CO/R+poss Ok
-./tests/CO/RWC+fence.rw.rws+pos Ok
-./tests/CO/RWC+fence.rw.rwss Ok
-./tests/CO/RWC+pos+fence.rw.rws Ok
-./tests/CO/RWC+poss Ok
-./tests/CO/SB+fence.rw.rws+pos Ok
-./tests/CO/SB+fence.rw.rwss Ok
-./tests/CO/SB+poss Ok
-./tests/CO/S+fence.rw.rws+pos Ok
-./tests/CO/S+fence.rw.rwss Ok
-./tests/CO/S+pos+fence.rw.rws Ok
-./tests/CO/S+poss Ok
-./tests/CO/WRC+fence.rw.rws+pos Ok
-./tests/CO/WRC+fence.rw.rwss Ok
-./tests/CO/WRC+pos+fence.rw.rws Ok
-./tests/CO/WRC+poss Ok
-./tests/CO/WRR+2W+fence.rw.rws+pos Ok
-./tests/CO/WRR+2W+fence.rw.rwss Ok
-./tests/CO/WRR+2W+pos+fence.rw.rws Ok
-./tests/CO/WRR+2W+poss Ok
-./tests/CO/WRW+2W+fence.rw.rws+pos Ok
-./tests/CO/WRW+2W+fence.rw.rwss Ok
-./tests/CO/WRW+2W+pos+fence.rw.rws Ok
-./tests/CO/WRW+2W+poss Ok
-./tests/CO/WRW+WR+fence.rw.rws+pos Ok
-./tests/CO/WRW+WR+fence.rw.rwss Ok
-./tests/CO/WRW+WR+pos+fence.rw.rws Ok
-./tests/CO/WRW+WR+poss Ok
-./tests/CO/WWC+fence.rw.rws+pos Ok
-./tests/CO/WWC+fence.rw.rwss Ok
-./tests/CO/WWC+pos+fence.rw.rws Ok
-./tests/CO/WWC+poss Ok
-./tests/FENCE.TSO/2/2+2W+fence.tso+fence.tsopx Ok
-./tests/FENCE.TSO/2/2+2W+fence.tso+fence.tsoxp Ok
-./tests/FENCE.TSO/2/2+2W+fence.tso+fence.tsoxx Ok
-./tests/FENCE.TSO/2/2+2W+fence.tsopx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/2+2W+fence.tsopx+fence.tsoxx Ok
-./tests/FENCE.TSO/2/2+2W+fence.tsopxs Ok
-./tests/FENCE.TSO/2/2+2W+fence.tsos Ok
-./tests/FENCE.TSO/2/2+2W+fence.tsoxp+fence.tsoxx Ok
-./tests/FENCE.TSO/2/2+2W+fence.tsoxps Ok
-./tests/FENCE.TSO/2/2+2W+fence.tsoxxs Ok
-./tests/FENCE.TSO/2/LB+fence.tso+fence.tsopx Ok
-./tests/FENCE.TSO/2/LB+fence.tso+fence.tsoxp Ok
-./tests/FENCE.TSO/2/LB+fence.tso+fence.tsoxx Ok
-./tests/FENCE.TSO/2/LB+fence.tsopx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/LB+fence.tsopx+fence.tsoxx Ok
-./tests/FENCE.TSO/2/LB+fence.tsopxs Ok
-./tests/FENCE.TSO/2/LB+fence.tsos Ok
-./tests/FENCE.TSO/2/LB+fence.tsoxp+fence.tsoxx Ok
-./tests/FENCE.TSO/2/LB+fence.tsoxps Ok
-./tests/FENCE.TSO/2/LB+fence.tsoxxs Ok
-./tests/FENCE.TSO/2/MP+fence.tso+fence.tsopx Ok
-./tests/FENCE.TSO/2/MP+fence.tso+fence.tsoxp Ok
-./tests/FENCE.TSO/2/MP+fence.tso+fence.tsoxx Ok
-./tests/FENCE.TSO/2/MP+fence.tsopx+fence.tso Ok
-./tests/FENCE.TSO/2/MP+fence.tsopx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/MP+fence.tsopx+fence.tsoxx Ok
-./tests/FENCE.TSO/2/MP+fence.tsopxs Ok
-./tests/FENCE.TSO/2/MP+fence.tsos Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxp+fence.tso Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxp+fence.tsopx Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxp+fence.tsoxx Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxps Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxx+fence.tso Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxx+fence.tsopx Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/MP+fence.tsoxxs Ok
-./tests/FENCE.TSO/2/R+fence.tso+fence.tsopx Ok
-./tests/FENCE.TSO/2/R+fence.tso+fence.tsoxp Ok
-./tests/FENCE.TSO/2/R+fence.tso+fence.tsoxx Ok
-./tests/FENCE.TSO/2/R+fence.tsopx+fence.tso Ok
-./tests/FENCE.TSO/2/R+fence.tsopx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/R+fence.tsopx+fence.tsoxx Ok
-./tests/FENCE.TSO/2/R+fence.tsopxs Ok
-./tests/FENCE.TSO/2/R+fence.tsos Ok
-./tests/FENCE.TSO/2/R+fence.tsoxp+fence.tso Ok
-./tests/FENCE.TSO/2/R+fence.tsoxp+fence.tsopx Ok
-./tests/FENCE.TSO/2/R+fence.tsoxp+fence.tsoxx Ok
-./tests/FENCE.TSO/2/R+fence.tsoxps Ok
-./tests/FENCE.TSO/2/R+fence.tsoxx+fence.tso Ok
-./tests/FENCE.TSO/2/R+fence.tsoxx+fence.tsopx Ok
-./tests/FENCE.TSO/2/R+fence.tsoxx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/R+fence.tsoxxs Ok
-./tests/FENCE.TSO/2/SB+fence.tso+fence.tsopx Ok
-./tests/FENCE.TSO/2/SB+fence.tso+fence.tsoxp Ok
-./tests/FENCE.TSO/2/SB+fence.tso+fence.tsoxx Ok
-./tests/FENCE.TSO/2/SB+fence.tsopx+fence.tsoxp No
-./tests/FENCE.TSO/2/SB+fence.tsopx+fence.tsoxx Ok
-./tests/FENCE.TSO/2/SB+fence.tsopxs Ok
-./tests/FENCE.TSO/2/SB+fence.tsos Ok
-./tests/FENCE.TSO/2/SB+fence.tsoxp+fence.tsoxx No
-./tests/FENCE.TSO/2/SB+fence.tsoxps Ok
-./tests/FENCE.TSO/2/SB+fence.tsoxxs Ok
-./tests/FENCE.TSO/2/S+fence.tso+fence.tsopx Ok
-./tests/FENCE.TSO/2/S+fence.tso+fence.tsoxp Ok
-./tests/FENCE.TSO/2/S+fence.tso+fence.tsoxx Ok
-./tests/FENCE.TSO/2/S+fence.tsopx+fence.tso Ok
-./tests/FENCE.TSO/2/S+fence.tsopx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/S+fence.tsopx+fence.tsoxx Ok
-./tests/FENCE.TSO/2/S+fence.tsopxs Ok
-./tests/FENCE.TSO/2/S+fence.tsos Ok
-./tests/FENCE.TSO/2/S+fence.tsoxp+fence.tso Ok
-./tests/FENCE.TSO/2/S+fence.tsoxp+fence.tsopx Ok
-./tests/FENCE.TSO/2/S+fence.tsoxp+fence.tsoxx Ok
-./tests/FENCE.TSO/2/S+fence.tsoxps Ok
-./tests/FENCE.TSO/2/S+fence.tsoxx+fence.tso Ok
-./tests/FENCE.TSO/2/S+fence.tsoxx+fence.tsopx Ok
-./tests/FENCE.TSO/2/S+fence.tsoxx+fence.tsoxp Ok
-./tests/FENCE.TSO/2/S+fence.tsoxxs Ok
-./tests/FENCE.TSO/RMW/RR+RR+rmw-fence.tsopxs Ok
-./tests/FENCE.TSO/RMW/RR+RR+rmw-fence.tso+rmw-fence.tsopx No
-./tests/FENCE.TSO/RMW/RR+RR+rmw-fence.tsos No
-./tests/RelAcq_2_THREAD/2+2W Ok
-./tests/RelAcq_2_THREAD/2+2W+po+poprl Error
-./tests/RelAcq_2_THREAD/2+2W+po+porlp Error
-./tests/RelAcq_2_THREAD/2+2W+po+porlrl Error
-./tests/RelAcq_2_THREAD/2+2W+poprl+porlp Error
-./tests/RelAcq_2_THREAD/2+2W+poprl+porlrl Error
-./tests/RelAcq_2_THREAD/2+2W+poprls Error
-./tests/RelAcq_2_THREAD/2+2W+porlp+porlrl Error
-./tests/RelAcq_2_THREAD/2+2W+porlps Error
-./tests/RelAcq_2_THREAD/2+2W+porlrls Error
-./tests/RelAcq_2_THREAD/LB Ok
-./tests/RelAcq_2_THREAD/LB+poaqp+poaqrl Error
-./tests/RelAcq_2_THREAD/LB+poaqps Error
-./tests/RelAcq_2_THREAD/LB+poaqrls Error
-./tests/RelAcq_2_THREAD/LB+po+poaqp Error
-./tests/RelAcq_2_THREAD/LB+po+poaqrl Error
-./tests/RelAcq_2_THREAD/LB+po+poprl Error
-./tests/RelAcq_2_THREAD/LB+poprl+poaqp Error
-./tests/RelAcq_2_THREAD/LB+poprl+poaqrl Error
-./tests/RelAcq_2_THREAD/LB+poprls Error
-./tests/RelAcq_2_THREAD/MP Ok
-./tests/RelAcq_2_THREAD/MP+po+poaqaq Error
-./tests/RelAcq_2_THREAD/MP+po+poaqp Error
-./tests/RelAcq_2_THREAD/MP+po+popaq Error
-./tests/RelAcq_2_THREAD/MP+poprl+poaqaq Error
-./tests/RelAcq_2_THREAD/MP+poprl+poaqp Error
-./tests/RelAcq_2_THREAD/MP+poprl+po Error
-./tests/RelAcq_2_THREAD/MP+poprl+popaq Error
-./tests/RelAcq_2_THREAD/MP+porlp+poaqaq Error
-./tests/RelAcq_2_THREAD/MP+porlp+poaqp Error
-./tests/RelAcq_2_THREAD/MP+porlp+po Error
-./tests/RelAcq_2_THREAD/MP+porlp+popaq Error
-./tests/RelAcq_2_THREAD/MP+porlrl+poaqaq Error
-./tests/RelAcq_2_THREAD/MP+porlrl+poaqp Error
-./tests/RelAcq_2_THREAD/MP+porlrl+po Error
-./tests/RelAcq_2_THREAD/MP+porlrl+popaq Error
-./tests/RelAcq_2_THREAD/R Ok
-./tests/RelAcq_2_THREAD/R+po+popaq Error
-./tests/RelAcq_2_THREAD/R+po+porlaq Error
-./tests/RelAcq_2_THREAD/R+po+porlp Error
-./tests/RelAcq_2_THREAD/R+poprl+po Error
-./tests/RelAcq_2_THREAD/R+poprl+popaq Error
-./tests/RelAcq_2_THREAD/R+poprl+porlaq Error
-./tests/RelAcq_2_THREAD/R+poprl+porlp Error
-./tests/RelAcq_2_THREAD/R+porlp+po Error
-./tests/RelAcq_2_THREAD/R+porlp+popaq Error
-./tests/RelAcq_2_THREAD/R+porlp+porlaq Error
-./tests/RelAcq_2_THREAD/R+porlps Error
-./tests/RelAcq_2_THREAD/R+porlrl+po Error
-./tests/RelAcq_2_THREAD/R+porlrl+popaq Error
-./tests/RelAcq_2_THREAD/R+porlrl+porlaq Error
-./tests/RelAcq_2_THREAD/R+porlrl+porlp Error
-./tests/RelAcq_2_THREAD/SB Ok
-./tests/RelAcq_2_THREAD/SB+popaq+porlaq Error
-./tests/RelAcq_2_THREAD/SB+popaq+porlp Error
-./tests/RelAcq_2_THREAD/SB+popaqs Error
-./tests/RelAcq_2_THREAD/SB+po+popaq Error
-./tests/RelAcq_2_THREAD/SB+po+porlaq Error
-./tests/RelAcq_2_THREAD/SB+po+porlp Error
-./tests/RelAcq_2_THREAD/SB+porlaqs Error
-./tests/RelAcq_2_THREAD/SB+porlp+porlaq Error
-./tests/RelAcq_2_THREAD/SB+porlps Error
-./tests/RelAcq_2_THREAD/S Ok
-./tests/RelAcq_2_THREAD/S+po+poaqp Error
-./tests/RelAcq_2_THREAD/S+po+poaqrl Error
-./tests/RelAcq_2_THREAD/S+po+poprl Error
-./tests/RelAcq_2_THREAD/S+poprl+poaqp Error
-./tests/RelAcq_2_THREAD/S+poprl+poaqrl Error
-./tests/RelAcq_2_THREAD/S+poprl+po Error
-./tests/RelAcq_2_THREAD/S+poprls Error
-./tests/RelAcq_2_THREAD/S+porlp+poaqp Error
-./tests/RelAcq_2_THREAD/S+porlp+poaqrl Error
-./tests/RelAcq_2_THREAD/S+porlp+po Error
-./tests/RelAcq_2_THREAD/S+porlp+poprl Error
-./tests/RelAcq_2_THREAD/S+porlrl+poaqp Error
-./tests/RelAcq_2_THREAD/S+porlrl+poaqrl Error
-./tests/RelAcq_2_THREAD/S+porlrl+po Error
-./tests/RelAcq_2_THREAD/S+porlrl+poprl Error
-./tests/RELAX/Coi-Rfi/LB+addr+addr-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+addr+addr-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+addr+addr-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+addr+ctrl-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+addr+ctrl-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+addr+ctrl-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+addr+data-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+addr+data-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+addr+data-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+addr-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+addr-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+addr-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+ctrl-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+ctrl-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+ctrl-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+data-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+data-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+ctrl+data-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+data+addr-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+data+addr-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+data+addr-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+data+ctrl-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+data+ctrl-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+data+ctrl-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+data+data-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+data+data-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+data+data-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+addr-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+addr-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+addr-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+ctrl-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+ctrl-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+ctrl-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+data-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+data-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+data-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+addr-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+addr-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+ctrl-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+ctrl-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+data-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+data-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-addr+addr Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-addr+ctrl Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-addr+fence.rw.rw Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-ctrl+addr Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-ctrl+ctrl Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-ctrl+fence.rw.rw Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-data+addr Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-data+ctrl Ok
-./tests/RELAX/Coi-Rfi/MP+wsi-rfi-data+fence.rw.rw Ok
-./tests/RELAX/Coi-Rfi/R+wsi-rfi-addr+fence.rw.rw Ok
-./tests/RELAX/Coi-Rfi/R+wsi-rfi-ctrl+fence.rw.rw Ok
-./tests/RELAX/Coi-Rfi/R+wsi-rfi-data+fence.rw.rw Ok
-./tests/RELAX/Coi-Rfi/SB+fence.rw.rw+wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/SB+fence.rw.rw+wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/SB+wsi-rfi-addrs Ok
-./tests/RELAX/Coi-Rfi/SB+wsi-rfi-addr+wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/SB+wsi-rfi-ctrls Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+addr-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+addr-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+addr-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+ctrl-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+ctrl-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+ctrl-wsi-rfi-data Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+data-wsi-rfi-addr Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+data-wsi-rfi-ctrl Ok
-./tests/RELAX/Coi-Rfi/S+fence.rw.rw+data-wsi-rfi-data Ok
-./tests/RELAX/DpCtrldR/MP+fence.rw.rw+ctrl Ok
-./tests/RELAX/DpCtrldR/MP+fence.rw.w+ctrl Ok
-./tests/RELAX/DpCtrldR/MP+fence.w.w+ctrl Ok
-./tests/RELAX/DpCtrldR/MP+poprl+ctrl Error
-./tests/RELAX/Fence.idRR/MP+fence.rw.rw+fence.i Ok
-./tests/RELAX/Fence.idRR/MP+fence.rw.w+fence.i Ok
-./tests/RELAX/Fence.idRR/MP+fence.w.w+fence.i Ok
-./tests/RELAX/Fence.idRR/MP+poprl+fence.i Error
-./tests/RELAX/Fence.idRW/LB+fence.i+addr Ok
-./tests/RELAX/Fence.idRW/LB+fence.i+ctrlfencei Ok
-./tests/RELAX/Fence.idRW/LB+fence.i+ctrl Ok
-./tests/RELAX/Fence.idRW/LB+fence.i+data Ok
-./tests/RELAX/Fence.idRW/LB+fence.i+fence.r.rw Ok
-./tests/RELAX/Fence.idRW/LB+fence.i+fence.rw.rw Ok
-./tests/RELAX/Fence.idRW/LB+fence.i+fence.rw.w Ok
-./tests/RELAX/Fence.idRW/LB+fence.i+poaqp Error
-./tests/RELAX/Fence.idRW/LB+fence.i+poprl Error
-./tests/RELAX/Fence.idRW/LB+fence.is Ok
-./tests/RELAX/Fence.idRW/S+fence.rw.rw+fence.i Ok
-./tests/RELAX/Fence.idRW/S+fence.rw.w+fence.i Ok
-./tests/RELAX/Fence.idRW/S+fence.w.w+fence.i Ok
-./tests/RELAX/Fence.idRW/S+poprl+fence.i Error
-./tests/RELAX/Fence.idWR/R+fence.rw.rw+fence.i Ok
-./tests/RELAX/Fence.idWR/R+fence.rw.w+fence.i Ok
-./tests/RELAX/Fence.idWR/R+fence.w.w+fence.i Ok
-./tests/RELAX/Fence.idWR/R+poprl+fence.i Error
-./tests/RELAX/Fence.idWR/SB+fence.i+fence.rw.rw Ok
-./tests/RELAX/Fence.idWR/SB+fence.is Ok
-./tests/RELAX/Fence.idWW/2+2W+fence.i+fence.rw.rw Ok
-./tests/RELAX/Fence.idWW/2+2W+fence.i+fence.rw.w Ok
-./tests/RELAX/Fence.idWW/2+2W+fence.i+fence.w.w Ok
-./tests/RELAX/Fence.idWW/2+2W+fence.i+poprl Error
-./tests/RELAX/Fence.idWW/2+2W+fence.is Ok
-./tests/RELAX/Fence.idWW/MP+fence.i+addr Ok
-./tests/RELAX/Fence.idWW/MP+fence.i+ctrlfencei Ok
-./tests/RELAX/Fence.idWW/MP+fence.i+fence.r.rw Ok
-./tests/RELAX/Fence.idWW/MP+fence.i+fence.rw.rw Ok
-./tests/RELAX/Fence.idWW/MP+fence.i+poaqp Error
-./tests/RELAX/Fence.idWW/R+fence.i+fence.rw.rw Ok
-./tests/RELAX/Fence.idWW/S+fence.i+addr Ok
-./tests/RELAX/Fence.idWW/S+fence.i+ctrlfencei Ok
-./tests/RELAX/Fence.idWW/S+fence.i+ctrl Ok
-./tests/RELAX/Fence.idWW/S+fence.i+data Ok
-./tests/RELAX/Fence.idWW/S+fence.i+fence.r.rw Ok
-./tests/RELAX/Fence.idWW/S+fence.i+fence.rw.rw Ok
-./tests/RELAX/Fence.idWW/S+fence.i+fence.rw.w Ok
-./tests/RELAX/Fence.idWW/S+fence.i+poaqp Error
-./tests/RELAX/Fence.idWW/S+fence.i+poprl Error
-./tests/RELAX/Fence.r.rwdWR/R+fence.rw.rw+fence.r.rw Ok
-./tests/RELAX/Fence.r.rwdWR/R+fence.rw.w+fence.r.rw Ok
-./tests/RELAX/Fence.r.rwdWR/R+fence.w.w+fence.r.rw Ok
-./tests/RELAX/Fence.r.rwdWR/R+poprl+fence.r.rw Error
-./tests/RELAX/Fence.r.rwdWR/SB+fence.r.rw+fence.rw.rw Ok
-./tests/RELAX/Fence.r.rwdWR/SB+fence.r.rws Ok
-./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rw+fence.rw.rw Ok
-./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rw+fence.rw.w Ok
-./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rw+fence.w.w Ok
-./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rw+poprl Error
-./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rws Ok
-./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rw+addr Ok
-./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rw+ctrlfencei Ok
-./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rw+fence.rw.rw Ok
-./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rw+poaqp Error
-./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rws Ok
-./tests/RELAX/Fence.r.rwdWW/R+fence.r.rw+fence.rw.rw Ok
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+addr Ok
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+ctrlfencei Ok
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+ctrl Ok
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+data Ok
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+fence.rw.rw Ok
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+fence.rw.w Ok
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+poaqp Error
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+poprl Error
-./tests/RELAX/Fence.r.rwdWW/S+fence.r.rws Ok
-./tests/RELAX/Fence.rw.wdRR/MP+fence.rw.rw+fence.rw.w Ok
-./tests/RELAX/Fence.rw.wdRR/MP+fence.rw.ws Ok
-./tests/RELAX/Fence.rw.wdRR/MP+fence.w.w+fence.rw.w Ok
-./tests/RELAX/Fence.rw.wdRR/MP+poprl+fence.rw.w Error
-./tests/RELAX/Fence.rw.wdWR/R+fence.rw.rw+fence.rw.w Ok
-./tests/RELAX/Fence.rw.wdWR/R+fence.rw.ws Ok
-./tests/RELAX/Fence.rw.wdWR/R+fence.w.w+fence.rw.w Ok
-./tests/RELAX/Fence.rw.wdWR/R+poprl+fence.rw.w Error
-./tests/RELAX/Fence.rw.wdWR/SB+fence.rw.w+fence.rw.rw Ok
-./tests/RELAX/Fence.rw.wdWR/SB+fence.rw.ws Ok
-./tests/RELAX/Fence.w.wdRR/MP+fence.rw.rw+fence.w.w Ok
-./tests/RELAX/Fence.w.wdRR/MP+fence.rw.w+fence.w.w Ok
-./tests/RELAX/Fence.w.wdRR/MP+fence.w.ws Ok
-./tests/RELAX/Fence.w.wdRR/MP+poprl+fence.w.w Error
-./tests/RELAX/Fence.w.wdRW/LB+fence.r.rw+fence.w.w Ok
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+addr Ok
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+ctrlfencei Ok
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+ctrl Ok
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+data Ok
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+fence.rw.rw Ok
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+fence.rw.w Ok
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+poaqp Error
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+poprl Error
-./tests/RELAX/Fence.w.wdRW/LB+fence.w.ws Ok
-./tests/RELAX/Fence.w.wdRW/S+fence.rw.rw+fence.w.w Ok
-./tests/RELAX/Fence.w.wdRW/S+fence.rw.w+fence.w.w Ok
-./tests/RELAX/Fence.w.wdRW/S+fence.w.ws Ok
-./tests/RELAX/Fence.w.wdRW/S+poprl+fence.w.w Error
-./tests/RELAX/Fence.w.wdWR/R+fence.rw.rw+fence.w.w Ok
-./tests/RELAX/Fence.w.wdWR/R+fence.rw.w+fence.w.w Ok
-./tests/RELAX/Fence.w.wdWR/R+fence.w.ws Ok
-./tests/RELAX/Fence.w.wdWR/R+poprl+fence.w.w Error
-./tests/RELAX/Fence.w.wdWR/SB+fence.w.w+fence.rw.rw Ok
-./tests/RELAX/Fence.w.wdWR/SB+fence.w.ws Ok
-./tests/RELAX/Fri-Rfi/LB+addr+addr-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+addr+addr-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+addr+addr-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+addr+ctrl-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+addr+ctrl-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+addr+ctrl-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+addr+fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+addr+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+addr+fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+addr-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+addr-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+addr-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+ctrl-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+ctrl-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+ctrl-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+ctrl+fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+data+addr-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+data+addr-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+data+addr-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+data+ctrl-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+data+ctrl-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+data+ctrl-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+data+fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+data+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+data+fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+addr-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+addr-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+addr-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+ctrl-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+ctrl-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+ctrl-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+fri-rfi-addr+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+fri-rfi-addr+fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/LB+fri-rfi-addrs Ok
-./tests/RELAX/Fri-Rfi/LB+fri-rfi-ctrls Ok
-./tests/RELAX/Fri-Rfi/LB+fri-rfi-data+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/LB+fri-rfi-datas Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+addr-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+addr-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+addr-fri-rfi Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+ctrl-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+ctrl-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+ctrl-fri-rfi Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-addr-fri-rfi Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-ctrl-fri-rfi Ok
-./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+addr-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+addr-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+addr-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+ctrl-fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+ctrl-fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+ctrl-fri-rfi-data Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+fri-rfi-addr Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+fri-rfi-ctrl Ok
-./tests/RELAX/Fri-Rfi/S+fence.rw.rw+fri-rfi-data Ok
-./tests/RELAX/PodRR/MP+fence.rw.rw+po Ok
-./tests/RELAX/PodRR/MP+fence.rw.w+po Ok
-./tests/RELAX/PodRR/MP+fence.w.w+po Ok
-./tests/RELAX/PodRR/MP+poprl+po Error
-./tests/RELAX/PodRRPAq/MP+fence.rw.rw+popaq Error
-./tests/RELAX/PodRRPAq/MP+fence.rw.w+popaq Error
-./tests/RELAX/PodRRPAq/MP+fence.w.w+popaq Error
-./tests/RELAX/PodRRPAq/MP+poprl+popaq Error
-./tests/RELAX/PodRW/LB+addr+po Ok
-./tests/RELAX/PodRW/LB+ctrlfencei+po Ok
-./tests/RELAX/PodRW/LB+ctrl+po Ok
-./tests/RELAX/PodRW/LB+data+po Ok
-./tests/RELAX/PodRW/LB+fence.r.rw+po Ok
-./tests/RELAX/PodRW/LB+fence.rw.rw+po Ok
-./tests/RELAX/PodRW/LB+fence.rw.w+po Ok
-./tests/RELAX/PodRW/LB Ok
-./tests/RELAX/PodRW/LB+po+poaqp Error
-./tests/RELAX/PodRW/LB+po+poprl Error
-./tests/RELAX/PodRW/S+fence.rw.rw+po Ok
-./tests/RELAX/PodRW/S+fence.rw.w+po Ok
-./tests/RELAX/PodRW/S+fence.w.w+po Ok
-./tests/RELAX/PodRW/S+poprl+po Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+popaq Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+poprl-porlaq Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+popaq Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+poprl-porlaq Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+fence.rw.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+popaq Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+poprl-porlaq Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+fence.w.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+poprl+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+popaq Error
-./tests/RELAX/PodWRPAq/R+poprl+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/R+poprl+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+poprl-porlaq Error
-./tests/RELAX/PodWRPAq/R+poprl+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/R+poprl+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+popaq Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+poprl-porlaq Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+pos-popaq Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+fence.rw.rw+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addraqps Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-addrsaqps Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceiaqps Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-ctrlfenceisaqps Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-poaqps Error
-./tests/RELAX/PodWRPAq/SB+popaq+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+poprl-porlaq Error
-./tests/RELAX/PodWRPAq/SB+popaq+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq-posaqps Error
-./tests/RELAX/PodWRPAq/SB+popaq+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+pos-popaq Error
-./tests/RELAX/PodWRPAq/SB+popaq+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+popaq+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+popaqs Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addraqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addraqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addraqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addraqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addraqps Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-addrsaqps Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-ctrlfenceiaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-ctrlfenceiaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-ctrlfenceiaqps Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-ctrlfenceisaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-ctrlfenceisaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-ctrlfenceisaqps Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-poaqps Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq-posaqps Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaq+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+poprl-porlaqs Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addraqps Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-addrsaqps Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceiaqps Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-ctrlfenceisaqps Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-poaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-poaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-poaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-poaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-poaqps Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+poprl-porlaq Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq-posaqps Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+pos-popaq-addraqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+pos-popaq-addrsaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+pos-popaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+pos-popaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+pos-popaq-poaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaq+pos-popaq-posaqp Error
-./tests/RELAX/PodWRPAq/SB+pos-popaqs Error
-./tests/RELAX/PodWR/R+fence.rw.rw+po-addr Ok
-./tests/RELAX/PodWR/R+fence.rw.rw+po-addrs Ok
-./tests/RELAX/PodWR/R+fence.rw.rw+po-ctrlfencei Ok
-./tests/RELAX/PodWR/R+fence.rw.rw+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/R+fence.rw.rw+po Ok
-./tests/RELAX/PodWR/R+fence.rw.rw+popaq-poaqp Error
-./tests/RELAX/PodWR/R+fence.rw.rw+popaq-posaqp Error
-./tests/RELAX/PodWR/R+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/R+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/R+fence.rw.rw+poprl-porlp-addr Error
-./tests/RELAX/PodWR/R+fence.rw.rw+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/R+fence.rw.rw+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/R+fence.rw.rw+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/R+fence.rw.rw+poprl-porlp Error
-./tests/RELAX/PodWR/R+fence.rw.w+po-addr Ok
-./tests/RELAX/PodWR/R+fence.rw.w+po-addrs Ok
-./tests/RELAX/PodWR/R+fence.rw.w+po-ctrlfencei Ok
-./tests/RELAX/PodWR/R+fence.rw.w+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/R+fence.rw.w+po Ok
-./tests/RELAX/PodWR/R+fence.rw.w+popaq-poaqp Error
-./tests/RELAX/PodWR/R+fence.rw.w+popaq-posaqp Error
-./tests/RELAX/PodWR/R+fence.rw.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/R+fence.rw.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/R+fence.rw.w+poprl-porlp-addr Error
-./tests/RELAX/PodWR/R+fence.rw.w+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/R+fence.rw.w+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/R+fence.rw.w+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/R+fence.rw.w+poprl-porlp Error
-./tests/RELAX/PodWR/R+fence.w.w+po-addr Ok
-./tests/RELAX/PodWR/R+fence.w.w+po-addrs Ok
-./tests/RELAX/PodWR/R+fence.w.w+po-ctrlfencei Ok
-./tests/RELAX/PodWR/R+fence.w.w+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/R+fence.w.w+po Ok
-./tests/RELAX/PodWR/R+fence.w.w+popaq-poaqp Error
-./tests/RELAX/PodWR/R+fence.w.w+popaq-posaqp Error
-./tests/RELAX/PodWR/R+fence.w.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/R+fence.w.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/R+fence.w.w+poprl-porlp-addr Error
-./tests/RELAX/PodWR/R+fence.w.w+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/R+fence.w.w+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/R+fence.w.w+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/R+fence.w.w+poprl-porlp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+poprl-porlaq Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+porlaq Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.rw+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+poprl-porlaq Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+porlaq Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.rw.w+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+poprl-porlaq Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+porlaq Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+fence.w.w+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+poprl-porlaq Error
-./tests/RELAX/PodWRRlAq/R+poprl+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+porlaq Error
-./tests/RELAX/PodWRRlAq/R+poprl+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/R+poprl+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+poprl-porlaq Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+porlaq Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+posprl-porlaq Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+fence.rw.rw+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addraqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addraqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addraqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addraqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addraqps Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addrsaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-addrsaqps Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-ctrlfenceiaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-ctrlfenceiaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-ctrlfenceiaqps Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-ctrlfenceisaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-ctrlfenceisaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-ctrlfenceisaqps Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-poaqps Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq-posaqps Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaq+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+poprl-porlaqs Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addraqps Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-addrsaqps Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceiaqps Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-ctrlfenceisaqps Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-poaqps Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+poprl-porlaq Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq-posaqps Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+posprl-porlaq Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaq+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+porlaqs Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addraqps Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-addrsaqps Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceiaqps Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-ctrlfenceisaqps Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-poaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-poaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-poaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-poaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-poaqps Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+poprl-porlaq Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqp+poprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqp+poprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqp+poprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqp+poprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq-posaqps Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+posprl-porlaq-addraqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+posprl-porlaq-addrsaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+posprl-porlaq-ctrlfenceiaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+posprl-porlaq-ctrlfenceisaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaq+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlAq/SB+posprl-porlaqs Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+poprl-porlp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+porlp-addr Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+fence.rw.rw+porlp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+poprl-porlp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+porlp-addr Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+fence.rw.w+porlp Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+poprl-porlp Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+porlp-addr Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+fence.w.w+porlp Error
-./tests/RELAX/PodWRRlP/R+poprl+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+poprl+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+poprl+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/R+poprl+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+poprl+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+poprl+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+poprl+poprl-porlp Error
-./tests/RELAX/PodWRRlP/R+poprl+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/R+poprl+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/R+poprl+porlp-addr Error
-./tests/RELAX/PodWRRlP/R+poprl+porlp-addrs Error
-./tests/RELAX/PodWRRlP/R+poprl+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/R+poprl+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/R+poprl+porlp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+poprl-porlp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+porlp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+fence.rw.rw+posprl-porlp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlaq-poaqps Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlaq-posaqps Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addr+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addr+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addr+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addr+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addrs+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addrs+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addrs+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addrs+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addrs+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-addrss Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-ctrlfencei+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-ctrlfencei+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-ctrlfenceis+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-ctrlfenceis+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-ctrlfenceis+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp-ctrlfenceiss Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlp+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+poprl-porlps Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqp+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlaq-poaqps Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqp+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlaq-posaqps Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-addr+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrs+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-addrss Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfencei+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceis+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp-ctrlfenceiss Error
-./tests/RELAX/PodWRRlP/SB+porlp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp+poprl-porlp Error
-./tests/RELAX/PodWRRlP/SB+porlp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp+porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp+porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+porlp+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+porlp+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+porlp+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+porlp+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+porlp+posprl-porlp Error
-./tests/RELAX/PodWRRlP/SB+porlps Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-poaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-poaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-poaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-poaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-poaqps Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlaq-posaqps Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addr+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrs+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-addrss Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfencei+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceis+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp-ctrlfenceiss Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+poprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+poprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+poprl-porlp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+posprl-porlaq-poaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+posprl-porlaq-posaqp Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+posprl-porlp-addr Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+posprl-porlp-addrs Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+posprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlp+posprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWRRlP/SB+posprl-porlps Error
-./tests/RELAX/PodWR/R+poprl+po-addr Error
-./tests/RELAX/PodWR/R+poprl+po-addrs Error
-./tests/RELAX/PodWR/R+poprl+po-ctrlfencei Error
-./tests/RELAX/PodWR/R+poprl+po-ctrlfenceis Error
-./tests/RELAX/PodWR/R+poprl+po Error
-./tests/RELAX/PodWR/R+poprl+popaq-poaqp Error
-./tests/RELAX/PodWR/R+poprl+popaq-posaqp Error
-./tests/RELAX/PodWR/R+poprl+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/R+poprl+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/R+poprl+poprl-porlp-addr Error
-./tests/RELAX/PodWR/R+poprl+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/R+poprl+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/R+poprl+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/R+poprl+poprl-porlp Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+po-addr Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+po-addrs Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+po Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+poprl-porlp Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-addr Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-addrs Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po Ok
-./tests/RELAX/PodWR/SB+fence.rw.rw+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+fence.rw.rw+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB Ok
-./tests/RELAX/PodWR/SB+po-addr+po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po-addr+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po-addr+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-addr+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-addr+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-addr+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-addr+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+po-addr+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+po-addr+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po-addr+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+po-addr+pos-po-addr Error
-./tests/RELAX/PodWR/SB+po-addr+pos-po-addrs Ok
-./tests/RELAX/PodWR/SB+po-addr+pos-po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po-addr+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po-addr+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-addr+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-addrs Error
-./tests/RELAX/PodWR/SB+po-addrs+po-addr Ok
-./tests/RELAX/PodWR/SB+po-addrs+po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+po-addrs+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po-addrs+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-addrs+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-addrs+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-addrs+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-addrs+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+po-addrs+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+po-addrs+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po-addrs+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+po-addrs+pos-po-addr Ok
-./tests/RELAX/PodWR/SB+po-addrs+pos-po-addrs Ok
-./tests/RELAX/PodWR/SB+po-addrs+pos-po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+po-addrs+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po-addrs+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-addrs+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-addrss Ok
-./tests/RELAX/PodWR/SB+po-ctrlfencei+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-po-addr Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-po-addrs Ok
-./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-addr Ok
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-addrs Ok
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po-ctrlfenceiss Ok
-./tests/RELAX/PodWR/SB+popaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+pos-po-addr Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+pos-po-addrs Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+pos-po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+pos-po-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+popaq-poaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+popaq-poaqps Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+pos-po-addr Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+pos-po-addrs Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+pos-po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+pos-po-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+popaq-posaqp+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+popaq-posaqps Error
-./tests/RELAX/PodWR/SB+po+po-addr Ok
-./tests/RELAX/PodWR/SB+po+po-addrs Ok
-./tests/RELAX/PodWR/SB+po+po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+po+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+po+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+po+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+po+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+po+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+po+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+po+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+po+poprl-porlp Error
-./tests/RELAX/PodWR/SB+po+pos-po-addr Ok
-./tests/RELAX/PodWR/SB+po+pos-po-addrs Ok
-./tests/RELAX/PodWR/SB+po+pos-po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+po+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+po+pos-po Ok
-./tests/RELAX/PodWR/SB+po+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+po+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlaq-poaqps Error
-./tests/RELAX/PodWR/SB+poprl-porlaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlaq-posaqps Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addr+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addr+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addr+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addr+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addrs+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addrs+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addrs+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addrs+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addrs+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+poprl-porlp-addrss Error
-./tests/RELAX/PodWR/SB+poprl-porlp-ctrlfencei+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-ctrlfencei+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+poprl-porlp-ctrlfenceis+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-ctrlfenceis+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp-ctrlfenceis+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+poprl-porlp-ctrlfenceiss Error
-./tests/RELAX/PodWR/SB+poprl-porlp+po-addr Error
-./tests/RELAX/PodWR/SB+poprl-porlp+po-addrs Error
-./tests/RELAX/PodWR/SB+poprl-porlp+po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+poprl-porlp+po-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+poprl-porlp+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+poprl-porlp+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+poprl-porlp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+poprl-porlp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+poprl-porlp+pos-po-addr Error
-./tests/RELAX/PodWR/SB+poprl-porlp+pos-po-addrs Error
-./tests/RELAX/PodWR/SB+poprl-porlp+pos-po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+poprl-porlp+pos-po-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+poprl-porlp+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlp+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+poprl-porlps Error
-./tests/RELAX/PodWR/SB+pos-po-addr+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addr+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addr+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+pos-po-addr+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+pos-po-addr+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-po-addr+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-po-addr+pos-po-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-po-addr+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+pos-po-addr+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addr+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addrs Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+pos-po-addr Ok
-./tests/RELAX/PodWR/SB+pos-po-addrs+pos-po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+pos-po-addrs+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+pos-po-addrs+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addrs+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-addrss Ok
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfencei+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+pos-po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po-ctrlfenceiss Ok
-./tests/RELAX/PodWR/SB+pos-popaq-poaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-popaq-poaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-popaq-poaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+pos-popaq-poaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+pos-popaq-poaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-popaq-poaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-popaq-poaqps Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqp+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqp+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqp+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqp+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqp+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqp+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqp+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-popaq-posaqps Error
-./tests/RELAX/PodWR/SB+pos-po+po-addr Ok
-./tests/RELAX/PodWR/SB+pos-po+po-addrs Ok
-./tests/RELAX/PodWR/SB+pos-po+po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+pos-po+po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+pos-po+popaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po+popaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po+poprl-porlaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po+poprl-porlaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-po+poprl-porlp-addr Error
-./tests/RELAX/PodWR/SB+pos-po+poprl-porlp-addrs Error
-./tests/RELAX/PodWR/SB+pos-po+poprl-porlp-ctrlfencei Error
-./tests/RELAX/PodWR/SB+pos-po+poprl-porlp-ctrlfenceis Error
-./tests/RELAX/PodWR/SB+pos-po+poprl-porlp Error
-./tests/RELAX/PodWR/SB+pos-po+pos-po-addr Ok
-./tests/RELAX/PodWR/SB+pos-po+pos-po-addrs Ok
-./tests/RELAX/PodWR/SB+pos-po+pos-po-ctrlfencei Ok
-./tests/RELAX/PodWR/SB+pos-po+pos-po-ctrlfenceis Ok
-./tests/RELAX/PodWR/SB+pos-po+pos-popaq-poaqp Error
-./tests/RELAX/PodWR/SB+pos-po+pos-popaq-posaqp Error
-./tests/RELAX/PodWR/SB+pos-pos Ok
-./tests/RELAX/PodWW/2+2W+fence.rw.rw+po Ok
-./tests/RELAX/PodWW/2+2W+fence.rw.w+po Ok
-./tests/RELAX/PodWW/2+2W+fence.w.w+po Ok
-./tests/RELAX/PodWW/2+2W Ok
-./tests/RELAX/PodWW/2+2W+po+poprl Error
-./tests/RELAX/PodWW/MP+po+addr Ok
-./tests/RELAX/PodWW/MP+po+ctrlfencei Ok
-./tests/RELAX/PodWW/MP+po+fence.r.rw Ok
-./tests/RELAX/PodWW/MP+po+fence.rw.rw Ok
-./tests/RELAX/PodWW/MP+po+poaqp Error
-./tests/RELAX/PodWWRlP/2+2W+fence.rw.rw+porlp Error
-./tests/RELAX/PodWWRlP/2+2W+fence.rw.w+porlp Error
-./tests/RELAX/PodWWRlP/2+2W+fence.w.w+porlp Error
-./tests/RELAX/PodWWRlP/2+2W+poprl+porlp Error
-./tests/RELAX/PodWWRlP/2+2W+porlps Error
-./tests/RELAX/PodWWRlP/MP+porlp+addr Error
-./tests/RELAX/PodWWRlP/MP+porlp+ctrlfencei Error
-./tests/RELAX/PodWWRlP/MP+porlp+fence.r.rw Error
-./tests/RELAX/PodWWRlP/MP+porlp+fence.rw.rw Error
-./tests/RELAX/PodWWRlP/MP+porlp+poaqp Error
-./tests/RELAX/PodWWRlP/R+porlp+fence.rw.rw Error
-./tests/RELAX/PodWWRlP/S+porlp+addr Error
-./tests/RELAX/PodWWRlP/S+porlp+ctrl Error
-./tests/RELAX/PodWWRlP/S+porlp+ctrlfencei Error
-./tests/RELAX/PodWWRlP/S+porlp+data Error
-./tests/RELAX/PodWWRlP/S+porlp+fence.r.rw Error
-./tests/RELAX/PodWWRlP/S+porlp+fence.rw.rw Error
-./tests/RELAX/PodWWRlP/S+porlp+fence.rw.w Error
-./tests/RELAX/PodWWRlP/S+porlp+poaqp Error
-./tests/RELAX/PodWWRlP/S+porlp+poprl Error
-./tests/RELAX/PodWW/R+po+fence.rw.rw Ok
-./tests/RELAX/PodWW/S+po+addr Ok
-./tests/RELAX/PodWW/S+po+ctrlfencei Ok
-./tests/RELAX/PodWW/S+po+ctrl Ok
-./tests/RELAX/PodWW/S+po+data Ok
-./tests/RELAX/PodWW/S+po+fence.r.rw Ok
-./tests/RELAX/PodWW/S+po+fence.rw.rw Ok
-./tests/RELAX/PodWW/S+po+fence.rw.w Ok
-./tests/RELAX/PodWW/S+po+poaqp Error
-./tests/RELAX/PodWW/S+po+poprl Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.rw+pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+fence.rw.w+pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+fence.w.w+pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/R+poprl+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+poprl+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/R+poprl+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+poprl+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/R+poprl+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/R+poprl+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/R+poprl+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/R+poprl+pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/R+poprl+pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/R+poprl+pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+pos-pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+pos-pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+fence.rw.rw+pos-pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addraqps Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-addrsaqps Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-ctrlfenceiaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-ctrlfenceiaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-ctrlfenceiaqps Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-ctrlfenceisaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-ctrlfenceisaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-ctrlfenceisaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-ctrlfenceisaqps Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-poaqps Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-posaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaq-posaqps Error
-./tests/RELAX/PosWRPAq/SB+poprl-posrlaqs Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+pos-pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+pos-pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqp+pos-pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-addraqps Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+pos-pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+pos-pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqp+pos-pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-ctrlfenceiaqps Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+poprl-posrlaq Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+pos-pospaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+pos-pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqp+pos-pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pospaq-poaqps Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-addraqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-addraqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-addraqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-addraqp+pos-pospaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-addraqp+pos-pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-addraqps Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-ctrlfenceiaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-ctrlfenceiaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-ctrlfenceiaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-ctrlfenceiaqp+pos-pospaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-ctrlfenceiaqps Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-poaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-poaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRPAq/SB+pos-pospaq-poaqps Error
-./tests/RELAX/PosWR/R+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/R+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/R+fence.rw.rw+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/R+fence.rw.rw+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/R+fence.rw.rw+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/R+fence.rw.rw+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/R+fence.rw.rw+poprl-posrlp Error
-./tests/RELAX/PosWR/R+fence.rw.rw+pos-addr Ok
-./tests/RELAX/PosWR/R+fence.rw.rw+pos-ctrlfencei Ok
-./tests/RELAX/PosWR/R+fence.rw.rw+pospaq-poaqp Error
-./tests/RELAX/PosWR/R+fence.rw.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/R+fence.rw.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/R+fence.rw.w+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/R+fence.rw.w+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/R+fence.rw.w+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/R+fence.rw.w+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/R+fence.rw.w+poprl-posrlp Error
-./tests/RELAX/PosWR/R+fence.rw.w+pos-addr Ok
-./tests/RELAX/PosWR/R+fence.rw.w+pos-ctrlfencei Ok
-./tests/RELAX/PosWR/R+fence.rw.w+pospaq-poaqp Error
-./tests/RELAX/PosWR/R+fence.w.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/R+fence.w.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/R+fence.w.w+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/R+fence.w.w+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/R+fence.w.w+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/R+fence.w.w+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/R+fence.w.w+poprl-posrlp Error
-./tests/RELAX/PosWR/R+fence.w.w+pos-addr Ok
-./tests/RELAX/PosWR/R+fence.w.w+pos-ctrlfencei Ok
-./tests/RELAX/PosWR/R+fence.w.w+pospaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.rw+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.rw.w+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+fence.w.w+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/R+poprl+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/R+poprl+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+posprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+posprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+fence.rw.rw+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addraqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addraqps Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addrsaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-addrsaqps Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-ctrlfenceiaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-ctrlfenceiaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-ctrlfenceiaqps Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-ctrlfenceisaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-ctrlfenceisaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-ctrlfenceisaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-ctrlfenceisaqps Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-poaqps Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-posaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaq-posaqps Error
-./tests/RELAX/PosWRRlAq/SB+poprl-posrlaqs Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-addraqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-addraqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-addraqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-addraqp+posprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-addraqp+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-addraqps Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-ctrlfenceiaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-ctrlfenceiaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-ctrlfenceiaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-ctrlfenceiaqp+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-ctrlfenceiaqps Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-poaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-poaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posprl-posrlaq-poaqps Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+posprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+posprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqp+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-addraqps Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+posprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+posprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqp+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-ctrlfenceiaqps Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+poprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+poprl-posrlaq-addrsaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+poprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+poprl-posrlaq-ctrlfenceisaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+poprl-posrlaq Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+posprl-posrlaq-addraqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+posprl-posrlaq-ctrlfenceiaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqp+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlAq/SB+posrlaq-poaqps Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+fence.rw.rw+posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+fence.rw.w+posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+fence.w.w+posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/R+poprl+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+poprl+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/R+poprl+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+poprl+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/R+poprl+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/R+poprl+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/R+poprl+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/R+poprl+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/R+poprl+posrlp-addr Error
-./tests/RELAX/PosWRRlP/R+poprl+posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+posprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+posprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+fence.rw.rw+posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlaq-poaqps Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlaq-posaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlaq-posaqps Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addr+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addr+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addr+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addr+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addrs+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addrs+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addrs+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addrs+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addrs+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-addrss Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-ctrlfencei+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-ctrlfencei+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-ctrlfenceis+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-ctrlfenceis+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-ctrlfenceis+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp-ctrlfenceiss Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlp+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+poprl-posrlps Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlaq-poaqp+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlaq-poaqp+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlaq-poaqps Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-addr+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-addr+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-addr+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-addr+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-addr+posprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-ctrlfencei+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-ctrlfencei+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-ctrlfencei+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-ctrlfencei+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+posprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqp+posprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posrlaq-poaqps Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+posprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+posprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addr+posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+poprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+poprl-posrlp-addrs Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+poprl-posrlp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+posprl-posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+posprl-posrlp-addr Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+posprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfencei+posrlaq-poaqp Error
-./tests/RELAX/PosWRRlP/SB+posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/R+poprl+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/R+poprl+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/R+poprl+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/R+poprl+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/R+poprl+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/R+poprl+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/R+poprl+poprl-posrlp Error
-./tests/RELAX/PosWR/R+poprl+pos-addr Error
-./tests/RELAX/PosWR/R+poprl+pos-ctrlfencei Error
-./tests/RELAX/PosWR/R+poprl+pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+poprl-posrlp Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+pos-addr Ok
-./tests/RELAX/PosWR/SB+fence.rw.rw+pos-ctrlfencei Ok
-./tests/RELAX/PosWR/SB+fence.rw.rw+pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+fence.rw.rw+pos-pos-addr Ok
-./tests/RELAX/PosWR/SB+fence.rw.rw+pos-pos-ctrlfencei Ok
-./tests/RELAX/PosWR/SB+fence.rw.rw+pos-pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlaq-poaqps Error
-./tests/RELAX/PosWR/SB+poprl-posrlaq-posaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlaq-posaqps Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addr+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addr+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addr+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addr+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addrs+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addrs+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addrs+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addrs+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addrs+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-addrss Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-ctrlfencei+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-ctrlfencei+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-ctrlfenceis+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-ctrlfenceis+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-ctrlfenceis+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+poprl-posrlp-ctrlfenceiss Error
-./tests/RELAX/PosWR/SB+poprl-posrlp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+poprl-posrlp+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+poprl-posrlp+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/SB+poprl-posrlp+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+poprl-posrlp+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+poprl-posrlps Error
-./tests/RELAX/PosWR/SB+pos-addr+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-addr+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+pos-addr+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+pos-addr+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/SB+pos-addr+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+pos-addr+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+pos-addr+poprl-posrlp Error
-./tests/RELAX/PosWR/SB+pos-addr+pos-ctrlfencei Ok
-./tests/RELAX/PosWR/SB+pos-addr+pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-addr+pos-pos-addr Ok
-./tests/RELAX/PosWR/SB+pos-addr+pos-pos-ctrlfencei Ok
-./tests/RELAX/PosWR/SB+pos-addr+pos-pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-addrs Ok
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+poprl-posrlp Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+pos-pos-addr Ok
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+pos-pos-ctrlfencei Ok
-./tests/RELAX/PosWR/SB+pos-ctrlfencei+pos-pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-ctrlfenceis Ok
-./tests/RELAX/PosWR/SB+pospaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+poprl-posrlaq-posaqp Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+poprl-posrlp-addrs Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+poprl-posrlp-ctrlfenceis Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+poprl-posrlp Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+pos-pos-addr Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+pos-pos-ctrlfencei Error
-./tests/RELAX/PosWR/SB+pospaq-poaqp+pos-pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+pospaq-poaqps Error
-./tests/RELAX/PosWR/SB+pos-pos-addr+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-pos-addr+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+pos-pos-addr+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+pos-pos-addr+pos-pos-ctrlfencei Ok
-./tests/RELAX/PosWR/SB+pos-pos-addr+pos-pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-pos-addrs Ok
-./tests/RELAX/PosWR/SB+pos-pos-ctrlfencei+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-pos-ctrlfencei+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+pos-pos-ctrlfencei+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+pos-pos-ctrlfencei+pos-pospaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-pos-ctrlfenceis Ok
-./tests/RELAX/PosWR/SB+pos-pospaq-poaqp+poprl-posrlaq-poaqp Error
-./tests/RELAX/PosWR/SB+pos-pospaq-poaqp+poprl-posrlp-addr Error
-./tests/RELAX/PosWR/SB+pos-pospaq-poaqp+poprl-posrlp-ctrlfencei Error
-./tests/RELAX/PosWR/SB+pos-pospaq-poaqps Error
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-addr Ok
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-ctrl Ok
-./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-data Ok
-./tests/RELAX/Rfi/2+2W+fence.rw.w+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+fence.rw.w+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+fence.rw.w+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+fence.rw.w+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-addr Ok
-./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-ctrl Ok
-./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-data Ok
-./tests/RELAX/Rfi/2+2W+fence.w.w+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+fence.w.w+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+fence.w.w+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+fence.w.w+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-addr Ok
-./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-ctrl Ok
-./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-data Ok
-./tests/RELAX/Rfi/2+2W+poprl+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+poprl+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+poprl+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+poprl+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+poprl+rfi-addr Error
-./tests/RELAX/Rfi/2+2W+poprl+rfi-ctrl Error
-./tests/RELAX/Rfi/2+2W+poprl+rfi-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+poprl+rfi-data Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-addr+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-addr+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-ctrl+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-ctrls Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-data+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-data+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+poprl-rfirlp-datas Error
-./tests/RELAX/Rfi/2+2W+rfi-addr+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+rfi-addr+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+rfi-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+rfi-addr+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+rfi-addr+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/2+2W+rfi-addr+rfi-ctrl Ok
-./tests/RELAX/Rfi/2+2W+rfi-addr+rfi-data Ok
-./tests/RELAX/Rfi/2+2W+rfi-addrs Ok
-./tests/RELAX/Rfi/2+2W+rfi-ctrlfencei+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrlfencei+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrlfencei+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrlfencei+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/2+2W+rfi-ctrl+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrl+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrl+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrl+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+rfi-ctrl+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/2+2W+rfi-ctrls Ok
-./tests/RELAX/Rfi/2+2W+rfi-data+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/2+2W+rfi-data+poprl-rfirlp-ctrl Error
-./tests/RELAX/Rfi/2+2W+rfi-data+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/2+2W+rfi-data+poprl-rfirlp-data Error
-./tests/RELAX/Rfi/2+2W+rfi-data+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/2+2W+rfi-data+rfi-ctrl Ok
-./tests/RELAX/Rfi/2+2W+rfi-datas Ok
-./tests/RELAX/Rfi/LB+addr+addr-rfi-addr Ok
-./tests/RELAX/Rfi/LB+addr+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+addr+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+addr+addr-rfi-data Ok
-./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/LB+addr+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/LB+addr+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+addr+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+addr+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/LB+addr+data-rfi-addr Ok
-./tests/RELAX/Rfi/LB+addr+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+addr+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+addr+data-rfi-data Ok
-./tests/RELAX/Rfi/LB+addr-rfi-addr+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+addr-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+data-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-addr+data-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-addrs Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+data-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrl+data-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+data-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfencei+data-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/LB+addr-rfi-ctrls Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+data-rfi-addr Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+addr-rfi-data+data-rfi-data Error
-./tests/RELAX/Rfi/LB+addr-rfi-datas Error
-./tests/RELAX/Rfi/LB+ctrl+addr-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrl+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrl+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrl+addr-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrl+data-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrl+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrl+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrl+data-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-addr Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-data Ok
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-addr+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-addr+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-addr+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-addrs Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-ctrl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-ctrls Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-data+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-data+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrlfencei-rfi-datas Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addr+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addr+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addr+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addr+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addr+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addr+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addr+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-addrs Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrl+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrl+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrlfencei+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrlfencei+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrlfencei+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-ctrls Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-data+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-data+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-data+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-data+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-data+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-data+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+ctrl-rfi-datas Error
-./tests/RELAX/Rfi/LB+data+addr-rfi-addr Ok
-./tests/RELAX/Rfi/LB+data+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+data+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+data+addr-rfi-data Ok
-./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/LB+data+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/LB+data+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+data+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+data+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/LB+data+data-rfi-addr Ok
-./tests/RELAX/Rfi/LB+data+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+data+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+data+data-rfi-data Ok
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-addr+data-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-addrs Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrl+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfencei+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/LB+data-rfi-ctrls Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-data+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+data-rfi-data+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+data-rfi-data+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+data-rfi-datas Error
-./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-addr Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-data Ok
-./tests/RELAX/Rfi/LB+poaqp+addr-rfi-addr Error
-./tests/RELAX/Rfi/LB+poaqp+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poaqp+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poaqp+addr-rfi-data Error
-./tests/RELAX/Rfi/LB+poaqp+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+poaqp+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poaqp+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poaqp+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+poaqp+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+poaqp+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poaqp+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poaqp+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+poaqp+data-rfi-addr Error
-./tests/RELAX/Rfi/LB+poaqp+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poaqp+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poaqp+data-rfi-data Error
-./tests/RELAX/Rfi/LB+poprl+addr-rfi-addr Error
-./tests/RELAX/Rfi/LB+poprl+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poprl+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poprl+addr-rfi-data Error
-./tests/RELAX/Rfi/LB+poprl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/LB+poprl+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poprl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poprl+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/LB+poprl+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/LB+poprl+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poprl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poprl+ctrl-rfi-data Error
-./tests/RELAX/Rfi/LB+poprl+data-rfi-addr Error
-./tests/RELAX/Rfi/LB+poprl+data-rfi-ctrl Error
-./tests/RELAX/Rfi/LB+poprl+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/LB+poprl+data-rfi-data Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi Ok
-./tests/RELAX/Rfi/MP+fence.rw.w+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.rw.w+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi Ok
-./tests/RELAX/Rfi/MP+fence.w.w+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi Ok
-./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+fence.w.w+data-rfi Ok
-./tests/RELAX/Rfi/MP+fence.w.w+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+fence.w.w+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl+addr-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl+addr-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl+addr-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl+addr-rfi Error
-./tests/RELAX/Rfi/MP+poprl+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl+ctrlfencei-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl+ctrlfencei-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl+ctrlfencei-rfi Error
-./tests/RELAX/Rfi/MP+poprl+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl+ctrl-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl+ctrl-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl+ctrl-rfi Error
-./tests/RELAX/Rfi/MP+poprl+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl+data-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl+data-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl+data-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl+data-rfi Error
-./tests/RELAX/Rfi/MP+poprl+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrl-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrl-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrl-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+data-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+data-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+data-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+data-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+fence.r.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+fence.rw.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-addr+poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrl-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrl-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrl-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+data-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+data-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+data-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+data-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrl-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrl-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrl-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+data-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+data-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+data-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+data-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+fence.r.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+fence.rw.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrlfencei+poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+fence.r.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+fence.rw.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-ctrl+poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrl-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrl-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrl-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+data-rfi-addr Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+data-rfi-addrs Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+data-rfi-ctrlfenceis Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+data-rfi Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+fence.r.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+fence.rw.rw Error
-./tests/RELAX/Rfi/MP+poprl-rfirlp-data+poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-addr+addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-addr+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-addr+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-addr+poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-ctrl+poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-data+addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-data+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-data+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-data+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+pos-rfi-data+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+pos-rfi-data+poaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+addr Ok
-./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-addr+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-addr+data-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-addr+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-addr+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+rfi-addr+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+rfi-addr+poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+rfi-ctrlfencei+poaqp Error
-./tests/RELAX/Rfi/MP+rfi-ctrl+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+rfi-ctrl+poaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+addr Ok
-./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-data+addr-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-data+addr-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+addr-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+data-rfi-addr Ok
-./tests/RELAX/Rfi/MP+rfi-data+data-rfi-addrs Ok
-./tests/RELAX/Rfi/MP+rfi-data+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/MP+rfi-data+data-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/MP+rfi-data+data-rfi Ok
-./tests/RELAX/Rfi/MP+rfi-data+data-rfipaq-poaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+data-rfipaq-posaqp Error
-./tests/RELAX/Rfi/MP+rfi-data+fence.r.rw Ok
-./tests/RELAX/Rfi/MP+rfi-data+fence.rw.rw Ok
-./tests/RELAX/Rfi/MP+rfi-data+poaqp Error
-./tests/RELAX/Rfi/R+fence.rw.rw+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+fence.rw.rw+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+fence.rw.rw+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+fence.rw.rw+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+fence.rw.rw+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+fence.rw.rw+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+fence.rw.rw+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+fence.rw.rw+rfi-addr Ok
-./tests/RELAX/Rfi/R+fence.rw.rw+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.rw+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+fence.rw.rw+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.rw+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.rw+rfi-data-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.rw+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+fence.rw.w+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+fence.rw.w+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+fence.rw.w+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+fence.rw.w+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+fence.rw.w+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+fence.rw.w+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+fence.rw.w+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+fence.rw.w+rfi-addr Ok
-./tests/RELAX/Rfi/R+fence.rw.w+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.w+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+fence.rw.w+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.w+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.w+rfi-data-rfi Ok
-./tests/RELAX/Rfi/R+fence.rw.w+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+fence.w.w+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+fence.w.w+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+fence.w.w+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+fence.w.w+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+fence.w.w+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+fence.w.w+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+fence.w.w+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+fence.w.w+rfi-addr Ok
-./tests/RELAX/Rfi/R+fence.w.w+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/R+fence.w.w+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+fence.w.w+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/R+fence.w.w+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/R+fence.w.w+rfi-data-rfi Ok
-./tests/RELAX/Rfi/R+fence.w.w+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+poprl+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+poprl+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+poprl+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+poprl+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+poprl+rfi-addr Error
-./tests/RELAX/Rfi/R+poprl+rfi-addr-rfi Error
-./tests/RELAX/Rfi/R+poprl+rfi-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl+rfi-ctrlfencei-rfi Error
-./tests/RELAX/Rfi/R+poprl+rfi-ctrl-rfi Error
-./tests/RELAX/Rfi/R+poprl+rfi-data-rfi Error
-./tests/RELAX/Rfi/R+poprl+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+fence.rw.rw Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+rfi-addr Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+rfi-addr-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+rfi-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+rfi-ctrlfencei-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+rfi-ctrl-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+rfi-data-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addr+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+fence.rw.rw Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+rfi-addr Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+rfi-addr-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+rfi-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+rfi-ctrlfencei-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+rfi-ctrl-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+rfi-data-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfencei+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+fence.rw.rw Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+rfi-addr Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+rfi-addr-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+rfi-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+rfi-ctrlfencei-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+rfi-ctrl-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+rfi-data-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-ctrl+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+fence.rw.rw Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+rfi-addr Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+rfi-addr-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+rfi-ctrlfencei Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+rfi-ctrlfencei-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+rfi-ctrl-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+rfi-data-rfi Error
-./tests/RELAX/Rfi/R+poprl-rfirlp-data+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-addr+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+pos-rfi-addr+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-addr+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+pos-rfi-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+pos-rfi-addr+rfi-addr Ok
-./tests/RELAX/Rfi/R+pos-rfi-addr+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+pos-rfi-addr+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+rfi-addr Ok
-./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrl+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+pos-rfi-ctrl+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrl+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrl+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+pos-rfi-ctrl+rfi-addr Ok
-./tests/RELAX/Rfi/R+pos-rfi-ctrl+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+pos-rfi-ctrl+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-data+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+pos-rfi-data+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+pos-rfi-data+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+pos-rfi-data+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+pos-rfi-data+rfi-addr Ok
-./tests/RELAX/Rfi/R+pos-rfi-data+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+pos-rfi-data+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-addr+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+rfi-addr+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-addr+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+rfi-addr+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+rfi-addr+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+rfi-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+rfi-addr+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+rfi-addr+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+rfi-addr+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/R+rfi-addr+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+rfi-addr+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/R+rfi-addr+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/R+rfi-addr+rfi-data-rfi Ok
-./tests/RELAX/Rfi/R+rfi-addr+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-addrs Ok
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-addr Ok
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-data-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-ctrl+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+rfi-ctrl+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+rfi-ctrl+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+rfi-ctrl+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+rfi-ctrl+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+rfi-ctrl+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+rfi-ctrl+rfi-addr Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+rfi-data-rfi Ok
-./tests/RELAX/Rfi/R+rfi-ctrl+rfipaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-data+fence.rw.rw Ok
-./tests/RELAX/Rfi/R+rfi-data+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/R+rfi-data+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/R+rfi-data+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/R+rfi-data+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/R+rfi-data+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/R+rfi-data+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/R+rfi-data+poprl-rfirlp Error
-./tests/RELAX/Rfi/R+rfi-data+rfi-addr Ok
-./tests/RELAX/Rfi/R+rfi-data+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/R+rfi-data+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/R+rfi-data+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/R+rfi-data+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/R+rfi-data+rfi-data-rfi Ok
-./tests/RELAX/Rfi/R+rfi-data+rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+poprl-rfirlp Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+pos-rfi-addr Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+pos-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+pos-rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-addr Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-data-rfi Ok
-./tests/RELAX/Rfi/SB+fence.rw.rw+rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlaq-poaqps Error
-./tests/RELAX/Rfi/SB+poprl-rfirlaq-posaqp+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlaq-posaqps Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addr+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addr+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addr+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addrs+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addrs+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addrs+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addrs+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addrs+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-addrss Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-ctrlfencei+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-ctrlfencei+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-ctrlfenceis+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-ctrlfenceis+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-ctrlfenceis+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp-ctrlfenceiss Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+rfi-addr-rfi Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+rfi-ctrlfencei-rfi Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+rfi-ctrl-rfi Error
-./tests/RELAX/Rfi/SB+poprl-rfirlp+rfi-data-rfi Error
-./tests/RELAX/Rfi/SB+poprl-rfirlps Error
-./tests/RELAX/Rfi/SB+pos-rfi-addr+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+pos-rfi-addr+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+pos-rfi-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+pos-rfi-addr+pos-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/SB+pos-rfi-addr+pos-rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+pos-rfi-addrs Ok
-./tests/RELAX/Rfi/SB+pos-rfi-ctrlfencei+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+pos-rfi-ctrlfencei+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+pos-rfi-ctrlfencei+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+pos-rfi-ctrlfencei+pos-rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+pos-rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/SB+pos-rfipaq-poaqp+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+pos-rfipaq-poaqp+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+pos-rfipaq-poaqp+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+pos-rfipaq-poaqps Error
-./tests/RELAX/Rfi/SB+rfi-addr+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-addr+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+rfi-addr+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+rfi-addr+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+rfi-addr+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfi-addr+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+rfi-addr+poprl-rfirlp Error
-./tests/RELAX/Rfi/SB+rfi-addr+pos-rfi-addr Ok
-./tests/RELAX/Rfi/SB+rfi-addr+pos-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/SB+rfi-addr+pos-rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-addr+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-addr+rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/SB+rfi-addr+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-addr+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-addr+rfi-data-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-addr+rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-addr-rfi+rfi-data-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-addr-rfis Ok
-./tests/RELAX/Rfi/SB+rfi-addrs Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+poprl-rfirlp Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+pos-rfi-addr Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+pos-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+pos-rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-addr-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-data-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfi+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfi+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfi+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfi+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfi+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfi+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfis Ok
-./tests/RELAX/Rfi/SB+rfi-ctrlfenceis Ok
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-ctrl-rfis Ok
-./tests/RELAX/Rfi/SB+rfi-data-rfi+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfi-data-rfi+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+rfi-data-rfi+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+rfi-data-rfi+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+rfi-data-rfi+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfi-data-rfi+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+rfi-data-rfi+rfi-ctrlfencei-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-data-rfi+rfi-ctrl-rfi Ok
-./tests/RELAX/Rfi/SB+rfi-data-rfis Ok
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+poprl-rfirlaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+poprl-rfirlaq-posaqp Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+poprl-rfirlp-addr Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+poprl-rfirlp-addrs Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+poprl-rfirlp-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+poprl-rfirlp-ctrlfenceis Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+poprl-rfirlp Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+pos-rfi-addr Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+pos-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+pos-rfipaq-poaqp Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+rfi-addr-rfi Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+rfi-ctrlfencei-rfi Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+rfi-ctrl-rfi Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqp+rfi-data-rfi Error
-./tests/RELAX/Rfi/SB+rfipaq-poaqps Error
-./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/S+fence.w.w+data-rfi-addr Ok
-./tests/RELAX/Rfi/S+fence.w.w+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+fence.w.w+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+fence.w.w+data-rfi-data Ok
-./tests/RELAX/Rfi/S+poprl+addr-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl+addr-rfi-data Error
-./tests/RELAX/Rfi/S+poprl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/S+poprl+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl+ctrl-rfi-data Error
-./tests/RELAX/Rfi/S+poprl+data-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl+data-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl+data-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+addr-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+addr-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+ctrl-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+data-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+data-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+data-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+fence.r.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+fence.rw.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+fence.rw.w Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+poaqp Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-addr+poprl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+addr-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+addr-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+ctrl-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+data-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+data-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+data-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+addr-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+addr-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+ctrl-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+data-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+data-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+data-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+fence.r.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+fence.rw.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+fence.rw.w Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+poaqp Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrlfencei+poprl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+fence.r.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+fence.rw.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+fence.rw.w Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+poaqp Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-ctrl+poprl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+addr-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+addr-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+addr-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+addr-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrlfencei-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrlfencei-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrlfencei-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrlfencei-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrl-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrl-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrl-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+ctrl-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+data-rfi-addr Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+data-rfi-ctrl Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+data-rfi-ctrlfencei Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+data-rfi-data Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+fence.r.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+fence.rw.rw Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+fence.rw.w Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+poaqp Error
-./tests/RELAX/Rfi/S+poprl-rfirlp-data+poprl Error
-./tests/RELAX/Rfi/S+rfi-addr+addr Ok
-./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrl Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-addr+data Ok
-./tests/RELAX/Rfi/S+rfi-addr+data-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-addr+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-addr+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-addr+data-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-addr+fence.r.rw Ok
-./tests/RELAX/Rfi/S+rfi-addr+fence.rw.rw Ok
-./tests/RELAX/Rfi/S+rfi-addr+fence.rw.w Ok
-./tests/RELAX/Rfi/S+rfi-addr+poaqp Error
-./tests/RELAX/Rfi/S+rfi-addr+poprl Error
-./tests/RELAX/Rfi/S+rfi-ctrl+addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+data Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+data Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+fence.r.rw Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+fence.rw.rw Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+fence.rw.w Ok
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+poaqp Error
-./tests/RELAX/Rfi/S+rfi-ctrlfencei+poprl Error
-./tests/RELAX/Rfi/S+rfi-ctrl+fence.r.rw Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+fence.rw.rw Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+fence.rw.w Ok
-./tests/RELAX/Rfi/S+rfi-ctrl+poaqp Error
-./tests/RELAX/Rfi/S+rfi-ctrl+poprl Error
-./tests/RELAX/Rfi/S+rfi-data+addr Ok
-./tests/RELAX/Rfi/S+rfi-data+addr-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-data+addr-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-data+addr-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-data+addr-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrl Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-data+data Ok
-./tests/RELAX/Rfi/S+rfi-data+data-rfi-addr Ok
-./tests/RELAX/Rfi/S+rfi-data+data-rfi-ctrlfencei Ok
-./tests/RELAX/Rfi/S+rfi-data+data-rfi-ctrl Ok
-./tests/RELAX/Rfi/S+rfi-data+data-rfi-data Ok
-./tests/RELAX/Rfi/S+rfi-data+fence.r.rw Ok
-./tests/RELAX/Rfi/S+rfi-data+fence.rw.rw Ok
-./tests/RELAX/Rfi/S+rfi-data+fence.rw.w Ok
-./tests/RELAX/Rfi/S+rfi-data+poaqp Error
-./tests/RELAX/Rfi/S+rfi-data+poprl Error
-./tests/SAFE/2+2W+fence.rw.rw+poprl Error
-./tests/SAFE/2+2W+fence.rw.rws Ok
-./tests/SAFE/2+2W+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/2+2W+fence.rw.w+poprl Error
-./tests/SAFE/2+2W+fence.rw.ws Ok
-./tests/SAFE/2+2W+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/2+2W+fence.w.w+fence.rw.w Ok
-./tests/SAFE/2+2W+fence.w.w+poprl Error
-./tests/SAFE/2+2W+fence.w.ws Ok
-./tests/SAFE/2+2W+poprls Error
-./tests/SAFE/2+2W+[rf-addr-fr]+fence.rw.rw Ok
-./tests/SAFE/2+2W+[rf-addr-fr]+fence.rw.w Ok
-./tests/SAFE/2+2W+[rf-addr-fr]+fence.w.w Ok
-./tests/SAFE/2+2W+[rf-addr-fr]+poprl Error
-./tests/SAFE/2+2W+[rf-ctrlfencei-fr]+fence.rw.rw Ok
-./tests/SAFE/2+2W+[rf-ctrlfencei-fr]+fence.rw.w Ok
-./tests/SAFE/2+2W+[rf-ctrlfencei-fr]+fence.w.w Ok
-./tests/SAFE/2+2W+[rf-ctrlfencei-fr]+poprl Error
-./tests/SAFE/2+2W+[rf-fence.r.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/2+2W+[rf-fence.r.rw-fr]+fence.rw.w Ok
-./tests/SAFE/2+2W+[rf-fence.r.rw-fr]+fence.w.w Ok
-./tests/SAFE/2+2W+[rf-fence.r.rw-fr]+poprl Error
-./tests/SAFE/2+2W+[rf-fence.rw.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/2+2W+[rf-fence.rw.rw-fr]+fence.rw.w Ok
-./tests/SAFE/2+2W+[rf-fence.rw.rw-fr]+fence.w.w Ok
-./tests/SAFE/2+2W+[rf-fence.rw.rw-fr]+poprl Error
-./tests/SAFE/2+2W+[rfpaq-poaqp-fr]+fence.rw.rw Error
-./tests/SAFE/2+2W+[rfpaq-poaqp-fr]+fence.rw.w Error
-./tests/SAFE/2+2W+[rfpaq-poaqp-fr]+fence.w.w Error
-./tests/SAFE/2+2W+[rfpaq-poaqp-fr]+poprl Error
-./tests/SAFE/3.2W+fence.rw.rw+fence.rw.rw+poprl Error
-./tests/SAFE/3.2W+fence.rw.rw+poprl+poprl Error
-./tests/SAFE/3.2W+fence.rw.rws Ok
-./tests/SAFE/3.2W+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/3.2W+fence.rw.w+fence.rw.rw+poprl Error
-./tests/SAFE/3.2W+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/3.2W+fence.rw.w+fence.rw.w+poprl Error
-./tests/SAFE/3.2W+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/3.2W+fence.rw.w+poprl+poprl Error
-./tests/SAFE/3.2W+fence.rw.ws Ok
-./tests/SAFE/3.2W+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/3.2W+fence.w.w+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/3.2W+fence.w.w+fence.rw.rw+poprl Error
-./tests/SAFE/3.2W+fence.w.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/3.2W+fence.w.w+fence.rw.w+fence.rw.w Ok
-./tests/SAFE/3.2W+fence.w.w+fence.rw.w+poprl Error
-./tests/SAFE/3.2W+fence.w.w+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/3.2W+fence.w.w+fence.w.w+fence.rw.w Ok
-./tests/SAFE/3.2W+fence.w.w+fence.w.w+poprl Error
-./tests/SAFE/3.2W+fence.w.w+poprl+fence.rw.rw Error
-./tests/SAFE/3.2W+fence.w.w+poprl+fence.rw.w Error
-./tests/SAFE/3.2W+fence.w.w+poprl+poprl Error
-./tests/SAFE/3.2W+fence.w.ws Ok
-./tests/SAFE/3.2W+poprls Error
-./tests/SAFE/3.LB+addr+addr+ctrlfencei Ok
-./tests/SAFE/3.LB+addr+addr+ctrl Ok
-./tests/SAFE/3.LB+addr+addr+data Ok
-./tests/SAFE/3.LB+addr+addr+poaqp Error
-./tests/SAFE/3.LB+addr+addr+poprl Error
-./tests/SAFE/3.LB+addr+addr+pos Ok
-./tests/SAFE/3.LB+addr+ctrl+ctrlfencei Ok
-./tests/SAFE/3.LB+addr+ctrl+ctrl Ok
-./tests/SAFE/3.LB+addr+ctrl+data Ok
-./tests/SAFE/3.LB+addr+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/3.LB+addr+ctrlfencei+ctrl Ok
-./tests/SAFE/3.LB+addr+ctrlfencei+data Ok
-./tests/SAFE/3.LB+addr+ctrlfencei+poaqp Error
-./tests/SAFE/3.LB+addr+ctrlfencei+poprl Error
-./tests/SAFE/3.LB+addr+ctrlfencei+pos Ok
-./tests/SAFE/3.LB+addr+ctrl+poaqp Error
-./tests/SAFE/3.LB+addr+ctrl+poprl Error
-./tests/SAFE/3.LB+addr+ctrl+pos Ok
-./tests/SAFE/3.LB+addr+data+ctrlfencei Ok
-./tests/SAFE/3.LB+addr+data+ctrl Ok
-./tests/SAFE/3.LB+addr+data+data Ok
-./tests/SAFE/3.LB+addr+data+poaqp Error
-./tests/SAFE/3.LB+addr+data+poprl Error
-./tests/SAFE/3.LB+addr+data+pos Ok
-./tests/SAFE/3.LB+addr+poaqp+ctrl Error
-./tests/SAFE/3.LB+addr+poaqp+ctrlfencei Error
-./tests/SAFE/3.LB+addr+poaqp+data Error
-./tests/SAFE/3.LB+addr+poaqp+poaqp Error
-./tests/SAFE/3.LB+addr+poaqp+poprl Error
-./tests/SAFE/3.LB+addr+poaqp+pos Error
-./tests/SAFE/3.LB+addr+poprl+ctrl Error
-./tests/SAFE/3.LB+addr+poprl+ctrlfencei Error
-./tests/SAFE/3.LB+addr+poprl+data Error
-./tests/SAFE/3.LB+addr+poprl+poaqp Error
-./tests/SAFE/3.LB+addr+poprl+poprl Error
-./tests/SAFE/3.LB+addr+poprl+pos Error
-./tests/SAFE/3.LB+addr+pos+ctrlfencei Ok
-./tests/SAFE/3.LB+addr+pos+ctrl Ok
-./tests/SAFE/3.LB+addr+pos+data Ok
-./tests/SAFE/3.LB+addr+pos+poaqp Error
-./tests/SAFE/3.LB+addr+pos+poprl Error
-./tests/SAFE/3.LB+addrs Ok
-./tests/SAFE/3.LB+ctrl+ctrl+ctrlfencei Ok
-./tests/SAFE/3.LB+ctrl+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/3.LB+ctrl+ctrlfencei+poaqp Error
-./tests/SAFE/3.LB+ctrl+ctrlfencei+poprl Error
-./tests/SAFE/3.LB+ctrl+ctrlfencei+pos Ok
-./tests/SAFE/3.LB+ctrl+ctrl+poaqp Error
-./tests/SAFE/3.LB+ctrl+ctrl+poprl Error
-./tests/SAFE/3.LB+ctrl+ctrl+pos Ok
-./tests/SAFE/3.LB+ctrlfencei+ctrlfencei+poaqp Error
-./tests/SAFE/3.LB+ctrlfencei+ctrlfencei+poprl Error
-./tests/SAFE/3.LB+ctrlfencei+ctrlfencei+pos Ok
-./tests/SAFE/3.LB+ctrlfencei+poaqp+poaqp Error
-./tests/SAFE/3.LB+ctrlfencei+poaqp+poprl Error
-./tests/SAFE/3.LB+ctrlfencei+poaqp+pos Error
-./tests/SAFE/3.LB+ctrlfencei+poprl+poaqp Error
-./tests/SAFE/3.LB+ctrlfencei+poprl+poprl Error
-./tests/SAFE/3.LB+ctrlfencei+poprl+pos Error
-./tests/SAFE/3.LB+ctrlfencei+pos+poaqp Error
-./tests/SAFE/3.LB+ctrlfencei+pos+poprl Error
-./tests/SAFE/3.LB+ctrlfenceis Ok
-./tests/SAFE/3.LB+ctrl+poaqp+ctrlfencei Error
-./tests/SAFE/3.LB+ctrl+poaqp+poaqp Error
-./tests/SAFE/3.LB+ctrl+poaqp+poprl Error
-./tests/SAFE/3.LB+ctrl+poaqp+pos Error
-./tests/SAFE/3.LB+ctrl+poprl+ctrlfencei Error
-./tests/SAFE/3.LB+ctrl+poprl+poaqp Error
-./tests/SAFE/3.LB+ctrl+poprl+poprl Error
-./tests/SAFE/3.LB+ctrl+poprl+pos Error
-./tests/SAFE/3.LB+ctrl+pos+ctrlfencei Ok
-./tests/SAFE/3.LB+ctrl+pos+poaqp Error
-./tests/SAFE/3.LB+ctrl+pos+poprl Error
-./tests/SAFE/3.LB+ctrls Ok
-./tests/SAFE/3.LB+data+ctrl+ctrlfencei Ok
-./tests/SAFE/3.LB+data+ctrl+ctrl Ok
-./tests/SAFE/3.LB+data+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/3.LB+data+ctrlfencei+ctrl Ok
-./tests/SAFE/3.LB+data+ctrlfencei+poaqp Error
-./tests/SAFE/3.LB+data+ctrlfencei+poprl Error
-./tests/SAFE/3.LB+data+ctrlfencei+pos Ok
-./tests/SAFE/3.LB+data+ctrl+poaqp Error
-./tests/SAFE/3.LB+data+ctrl+poprl Error
-./tests/SAFE/3.LB+data+ctrl+pos Ok
-./tests/SAFE/3.LB+data+data+ctrlfencei Ok
-./tests/SAFE/3.LB+data+data+ctrl Ok
-./tests/SAFE/3.LB+data+data+poaqp Error
-./tests/SAFE/3.LB+data+data+poprl Error
-./tests/SAFE/3.LB+data+data+pos Ok
-./tests/SAFE/3.LB+data+poaqp+ctrl Error
-./tests/SAFE/3.LB+data+poaqp+ctrlfencei Error
-./tests/SAFE/3.LB+data+poaqp+poaqp Error
-./tests/SAFE/3.LB+data+poaqp+poprl Error
-./tests/SAFE/3.LB+data+poaqp+pos Error
-./tests/SAFE/3.LB+data+poprl+ctrl Error
-./tests/SAFE/3.LB+data+poprl+ctrlfencei Error
-./tests/SAFE/3.LB+data+poprl+poaqp Error
-./tests/SAFE/3.LB+data+poprl+poprl Error
-./tests/SAFE/3.LB+data+poprl+pos Error
-./tests/SAFE/3.LB+data+pos+ctrlfencei Ok
-./tests/SAFE/3.LB+data+pos+ctrl Ok
-./tests/SAFE/3.LB+data+pos+poaqp Error
-./tests/SAFE/3.LB+data+pos+poprl Error
-./tests/SAFE/3.LB+datas Ok
-./tests/SAFE/3.LB+fence.r.rw+addr+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+addr+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+addr+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+addr+data Ok
-./tests/SAFE/3.LB+fence.r.rw+addr+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+addr+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+addr+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+addr+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+addr+pos Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrl+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrl+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrl+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrl+data Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+data Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+pos Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrl+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrl+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+ctrl+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+ctrl+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+ctrl+pos Ok
-./tests/SAFE/3.LB+fence.r.rw+data+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+data+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+data+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+data+data Ok
-./tests/SAFE/3.LB+fence.r.rw+data+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+data+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+data+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+data+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+data+pos Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+data Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+pos Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+data Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+pos Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+data Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+pos Ok
-./tests/SAFE/3.LB+fence.r.rw+poaqp+addr Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+ctrl Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+ctrlfencei Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+data Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+fence.rw.rw Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+fence.rw.w Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+poaqp+pos Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+addr Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+ctrl Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+ctrlfencei Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+data Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+fence.rw.rw Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+fence.rw.w Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+poprl Error
-./tests/SAFE/3.LB+fence.r.rw+poprl+pos Error
-./tests/SAFE/3.LB+fence.r.rw+pos+addr Ok
-./tests/SAFE/3.LB+fence.r.rw+pos+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.r.rw+pos+ctrl Ok
-./tests/SAFE/3.LB+fence.r.rw+pos+data Ok
-./tests/SAFE/3.LB+fence.r.rw+pos+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.r.rw+pos+fence.rw.w Ok
-./tests/SAFE/3.LB+fence.r.rw+pos+poaqp Error
-./tests/SAFE/3.LB+fence.r.rw+pos+poprl Error
-./tests/SAFE/3.LB+fence.r.rws Ok
-./tests/SAFE/3.LB+fence.rw.rw+addr+addr Ok
-./tests/SAFE/3.LB+fence.rw.rw+addr+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.rw+addr+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.rw+addr+data Ok
-./tests/SAFE/3.LB+fence.rw.rw+addr+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+addr+poprl Error
-./tests/SAFE/3.LB+fence.rw.rw+addr+pos Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrl+addr Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrl+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrl+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrl+data Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+addr Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+data Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+poprl Error
-./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+pos Ok
-./tests/SAFE/3.LB+fence.rw.rw+ctrl+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+ctrl+poprl Error
-./tests/SAFE/3.LB+fence.rw.rw+ctrl+pos Ok
-./tests/SAFE/3.LB+fence.rw.rw+data+addr Ok
-./tests/SAFE/3.LB+fence.rw.rw+data+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.rw+data+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.rw+data+data Ok
-./tests/SAFE/3.LB+fence.rw.rw+data+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+data+poprl Error
-./tests/SAFE/3.LB+fence.rw.rw+data+pos Ok
-./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+addr Ok
-./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+data Ok
-./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+poprl Error
-./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+pos Ok
-./tests/SAFE/3.LB+fence.rw.rw+poaqp+addr Error
-./tests/SAFE/3.LB+fence.rw.rw+poaqp+ctrl Error
-./tests/SAFE/3.LB+fence.rw.rw+poaqp+ctrlfencei Error
-./tests/SAFE/3.LB+fence.rw.rw+poaqp+data Error
-./tests/SAFE/3.LB+fence.rw.rw+poaqp+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+poaqp+poprl Error
-./tests/SAFE/3.LB+fence.rw.rw+poaqp+pos Error
-./tests/SAFE/3.LB+fence.rw.rw+poprl+addr Error
-./tests/SAFE/3.LB+fence.rw.rw+poprl+ctrl Error
-./tests/SAFE/3.LB+fence.rw.rw+poprl+ctrlfencei Error
-./tests/SAFE/3.LB+fence.rw.rw+poprl+data Error
-./tests/SAFE/3.LB+fence.rw.rw+poprl+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+poprl+poprl Error
-./tests/SAFE/3.LB+fence.rw.rw+poprl+pos Error
-./tests/SAFE/3.LB+fence.rw.rw+pos+addr Ok
-./tests/SAFE/3.LB+fence.rw.rw+pos+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.rw+pos+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.rw+pos+data Ok
-./tests/SAFE/3.LB+fence.rw.rw+pos+poaqp Error
-./tests/SAFE/3.LB+fence.rw.rw+pos+poprl Error
-./tests/SAFE/3.LB+fence.rw.rws Ok
-./tests/SAFE/3.LB+fence.rw.w+addr+addr Ok
-./tests/SAFE/3.LB+fence.rw.w+addr+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.w+addr+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.w+addr+data Ok
-./tests/SAFE/3.LB+fence.rw.w+addr+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.rw.w+addr+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+addr+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+addr+pos Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrl+addr Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrl+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrl+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrl+data Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+addr Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+data Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+pos Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrl+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.rw.w+ctrl+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+ctrl+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+ctrl+pos Ok
-./tests/SAFE/3.LB+fence.rw.w+data+addr Ok
-./tests/SAFE/3.LB+fence.rw.w+data+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.w+data+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.w+data+data Ok
-./tests/SAFE/3.LB+fence.rw.w+data+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.rw.w+data+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+data+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+data+pos Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+addr Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+data Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+pos Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+addr Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+data Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+pos Ok
-./tests/SAFE/3.LB+fence.rw.w+poaqp+addr Error
-./tests/SAFE/3.LB+fence.rw.w+poaqp+ctrl Error
-./tests/SAFE/3.LB+fence.rw.w+poaqp+ctrlfencei Error
-./tests/SAFE/3.LB+fence.rw.w+poaqp+data Error
-./tests/SAFE/3.LB+fence.rw.w+poaqp+fence.rw.rw Error
-./tests/SAFE/3.LB+fence.rw.w+poaqp+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+poaqp+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+poaqp+pos Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+addr Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+ctrl Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+ctrlfencei Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+data Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+poprl Error
-./tests/SAFE/3.LB+fence.rw.w+poprl+pos Error
-./tests/SAFE/3.LB+fence.rw.w+pos+addr Ok
-./tests/SAFE/3.LB+fence.rw.w+pos+ctrlfencei Ok
-./tests/SAFE/3.LB+fence.rw.w+pos+ctrl Ok
-./tests/SAFE/3.LB+fence.rw.w+pos+data Ok
-./tests/SAFE/3.LB+fence.rw.w+pos+fence.rw.rw Ok
-./tests/SAFE/3.LB+fence.rw.w+pos+poaqp Error
-./tests/SAFE/3.LB+fence.rw.w+pos+poprl Error
-./tests/SAFE/3.LB+fence.rw.ws Ok
-./tests/SAFE/3.LB+poaqps Error
-./tests/SAFE/3.LB+poprl+poaqp+poaqp Error
-./tests/SAFE/3.LB+poprl+poprl+poaqp Error
-./tests/SAFE/3.LB+poprls Error
-./tests/SAFE/3.LB+pos+poaqp+poaqp Error
-./tests/SAFE/3.LB+pos+poaqp+poprl Error
-./tests/SAFE/3.LB+pos+poprl+poaqp Error
-./tests/SAFE/3.LB+pos+poprl+poprl Error
-./tests/SAFE/3.SB+fence.rw.rws+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/3.SB+fence.rw.rws Ok
-./tests/SAFE/IRIW+addr+ctrlfencei Ok
-./tests/SAFE/IRIW+addr+poaqp Error
-./tests/SAFE/IRIW+addrs Ok
-./tests/SAFE/IRIW+ctrlfencei+poaqp Error
-./tests/SAFE/IRIW+ctrlfenceis Ok
-./tests/SAFE/IRIW+fence.r.rw+addr Ok
-./tests/SAFE/IRIW+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/IRIW+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/IRIW+fence.r.rw+poaqp Error
-./tests/SAFE/IRIW+fence.r.rws Ok
-./tests/SAFE/IRIW+fence.rw.rw+addr Ok
-./tests/SAFE/IRIW+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/IRIW+fence.rw.rw+poaqp Error
-./tests/SAFE/IRIW+fence.rw.rws Ok
-./tests/SAFE/IRIW+poaqps Error
-./tests/SAFE/IRRWIW+addr+ctrlfencei Ok
-./tests/SAFE/IRRWIW+addr+ctrl Ok
-./tests/SAFE/IRRWIW+addr+data Ok
-./tests/SAFE/IRRWIW+addr+fence.r.rw Ok
-./tests/SAFE/IRRWIW+addr+fence.rw.rw Ok
-./tests/SAFE/IRRWIW+addr+fence.rw.w Ok
-./tests/SAFE/IRRWIW+addr+poaqp Error
-./tests/SAFE/IRRWIW+addr+poprl Error
-./tests/SAFE/IRRWIW+addrs Ok
-./tests/SAFE/IRRWIW+ctrlfencei+addr Ok
-./tests/SAFE/IRRWIW+ctrlfencei+ctrl Ok
-./tests/SAFE/IRRWIW+ctrlfencei+data Ok
-./tests/SAFE/IRRWIW+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/IRRWIW+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/IRRWIW+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/IRRWIW+ctrlfencei+poaqp Error
-./tests/SAFE/IRRWIW+ctrlfencei+poprl Error
-./tests/SAFE/IRRWIW+ctrlfenceis Ok
-./tests/SAFE/IRRWIW+fence.r.rw+addr Ok
-./tests/SAFE/IRRWIW+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/IRRWIW+fence.r.rw+ctrl Ok
-./tests/SAFE/IRRWIW+fence.r.rw+data Ok
-./tests/SAFE/IRRWIW+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/IRRWIW+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/IRRWIW+fence.r.rw+poaqp Error
-./tests/SAFE/IRRWIW+fence.r.rw+poprl Error
-./tests/SAFE/IRRWIW+fence.r.rws Ok
-./tests/SAFE/IRRWIW+fence.rw.rw+addr Ok
-./tests/SAFE/IRRWIW+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/IRRWIW+fence.rw.rw+ctrl Ok
-./tests/SAFE/IRRWIW+fence.rw.rw+data Ok
-./tests/SAFE/IRRWIW+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/IRRWIW+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/IRRWIW+fence.rw.rw+poaqp Error
-./tests/SAFE/IRRWIW+fence.rw.rw+poprl Error
-./tests/SAFE/IRRWIW+fence.rw.rws Ok
-./tests/SAFE/IRRWIW+poaqp+addr Error
-./tests/SAFE/IRRWIW+poaqp+ctrl Error
-./tests/SAFE/IRRWIW+poaqp+ctrlfencei Error
-./tests/SAFE/IRRWIW+poaqp+data Error
-./tests/SAFE/IRRWIW+poaqp+fence.r.rw Error
-./tests/SAFE/IRRWIW+poaqp+fence.rw.rw Error
-./tests/SAFE/IRRWIW+poaqp+fence.rw.w Error
-./tests/SAFE/IRRWIW+poaqp+poprl Error
-./tests/SAFE/IRRWIW+poaqps Error
-./tests/SAFE/IRWIW+addr+ctrlfencei Ok
-./tests/SAFE/IRWIW+addr+ctrl Ok
-./tests/SAFE/IRWIW+addr+data Ok
-./tests/SAFE/IRWIW+addr+poaqp Error
-./tests/SAFE/IRWIW+addr+poprl Error
-./tests/SAFE/IRWIW+addrs Ok
-./tests/SAFE/IRWIW+ctrl+ctrlfencei Ok
-./tests/SAFE/IRWIW+ctrlfencei+poaqp Error
-./tests/SAFE/IRWIW+ctrlfencei+poprl Error
-./tests/SAFE/IRWIW+ctrlfenceis Ok
-./tests/SAFE/IRWIW+ctrl+poaqp Error
-./tests/SAFE/IRWIW+ctrl+poprl Error
-./tests/SAFE/IRWIW+ctrls Ok
-./tests/SAFE/IRWIW+data+ctrlfencei Ok
-./tests/SAFE/IRWIW+data+ctrl Ok
-./tests/SAFE/IRWIW+data+poaqp Error
-./tests/SAFE/IRWIW+data+poprl Error
-./tests/SAFE/IRWIW+datas Ok
-./tests/SAFE/IRWIW+fence.r.rw+addr Ok
-./tests/SAFE/IRWIW+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/IRWIW+fence.r.rw+ctrl Ok
-./tests/SAFE/IRWIW+fence.r.rw+data Ok
-./tests/SAFE/IRWIW+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/IRWIW+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/IRWIW+fence.r.rw+poaqp Error
-./tests/SAFE/IRWIW+fence.r.rw+poprl Error
-./tests/SAFE/IRWIW+fence.r.rws Ok
-./tests/SAFE/IRWIW+fence.rw.rw+addr Ok
-./tests/SAFE/IRWIW+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/IRWIW+fence.rw.rw+ctrl Ok
-./tests/SAFE/IRWIW+fence.rw.rw+data Ok
-./tests/SAFE/IRWIW+fence.rw.rw+poaqp Error
-./tests/SAFE/IRWIW+fence.rw.rw+poprl Error
-./tests/SAFE/IRWIW+fence.rw.rws Ok
-./tests/SAFE/IRWIW+fence.rw.w+addr Ok
-./tests/SAFE/IRWIW+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/IRWIW+fence.rw.w+ctrl Ok
-./tests/SAFE/IRWIW+fence.rw.w+data Ok
-./tests/SAFE/IRWIW+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/IRWIW+fence.rw.w+poaqp Error
-./tests/SAFE/IRWIW+fence.rw.w+poprl Error
-./tests/SAFE/IRWIW+fence.rw.ws Ok
-./tests/SAFE/IRWIW+poaqps Error
-./tests/SAFE/IRWIW+poprl+poaqp Error
-./tests/SAFE/IRWIW+poprls Error
-./tests/SAFE/ISA2+fence.rw.rw+addr+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+addrs Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+addr+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+addrs Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+addrs Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+ctrl+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+data+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+addrs Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+data+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+addrs Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+addrs Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+addrs Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+addr Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+addrs Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+ctrlfencei Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+ctrlfenceis Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+fence.r.rw Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+fence.r.rws Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+fence.rw.rw Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+fence.rw.rws Error
-./tests/SAFE/ISA2+fence.rw.rw+poaqp+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+addr Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+addrs Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+ctrlfencei Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+ctrlfenceis Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+fence.r.rw Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+fence.r.rws Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+fence.rw.rw Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+fence.rw.rws Error
-./tests/SAFE/ISA2+fence.rw.rw+poprl+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rw+pos+addr Ok
-./tests/SAFE/ISA2+fence.rw.rw+pos+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.rw+pos+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+pos+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.rw+pos+poaqp Error
-./tests/SAFE/ISA2+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+addrs Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+addr+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+ctrl+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrl+addrs Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrl+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrl+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+addrs Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+ctrl+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+data+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+data+addrs Ok
-./tests/SAFE/ISA2+fence.rw.w+data+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+data+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.w+data+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+data+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+data+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+data+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+data+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+addrs Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+addrs Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+addrs Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+addr Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+addrs Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+ctrlfencei Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+ctrlfenceis Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+fence.r.rw Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+fence.r.rws Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+fence.rw.rw Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+fence.rw.rws Error
-./tests/SAFE/ISA2+fence.rw.w+poaqp+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+addr Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+addrs Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+ctrlfencei Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+ctrlfenceis Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+fence.r.rw Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+fence.r.rws Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+fence.rw.rws Error
-./tests/SAFE/ISA2+fence.rw.w+poprl+poaqp Error
-./tests/SAFE/ISA2+fence.rw.w+pos+addr Ok
-./tests/SAFE/ISA2+fence.rw.w+pos+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.rw.w+pos+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+pos+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.rw.w+pos+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+addr+addr Ok
-./tests/SAFE/ISA2+fence.w.w+addr+addrs Ok
-./tests/SAFE/ISA2+fence.w.w+addr+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+addr+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.w.w+addr+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+addr+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.w.w+addr+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+addr+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.w.w+addr+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+ctrl+addr Ok
-./tests/SAFE/ISA2+fence.w.w+ctrl+addrs Ok
-./tests/SAFE/ISA2+fence.w.w+ctrl+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+ctrl+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+addr Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+addrs Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.w.w+ctrlfencei+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+ctrl+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+ctrl+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.w.w+ctrl+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+ctrl+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.w.w+ctrl+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+data+addr Ok
-./tests/SAFE/ISA2+fence.w.w+data+addrs Ok
-./tests/SAFE/ISA2+fence.w.w+data+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+data+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.w.w+data+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+data+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.w.w+data+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+data+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.w.w+data+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+addr Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+addrs Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.w.w+fence.r.rw+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+addr Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+addrs Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+addr Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+addrs Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+ctrlfenceis Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.r.rws Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.rw.rws Ok
-./tests/SAFE/ISA2+fence.w.w+fence.rw.w+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+addr Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+addrs Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+ctrlfencei Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+ctrlfenceis Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+fence.r.rw Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+fence.r.rws Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+fence.rw.rw Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+fence.rw.rws Error
-./tests/SAFE/ISA2+fence.w.w+poaqp+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+poprl+addr Error
-./tests/SAFE/ISA2+fence.w.w+poprl+addrs Error
-./tests/SAFE/ISA2+fence.w.w+poprl+ctrlfencei Error
-./tests/SAFE/ISA2+fence.w.w+poprl+ctrlfenceis Error
-./tests/SAFE/ISA2+fence.w.w+poprl+fence.r.rw Error
-./tests/SAFE/ISA2+fence.w.w+poprl+fence.r.rws Error
-./tests/SAFE/ISA2+fence.w.w+poprl+fence.rw.rw Error
-./tests/SAFE/ISA2+fence.w.w+poprl+fence.rw.rws Error
-./tests/SAFE/ISA2+fence.w.w+poprl+poaqp Error
-./tests/SAFE/ISA2+fence.w.w+pos+addr Ok
-./tests/SAFE/ISA2+fence.w.w+pos+ctrlfencei Ok
-./tests/SAFE/ISA2+fence.w.w+pos+fence.r.rw Ok
-./tests/SAFE/ISA2+fence.w.w+pos+fence.rw.rw Ok
-./tests/SAFE/ISA2+fence.w.w+pos+poaqp Error
-./tests/SAFE/ISA2+poprl+addr+addr Error
-./tests/SAFE/ISA2+poprl+addr+addrs Error
-./tests/SAFE/ISA2+poprl+addr+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+addr+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+addr+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+addr+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+addr+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+addr+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+addr+poaqp Error
-./tests/SAFE/ISA2+poprl+ctrl+addr Error
-./tests/SAFE/ISA2+poprl+ctrl+addrs Error
-./tests/SAFE/ISA2+poprl+ctrl+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+ctrl+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+addr Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+addrs Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+ctrlfencei+poaqp Error
-./tests/SAFE/ISA2+poprl+ctrl+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+ctrl+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+ctrl+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+ctrl+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+ctrl+poaqp Error
-./tests/SAFE/ISA2+poprl+data+addr Error
-./tests/SAFE/ISA2+poprl+data+addrs Error
-./tests/SAFE/ISA2+poprl+data+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+data+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+data+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+data+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+data+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+data+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+data+poaqp Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+addr Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+addrs Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+fence.r.rw+poaqp Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+addr Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+addrs Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+fence.rw.rw+poaqp Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+addr Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+addrs Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+fence.rw.w+poaqp Error
-./tests/SAFE/ISA2+poprl+poaqp+addr Error
-./tests/SAFE/ISA2+poprl+poaqp+addrs Error
-./tests/SAFE/ISA2+poprl+poaqp+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+poaqp+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+poaqp+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+poaqp+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+poaqp+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+poaqp+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+poaqp+poaqp Error
-./tests/SAFE/ISA2+poprl+poprl+addr Error
-./tests/SAFE/ISA2+poprl+poprl+addrs Error
-./tests/SAFE/ISA2+poprl+poprl+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+poprl+ctrlfenceis Error
-./tests/SAFE/ISA2+poprl+poprl+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+poprl+fence.r.rws Error
-./tests/SAFE/ISA2+poprl+poprl+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+poprl+fence.rw.rws Error
-./tests/SAFE/ISA2+poprl+poprl+poaqp Error
-./tests/SAFE/ISA2+poprl+pos+addr Error
-./tests/SAFE/ISA2+poprl+pos+ctrlfencei Error
-./tests/SAFE/ISA2+poprl+pos+fence.r.rw Error
-./tests/SAFE/ISA2+poprl+pos+fence.rw.rw Error
-./tests/SAFE/ISA2+poprl+pos+poaqp Error
-./tests/SAFE/ISA2+pos+addr+addr Ok
-./tests/SAFE/ISA2+pos+addr+ctrlfencei Ok
-./tests/SAFE/ISA2+pos+addr+fence.r.rw Ok
-./tests/SAFE/ISA2+pos+addr+fence.rw.rw Ok
-./tests/SAFE/ISA2+pos+addr+poaqp Error
-./tests/SAFE/ISA2+pos+ctrl+addr Ok
-./tests/SAFE/ISA2+pos+ctrl+ctrlfencei Ok
-./tests/SAFE/ISA2+pos+ctrlfencei+addr Ok
-./tests/SAFE/ISA2+pos+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/ISA2+pos+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/ISA2+pos+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/ISA2+pos+ctrlfencei+poaqp Error
-./tests/SAFE/ISA2+pos+ctrl+fence.r.rw Ok
-./tests/SAFE/ISA2+pos+ctrl+fence.rw.rw Ok
-./tests/SAFE/ISA2+pos+ctrl+poaqp Error
-./tests/SAFE/ISA2+pos+data+addr Ok
-./tests/SAFE/ISA2+pos+data+ctrlfencei Ok
-./tests/SAFE/ISA2+pos+data+fence.r.rw Ok
-./tests/SAFE/ISA2+pos+data+fence.rw.rw Ok
-./tests/SAFE/ISA2+pos+data+poaqp Error
-./tests/SAFE/ISA2+pos+fence.r.rw+addr Ok
-./tests/SAFE/ISA2+pos+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+pos+fence.r.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+pos+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/ISA2+pos+fence.r.rw+poaqp Error
-./tests/SAFE/ISA2+pos+fence.rw.rw+addr Ok
-./tests/SAFE/ISA2+pos+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/ISA2+pos+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/ISA2+pos+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/ISA2+pos+fence.rw.rw+poaqp Error
-./tests/SAFE/ISA2+pos+fence.rw.w+addr Ok
-./tests/SAFE/ISA2+pos+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/ISA2+pos+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/ISA2+pos+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/ISA2+pos+fence.rw.w+poaqp Error
-./tests/SAFE/ISA2+pos+poaqp+addr Error
-./tests/SAFE/ISA2+pos+poaqp+ctrlfencei Error
-./tests/SAFE/ISA2+pos+poaqp+fence.r.rw Error
-./tests/SAFE/ISA2+pos+poaqp+fence.rw.rw Error
-./tests/SAFE/ISA2+pos+poaqp+poaqp Error
-./tests/SAFE/ISA2+pos+poprl+addr Error
-./tests/SAFE/ISA2+pos+poprl+ctrlfencei Error
-./tests/SAFE/ISA2+pos+poprl+fence.r.rw Error
-./tests/SAFE/ISA2+pos+poprl+fence.rw.rw Error
-./tests/SAFE/ISA2+pos+poprl+poaqp Error
-./tests/SAFE/LB+addr+addr-[fr-ws] Ok
-./tests/SAFE/LB+addr+addr-[rf-fr] Ok
-./tests/SAFE/LB+addr+ctrlfencei-[fr-ws] Ok
-./tests/SAFE/LB+addr+ctrlfencei Ok
-./tests/SAFE/LB+addr+ctrlfencei-[rf-fr] Ok
-./tests/SAFE/LB+addr+ctrl Ok
-./tests/SAFE/LB+addr+ctrl-[rf-fr] Ok
-./tests/SAFE/LB+addr+data Ok
-./tests/SAFE/LB+addr+data-[rf-fr] Ok
-./tests/SAFE/LB+addr-[fr-ws]+ctrlfencei Ok
-./tests/SAFE/LB+addr-[fr-ws]+ctrl Ok
-./tests/SAFE/LB+addr-[fr-ws]+data Ok
-./tests/SAFE/LB+addr-[fr-ws]+poaqp Error
-./tests/SAFE/LB+addr-[fr-ws]+poprl Error
-./tests/SAFE/LB+addr+poaqp Error
-./tests/SAFE/LB+addr+poaqp-[fr-ws] Error
-./tests/SAFE/LB+addr+poaqp-[rf-fr] Error
-./tests/SAFE/LB+addr+poprl Error
-./tests/SAFE/LB+addr+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+addr-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/LB+addr-[rf-fr]+ctrl Ok
-./tests/SAFE/LB+addr-[rf-fr]+data Ok
-./tests/SAFE/LB+addr-[rf-fr]+poaqp Error
-./tests/SAFE/LB+addr-[rf-fr]+poprl Error
-./tests/SAFE/LB+addrs Ok
-./tests/SAFE/LB+ctrl+ctrlfencei-[fr-ws] Ok
-./tests/SAFE/LB+ctrl+ctrlfencei Ok
-./tests/SAFE/LB+ctrl+ctrlfencei-[rf-fr] Ok
-./tests/SAFE/LB+ctrl+ctrl-[rf-fr] Ok
-./tests/SAFE/LB+ctrlfencei+ctrlfencei-[fr-ws] Ok
-./tests/SAFE/LB+ctrlfencei+ctrlfencei-[rf-fr] Ok
-./tests/SAFE/LB+ctrlfencei-[fr-ws]+poaqp Error
-./tests/SAFE/LB+ctrlfencei-[fr-ws]+poprl Error
-./tests/SAFE/LB+ctrlfencei+poaqp Error
-./tests/SAFE/LB+ctrlfencei+poaqp-[fr-ws] Error
-./tests/SAFE/LB+ctrlfencei+poaqp-[rf-fr] Error
-./tests/SAFE/LB+ctrlfencei+poprl Error
-./tests/SAFE/LB+ctrlfencei+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+ctrlfencei-[rf-fr]+poaqp Error
-./tests/SAFE/LB+ctrlfencei-[rf-fr]+poprl Error
-./tests/SAFE/LB+ctrlfenceis Ok
-./tests/SAFE/LB+ctrl+poaqp Error
-./tests/SAFE/LB+ctrl+poaqp-[fr-ws] Error
-./tests/SAFE/LB+ctrl+poaqp-[rf-fr] Error
-./tests/SAFE/LB+ctrl+poprl Error
-./tests/SAFE/LB+ctrl+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+ctrl-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/LB+ctrl-[rf-fr]+poaqp Error
-./tests/SAFE/LB+ctrl-[rf-fr]+poprl Error
-./tests/SAFE/LB+ctrls Ok
-./tests/SAFE/LB+data+ctrlfencei-[fr-ws] Ok
-./tests/SAFE/LB+data+ctrlfencei Ok
-./tests/SAFE/LB+data+ctrlfencei-[rf-fr] Ok
-./tests/SAFE/LB+data+ctrl Ok
-./tests/SAFE/LB+data+ctrl-[rf-fr] Ok
-./tests/SAFE/LB+data+data-[rf-fr] Ok
-./tests/SAFE/LB+data+poaqp Error
-./tests/SAFE/LB+data+poaqp-[fr-ws] Error
-./tests/SAFE/LB+data+poaqp-[rf-fr] Error
-./tests/SAFE/LB+data+poprl Error
-./tests/SAFE/LB+data+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+data-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/LB+data-[rf-fr]+ctrl Ok
-./tests/SAFE/LB+data-[rf-fr]+poaqp Error
-./tests/SAFE/LB+data-[rf-fr]+poprl Error
-./tests/SAFE/LB+datas Ok
-./tests/SAFE/LB+fence.r.rw+addr-[fr-ws] Ok
-./tests/SAFE/LB+fence.r.rw+addr Ok
-./tests/SAFE/LB+fence.r.rw+addr-[rf-fr] Ok
-./tests/SAFE/LB+fence.r.rw+ctrlfencei-[fr-ws] Ok
-./tests/SAFE/LB+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/LB+fence.r.rw+ctrlfencei-[rf-fr] Ok
-./tests/SAFE/LB+fence.r.rw+ctrl Ok
-./tests/SAFE/LB+fence.r.rw+ctrl-[rf-fr] Ok
-./tests/SAFE/LB+fence.r.rw+data Ok
-./tests/SAFE/LB+fence.r.rw+data-[rf-fr] Ok
-./tests/SAFE/LB+fence.r.rw+fence.r.rw-[fr-ws] Ok
-./tests/SAFE/LB+fence.r.rw+fence.r.rw-[rf-fr] Ok
-./tests/SAFE/LB+fence.r.rw+fence.rw.rw-[fr-ws] Ok
-./tests/SAFE/LB+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/LB+fence.r.rw+fence.rw.rw-[rf-fr] Ok
-./tests/SAFE/LB+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/LB+fence.r.rw+fence.rw.w-[rf-fr] Ok
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+addr Ok
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+ctrlfencei Ok
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+ctrl Ok
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+data Ok
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+fence.rw.rw Ok
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+fence.rw.w Ok
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+poaqp Error
-./tests/SAFE/LB+fence.r.rw-[fr-ws]+poprl Error
-./tests/SAFE/LB+fence.r.rw+poaqp Error
-./tests/SAFE/LB+fence.r.rw+poaqp-[fr-ws] Error
-./tests/SAFE/LB+fence.r.rw+poaqp-[rf-fr] Error
-./tests/SAFE/LB+fence.r.rw+poprl Error
-./tests/SAFE/LB+fence.r.rw+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+addr Ok
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+ctrl Ok
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+data Ok
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+fence.rw.w Ok
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+poaqp Error
-./tests/SAFE/LB+fence.r.rw-[rf-fr]+poprl Error
-./tests/SAFE/LB+fence.r.rws Ok
-./tests/SAFE/LB+fence.rw.rw+addr-[fr-ws] Ok
-./tests/SAFE/LB+fence.rw.rw+addr Ok
-./tests/SAFE/LB+fence.rw.rw+addr-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.rw+ctrlfencei-[fr-ws] Ok
-./tests/SAFE/LB+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/LB+fence.rw.rw+ctrlfencei-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.rw+ctrl Ok
-./tests/SAFE/LB+fence.rw.rw+ctrl-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.rw+data Ok
-./tests/SAFE/LB+fence.rw.rw+data-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.rw+fence.rw.rw-[fr-ws] Ok
-./tests/SAFE/LB+fence.rw.rw+fence.rw.rw-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.rw-[fr-ws]+addr Ok
-./tests/SAFE/LB+fence.rw.rw-[fr-ws]+ctrlfencei Ok
-./tests/SAFE/LB+fence.rw.rw-[fr-ws]+ctrl Ok
-./tests/SAFE/LB+fence.rw.rw-[fr-ws]+data Ok
-./tests/SAFE/LB+fence.rw.rw-[fr-ws]+poaqp Error
-./tests/SAFE/LB+fence.rw.rw-[fr-ws]+poprl Error
-./tests/SAFE/LB+fence.rw.rw+poaqp Error
-./tests/SAFE/LB+fence.rw.rw+poaqp-[fr-ws] Error
-./tests/SAFE/LB+fence.rw.rw+poaqp-[rf-fr] Error
-./tests/SAFE/LB+fence.rw.rw+poprl Error
-./tests/SAFE/LB+fence.rw.rw+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+fence.rw.rw-[rf-fr]+addr Ok
-./tests/SAFE/LB+fence.rw.rw-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/LB+fence.rw.rw-[rf-fr]+ctrl Ok
-./tests/SAFE/LB+fence.rw.rw-[rf-fr]+data Ok
-./tests/SAFE/LB+fence.rw.rw-[rf-fr]+poaqp Error
-./tests/SAFE/LB+fence.rw.rw-[rf-fr]+poprl Error
-./tests/SAFE/LB+fence.rw.rws Ok
-./tests/SAFE/LB+fence.rw.w+addr-[fr-ws] Ok
-./tests/SAFE/LB+fence.rw.w+addr Ok
-./tests/SAFE/LB+fence.rw.w+addr-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.w+ctrlfencei-[fr-ws] Ok
-./tests/SAFE/LB+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/LB+fence.rw.w+ctrlfencei-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.w+ctrl Ok
-./tests/SAFE/LB+fence.rw.w+ctrl-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.w+data Ok
-./tests/SAFE/LB+fence.rw.w+data-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.w+fence.rw.rw-[fr-ws] Ok
-./tests/SAFE/LB+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/LB+fence.rw.w+fence.rw.rw-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.w+fence.rw.w-[rf-fr] Ok
-./tests/SAFE/LB+fence.rw.w+poaqp Error
-./tests/SAFE/LB+fence.rw.w+poaqp-[fr-ws] Error
-./tests/SAFE/LB+fence.rw.w+poaqp-[rf-fr] Error
-./tests/SAFE/LB+fence.rw.w+poprl Error
-./tests/SAFE/LB+fence.rw.w+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+fence.rw.w-[rf-fr]+addr Ok
-./tests/SAFE/LB+fence.rw.w-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/LB+fence.rw.w-[rf-fr]+ctrl Ok
-./tests/SAFE/LB+fence.rw.w-[rf-fr]+data Ok
-./tests/SAFE/LB+fence.rw.w-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/LB+fence.rw.w-[rf-fr]+poaqp Error
-./tests/SAFE/LB+fence.rw.w-[rf-fr]+poprl Error
-./tests/SAFE/LB+fence.rw.ws Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+addr Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+ctrlfencei Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+ctrl Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+data Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+fence.r.rw Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+fence.rw.w Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+poaqp Error
-./tests/SAFE/LB+[fr-fence.rw.rw-fr]+poprl Error
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+addr Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+ctrlfencei Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+ctrl Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+data Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+fence.r.rw Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+fence.rw.w Ok
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+poaqp Error
-./tests/SAFE/LB+[fr-fence.rw.rw-ws]+poprl Error
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+addr Ok
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+ctrlfencei Ok
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+ctrl Ok
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+data Ok
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+fence.r.rw Ok
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+fence.rw.w Ok
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+poaqp Error
-./tests/SAFE/LB+[fr-fence.rw.w-ws]+poprl Error
-./tests/SAFE/LB+[fr-fence.w.w-ws]+addr Ok
-./tests/SAFE/LB+[fr-fence.w.w-ws]+ctrlfencei Ok
-./tests/SAFE/LB+[fr-fence.w.w-ws]+ctrl Ok
-./tests/SAFE/LB+[fr-fence.w.w-ws]+data Ok
-./tests/SAFE/LB+[fr-fence.w.w-ws]+fence.r.rw Ok
-./tests/SAFE/LB+[fr-fence.w.w-ws]+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-fence.w.w-ws]+fence.rw.w Ok
-./tests/SAFE/LB+[fr-fence.w.w-ws]+poaqp Error
-./tests/SAFE/LB+[fr-fence.w.w-ws]+poprl Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+addr Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+ctrl Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+ctrlfencei Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+data Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+fence.r.rw Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+fence.rw.rw Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+fence.rw.w Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+poaqp Error
-./tests/SAFE/LB+[fr-poprl-ws]rlp+poprl Error
-./tests/SAFE/LB+[fr-rf]-addr+addr Ok
-./tests/SAFE/LB+[fr-rf]-addr+ctrlfencei Ok
-./tests/SAFE/LB+[fr-rf]-addr+ctrl Ok
-./tests/SAFE/LB+[fr-rf]-addr+data Ok
-./tests/SAFE/LB+[fr-rf]-addr+fence.r.rw Ok
-./tests/SAFE/LB+[fr-rf]-addr+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-rf]-addr+fence.rw.w Ok
-./tests/SAFE/LB+[fr-rf]-addr+poaqp Error
-./tests/SAFE/LB+[fr-rf]-addr+poprl Error
-./tests/SAFE/LB+[fr-rf]-ctrl+addr Ok
-./tests/SAFE/LB+[fr-rf]-ctrl+ctrlfencei Ok
-./tests/SAFE/LB+[fr-rf]-ctrl+ctrl Ok
-./tests/SAFE/LB+[fr-rf]-ctrl+data Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+addr Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+ctrlfencei Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+ctrl Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+data Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+fence.r.rw Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+fence.rw.w Ok
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+poaqp Error
-./tests/SAFE/LB+[fr-rf]-ctrlfencei+poprl Error
-./tests/SAFE/LB+[fr-rf]-ctrl+fence.r.rw Ok
-./tests/SAFE/LB+[fr-rf]-ctrl+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-rf]-ctrl+fence.rw.w Ok
-./tests/SAFE/LB+[fr-rf]-ctrl+poaqp Error
-./tests/SAFE/LB+[fr-rf]-ctrl+poprl Error
-./tests/SAFE/LB+[fr-rf]-data+addr Ok
-./tests/SAFE/LB+[fr-rf]-data+ctrlfencei Ok
-./tests/SAFE/LB+[fr-rf]-data+ctrl Ok
-./tests/SAFE/LB+[fr-rf]-data+data Ok
-./tests/SAFE/LB+[fr-rf]-data+fence.r.rw Ok
-./tests/SAFE/LB+[fr-rf]-data+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-rf]-data+fence.rw.w Ok
-./tests/SAFE/LB+[fr-rf]-data+poaqp Error
-./tests/SAFE/LB+[fr-rf]-data+poprl Error
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+addr Ok
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+ctrlfencei Ok
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+ctrl Ok
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+data Ok
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+fence.r.rw Ok
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+fence.rw.w Ok
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+poaqp Error
-./tests/SAFE/LB+[fr-rf]-fence.r.rw+poprl Error
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+addr Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+ctrl Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+data Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+poaqp Error
-./tests/SAFE/LB+[fr-rf]-fence.rw.rw+poprl Error
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+addr Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+ctrlfencei Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+ctrl Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+data Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+fence.r.rw Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+fence.rw.w Ok
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+poaqp Error
-./tests/SAFE/LB+[fr-rf]-fence.rw.w+poprl Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+addr Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+ctrl Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+ctrlfencei Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+data Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+fence.r.rw Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+fence.rw.rw Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+fence.rw.w Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+poaqp Error
-./tests/SAFE/LB+[fr-rf]paq-poaqp+poprl Error
-./tests/SAFE/LB+[fr-rf]-poprl+addr Error
-./tests/SAFE/LB+[fr-rf]-poprl+ctrl Error
-./tests/SAFE/LB+[fr-rf]-poprl+ctrlfencei Error
-./tests/SAFE/LB+[fr-rf]-poprl+data Error
-./tests/SAFE/LB+[fr-rf]-poprl+fence.r.rw Error
-./tests/SAFE/LB+[fr-rf]-poprl+fence.rw.rw Error
-./tests/SAFE/LB+[fr-rf]-poprl+fence.rw.w Error
-./tests/SAFE/LB+[fr-rf]-poprl+poaqp Error
-./tests/SAFE/LB+[fr-rf]-poprl+poprl Error
-./tests/SAFE/LB+poaqp+poaqp-[fr-ws] Error
-./tests/SAFE/LB+poaqp+poaqp-[rf-fr] Error
-./tests/SAFE/LB+poaqps Error
-./tests/SAFE/LB+poprl+poaqp Error
-./tests/SAFE/LB+poprl+poaqp-[fr-ws] Error
-./tests/SAFE/LB+poprl+poaqp-[rf-fr] Error
-./tests/SAFE/LB+poprl+poprl-[rfrlp-fr] Error
-./tests/SAFE/LB+poprl-[rfrlp-fr]+poaqp Error
-./tests/SAFE/LB+poprls Error
-./tests/SAFE/MP+fence.rw.rw+addr-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.rw+addr Ok
-./tests/SAFE/MP+fence.rw.rw+ctrlfencei-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/MP+fence.rw.rw+fence.r.rw-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/MP+fence.rw.rw+fence.rw.rw-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-fence.rw.rw-rf] Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-fence.rw.w-rf] Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-fence.w.w-rf] Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-poprl-rf]rlp Error
-./tests/SAFE/MP+fence.rw.rw+[fr-rf]-addr Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-rf]-ctrlfencei Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-rf]-fence.r.rw Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-rf]-fence.rw.rw Ok
-./tests/SAFE/MP+fence.rw.rw+[fr-rf]paq-poaqp Error
-./tests/SAFE/MP+fence.rw.rw-[fr-ws]+addr Ok
-./tests/SAFE/MP+fence.rw.rw-[fr-ws]+ctrlfencei Ok
-./tests/SAFE/MP+fence.rw.rw-[fr-ws]+fence.r.rw Ok
-./tests/SAFE/MP+fence.rw.rw-[fr-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+fence.rw.rw-[fr-ws]+poaqp Error
-./tests/SAFE/MP+fence.rw.rw+poaqp Error
-./tests/SAFE/MP+fence.rw.rw+poaqp-[fr-rf] Error
-./tests/SAFE/MP+fence.rw.rw-[rf-fr]+addr Ok
-./tests/SAFE/MP+fence.rw.rw-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/MP+fence.rw.rw-[rf-fr]+fence.r.rw Ok
-./tests/SAFE/MP+fence.rw.rw-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+fence.rw.rw-[rf-fr]+poaqp Error
-./tests/SAFE/MP+fence.rw.rws Ok
-./tests/SAFE/MP+fence.rw.w+addr-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.w+addr Ok
-./tests/SAFE/MP+fence.rw.w+ctrlfencei-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/MP+fence.rw.w+fence.r.rw-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/MP+fence.rw.w+fence.rw.rw-[fr-rf] Ok
-./tests/SAFE/MP+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/MP+fence.rw.w+[fr-fence.rw.rw-rf] Ok
-./tests/SAFE/MP+fence.rw.w+[fr-fence.rw.w-rf] Ok
-./tests/SAFE/MP+fence.rw.w+[fr-fence.w.w-rf] Ok
-./tests/SAFE/MP+fence.rw.w+[fr-poprl-rf]rlp Error
-./tests/SAFE/MP+fence.rw.w+[fr-rf]-addr Ok
-./tests/SAFE/MP+fence.rw.w+[fr-rf]-ctrlfencei Ok
-./tests/SAFE/MP+fence.rw.w+[fr-rf]-fence.r.rw Ok
-./tests/SAFE/MP+fence.rw.w+[fr-rf]-fence.rw.rw Ok
-./tests/SAFE/MP+fence.rw.w+[fr-rf]paq-poaqp Error
-./tests/SAFE/MP+fence.rw.w+poaqp Error
-./tests/SAFE/MP+fence.rw.w+poaqp-[fr-rf] Error
-./tests/SAFE/MP+fence.rw.w-[rf-fr]+addr Ok
-./tests/SAFE/MP+fence.rw.w-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/MP+fence.rw.w-[rf-fr]+fence.r.rw Ok
-./tests/SAFE/MP+fence.rw.w-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+fence.rw.w-[rf-fr]+poaqp Error
-./tests/SAFE/MP+fence.w.w+addr-[fr-rf] Ok
-./tests/SAFE/MP+fence.w.w+addr Ok
-./tests/SAFE/MP+fence.w.w+ctrlfencei-[fr-rf] Ok
-./tests/SAFE/MP+fence.w.w+ctrlfencei Ok
-./tests/SAFE/MP+fence.w.w+fence.r.rw-[fr-rf] Ok
-./tests/SAFE/MP+fence.w.w+fence.r.rw Ok
-./tests/SAFE/MP+fence.w.w+fence.rw.rw-[fr-rf] Ok
-./tests/SAFE/MP+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/MP+fence.w.w+[fr-fence.rw.rw-rf] Ok
-./tests/SAFE/MP+fence.w.w+[fr-fence.rw.w-rf] Ok
-./tests/SAFE/MP+fence.w.w+[fr-fence.w.w-rf] Ok
-./tests/SAFE/MP+fence.w.w+[fr-poprl-rf]rlp Error
-./tests/SAFE/MP+fence.w.w+[fr-rf]-addr Ok
-./tests/SAFE/MP+fence.w.w+[fr-rf]-ctrlfencei Ok
-./tests/SAFE/MP+fence.w.w+[fr-rf]-fence.r.rw Ok
-./tests/SAFE/MP+fence.w.w+[fr-rf]-fence.rw.rw Ok
-./tests/SAFE/MP+fence.w.w+[fr-rf]paq-poaqp Error
-./tests/SAFE/MP+fence.w.w+poaqp Error
-./tests/SAFE/MP+fence.w.w+poaqp-[fr-rf] Error
-./tests/SAFE/MP+fence.w.w-[rf-fr]+addr Ok
-./tests/SAFE/MP+fence.w.w-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/MP+fence.w.w-[rf-fr]+fence.r.rw Ok
-./tests/SAFE/MP+fence.w.w-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+fence.w.w-[rf-fr]+poaqp Error
-./tests/SAFE/MP+poprl+addr Error
-./tests/SAFE/MP+poprl+addr-[fr-rf] Error
-./tests/SAFE/MP+poprl+ctrlfencei Error
-./tests/SAFE/MP+poprl+ctrlfencei-[fr-rf] Error
-./tests/SAFE/MP+poprl+fence.r.rw Error
-./tests/SAFE/MP+poprl+fence.r.rw-[fr-rf] Error
-./tests/SAFE/MP+poprl+fence.rw.rw Error
-./tests/SAFE/MP+poprl+fence.rw.rw-[fr-rf] Error
-./tests/SAFE/MP+poprl+[fr-fence.rw.rw-rf] Error
-./tests/SAFE/MP+poprl+[fr-fence.rw.w-rf] Error
-./tests/SAFE/MP+poprl+[fr-fence.w.w-rf] Error
-./tests/SAFE/MP+poprl+[fr-poprl-rf]rlp Error
-./tests/SAFE/MP+poprl+[fr-rf]-addr Error
-./tests/SAFE/MP+poprl+[fr-rf]-ctrlfencei Error
-./tests/SAFE/MP+poprl+[fr-rf]-fence.r.rw Error
-./tests/SAFE/MP+poprl+[fr-rf]-fence.rw.rw Error
-./tests/SAFE/MP+poprl+[fr-rf]paq-poaqp Error
-./tests/SAFE/MP+poprl+poaqp Error
-./tests/SAFE/MP+poprl+poaqp-[fr-rf] Error
-./tests/SAFE/MP+poprl-[rfrlp-fr]+addr Error
-./tests/SAFE/MP+poprl-[rfrlp-fr]+ctrlfencei Error
-./tests/SAFE/MP+poprl-[rfrlp-fr]+fence.r.rw Error
-./tests/SAFE/MP+poprl-[rfrlp-fr]+fence.rw.rw Error
-./tests/SAFE/MP+poprl-[rfrlp-fr]+poaqp Error
-./tests/SAFE/MP+[rf-addr-fr]+addr Ok
-./tests/SAFE/MP+[rf-addr-fr]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-addr-fr]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-addr-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-addr-fr]+poaqp Error
-./tests/SAFE/MP+[rf-addr-ws]+addr Ok
-./tests/SAFE/MP+[rf-addr-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-addr-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-addr-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-addr-ws]+poaqp Error
-./tests/SAFE/MP+[rf-ctrlfencei-fr]+addr Ok
-./tests/SAFE/MP+[rf-ctrlfencei-fr]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-ctrlfencei-fr]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-ctrlfencei-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-ctrlfencei-fr]+poaqp Error
-./tests/SAFE/MP+[rf-ctrlfencei-ws]+addr Ok
-./tests/SAFE/MP+[rf-ctrlfencei-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-ctrlfencei-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-ctrlfencei-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-ctrlfencei-ws]+poaqp Error
-./tests/SAFE/MP+[rf-ctrl-ws]+addr Ok
-./tests/SAFE/MP+[rf-ctrl-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-ctrl-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-ctrl-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-ctrl-ws]+poaqp Error
-./tests/SAFE/MP+[rf-data-ws]+addr Ok
-./tests/SAFE/MP+[rf-data-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-data-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-data-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-data-ws]+poaqp Error
-./tests/SAFE/MP+[rf-fence.r.rw-fr]+addr Ok
-./tests/SAFE/MP+[rf-fence.r.rw-fr]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fence.r.rw-fr]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fence.r.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fence.r.rw-fr]+poaqp Error
-./tests/SAFE/MP+[rf-fence.r.rw-ws]+addr Ok
-./tests/SAFE/MP+[rf-fence.r.rw-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fence.r.rw-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fence.r.rw-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fence.r.rw-ws]+poaqp Error
-./tests/SAFE/MP+[rf-fence.rw.rw-fr]+addr Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-fr]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-fr]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-fr]+poaqp Error
-./tests/SAFE/MP+[rf-fence.rw.rw-ws]+addr Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fence.rw.rw-ws]+poaqp Error
-./tests/SAFE/MP+[rf-fence.rw.w-ws]+addr Ok
-./tests/SAFE/MP+[rf-fence.rw.w-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fence.rw.w-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fence.rw.w-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fence.rw.w-ws]+poaqp Error
-./tests/SAFE/MP+[rf-fr]-fence.rw.rw+addr Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.rw+poaqp Error
-./tests/SAFE/MP+[rf-fr]-fence.rw.w+addr Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.w+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.w+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fr]-fence.rw.w+poaqp Error
-./tests/SAFE/MP+[rf-fr]-fence.w.w+addr Ok
-./tests/SAFE/MP+[rf-fr]-fence.w.w+ctrlfencei Ok
-./tests/SAFE/MP+[rf-fr]-fence.w.w+fence.r.rw Ok
-./tests/SAFE/MP+[rf-fr]-fence.w.w+fence.rw.rw Ok
-./tests/SAFE/MP+[rf-fr]-fence.w.w+poaqp Error
-./tests/SAFE/MP+[rf-fr]-poprl+addr Error
-./tests/SAFE/MP+[rf-fr]-poprl+ctrlfencei Error
-./tests/SAFE/MP+[rf-fr]-poprl+fence.r.rw Error
-./tests/SAFE/MP+[rf-fr]-poprl+fence.rw.rw Error
-./tests/SAFE/MP+[rf-fr]-poprl+poaqp Error
-./tests/SAFE/MP+[rfpaq-poaqp-fr]+addr Error
-./tests/SAFE/MP+[rfpaq-poaqp-fr]+ctrlfencei Error
-./tests/SAFE/MP+[rfpaq-poaqp-fr]+fence.r.rw Error
-./tests/SAFE/MP+[rfpaq-poaqp-fr]+fence.rw.rw Error
-./tests/SAFE/MP+[rfpaq-poaqp-fr]+poaqp Error
-./tests/SAFE/MP+[rfpaq-poaqp-ws]+addr Error
-./tests/SAFE/MP+[rfpaq-poaqp-ws]+ctrlfencei Error
-./tests/SAFE/MP+[rfpaq-poaqp-ws]+fence.r.rw Error
-./tests/SAFE/MP+[rfpaq-poaqp-ws]+fence.rw.rw Error
-./tests/SAFE/MP+[rfpaq-poaqp-ws]+poaqp Error
-./tests/SAFE/MP+[rf-poprl-ws]rlp+addr Error
-./tests/SAFE/MP+[rf-poprl-ws]rlp+ctrlfencei Error
-./tests/SAFE/MP+[rf-poprl-ws]rlp+fence.r.rw Error
-./tests/SAFE/MP+[rf-poprl-ws]rlp+fence.rw.rw Error
-./tests/SAFE/MP+[rf-poprl-ws]rlp+poaqp Error
-./tests/SAFE/MP+[ws-fence.rw.rw-fr]+addr Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-fr]+ctrlfencei Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-fr]+fence.r.rw Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-fr]+poaqp Error
-./tests/SAFE/MP+[ws-fence.rw.rw-ws]+addr Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-fence.rw.rw-ws]+poaqp Error
-./tests/SAFE/MP+[ws-fence.rw.w-ws]+addr Ok
-./tests/SAFE/MP+[ws-fence.rw.w-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[ws-fence.rw.w-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[ws-fence.rw.w-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-fence.rw.w-ws]+poaqp Error
-./tests/SAFE/MP+[ws-fence.w.w-ws]+addr Ok
-./tests/SAFE/MP+[ws-fence.w.w-ws]+ctrlfencei Ok
-./tests/SAFE/MP+[ws-fence.w.w-ws]+fence.r.rw Ok
-./tests/SAFE/MP+[ws-fence.w.w-ws]+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-fence.w.w-ws]+poaqp Error
-./tests/SAFE/MP+[ws-poprl-ws]rlp+addr Error
-./tests/SAFE/MP+[ws-poprl-ws]rlp+ctrlfencei Error
-./tests/SAFE/MP+[ws-poprl-ws]rlp+fence.r.rw Error
-./tests/SAFE/MP+[ws-poprl-ws]rlp+fence.rw.rw Error
-./tests/SAFE/MP+[ws-poprl-ws]rlp+poaqp Error
-./tests/SAFE/MP+[ws-rf]-addr+addr Ok
-./tests/SAFE/MP+[ws-rf]-addr+ctrlfencei Ok
-./tests/SAFE/MP+[ws-rf]-addr+fence.r.rw Ok
-./tests/SAFE/MP+[ws-rf]-addr+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-rf]-addr+poaqp Error
-./tests/SAFE/MP+[ws-rf]-ctrl+addr Ok
-./tests/SAFE/MP+[ws-rf]-ctrl+ctrlfencei Ok
-./tests/SAFE/MP+[ws-rf]-ctrlfencei+addr Ok
-./tests/SAFE/MP+[ws-rf]-ctrlfencei+ctrlfencei Ok
-./tests/SAFE/MP+[ws-rf]-ctrlfencei+fence.r.rw Ok
-./tests/SAFE/MP+[ws-rf]-ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-rf]-ctrlfencei+poaqp Error
-./tests/SAFE/MP+[ws-rf]-ctrl+fence.r.rw Ok
-./tests/SAFE/MP+[ws-rf]-ctrl+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-rf]-ctrl+poaqp Error
-./tests/SAFE/MP+[ws-rf]-data+addr Ok
-./tests/SAFE/MP+[ws-rf]-data+ctrlfencei Ok
-./tests/SAFE/MP+[ws-rf]-data+fence.r.rw Ok
-./tests/SAFE/MP+[ws-rf]-data+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-rf]-data+poaqp Error
-./tests/SAFE/MP+[ws-rf]-fence.r.rw+addr Ok
-./tests/SAFE/MP+[ws-rf]-fence.r.rw+ctrlfencei Ok
-./tests/SAFE/MP+[ws-rf]-fence.r.rw+fence.r.rw Ok
-./tests/SAFE/MP+[ws-rf]-fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-rf]-fence.r.rw+poaqp Error
-./tests/SAFE/MP+[ws-rf]-fence.rw.rw+addr Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.rw+poaqp Error
-./tests/SAFE/MP+[ws-rf]-fence.rw.w+addr Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.w+ctrlfencei Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.w+fence.r.rw Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/MP+[ws-rf]-fence.rw.w+poaqp Error
-./tests/SAFE/MP+[ws-rf]paq-poaqp+addr Error
-./tests/SAFE/MP+[ws-rf]paq-poaqp+ctrlfencei Error
-./tests/SAFE/MP+[ws-rf]paq-poaqp+fence.r.rw Error
-./tests/SAFE/MP+[ws-rf]paq-poaqp+fence.rw.rw Error
-./tests/SAFE/MP+[ws-rf]paq-poaqp+poaqp Error
-./tests/SAFE/MP+[ws-rf]-poprl+addr Error
-./tests/SAFE/MP+[ws-rf]-poprl+ctrlfencei Error
-./tests/SAFE/MP+[ws-rf]-poprl+fence.r.rw Error
-./tests/SAFE/MP+[ws-rf]-poprl+fence.rw.rw Error
-./tests/SAFE/MP+[ws-rf]-poprl+poaqp Error
-./tests/SAFE/R+fence.rw.rw+fence.rw.rw-[fr-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rf-addr-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rf-ctrlfencei-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rf-ctrl-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rf-data-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rf-fence.r.rw-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rf-fence.rw.rw-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rf-fence.rw.w-rf] Ok
-./tests/SAFE/R+fence.rw.rw+[rfpaq-poaqp-rf] Error
-./tests/SAFE/R+fence.rw.rw+[rf-poprl-rf]rlp Error
-./tests/SAFE/R+fence.rw.rws Ok
-./tests/SAFE/R+fence.rw.w+fence.rw.rw-[fr-rf] Ok
-./tests/SAFE/R+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/R+fence.rw.w+[rf-addr-rf] Ok
-./tests/SAFE/R+fence.rw.w+[rf-ctrlfencei-rf] Ok
-./tests/SAFE/R+fence.rw.w+[rf-ctrl-rf] Ok
-./tests/SAFE/R+fence.rw.w+[rf-data-rf] Ok
-./tests/SAFE/R+fence.rw.w+[rf-fence.r.rw-rf] Ok
-./tests/SAFE/R+fence.rw.w+[rf-fence.rw.rw-rf] Ok
-./tests/SAFE/R+fence.rw.w+[rf-fence.rw.w-rf] Ok
-./tests/SAFE/R+fence.rw.w+[rfpaq-poaqp-rf] Error
-./tests/SAFE/R+fence.rw.w+[rf-poprl-rf]rlp Error
-./tests/SAFE/R+fence.w.w+fence.rw.rw-[fr-rf] Ok
-./tests/SAFE/R+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/R+fence.w.w+[rf-addr-rf] Ok
-./tests/SAFE/R+fence.w.w+[rf-ctrlfencei-rf] Ok
-./tests/SAFE/R+fence.w.w+[rf-ctrl-rf] Ok
-./tests/SAFE/R+fence.w.w+[rf-data-rf] Ok
-./tests/SAFE/R+fence.w.w+[rf-fence.r.rw-rf] Ok
-./tests/SAFE/R+fence.w.w+[rf-fence.rw.rw-rf] Ok
-./tests/SAFE/R+fence.w.w+[rf-fence.rw.w-rf] Ok
-./tests/SAFE/R+fence.w.w+[rfpaq-poaqp-rf] Error
-./tests/SAFE/R+fence.w.w+[rf-poprl-rf]rlp Error
-./tests/SAFE/R+poprl+fence.rw.rw Error
-./tests/SAFE/R+poprl+fence.rw.rw-[fr-rf] Error
-./tests/SAFE/R+poprl+[rf-addr-rf] Error
-./tests/SAFE/R+poprl+[rf-ctrlfencei-rf] Error
-./tests/SAFE/R+poprl+[rf-ctrl-rf] Error
-./tests/SAFE/R+poprl+[rf-data-rf] Error
-./tests/SAFE/R+poprl+[rf-fence.r.rw-rf] Error
-./tests/SAFE/R+poprl+[rf-fence.rw.rw-rf] Error
-./tests/SAFE/R+poprl+[rf-fence.rw.w-rf] Error
-./tests/SAFE/R+poprl+[rfpaq-poaqp-rf] Error
-./tests/SAFE/R+poprl+[rf-poprl-rf]rlp Error
-./tests/SAFE/R+[rf-addr-fr]+fence.rw.rw Ok
-./tests/SAFE/R+[rf-ctrlfencei-fr]+fence.rw.rw Ok
-./tests/SAFE/R+[rf-fence.r.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/R+[rf-fence.rw.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/R+[rf-fr]-fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/R+[rf-fr]-fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/R+[rf-fr]-fence.w.w+fence.rw.rw Ok
-./tests/SAFE/R+[rf-fr]-poprl+fence.rw.rw Error
-./tests/SAFE/R+[rfpaq-poaqp-fr]+fence.rw.rw Error
-./tests/SAFE/RWC+addr+fence.rw.rw Ok
-./tests/SAFE/RWC+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/RWC+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/RWC+fence.rw.rws Ok
-./tests/SAFE/RWC+poaqp+fence.rw.rw Error
-./tests/SAFE/R+[ws-fence.rw.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]-addr+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]-ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]-ctrl+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]-data+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]-fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]-fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]-fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/R+[ws-rf]paq-poaqp+fence.rw.rw Error
-./tests/SAFE/R+[ws-rf]-poprl+fence.rw.rw Error
-./tests/SAFE/SB+fence.rw.rw+fence.rw.rw-[fr-rf] Ok
-./tests/SAFE/SB+fence.rw.rws Ok
-./tests/SAFE/SB+[rf-addr-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[rf-ctrlfencei-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[rf-ctrl-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[rf-data-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[rf-fence.r.rw-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[rf-fence.rw.rw-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[rf-fence.rw.w-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[rf-fr]-fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/SB+[rfpaq-poaqp-rf]+fence.rw.rw Error
-./tests/SAFE/SB+[rf-poprl-rf]rlp+fence.rw.rw Error
-./tests/SAFE/SB+[ws-fence.rw.rw-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[ws-fence.rw.w-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[ws-fence.w.w-rf]+fence.rw.rw Ok
-./tests/SAFE/SB+[ws-poprl-rf]rlp+fence.rw.rw Error
-./tests/SAFE/SB+[ws-rf]-addr+fence.rw.rw Ok
-./tests/SAFE/SB+[ws-rf]-ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/SB+[ws-rf]-fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/SB+[ws-rf]-fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/SB+[ws-rf]paq-poaqp+fence.rw.rw Error
-./tests/SAFE/S+fence.rw.rw+addr Ok
-./tests/SAFE/S+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/S+fence.rw.rw+ctrl Ok
-./tests/SAFE/S+fence.rw.rw+data Ok
-./tests/SAFE/S+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/S+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/S+fence.rw.rw+[fr-fence.rw.rw-fr] Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-addr Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-ctrlfencei Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-ctrl Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-data Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-fence.r.rw Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-fence.rw.rw Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-fence.rw.w Ok
-./tests/SAFE/S+fence.rw.rw+[fr-rf]paq-poaqp Error
-./tests/SAFE/S+fence.rw.rw+[fr-rf]-poprl Error
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+addr Ok
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+ctrlfencei Ok
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+ctrl Ok
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+data Ok
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+fence.r.rw Ok
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+fence.rw.rw Ok
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+fence.rw.w Ok
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+poaqp Error
-./tests/SAFE/S+fence.rw.rw-[fr-ws]+poprl Error
-./tests/SAFE/S+fence.rw.rw+poaqp Error
-./tests/SAFE/S+fence.rw.rw+poprl Error
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+addr Ok
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+ctrl Ok
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+data Ok
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+fence.r.rw Ok
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+fence.rw.w Ok
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+poaqp Error
-./tests/SAFE/S+fence.rw.rw-[rf-fr]+poprl Error
-./tests/SAFE/S+fence.rw.rws Ok
-./tests/SAFE/S+fence.rw.w+addr Ok
-./tests/SAFE/S+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/S+fence.rw.w+ctrl Ok
-./tests/SAFE/S+fence.rw.w+data Ok
-./tests/SAFE/S+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/S+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/S+fence.rw.w+[fr-fence.rw.rw-fr] Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]-addr Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]-ctrlfencei Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]-ctrl Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]-data Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]-fence.r.rw Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]-fence.rw.rw Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]-fence.rw.w Ok
-./tests/SAFE/S+fence.rw.w+[fr-rf]paq-poaqp Error
-./tests/SAFE/S+fence.rw.w+[fr-rf]-poprl Error
-./tests/SAFE/S+fence.rw.w+poaqp Error
-./tests/SAFE/S+fence.rw.w+poprl Error
-./tests/SAFE/S+fence.rw.w-[rf-fr]+addr Ok
-./tests/SAFE/S+fence.rw.w-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/S+fence.rw.w-[rf-fr]+ctrl Ok
-./tests/SAFE/S+fence.rw.w-[rf-fr]+data Ok
-./tests/SAFE/S+fence.rw.w-[rf-fr]+fence.r.rw Ok
-./tests/SAFE/S+fence.rw.w-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/S+fence.rw.w-[rf-fr]+fence.rw.w Ok
-./tests/SAFE/S+fence.rw.w-[rf-fr]+poaqp Error
-./tests/SAFE/S+fence.rw.w-[rf-fr]+poprl Error
-./tests/SAFE/S+fence.rw.ws Ok
-./tests/SAFE/S+fence.w.w+addr Ok
-./tests/SAFE/S+fence.w.w+ctrlfencei Ok
-./tests/SAFE/S+fence.w.w+ctrl Ok
-./tests/SAFE/S+fence.w.w+data Ok
-./tests/SAFE/S+fence.w.w+fence.r.rw Ok
-./tests/SAFE/S+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/S+fence.w.w+fence.rw.w Ok
-./tests/SAFE/S+fence.w.w+[fr-fence.rw.rw-fr] Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]-addr Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]-ctrlfencei Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]-ctrl Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]-data Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]-fence.r.rw Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]-fence.rw.rw Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]-fence.rw.w Ok
-./tests/SAFE/S+fence.w.w+[fr-rf]paq-poaqp Error
-./tests/SAFE/S+fence.w.w+[fr-rf]-poprl Error
-./tests/SAFE/S+fence.w.w+poaqp Error
-./tests/SAFE/S+fence.w.w+poprl Error
-./tests/SAFE/S+fence.w.w-[rf-fr]+addr Ok
-./tests/SAFE/S+fence.w.w-[rf-fr]+ctrlfencei Ok
-./tests/SAFE/S+fence.w.w-[rf-fr]+ctrl Ok
-./tests/SAFE/S+fence.w.w-[rf-fr]+data Ok
-./tests/SAFE/S+fence.w.w-[rf-fr]+fence.r.rw Ok
-./tests/SAFE/S+fence.w.w-[rf-fr]+fence.rw.rw Ok
-./tests/SAFE/S+fence.w.w-[rf-fr]+fence.rw.w Ok
-./tests/SAFE/S+fence.w.w-[rf-fr]+poaqp Error
-./tests/SAFE/S+fence.w.w-[rf-fr]+poprl Error
-./tests/SAFE/S+poprl+addr Error
-./tests/SAFE/S+poprl+ctrl Error
-./tests/SAFE/S+poprl+ctrlfencei Error
-./tests/SAFE/S+poprl+data Error
-./tests/SAFE/S+poprl+fence.r.rw Error
-./tests/SAFE/S+poprl+fence.rw.rw Error
-./tests/SAFE/S+poprl+fence.rw.w Error
-./tests/SAFE/S+poprl+[fr-fence.rw.rw-fr] Error
-./tests/SAFE/S+poprl+[fr-rf]-addr Error
-./tests/SAFE/S+poprl+[fr-rf]-ctrl Error
-./tests/SAFE/S+poprl+[fr-rf]-ctrlfencei Error
-./tests/SAFE/S+poprl+[fr-rf]-data Error
-./tests/SAFE/S+poprl+[fr-rf]-fence.r.rw Error
-./tests/SAFE/S+poprl+[fr-rf]-fence.rw.rw Error
-./tests/SAFE/S+poprl+[fr-rf]-fence.rw.w Error
-./tests/SAFE/S+poprl+[fr-rf]paq-poaqp Error
-./tests/SAFE/S+poprl+[fr-rf]-poprl Error
-./tests/SAFE/S+poprl+poaqp Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+addr Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+ctrl Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+ctrlfencei Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+data Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+fence.r.rw Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+fence.rw.rw Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+fence.rw.w Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+poaqp Error
-./tests/SAFE/S+poprl-[rfrlp-fr]+poprl Error
-./tests/SAFE/S+poprls Error
-./tests/SAFE/S+[rf-addr-fr]+addr Ok
-./tests/SAFE/S+[rf-addr-fr]+ctrlfencei Ok
-./tests/SAFE/S+[rf-addr-fr]+ctrl Ok
-./tests/SAFE/S+[rf-addr-fr]+data Ok
-./tests/SAFE/S+[rf-addr-fr]+fence.r.rw Ok
-./tests/SAFE/S+[rf-addr-fr]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-addr-fr]+fence.rw.w Ok
-./tests/SAFE/S+[rf-addr-fr]+poaqp Error
-./tests/SAFE/S+[rf-addr-fr]+poprl Error
-./tests/SAFE/S+[rf-addr-ws]+addr Ok
-./tests/SAFE/S+[rf-addr-ws]+ctrlfencei Ok
-./tests/SAFE/S+[rf-addr-ws]+ctrl Ok
-./tests/SAFE/S+[rf-addr-ws]+data Ok
-./tests/SAFE/S+[rf-addr-ws]+fence.r.rw Ok
-./tests/SAFE/S+[rf-addr-ws]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-addr-ws]+fence.rw.w Ok
-./tests/SAFE/S+[rf-addr-ws]+poaqp Error
-./tests/SAFE/S+[rf-addr-ws]+poprl Error
-./tests/SAFE/S+[rf-ctrlfencei-fr]+addr Ok
-./tests/SAFE/S+[rf-ctrlfencei-fr]+ctrlfencei Ok
-./tests/SAFE/S+[rf-ctrlfencei-fr]+ctrl Ok
-./tests/SAFE/S+[rf-ctrlfencei-fr]+data Ok
-./tests/SAFE/S+[rf-ctrlfencei-fr]+fence.r.rw Ok
-./tests/SAFE/S+[rf-ctrlfencei-fr]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-ctrlfencei-fr]+fence.rw.w Ok
-./tests/SAFE/S+[rf-ctrlfencei-fr]+poaqp Error
-./tests/SAFE/S+[rf-ctrlfencei-fr]+poprl Error
-./tests/SAFE/S+[rf-ctrlfencei-ws]+addr Ok
-./tests/SAFE/S+[rf-ctrlfencei-ws]+ctrlfencei Ok
-./tests/SAFE/S+[rf-ctrlfencei-ws]+ctrl Ok
-./tests/SAFE/S+[rf-ctrlfencei-ws]+data Ok
-./tests/SAFE/S+[rf-ctrlfencei-ws]+fence.r.rw Ok
-./tests/SAFE/S+[rf-ctrlfencei-ws]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-ctrlfencei-ws]+fence.rw.w Ok
-./tests/SAFE/S+[rf-ctrlfencei-ws]+poaqp Error
-./tests/SAFE/S+[rf-ctrlfencei-ws]+poprl Error
-./tests/SAFE/S+[rf-ctrl-ws]+addr Ok
-./tests/SAFE/S+[rf-ctrl-ws]+ctrlfencei Ok
-./tests/SAFE/S+[rf-ctrl-ws]+ctrl Ok
-./tests/SAFE/S+[rf-ctrl-ws]+data Ok
-./tests/SAFE/S+[rf-ctrl-ws]+fence.r.rw Ok
-./tests/SAFE/S+[rf-ctrl-ws]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-ctrl-ws]+fence.rw.w Ok
-./tests/SAFE/S+[rf-ctrl-ws]+poaqp Error
-./tests/SAFE/S+[rf-ctrl-ws]+poprl Error
-./tests/SAFE/S+[rf-data-ws]+addr Ok
-./tests/SAFE/S+[rf-data-ws]+ctrlfencei Ok
-./tests/SAFE/S+[rf-data-ws]+ctrl Ok
-./tests/SAFE/S+[rf-data-ws]+data Ok
-./tests/SAFE/S+[rf-data-ws]+fence.r.rw Ok
-./tests/SAFE/S+[rf-data-ws]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-data-ws]+fence.rw.w Ok
-./tests/SAFE/S+[rf-data-ws]+poaqp Error
-./tests/SAFE/S+[rf-data-ws]+poprl Error
-./tests/SAFE/S+[rf-fence.r.rw-fr]+addr Ok
-./tests/SAFE/S+[rf-fence.r.rw-fr]+ctrlfencei Ok
-./tests/SAFE/S+[rf-fence.r.rw-fr]+ctrl Ok
-./tests/SAFE/S+[rf-fence.r.rw-fr]+data Ok
-./tests/SAFE/S+[rf-fence.r.rw-fr]+fence.r.rw Ok
-./tests/SAFE/S+[rf-fence.r.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-fence.r.rw-fr]+fence.rw.w Ok
-./tests/SAFE/S+[rf-fence.r.rw-fr]+poaqp Error
-./tests/SAFE/S+[rf-fence.r.rw-fr]+poprl Error
-./tests/SAFE/S+[rf-fence.r.rw-ws]+addr Ok
-./tests/SAFE/S+[rf-fence.r.rw-ws]+ctrlfencei Ok
-./tests/SAFE/S+[rf-fence.r.rw-ws]+ctrl Ok
-./tests/SAFE/S+[rf-fence.r.rw-ws]+data Ok
-./tests/SAFE/S+[rf-fence.r.rw-ws]+fence.r.rw Ok
-./tests/SAFE/S+[rf-fence.r.rw-ws]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-fence.r.rw-ws]+fence.rw.w Ok
-./tests/SAFE/S+[rf-fence.r.rw-ws]+poaqp Error
-./tests/SAFE/S+[rf-fence.r.rw-ws]+poprl Error
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+addr Ok
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+ctrlfencei Ok
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+ctrl Ok
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+data Ok
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+fence.r.rw Ok
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+fence.rw.w Ok
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+poaqp Error
-./tests/SAFE/S+[rf-fence.rw.rw-fr]+poprl Error
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+addr Ok
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+ctrlfencei Ok
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+ctrl Ok
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+data Ok
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+fence.r.rw Ok
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+fence.rw.w Ok
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+poaqp Error
-./tests/SAFE/S+[rf-fence.rw.rw-ws]+poprl Error
-./tests/SAFE/S+[rf-fence.rw.w-ws]+addr Ok
-./tests/SAFE/S+[rf-fence.rw.w-ws]+ctrlfencei Ok
-./tests/SAFE/S+[rf-fence.rw.w-ws]+ctrl Ok
-./tests/SAFE/S+[rf-fence.rw.w-ws]+data Ok
-./tests/SAFE/S+[rf-fence.rw.w-ws]+fence.r.rw Ok
-./tests/SAFE/S+[rf-fence.rw.w-ws]+fence.rw.rw Ok
-./tests/SAFE/S+[rf-fence.rw.w-ws]+fence.rw.w Ok
-./tests/SAFE/S+[rf-fence.rw.w-ws]+poaqp Error
-./tests/SAFE/S+[rf-fence.rw.w-ws]+poprl Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+addr Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+ctrl Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+ctrlfencei Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+data Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+fence.r.rw Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+fence.rw.rw Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+fence.rw.w Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+poaqp Error
-./tests/SAFE/S+[rfpaq-poaqp-fr]+poprl Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+addr Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+ctrl Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+ctrlfencei Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+data Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+fence.r.rw Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+fence.rw.rw Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+fence.rw.w Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+poaqp Error
-./tests/SAFE/S+[rfpaq-poaqp-ws]+poprl Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+addr Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+ctrl Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+ctrlfencei Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+data Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+fence.r.rw Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+fence.rw.rw Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+fence.rw.w Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+poaqp Error
-./tests/SAFE/S+[rf-poprl-ws]rlp+poprl Error
-./tests/SAFE/WRC+addr+ctrlfencei Ok
-./tests/SAFE/WRC+addr+fence.r.rw Ok
-./tests/SAFE/WRC+addr+fence.rw.rw Ok
-./tests/SAFE/WRC+addr+poaqp Error
-./tests/SAFE/WRC+addrs Ok
-./tests/SAFE/WRC+ctrl+addr Ok
-./tests/SAFE/WRC+ctrl+ctrlfencei Ok
-./tests/SAFE/WRC+ctrlfencei+addr Ok
-./tests/SAFE/WRC+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/WRC+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/WRC+ctrlfencei+poaqp Error
-./tests/SAFE/WRC+ctrlfenceis Ok
-./tests/SAFE/WRC+ctrl+fence.r.rw Ok
-./tests/SAFE/WRC+ctrl+fence.rw.rw Ok
-./tests/SAFE/WRC+ctrl+poaqp Error
-./tests/SAFE/WRC+data+addr Ok
-./tests/SAFE/WRC+data+ctrlfencei Ok
-./tests/SAFE/WRC+data+fence.r.rw Ok
-./tests/SAFE/WRC+data+fence.rw.rw Ok
-./tests/SAFE/WRC+data+poaqp Error
-./tests/SAFE/WRC+fence.r.rw+addr Ok
-./tests/SAFE/WRC+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/WRC+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/WRC+fence.r.rw+poaqp Error
-./tests/SAFE/WRC+fence.r.rws Ok
-./tests/SAFE/WRC+fence.rw.rw+addr Ok
-./tests/SAFE/WRC+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/WRC+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/WRC+fence.rw.rw+poaqp Error
-./tests/SAFE/WRC+fence.rw.rws Ok
-./tests/SAFE/WRC+fence.rw.w+addr Ok
-./tests/SAFE/WRC+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/WRC+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/WRC+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/WRC+fence.rw.w+poaqp Error
-./tests/SAFE/WRC+poaqp+addr Error
-./tests/SAFE/WRC+poaqp+ctrlfencei Error
-./tests/SAFE/WRC+poaqp+fence.r.rw Error
-./tests/SAFE/WRC+poaqp+fence.rw.rw Error
-./tests/SAFE/WRC+poaqps Error
-./tests/SAFE/WRC+poprl+addr Error
-./tests/SAFE/WRC+poprl+ctrlfencei Error
-./tests/SAFE/WRC+poprl+fence.r.rw Error
-./tests/SAFE/WRC+poprl+fence.rw.rw Error
-./tests/SAFE/WRC+poprl+poaqp Error
-./tests/SAFE/WRR+2W+addr+fence.rw.rw Ok
-./tests/SAFE/WRR+2W+addr+fence.rw.w Ok
-./tests/SAFE/WRR+2W+addr+fence.w.w Ok
-./tests/SAFE/WRR+2W+addr+poprl Error
-./tests/SAFE/WRR+2W+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/WRR+2W+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/WRR+2W+ctrlfencei+fence.w.w Ok
-./tests/SAFE/WRR+2W+ctrlfencei+poprl Error
-./tests/SAFE/WRR+2W+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/WRR+2W+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/WRR+2W+fence.r.rw+fence.w.w Ok
-./tests/SAFE/WRR+2W+fence.r.rw+poprl Error
-./tests/SAFE/WRR+2W+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/WRR+2W+fence.rw.rw+fence.w.w Ok
-./tests/SAFE/WRR+2W+fence.rw.rw+poprl Error
-./tests/SAFE/WRR+2W+fence.rw.rws Ok
-./tests/SAFE/WRR+2W+poaqp+fence.rw.rw Error
-./tests/SAFE/WRR+2W+poaqp+fence.rw.w Error
-./tests/SAFE/WRR+2W+poaqp+fence.w.w Error
-./tests/SAFE/WRR+2W+poaqp+poprl Error
-./tests/SAFE/WRW+2W+addr+fence.rw.rw Ok
-./tests/SAFE/WRW+2W+addr+fence.rw.w Ok
-./tests/SAFE/WRW+2W+addr+fence.w.w Ok
-./tests/SAFE/WRW+2W+addr+poprl Error
-./tests/SAFE/WRW+2W+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/WRW+2W+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/WRW+2W+ctrlfencei+fence.w.w Ok
-./tests/SAFE/WRW+2W+ctrlfencei+poprl Error
-./tests/SAFE/WRW+2W+ctrl+fence.rw.rw Ok
-./tests/SAFE/WRW+2W+ctrl+fence.rw.w Ok
-./tests/SAFE/WRW+2W+ctrl+fence.w.w Ok
-./tests/SAFE/WRW+2W+ctrl+poprl Error
-./tests/SAFE/WRW+2W+data+fence.rw.rw Ok
-./tests/SAFE/WRW+2W+data+fence.rw.w Ok
-./tests/SAFE/WRW+2W+data+fence.w.w Ok
-./tests/SAFE/WRW+2W+data+poprl Error
-./tests/SAFE/WRW+2W+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/WRW+2W+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/WRW+2W+fence.r.rw+fence.w.w Ok
-./tests/SAFE/WRW+2W+fence.r.rw+poprl Error
-./tests/SAFE/WRW+2W+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/WRW+2W+fence.rw.rw+fence.w.w Ok
-./tests/SAFE/WRW+2W+fence.rw.rw+poprl Error
-./tests/SAFE/WRW+2W+fence.rw.rws Ok
-./tests/SAFE/WRW+2W+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/WRW+2W+fence.rw.w+fence.w.w Ok
-./tests/SAFE/WRW+2W+fence.rw.w+poprl Error
-./tests/SAFE/WRW+2W+fence.rw.ws Ok
-./tests/SAFE/WRW+2W+poaqp+fence.rw.rw Error
-./tests/SAFE/WRW+2W+poaqp+fence.rw.w Error
-./tests/SAFE/WRW+2W+poaqp+fence.w.w Error
-./tests/SAFE/WRW+2W+poaqp+poprl Error
-./tests/SAFE/WRW+2W+poprl+fence.rw.rw Error
-./tests/SAFE/WRW+2W+poprl+fence.rw.w Error
-./tests/SAFE/WRW+2W+poprl+fence.w.w Error
-./tests/SAFE/WRW+2W+poprls Error
-./tests/SAFE/W+RWC+fence.rw.rw+addr+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.rw+addr+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.rw+addrs+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.rw+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.rw+ctrlfencei+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.rw+ctrlfenceis+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.rw+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.rw+fence.r.rw+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.rw+fence.r.rws+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.rw+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.rw+fence.rw.rws+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.rw+poaqp+fence.rw.rw Error
-./tests/SAFE/W+RWC+fence.rw.rw+poaqp+fence.rw.rws Error
-./tests/SAFE/W+RWC+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.w+addr+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+addr+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.w+addrs+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+ctrlfencei+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.w+ctrlfenceis+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+fence.r.rw+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.w+fence.r.rws+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.rw.w+fence.rw.rws+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.rw.w+poaqp+fence.rw.rw Error
-./tests/SAFE/W+RWC+fence.rw.w+poaqp+fence.rw.rws Error
-./tests/SAFE/W+RWC+fence.w.w+addr+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+addr+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.w.w+addrs+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+ctrlfencei+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.w.w+ctrlfenceis+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+fence.r.rw+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.w.w+fence.r.rws+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/W+RWC+fence.w.w+fence.rw.rws+fence.rw.rw Ok
-./tests/SAFE/W+RWC+fence.w.w+poaqp+fence.rw.rw Error
-./tests/SAFE/W+RWC+fence.w.w+poaqp+fence.rw.rws Error
-./tests/SAFE/W+RWC+poprl+addr+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+addr+fence.rw.rws Error
-./tests/SAFE/W+RWC+poprl+addrs+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+ctrlfencei+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+ctrlfencei+fence.rw.rws Error
-./tests/SAFE/W+RWC+poprl+ctrlfenceis+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+fence.r.rw+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+fence.r.rw+fence.rw.rws Error
-./tests/SAFE/W+RWC+poprl+fence.r.rws+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+fence.rw.rw+fence.rw.rws Error
-./tests/SAFE/W+RWC+poprl+fence.rw.rws+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+poaqp+fence.rw.rw Error
-./tests/SAFE/W+RWC+poprl+poaqp+fence.rw.rws Error
-./tests/SAFE/W+RWC+pos+addr+fence.rw.rw Ok
-./tests/SAFE/W+RWC+pos+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/W+RWC+pos+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/W+RWC+pos+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/W+RWC+pos+poaqp+fence.rw.rw Error
-./tests/SAFE/WRW+WR+addr+fence.rw.rw Ok
-./tests/SAFE/WRW+WR+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/WRW+WR+ctrl+fence.rw.rw Ok
-./tests/SAFE/WRW+WR+data+fence.rw.rw Ok
-./tests/SAFE/WRW+WR+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/WRW+WR+fence.rw.rws Ok
-./tests/SAFE/WRW+WR+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/WRW+WR+poaqp+fence.rw.rw Error
-./tests/SAFE/WRW+WR+poprl+fence.rw.rw Error
-./tests/SAFE/WWC+addr+ctrlfencei Ok
-./tests/SAFE/WWC+addr+ctrl Ok
-./tests/SAFE/WWC+addr+data Ok
-./tests/SAFE/WWC+addr+fence.r.rw Ok
-./tests/SAFE/WWC+addr+fence.rw.rw Ok
-./tests/SAFE/WWC+addr+fence.rw.w Ok
-./tests/SAFE/WWC+addr+poaqp Error
-./tests/SAFE/WWC+addr+poprl Error
-./tests/SAFE/WWC+addrs Ok
-./tests/SAFE/WWC+ctrl+addr Ok
-./tests/SAFE/WWC+ctrl+ctrlfencei Ok
-./tests/SAFE/WWC+ctrl+data Ok
-./tests/SAFE/WWC+ctrlfencei+addr Ok
-./tests/SAFE/WWC+ctrlfencei+ctrl Ok
-./tests/SAFE/WWC+ctrlfencei+data Ok
-./tests/SAFE/WWC+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/WWC+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/WWC+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/WWC+ctrlfencei+poaqp Error
-./tests/SAFE/WWC+ctrlfencei+poprl Error
-./tests/SAFE/WWC+ctrlfenceis Ok
-./tests/SAFE/WWC+ctrl+fence.r.rw Ok
-./tests/SAFE/WWC+ctrl+fence.rw.rw Ok
-./tests/SAFE/WWC+ctrl+fence.rw.w Ok
-./tests/SAFE/WWC+ctrl+poaqp Error
-./tests/SAFE/WWC+ctrl+poprl Error
-./tests/SAFE/WWC+ctrls Ok
-./tests/SAFE/WWC+data+addr Ok
-./tests/SAFE/WWC+data+ctrlfencei Ok
-./tests/SAFE/WWC+data+ctrl Ok
-./tests/SAFE/WWC+data+fence.r.rw Ok
-./tests/SAFE/WWC+data+fence.rw.rw Ok
-./tests/SAFE/WWC+data+fence.rw.w Ok
-./tests/SAFE/WWC+data+poaqp Error
-./tests/SAFE/WWC+data+poprl Error
-./tests/SAFE/WWC+datas Ok
-./tests/SAFE/WWC+fence.r.rw+addr Ok
-./tests/SAFE/WWC+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/WWC+fence.r.rw+ctrl Ok
-./tests/SAFE/WWC+fence.r.rw+data Ok
-./tests/SAFE/WWC+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/WWC+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/WWC+fence.r.rw+poaqp Error
-./tests/SAFE/WWC+fence.r.rw+poprl Error
-./tests/SAFE/WWC+fence.r.rws Ok
-./tests/SAFE/WWC+fence.rw.rw+addr Ok
-./tests/SAFE/WWC+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/WWC+fence.rw.rw+ctrl Ok
-./tests/SAFE/WWC+fence.rw.rw+data Ok
-./tests/SAFE/WWC+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/WWC+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/WWC+fence.rw.rw+poaqp Error
-./tests/SAFE/WWC+fence.rw.rw+poprl Error
-./tests/SAFE/WWC+fence.rw.rws Ok
-./tests/SAFE/WWC+fence.rw.w+addr Ok
-./tests/SAFE/WWC+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/WWC+fence.rw.w+ctrl Ok
-./tests/SAFE/WWC+fence.rw.w+data Ok
-./tests/SAFE/WWC+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/WWC+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/WWC+fence.rw.w+poaqp Error
-./tests/SAFE/WWC+fence.rw.w+poprl Error
-./tests/SAFE/WWC+fence.rw.ws Ok
-./tests/SAFE/WWC+poaqp+addr Error
-./tests/SAFE/WWC+poaqp+ctrl Error
-./tests/SAFE/WWC+poaqp+ctrlfencei Error
-./tests/SAFE/WWC+poaqp+data Error
-./tests/SAFE/WWC+poaqp+fence.r.rw Error
-./tests/SAFE/WWC+poaqp+fence.rw.rw Error
-./tests/SAFE/WWC+poaqp+fence.rw.w Error
-./tests/SAFE/WWC+poaqp+poprl Error
-./tests/SAFE/WWC+poaqps Error
-./tests/SAFE/WWC+poprl+addr Error
-./tests/SAFE/WWC+poprl+ctrl Error
-./tests/SAFE/WWC+poprl+ctrlfencei Error
-./tests/SAFE/WWC+poprl+data Error
-./tests/SAFE/WWC+poprl+fence.r.rw Error
-./tests/SAFE/WWC+poprl+fence.rw.rw Error
-./tests/SAFE/WWC+poprl+fence.rw.w Error
-./tests/SAFE/WWC+poprl+poaqp Error
-./tests/SAFE/WWC+poprls Error
-./tests/SAFE/Z6.0+fence.rw.rw+addr+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.rw+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.rw+ctrl+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.rw+data+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.rw+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.rw+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.rw+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.0+fence.rw.rw+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.0+fence.rw.rws Ok
-./tests/SAFE/Z6.0+fence.rw.w+addr+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.w+ctrl+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.w+data+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.rw.w+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.0+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.0+fence.w.w+addr+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.w.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.w.w+ctrl+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.w.w+data+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.w.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.w.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.0+fence.w.w+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.0+fence.w.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+addr+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+ctrlfencei+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+ctrl+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+data+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+fence.r.rw+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+fence.rw.w+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.0+poprl+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.0+pos+addr+fence.rw.rw Ok
-./tests/SAFE/Z6.0+pos+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/Z6.0+pos+ctrl+fence.rw.rw Ok
-./tests/SAFE/Z6.0+pos+data+fence.rw.rw Ok
-./tests/SAFE/Z6.0+pos+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.0+pos+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.0+pos+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.0+pos+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.0+pos+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+ctrl Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+data Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+addr Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+ctrl Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+data Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+poprl Error
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+addr Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+ctrl Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+data Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+poprl Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+addr Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+ctrl Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+ctrlfencei Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+data Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+fence.r.rw Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+fence.rw.w Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.rw+poprl+poprl Error
-./tests/SAFE/Z6.1+fence.rw.rws Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+ctrl Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+data Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+addr Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+ctrl Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+data Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+poprl Error
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+addr Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+ctrl Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+data Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+poprl Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+addr Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+ctrl Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+ctrlfencei Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+data Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+fence.r.rw Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+fence.rw.w Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+poaqp Error
-./tests/SAFE/Z6.1+fence.rw.w+poprl+poprl Error
-./tests/SAFE/Z6.1+fence.rw.ws Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+ctrl Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+data Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+addr Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+ctrl Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+data Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+poprl Error
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+addr Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+ctrlfencei Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+ctrl Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+data Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+fence.r.rw Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+fence.rw.w Ok
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+poaqp Error
-./tests/SAFE/Z6.1+fence.w.w+fence.w.w+poprl Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+addr Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+ctrl Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+ctrlfencei Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+data Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+fence.r.rw Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+fence.rw.w Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+poaqp Error
-./tests/SAFE/Z6.1+fence.w.w+poprl+poprl Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+addr Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+ctrl Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+ctrlfencei Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+data Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+fence.r.rw Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+fence.rw.w Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.1+poprl+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+addr Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+ctrl Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+ctrlfencei Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+data Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+fence.r.rw Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+fence.rw.rw Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+fence.rw.w Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.1+poprl+fence.rw.w+poprl Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+addr Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+ctrl Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+ctrlfencei Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+data Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+fence.r.rw Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+fence.rw.rw Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+fence.rw.w Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+poaqp Error
-./tests/SAFE/Z6.1+poprl+fence.w.w+poprl Error
-./tests/SAFE/Z6.1+poprl+poprl+addr Error
-./tests/SAFE/Z6.1+poprl+poprl+ctrl Error
-./tests/SAFE/Z6.1+poprl+poprl+ctrlfencei Error
-./tests/SAFE/Z6.1+poprl+poprl+data Error
-./tests/SAFE/Z6.1+poprl+poprl+fence.r.rw Error
-./tests/SAFE/Z6.1+poprl+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.1+poprl+poprl+fence.rw.w Error
-./tests/SAFE/Z6.1+poprl+poprl+poaqp Error
-./tests/SAFE/Z6.1+poprls Error
-./tests/SAFE/Z6.2+fence.rw.rw+addr+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+addr+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+addr+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+addr+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+addr+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+addr+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+addr+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+addr+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+addr+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+ctrl+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+data+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+data+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+data+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+data+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+data+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+data+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+data+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+data+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+data+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+addr Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+ctrl Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+ctrlfencei Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+data Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+fence.r.rw Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+fence.rw.w Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+poaqp+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+addr Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+ctrl Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+ctrlfencei Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+data Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+fence.r.rw Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+fence.rw.w Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+poprl+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rw+pos+addr Ok
-./tests/SAFE/Z6.2+fence.rw.rw+pos+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.rw+pos+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.rw+pos+data Ok
-./tests/SAFE/Z6.2+fence.rw.rw+pos+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+pos+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.rw+pos+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.rw+pos+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.rw+pos+poprl Error
-./tests/SAFE/Z6.2+fence.rw.rws Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.w+addr+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+addr+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+ctrl+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+data+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+data+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+data+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+data+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+data+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+data+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+data+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.w+data+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+data+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+addr Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+ctrl Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+ctrlfencei Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+data Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+fence.r.rw Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+fence.rw.w Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+poaqp+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+addr Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+ctrl Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+ctrlfencei Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+data Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+fence.r.rw Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+fence.rw.w Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+poprl+poprl Error
-./tests/SAFE/Z6.2+fence.rw.w+pos+addr Ok
-./tests/SAFE/Z6.2+fence.rw.w+pos+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.rw.w+pos+ctrl Ok
-./tests/SAFE/Z6.2+fence.rw.w+pos+data Ok
-./tests/SAFE/Z6.2+fence.rw.w+pos+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+pos+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.rw.w+pos+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.rw.w+pos+poaqp Error
-./tests/SAFE/Z6.2+fence.rw.w+pos+poprl Error
-./tests/SAFE/Z6.2+fence.rw.ws Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+data Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+addr+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+addr+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+ctrl+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrl+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrl+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrl+data Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+data Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+ctrl+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrl+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrl+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+ctrl+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+ctrl+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+data+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+data+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+data+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+data+data Ok
-./tests/SAFE/Z6.2+fence.w.w+data+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+data+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+data+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+data+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+data+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+data Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+data Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+data Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+addr Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+ctrl Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+ctrlfencei Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+data Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+fence.r.rw Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+fence.rw.w Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+poaqp+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+addr Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+ctrl Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+ctrlfencei Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+data Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+fence.r.rw Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+fence.rw.w Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+poprl+poprl Error
-./tests/SAFE/Z6.2+fence.w.w+pos+addr Ok
-./tests/SAFE/Z6.2+fence.w.w+pos+ctrlfencei Ok
-./tests/SAFE/Z6.2+fence.w.w+pos+ctrl Ok
-./tests/SAFE/Z6.2+fence.w.w+pos+data Ok
-./tests/SAFE/Z6.2+fence.w.w+pos+fence.r.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+pos+fence.rw.rw Ok
-./tests/SAFE/Z6.2+fence.w.w+pos+fence.rw.w Ok
-./tests/SAFE/Z6.2+fence.w.w+pos+poaqp Error
-./tests/SAFE/Z6.2+fence.w.w+pos+poprl Error
-./tests/SAFE/Z6.2+poprl+addr+addr Error
-./tests/SAFE/Z6.2+poprl+addr+ctrl Error
-./tests/SAFE/Z6.2+poprl+addr+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+addr+data Error
-./tests/SAFE/Z6.2+poprl+addr+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+addr+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+addr+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+addr+poaqp Error
-./tests/SAFE/Z6.2+poprl+addr+poprl Error
-./tests/SAFE/Z6.2+poprl+ctrl+addr Error
-./tests/SAFE/Z6.2+poprl+ctrl+ctrl Error
-./tests/SAFE/Z6.2+poprl+ctrl+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+ctrl+data Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+addr Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+ctrl Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+data Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+poaqp Error
-./tests/SAFE/Z6.2+poprl+ctrlfencei+poprl Error
-./tests/SAFE/Z6.2+poprl+ctrl+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+ctrl+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+ctrl+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+ctrl+poaqp Error
-./tests/SAFE/Z6.2+poprl+ctrl+poprl Error
-./tests/SAFE/Z6.2+poprl+data+addr Error
-./tests/SAFE/Z6.2+poprl+data+ctrl Error
-./tests/SAFE/Z6.2+poprl+data+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+data+data Error
-./tests/SAFE/Z6.2+poprl+data+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+data+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+data+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+data+poaqp Error
-./tests/SAFE/Z6.2+poprl+data+poprl Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+addr Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+ctrl Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+data Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+poaqp Error
-./tests/SAFE/Z6.2+poprl+fence.r.rw+poprl Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+addr Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+ctrl Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+data Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.2+poprl+fence.rw.rw+poprl Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+addr Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+ctrl Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+data Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.2+poprl+fence.rw.w+poprl Error
-./tests/SAFE/Z6.2+poprl+poaqp+addr Error
-./tests/SAFE/Z6.2+poprl+poaqp+ctrl Error
-./tests/SAFE/Z6.2+poprl+poaqp+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+poaqp+data Error
-./tests/SAFE/Z6.2+poprl+poaqp+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+poaqp+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+poaqp+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+poaqp+poaqp Error
-./tests/SAFE/Z6.2+poprl+poaqp+poprl Error
-./tests/SAFE/Z6.2+poprl+poprl+addr Error
-./tests/SAFE/Z6.2+poprl+poprl+ctrl Error
-./tests/SAFE/Z6.2+poprl+poprl+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+poprl+data Error
-./tests/SAFE/Z6.2+poprl+poprl+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+poprl+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+poprl+poaqp Error
-./tests/SAFE/Z6.2+poprl+pos+addr Error
-./tests/SAFE/Z6.2+poprl+pos+ctrl Error
-./tests/SAFE/Z6.2+poprl+pos+ctrlfencei Error
-./tests/SAFE/Z6.2+poprl+pos+data Error
-./tests/SAFE/Z6.2+poprl+pos+fence.r.rw Error
-./tests/SAFE/Z6.2+poprl+pos+fence.rw.rw Error
-./tests/SAFE/Z6.2+poprl+pos+fence.rw.w Error
-./tests/SAFE/Z6.2+poprl+pos+poaqp Error
-./tests/SAFE/Z6.2+poprl+pos+poprl Error
-./tests/SAFE/Z6.2+poprls Error
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+addrs Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+addr Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+addrs Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+addr Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+addrs Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+poaqp Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+addr Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+addrs Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+ctrlfencei Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+ctrlfenceis Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+fence.r.rw Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+fence.r.rws Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+fence.rw.rws Error
-./tests/SAFE/Z6.3+fence.rw.rw+poprl+poaqp Error
-./tests/SAFE/Z6.3+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+addrs Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+addr Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+addrs Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+addr Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+addrs Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+poaqp Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+addr Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+addrs Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+ctrlfencei Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+ctrlfenceis Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+fence.r.rw Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+fence.r.rws Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+fence.rw.rws Error
-./tests/SAFE/Z6.3+fence.rw.w+poprl+poaqp Error
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+addr Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+addrs Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+addr Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+addrs Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+addr Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+addrs Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+ctrlfencei Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+ctrlfenceis Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.r.rw Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.r.rws Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.rw.rws Ok
-./tests/SAFE/Z6.3+fence.w.w+fence.w.w+poaqp Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+addr Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+addrs Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+ctrlfencei Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+ctrlfenceis Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+fence.r.rw Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+fence.r.rws Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+fence.rw.rws Error
-./tests/SAFE/Z6.3+fence.w.w+poprl+poaqp Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+addr Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+addrs Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+ctrlfencei Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+ctrlfenceis Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+fence.r.rw Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+fence.r.rws Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+fence.rw.rws Error
-./tests/SAFE/Z6.3+poprl+fence.rw.rw+poaqp Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+addr Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+addrs Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+ctrlfencei Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+ctrlfenceis Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+fence.r.rw Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+fence.r.rws Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+fence.rw.rw Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+fence.rw.rws Error
-./tests/SAFE/Z6.3+poprl+fence.rw.w+poaqp Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+addr Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+addrs Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+ctrlfencei Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+ctrlfenceis Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+fence.r.rw Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+fence.r.rws Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+fence.rw.rw Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+fence.rw.rws Error
-./tests/SAFE/Z6.3+poprl+fence.w.w+poaqp Error
-./tests/SAFE/Z6.3+poprl+poprl+addr Error
-./tests/SAFE/Z6.3+poprl+poprl+addrs Error
-./tests/SAFE/Z6.3+poprl+poprl+ctrlfencei Error
-./tests/SAFE/Z6.3+poprl+poprl+ctrlfenceis Error
-./tests/SAFE/Z6.3+poprl+poprl+fence.r.rw Error
-./tests/SAFE/Z6.3+poprl+poprl+fence.r.rws Error
-./tests/SAFE/Z6.3+poprl+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.3+poprl+poprl+fence.rw.rws Error
-./tests/SAFE/Z6.3+poprl+poprl+poaqp Error
-./tests/SAFE/Z6.4+fence.rw.rw+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/Z6.4+fence.rw.rws Ok
-./tests/SAFE/Z6.4+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.4+fence.rw.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/Z6.4+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.4+fence.w.w+fence.rw.rw+fence.rw.rws Ok
-./tests/SAFE/Z6.4+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/Z6.4+poprl+fence.rw.rw+fence.rw.rws Error
-./tests/SAFE/Z6.5+fence.rw.rw+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.rw.rw+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.rw.rw+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.5+fence.rw.rws Ok
-./tests/SAFE/Z6.5+fence.rw.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.rw.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.rw.w+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.rw.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.5+fence.w.w+fence.rw.rw+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.w.w+fence.rw.w+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.w.w+fence.w.w+fence.rw.rw Ok
-./tests/SAFE/Z6.5+fence.w.w+poprl+fence.rw.rw Error
-./tests/SAFE/Z6.5+poprl+fence.rw.rw+fence.rw.rw Error
-./tests/SAFE/Z6.5+poprl+fence.rw.w+fence.rw.rw Error
-./tests/SAFE/Z6.5+poprl+fence.w.w+fence.rw.rw Error
-./tests/SAFE/Z6.5+poprl+poprl+fence.rw.rw Error
-./tests/SINGLE_INST/amoswap.w.aq.rl Ok
-./tests/SINGLE_INST/fence.tso Error
-./tests/SINGLE_INST/lr.w.aq.rl Ok
+./tests/ATOMICS/BASIC_2_THREAD/2+2W+poxxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/BASIC_2_THREAD/LB+poxxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/BASIC_2_THREAD/MP+poxxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/BASIC_2_THREAD/R+poxxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/BASIC_2_THREAD/SB+poxxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/BASIC_2_THREAD/S+poxxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/CO/2+2W+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwspxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwsxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwsxp+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwsxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwsxx+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+fence.rw.rwsxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+pospxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+posxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/2+2W+posxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRR+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW1+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW1+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW1+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW1+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW1+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW1+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoRW2+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWR0+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWR0+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWR0+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWR0+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWR0+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWR0+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWW+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWW+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWW+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWW+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWW+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/CoWW+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwspx+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwspxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwsxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwsxp+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwsxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwsxx+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+fence.rw.rwsxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+pospxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+posxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/LB+posxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwsxp+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwsxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+posxp+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+posxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/MP+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwsxp+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwsxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+posxp+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+posxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/R+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspx+fence.rw.rwsxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspx+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspx+posxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwspxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwsxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospx+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospx+fence.rw.rwsxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospx+posxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+pospxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+poss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+posxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+posxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/RWC+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwspx+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwspxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwsxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwsxp+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwsxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwsxx+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+fence.rw.rwsxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+pospxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+posxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/SB+posxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwsxp+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwsxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+posxp+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+posxp+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/S+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwspx+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwspx+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxp+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+fence.rw.rwsxx+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pospx+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pospx+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+poss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxp+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxx+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRC+posxx+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+poss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+posxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+posxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRR+2W+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+fence.rw.rwsxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspx+posxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwspxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospx+fence.rw.rwsxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospx+posxx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+pospxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+poss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+posxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+posxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+2W+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+poss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+posxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+posxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WRW+WR+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rws+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwspx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwspx+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwspx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwspx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwspx+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwspx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwspxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxp+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxx+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+fence.rw.rwsxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+fence.rw.rwspx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+fence.rw.rwspx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+fence.rw.rwsxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+pospx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+pospx+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pos+posxx [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pospx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pospx+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pospx+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pospx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pospx+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pospx+posxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+pospxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+poss+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxp+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxp+fence.rw.rws+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxp+fence.rw.rwsxp [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxp+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxp+pos+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxps [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxx+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxx+fence.rw.rwsxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxx+pos [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxx+posxp+X [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/CO/WWC+posxxs [0;32mOk[0m (expected No, found No)
+./tests/ATOMICS/RELAX/PodRWPX/LB+addr+popx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWPX/LB+ctrl+popx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWPX/LB+data+popx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWPX/LB+fence.rw.rw+popx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWPX/LB+popxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWPX/S+fence.rw.rw+popx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXP/LB+addr+poxp [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXP/LB+ctrl+poxp [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXP/LB+data+poxp [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXP/LB+fence.rw.rw+poxp [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXP/LB+poxps [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXP/S+fence.rw.rw+poxp [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXX/LB+addr+poxx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXX/LB+ctrl+poxx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXX/LB+data+poxx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXX/LB+fence.rw.rw+poxx [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXX/LB+poxxs [0;32mOk[0m (expected Ok, found Ok)
+./tests/ATOMICS/RELAX/PodRWXX/S+fence.rw.rw+poxx [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/2+2W [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/2+2W+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/2+2W+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/LB [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/LB+ctrl+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/LB+ctrls [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/LB+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/LB+data+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/LB+datas [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/LB+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/LB+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/LB+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/LB+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/MP [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/MP+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/MP+fence.rw.rw+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/MP+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/MP+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/MP+po+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/MP+po+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/MP+po+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/R [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/R+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/R+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/R+po+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/S [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/SB [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/SB+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/SB+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/S+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/S+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/S+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/S+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/BASIC_2_THREAD/S+po+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/S+po+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/BASIC_2_THREAD/S+po+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/CO/2+2W+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/2+2W+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/2+2W+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/CoRR [0;32mOk[0m (expected No, found No)
+./tests/CO/CoRR+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/CoRW1 [0;32mOk[0m (expected No, found No)
+./tests/CO/CoRW1+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/CoRW2 [0;32mOk[0m (expected No, found No)
+./tests/CO/CoRW2+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/CO-SBI [0;32mOk[0m (expected Ok, found Ok)
+./tests/CO/CoWR0 [0;32mOk[0m (expected No, found No)
+./tests/CO/CoWR0+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/CoWW [0;32mOk[0m (expected No, found No)
+./tests/CO/CoWW+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/LB+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/LB+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/LB+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/MP+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/MP+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/MP+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/MP+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/R+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/R+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/R+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/R+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/RWC+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/RWC+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/RWC+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/RWC+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/SB+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/SB+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/SB+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/S+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/S+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/S+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/S+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRC+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/WRC+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRC+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/WRC+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRR+2W+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/WRR+2W+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRR+2W+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/WRR+2W+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+2W+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+2W+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+2W+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+2W+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+WR+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+WR+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+WR+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/WRW+WR+poss [0;32mOk[0m (expected No, found No)
+./tests/CO/WWC+fence.rw.rws+pos [0;32mOk[0m (expected No, found No)
+./tests/CO/WWC+fence.rw.rwss [0;32mOk[0m (expected No, found No)
+./tests/CO/WWC+pos+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/CO/WWC+poss [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tso+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tso+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tso+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tsopx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tsopx+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tsopxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tsos [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tsoxp+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tsoxps [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/2+2W+fence.tsoxxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tso+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tso+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tso+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tsopx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tsopx+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tsopxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tsos [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tsoxp+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tsoxps [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/LB+fence.tsoxxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tso+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tso+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tso+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsopx+fence.tso [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsopx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsopx+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsopxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsos [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxp+fence.tso [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxp+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxp+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxps [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxx+fence.tso [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxx+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/MP+fence.tsoxxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tso+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tso+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tso+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsopx+fence.tso [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/R+fence.tsopx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsopx+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsopxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsos [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/R+fence.tsoxp+fence.tso [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/R+fence.tsoxp+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsoxp+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsoxps [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsoxx+fence.tso [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/R+fence.tsoxx+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsoxx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/R+fence.tsoxxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/SB+fence.tso+fence.tsopx [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/SB+fence.tso+fence.tsoxp [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/SB+fence.tso+fence.tsoxx [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/SB+fence.tsopx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/SB+fence.tsopx+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/SB+fence.tsopxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/SB+fence.tsos [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/SB+fence.tsoxp+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/SB+fence.tsoxps [0;32mOk[0m (expected Ok, found Ok)
+./tests/FENCE.TSO/2/SB+fence.tsoxxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tso+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tso+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tso+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsopx+fence.tso [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsopx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsopx+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsopxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsos [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxp+fence.tso [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxp+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxp+fence.tsoxx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxps [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxx+fence.tso [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxx+fence.tsopx [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxx+fence.tsoxp [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/2/S+fence.tsoxxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/RMW/RR+RR+rmw-fence.tsopxs [0;32mOk[0m (expected No, found No)
+./tests/FENCE.TSO/RMW/RR+RR+rmw-fence.tso+rmw-fence.tsopx [0;31mNo[0m (expected No, found Ok)
+./tests/FENCE.TSO/RMW/RR+RR+rmw-fence.tsos [0;31mNo[0m (expected No, found Ok)
+./tests/RelAcq_2_THREAD/2+2W [0;32mOk[0m (expected Ok, found Ok)
+./tests/RelAcq_2_THREAD/LB [0;32mOk[0m (expected Ok, found Ok)
+./tests/RelAcq_2_THREAD/MP [0;32mOk[0m (expected Ok, found Ok)
+./tests/RelAcq_2_THREAD/R [0;32mOk[0m (expected Ok, found Ok)
+./tests/RelAcq_2_THREAD/S [0;32mOk[0m (expected Ok, found Ok)
+./tests/RelAcq_2_THREAD/SB [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+addr+addr-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+addr+addr-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+addr+addr-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+addr+ctrl-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+addr+ctrl-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+addr+ctrl-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+addr+data-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+addr+data-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+addr+data-wsi-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+ctrl+addr-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+ctrl+addr-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+ctrl+addr-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+ctrl+ctrl-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+ctrl+ctrl-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+ctrl+ctrl-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+ctrl+data-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+ctrl+data-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+ctrl+data-wsi-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+data+addr-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+data+addr-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+data+addr-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+data+ctrl-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+data+ctrl-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+data+ctrl-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+data+data-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+data+data-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+data+data-wsi-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+addr-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+addr-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+addr-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+ctrl-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+ctrl-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+ctrl-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+data-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+data-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/LB+fence.rw.rw+data-wsi-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+addr-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+addr-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+ctrl-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+ctrl-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+data-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+fence.rw.rw+data-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-addr+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-addr+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-addr+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-ctrl+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-ctrl+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-ctrl+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-data+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-data+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/MP+wsi-rfi-data+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/R+wsi-rfi-addr+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/R+wsi-rfi-ctrl+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/R+wsi-rfi-data+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/SB+fence.rw.rw+wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/SB+fence.rw.rw+wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/SB+wsi-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/SB+wsi-rfi-addr+wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/SB+wsi-rfi-ctrls [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+addr-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+addr-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+addr-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+ctrl-wsi-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+ctrl-wsi-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+ctrl-wsi-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+data-wsi-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+data-wsi-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Coi-Rfi/S+fence.rw.rw+data-wsi-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/DpCtrldR/MP+fence.rw.rw+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/DpCtrldR/MP+fence.rw.w+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/DpCtrldR/MP+fence.w.w+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRR/MP+fence.rw.rw+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRR/MP+fence.rw.w+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRR/MP+fence.w.w+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.i+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.i+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.i+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.i+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.i+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.i+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.i+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/LB+fence.is [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/S+fence.rw.rw+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/S+fence.rw.w+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idRW/S+fence.w.w+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWR/R+fence.rw.rw+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWR/R+fence.rw.w+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWR/R+fence.w.w+fence.i [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWR/SB+fence.i+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWR/SB+fence.is [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/2+2W+fence.i+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/2+2W+fence.i+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/2+2W+fence.i+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/2+2W+fence.is [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/MP+fence.i+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/MP+fence.i+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/MP+fence.i+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/MP+fence.i+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/R+fence.i+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/S+fence.i+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/S+fence.i+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/S+fence.i+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/S+fence.i+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/S+fence.i+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/S+fence.i+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.idWW/S+fence.i+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWR/R+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWR/R+fence.rw.w+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWR/R+fence.w.w+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWR/SB+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWR/SB+fence.r.rws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rw+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rw+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/2+2W+fence.r.rws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rw+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/MP+fence.r.rws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/R+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/S+fence.r.rw+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.r.rwdWW/S+fence.r.rws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdRR/MP+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdRR/MP+fence.rw.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdRR/MP+fence.w.w+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdWR/R+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdWR/R+fence.rw.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdWR/R+fence.w.w+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdWR/SB+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.rw.wdWR/SB+fence.rw.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRR/MP+fence.rw.rw+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRR/MP+fence.rw.w+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRR/MP+fence.w.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.r.rw+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.w.w+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/LB+fence.w.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/S+fence.rw.rw+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/S+fence.rw.w+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdRW/S+fence.w.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdWR/R+fence.rw.rw+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdWR/R+fence.rw.w+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdWR/R+fence.w.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdWR/SB+fence.w.w+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fence.w.wdWR/SB+fence.w.ws [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+addr+addr-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+addr+addr-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+addr+addr-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+addr+ctrl-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+addr+ctrl-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+addr+ctrl-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+addr+fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+addr+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+addr+fri-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+ctrl+addr-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+ctrl+addr-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+ctrl+addr-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+ctrl+ctrl-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+ctrl+ctrl-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+ctrl+ctrl-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+ctrl+fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+ctrl+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+ctrl+fri-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+data+addr-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+data+addr-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+data+addr-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+data+ctrl-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+data+ctrl-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+data+ctrl-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+data+fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+data+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+data+fri-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+addr-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+addr-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+addr-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+ctrl-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+ctrl-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+ctrl-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fence.rw.rw+fri-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fri-rfi-addr+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fri-rfi-addr+fri-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fri-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fri-rfi-ctrls [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fri-rfi-data+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/LB+fri-rfi-datas [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+addr-fri-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+addr-fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+addr-fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+ctrl-fri-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+ctrl-fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+ctrl-fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-addr-fri-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/MP+fence.rw.rw+fri-rfi-ctrl-fri-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+addr-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+addr-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+addr-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+ctrl-fri-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+ctrl-fri-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+ctrl-fri-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+fri-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+fri-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Fri-Rfi/S+fence.rw.rw+fri-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRR/MP+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRR/MP+fence.rw.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRR/MP+fence.w.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB+addr+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB+ctrlfencei+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB+ctrl+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB+data+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB+fence.r.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/LB+fence.rw.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/S+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/S+fence.rw.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodRW/S+fence.w.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.rw+po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.rw+po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.rw+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.rw+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.w+po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.w+po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.w+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.rw.w+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.w.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.w.w+po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.w.w+po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.w.w+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/R+fence.w.w+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+fence.rw.rw+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addr+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addr+pos-po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addr+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrs+po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrs+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrs+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrs+pos-po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrs+pos-po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrs+pos-po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrs+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-addrss [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfencei+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfenceis+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfenceis+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po-ctrlfenceiss [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+pos-po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+pos-po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+pos-po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+pos-po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+po+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po-addr+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po-addrs+pos-po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po-addrs+pos-po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po-addrs+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po-addrss [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po-ctrlfenceis+pos-po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po-ctrlfenceiss [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+pos-po-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+pos-po-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+pos-po-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-po+pos-po-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWR/SB+pos-pos [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/2+2W [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/2+2W+fence.rw.rw+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/2+2W+fence.rw.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/2+2W+fence.w.w+po [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/MP+po+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/MP+po+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/MP+po+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/MP+po+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/R+po+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/S+po+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/S+po+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/S+po+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/S+po+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/S+po+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/S+po+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PodWW/S+po+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/R+fence.rw.rw+pos-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/R+fence.rw.rw+pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/R+fence.rw.w+pos-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/R+fence.rw.w+pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/R+fence.w.w+pos-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/R+fence.w.w+pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+fence.rw.rw+pos-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+fence.rw.rw+pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+fence.rw.rw+pos-pos-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+fence.rw.rw+pos-pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-addr+pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-addr+pos-pos-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-addr+pos-pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-ctrlfencei+pos-pos-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-ctrlfencei+pos-pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-pos-addr+pos-pos-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-pos-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/PosWR/SB+pos-pos-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.rw+rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.rw.w+rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+fence.w.w+rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-addr+rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-addr+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-addr+rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-ctrl+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-ctrls [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-data+rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-data+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/2+2W+rfi-datas [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/LB+addr+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+addr+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrl+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+ctrlfencei+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+data+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.r.rw+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.rw+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/LB+fence.rw.w+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.rw+addr-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrlfencei-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.rw+ctrl-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.rw+data-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.w+addr-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrlfencei-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.w+ctrl-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.rw.w+data-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.w.w+addr-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrlfencei-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.w.w+ctrl-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+data-rfi [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-addrs [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+fence.w.w+data-rfi-ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-addr+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-ctrl+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+pos-rfi-data+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+addr-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrlfencei-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+ctrl-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+data-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-addr+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+addr-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrlfencei-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+ctrl-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+data-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+addr-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrlfencei-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+ctrl-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+data-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-ctrl+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+addr-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrlfencei-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+ctrl-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+data-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+data-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/MP+rfi-data+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.rw+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.rw+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.rw+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.rw+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.rw+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.rw+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.w+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.w+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.w+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.w+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.w+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.rw.w+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.w.w+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.w.w+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.w.w+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.w.w+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.w.w+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+fence.w.w+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-addr+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-addr+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-addr+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-ctrlfencei+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-ctrl+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-ctrl+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-ctrl+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-data+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-data+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+pos-rfi-data+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-addr+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-addr+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-addr+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-addr+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-addr+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-addr+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrlfencei+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrl+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrl+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrl+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrl+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrl+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrl+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-ctrl+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-data+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-data+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-data+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-data+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-data+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-data+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/R+rfi-data+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+pos-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+pos-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+fence.rw.rw+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+pos-rfi-addr+pos-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+pos-rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+pos-rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr+pos-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr+pos-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr+rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr-rfi+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr-rfi+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr-rfi+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addr-rfis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-addrs [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfencei+pos-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfencei+pos-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-addr-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfencei+rfi-data-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfencei-rfis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrl-rfi+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-ctrl-rfis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-data-rfi+rfi-ctrlfencei-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-data-rfi+rfi-ctrl-rfi [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/SB+rfi-data-rfis [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.rw+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.rw.w+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+addr-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrlfencei-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+ctrl-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+data-rfi-addr [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+data-rfi-ctrl [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+data-rfi-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+fence.w.w+data-rfi-data [0;32mOk[0m (expected No, found No)
+./tests/RELAX/Rfi/S+rfi-addr+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+addr-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrlfencei-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+ctrl-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+data-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+data-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-addr+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+addr-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrlfencei-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+ctrl-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+data-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+addr-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrlfencei-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+ctrl-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+data-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrlfencei+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-ctrl+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+addr-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+addr-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+addr-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+addr-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrlfencei-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+ctrl-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+data-rfi-addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+data-rfi-ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+data-rfi-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+data-rfi-data [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/RELAX/Rfi/S+rfi-data+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/2+2W+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+fence.w.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+fence.w.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-addr-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-addr-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-addr-fr]+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-ctrlfencei-fr]+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/2+2W+[rf-ctrlfencei-fr]+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/2+2W+[rf-ctrlfencei-fr]+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/2+2W+[rf-fence.r.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-fence.r.rw-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-fence.r.rw-fr]+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-fence.rw.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-fence.rw.rw-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/2+2W+[rf-fence.rw.rw-fr]+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.w.w+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.w.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.w.w+fence.rw.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.w.w+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.w.w+fence.w.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.2W+fence.w.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+addr+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrlfencei+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+ctrl+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+data+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addr+pos+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrl+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrl+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrl+ctrlfencei+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrl+ctrl+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrlfencei+ctrlfencei+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrl+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+ctrls [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+ctrlfencei+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+ctrl+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+data+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+data+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+datas [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+addr+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrlfencei+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrl+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+ctrl+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+data+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+data+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.r.rw+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.rw+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+fence.rw.w+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+pos+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rw+pos+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+addr+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrlfencei+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+ctrl+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+data+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+fence.rw.rw+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rw+pos+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+addr+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrlfencei+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+ctrl+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+data+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.rw+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+fence.rw.w+pos [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+pos+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.w+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.LB+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.SB+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/3.SB+fence.rw.rws+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRIW+addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRIW+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRIW+ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRIW+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRIW+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRIW+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRIW+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRIW+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRIW+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRIW+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+ctrlfencei+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRRWIW+ctrlfencei+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRRWIW+ctrlfencei+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRRWIW+ctrlfencei+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRRWIW+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRRWIW+ctrlfencei+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRRWIW+ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/IRRWIW+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRRWIW+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+ctrls [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+datas [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/IRWIW+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+addr+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+addr+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+addr+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+addr+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrlfencei+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+ctrl+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+data+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+data+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+data+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+data+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.r.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+fence.rw.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+pos+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.rw+pos+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rw+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+addr+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+addr+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+addr+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+addr+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrlfencei+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+ctrl+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+data+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+data+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+data+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+data+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.r.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+fence.rw.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+pos+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.rw.w+pos+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.rw.w+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+addr+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+addr+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+addr+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+addr+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrl+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+ctrl+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrlfencei+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrl+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+ctrl+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+data+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+data+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+data+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+data+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.r.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+fence.rw.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+pos+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+fence.w.w+pos+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+fence.w.w+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+pos+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+pos+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+pos+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+pos+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+pos+fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+pos+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/ISA2+pos+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/ISA2+pos+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+addr-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+addr-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+ctrlfencei-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+ctrlfencei-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+ctrl-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr+data-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr-[fr-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr-[fr-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr-[fr-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addr-[rf-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrl+ctrlfencei-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrl+ctrlfencei-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrl+ctrl-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrlfencei+ctrlfencei-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrlfencei+ctrlfencei-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrl-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+ctrls [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data+ctrlfencei-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data+ctrlfencei-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data+ctrl-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data+data-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+data-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+datas [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+addr-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+addr-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+ctrlfencei-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+ctrlfencei-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+ctrl-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+data-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+fence.r.rw-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+fence.r.rw-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+fence.rw.rw-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+fence.rw.rw-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw+fence.rw.w-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[fr-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[fr-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[fr-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[fr-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[fr-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[fr-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[rf-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rw-[rf-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+addr-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+addr-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+ctrlfencei-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+ctrlfencei-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+ctrl-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+data-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+fence.rw.rw-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw+fence.rw.rw-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[fr-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[fr-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[fr-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[fr-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rw-[rf-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+addr-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+addr-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+ctrlfencei-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+ctrlfencei-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+ctrl-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+data-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+fence.rw.rw-[fr-ws] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+fence.rw.rw-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w+fence.rw.w-[rf-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w-[rf-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.w-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.rw-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.w-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.w-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.w-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.w-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.w-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.w-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.rw.w-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.w.w-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.w.w-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.w.w-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.w.w-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.w.w-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.w.w-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-fence.w.w-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrlfencei+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-ctrl+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-data+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/LB+[fr-rf]-fence.rw.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+addr-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.rw+ctrlfencei-[fr-rf] [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+fence.r.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+fence.rw.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+[fr-fence.rw.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+[fr-fence.rw.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+[fr-fence.w.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+[fr-rf]-addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+[fr-rf]-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.rw+[fr-rf]-fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw+[fr-rf]-fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw-[fr-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw-[fr-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.rw-[fr-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw-[fr-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw-[rf-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.rw-[rf-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rw-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+addr-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.w+ctrlfencei-[fr-rf] [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+fence.r.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+fence.rw.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+[fr-fence.rw.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+[fr-fence.rw.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+[fr-fence.w.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+[fr-rf]-addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+[fr-rf]-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.w+[fr-rf]-fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w+[fr-rf]-fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w-[rf-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.rw.w-[rf-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.rw.w-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+addr-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.w.w+ctrlfencei-[fr-rf] [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+fence.r.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+fence.rw.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+[fr-fence.rw.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+[fr-fence.rw.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+[fr-fence.w.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+[fr-rf]-addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+[fr-rf]-ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.w.w+[fr-rf]-fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w+[fr-rf]-fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w-[rf-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+fence.w.w-[rf-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+fence.w.w-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-addr-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-addr-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-addr-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-addr-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-addr-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-addr-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-addr-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-addr-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-ctrlfencei-fr]+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-ctrlfencei-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-ctrlfencei-fr]+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-ctrlfencei-fr]+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-ctrlfencei-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-ctrlfencei-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-ctrlfencei-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-ctrlfencei-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-ctrl-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-ctrl-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-ctrl-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-ctrl-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-data-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-data-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-data-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-data-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.r.rw-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.r.rw-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fence.r.rw-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.r.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.r.rw-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.r.rw-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fence.r.rw-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.r.rw-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.rw-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.rw-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fence.rw.rw-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.rw-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.rw-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fence.rw.rw-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.rw-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.w-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.w-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fence.rw.w-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fence.rw.w-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fr]-fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fr]-fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.w.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[rf-fr]-fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[rf-fr]-fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.rw-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.rw-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-fence.rw.rw-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.rw-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.rw-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-fence.rw.rw-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.rw-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.w-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.w-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-fence.rw.w-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.rw.w-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.w.w-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.w.w-ws]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-fence.w.w-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-fence.w.w-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-rf]-addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-rf]-ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-ctrlfencei+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-rf]-ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-rf]-data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-rf]-fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-rf]-fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/MP+[ws-rf]-fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/MP+[ws-rf]-fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+fence.rw.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+[rf-addr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+[rf-ctrlfencei-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+[rf-ctrl-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+[rf-data-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+[rf-fence.r.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+[rf-fence.rw.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rw+[rf-fence.rw.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+fence.rw.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+[rf-addr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+[rf-ctrlfencei-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+[rf-ctrl-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+[rf-data-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+[rf-fence.r.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+[rf-fence.rw.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.rw.w+[rf-fence.rw.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+fence.rw.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+[rf-addr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+[rf-ctrlfencei-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+[rf-ctrl-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+[rf-data-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+[rf-fence.r.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+[rf-fence.rw.rw-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+fence.w.w+[rf-fence.rw.w-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[rf-addr-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[rf-ctrlfencei-fr]+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/R+[rf-fence.r.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[rf-fence.rw.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[rf-fr]-fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[rf-fr]-fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[rf-fr]-fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/RWC+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/RWC+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/RWC+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/RWC+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-fence.rw.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-rf]-addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-rf]-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-rf]-ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-rf]-data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-rf]-fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-rf]-fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/R+[ws-rf]-fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+fence.rw.rw+fence.rw.rw-[fr-rf] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-addr-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-ctrlfencei-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-ctrl-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-data-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-fence.r.rw-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-fence.rw.rw-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-fence.rw.w-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[rf-fr]-fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[ws-fence.rw.rw-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[ws-fence.rw.w-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[ws-fence.w.w-rf]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[ws-rf]-addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[ws-rf]-ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/SB+[ws-rf]-fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/SB+[ws-rf]-fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-fence.rw.rw-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-rf]-addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-rf]-ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-rf]-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-rf]-data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-rf]-fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-rf]-fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw+[fr-rf]-fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[fr-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[fr-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[fr-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[fr-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[fr-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[fr-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[fr-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[rf-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[rf-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rw-[rf-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-fence.rw.rw-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-rf]-addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-rf]-ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-rf]-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-rf]-data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-rf]-fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-rf]-fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w+[fr-rf]-fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w-[rf-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w-[rf-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.w-[rf-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-fence.rw.rw-fr] [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-rf]-addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-rf]-ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-rf]-ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-rf]-data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-rf]-fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-rf]-fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w+[fr-rf]-fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w-[rf-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w-[rf-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w-[rf-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w-[rf-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w-[rf-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w-[rf-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+fence.w.w-[rf-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-addr-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrlfencei-fr]+addr [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/S+[rf-ctrlfencei-fr]+ctrl [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/S+[rf-ctrlfencei-fr]+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/S+[rf-ctrlfencei-fr]+data [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/S+[rf-ctrlfencei-fr]+fence.r.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/S+[rf-ctrlfencei-fr]+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/S+[rf-ctrlfencei-fr]+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/S+[rf-ctrlfencei-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrlfencei-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrlfencei-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrlfencei-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrlfencei-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrlfencei-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrlfencei-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrl-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrl-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrl-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrl-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrl-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrl-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-ctrl-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-data-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-data-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-data-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-data-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-data-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-data-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-data-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.r.rw-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-fr]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-fr]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-fr]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-fr]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-fr]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-fr]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-fr]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.rw-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.w-ws]+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.w-ws]+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.w-ws]+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.w-ws]+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.w-ws]+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.w-ws]+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/S+[rf-fence.rw.w-ws]+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+addr+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRC+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+ctrl+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRC+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+ctrlfenceis [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRC+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+data+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRC+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.r.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRC+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRC+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRC+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRC+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+addr+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRR+2W+ctrlfencei+fence.rw.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRR+2W+ctrlfencei+fence.w.w [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/WRR+2W+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+fence.r.rw+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+fence.rw.rw+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRR+2W+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+addr+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+ctrlfencei+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+ctrlfencei+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+ctrl+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+ctrl+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+data+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+data+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.r.rw+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.rw.rw+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.rw.w+fence.w.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+2W+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+addr+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+addrs+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/W+RWC+fence.rw.rw+ctrlfencei+fence.rw.rws [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/W+RWC+fence.rw.rw+ctrlfenceis+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+fence.r.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+fence.r.rws+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rw+fence.rw.rws+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+addr+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+addrs+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/W+RWC+fence.rw.w+ctrlfencei+fence.rw.rws [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/W+RWC+fence.rw.w+ctrlfenceis+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+fence.r.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+fence.r.rws+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.rw.w+fence.rw.rws+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+addr+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+addrs+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/W+RWC+fence.w.w+ctrlfencei+fence.rw.rws [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/W+RWC+fence.w.w+ctrlfenceis+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+fence.r.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+fence.r.rws+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+fence.w.w+fence.rw.rws+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+pos+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+pos+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/W+RWC+pos+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/W+RWC+pos+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+WR+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+WR+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+WR+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+WR+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+WR+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+WR+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WRW+WR+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrlfencei+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrl+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+ctrls [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+data+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+datas [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/WWC+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.rw+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.rw+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.rw+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.rw+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.rw+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.rw+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.w+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.w+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.w.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.w.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.w.w+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.w.w+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.w.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+fence.w.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+pos+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+pos+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+pos+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+pos+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+pos+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+pos+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.0+pos+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.rw.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rw+fence.w.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.w+fence.w.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.rw.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.w.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.w.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.w.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.1+fence.w.w+fence.w.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrlfencei+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+ctrl+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+data+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+fence.rw.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+pos+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+pos+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rw+pos+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrlfencei+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+ctrl+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+data+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+pos+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+pos+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.w+pos+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.rw.ws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+addr+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+addr+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+addr+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+addr+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+addr+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+addr+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+addr+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrl+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrl+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrl+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrl+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrlfencei+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrl+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrl+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+ctrl+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+data+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+data+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+data+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+data+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+data+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+data+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+data+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.r.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.rw+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+fence.rw.w+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+pos+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+pos+ctrl [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+pos+ctrlfencei [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+pos+data [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+pos+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+pos+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.2+fence.w.w+pos+fence.rw.w [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.rw.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rw+fence.w.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.rw.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.rw.w+fence.w.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.rw.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+addr [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+addrs [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+ctrlfencei [0;32mOk[0m (expected Ok, found Ok)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+ctrlfenceis [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.r.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.r.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.3+fence.w.w+fence.w.w+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.4+fence.rw.rw+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.4+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.4+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.4+fence.rw.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.4+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.4+fence.w.w+fence.rw.rw+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.rw.rw+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.rw.rw+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.rw.rws [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.rw.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.rw.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.rw.w+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.w.w+fence.rw.rw+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.w.w+fence.rw.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SAFE/Z6.5+fence.w.w+fence.w.w+fence.rw.rw [0;32mOk[0m (expected No, found No)
+./tests/SINGLE_INST/amoswap.w.aq.rl [0;32mOk[0m (expected Ok, found Ok)
+./tests/SINGLE_INST/lr.w.aq.rl [0;32mOk[0m (expected Ok, found Ok)
