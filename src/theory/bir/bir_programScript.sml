@@ -253,6 +253,7 @@ val bir_state_init_def = Define `bir_state_init p = <|
   ; bst_inflight := []
   ; bst_counter := 0
   ; bst_fwdb := (\l. <| fwdb_time:= 0; fwdb_view:=0; fwdb_xcl:=F |>)
+  ; bst_xclb := NONE
 |>`;
 
 (* ------------------------------------------------------------------------- *)
