@@ -42,7 +42,7 @@ fun promiseRun fuel coresAndMemory =
 
 local
     fun nonPromiseRunAux fuel memory core =
-	let val term = “eval_clsteps_coreO1 ^fuel ^core ^memory”
+	let val term = “FILTER is_final_core $ eval_clsteps_coreO1 ^fuel ^core ^memory”
 	in fst (dest_list(term_EVAL term)) end;
 
     (* Cartesian product *)
@@ -70,12 +70,22 @@ fun getRegistersAndMemory coresAndMemory =
 	val memory' = “FOLDL (\t m. t (|m.loc |-> SOME m.val|)) (K NONE) ^memory”;
     in term_EVAL $ mk_pair (memory', regs) end;
 
+(* 
+fun getStatesAndMemory coresAndMemory = 
+    let
+        val (cores, memory) = dest_pair
+	val states = “MAP (\t. case t of (Core cid p s) => s) ^cores”
+     in (states, memory)
+
+val filename = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.litmus";
+val filename = "./tests/ATOMICS/CO/2+2W+fence.rw.rws+pospx.litmus";
+val testRecord = lift_herd_litmus filename;
+val fuel = 64;
+*)
+
 fun run_litmus fuel filename =
    let 
        (* Load litmus test *)
-       (*
-       val testRecord  = lift_herd_litmus filename;
-       *)
        val testRecord  = load_litmus filename;
        (* Fuel used for promise and non-promise execution *)
        val fuelTerm = term_of_int fuel;
@@ -109,9 +119,3 @@ fun main () =
 	val result    = run_litmus 64 inputfile
     in print $ inputfile ^ " " ^ result ^ "\n" end;
 
-(* 
-val filename = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.litmus";
-val fuel = 20;
-val res = run_litmus fuel filename;
-val filename = "tests/AMO_X0_2_THREAD/LB+popars+NEW.json"
-*)
