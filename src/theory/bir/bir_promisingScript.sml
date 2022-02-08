@@ -96,7 +96,7 @@ val mem_timestamps_def = Define‘
 (* The atomic predicate from promising-semantics. *)
 val mem_atomic_def = Define‘
   mem_atomic M l cid t_r t_w =
-  ((EL (t_r - 1) M).loc = l ⇒
+  (((EL (t_r - 1) M).loc = l ∨ t_r = 0)⇒
      mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
 ’;
 
@@ -223,7 +223,7 @@ val fulfil_atomic_ok_def = Define`
   (fulfil_atomic_ok M l cid s tw =
    case s.bst_xclb of
    | SOME xclb =>
-     ((EL (xclb.xclb_time-1) M).loc = l) ==>
+     ((EL (xclb.xclb_time-1) M).loc = l ∨ (xclb.xclb_time = 0)) ==>
        (!t'. (xclb.xclb_time < t'
              /\ t' < tw
              /\ (EL (t'-1) M).loc = l) ==> (EL (t'-1) M).cid = cid)
@@ -607,6 +607,20 @@ val _ = Datatype `core_t =
   Core num (string bir_program_t) bir_state_t
 `;
 
+val get_core_cid = Define‘
+   get_core_cid (Core cid p s) = cid
+’;
+
+val get_core_prog = Define‘
+   get_core_prog (Core cid p s) = p
+’;
+
+val get_core_state = Define‘
+   get_core_state (Core cid p s) = s
+’;
+
+
+
 val cores_pc_not_atomic_def = Define`
   cores_pc_not_atomic cores =
     ~?cid p s i bl.
@@ -677,7 +691,7 @@ val eval_clstep_xclfail_def = Define‘
         [s with <| bst_viewenv := new_viewenv;
                    bst_environ := new_env;
                    bst_xclb    := NONE;
-                   bst_pc updated_by (bir_pc_next o bir_pc_next) |>]
+                   bst_pc updated_by (bir_pc_next o bir_pc_next o bir_pc_next) |>]
     | _ => [])
   else []
 ’;
@@ -923,6 +937,13 @@ Definition eval_pmstep_def:
       (eval_find_promises fuel cM)
 End
 
+(* Check if core has finished execution and is certified *)
+Definition is_final_core_def:
+  is_final_core (Core cid p s) =
+  case s.bst_status of
+  | BST_Halted _ => NULL s.bst_prom
+  | _ => F
+End
         
 (* Optimized atomic *)
 Definition mem_atomicO1_def:
@@ -933,7 +954,7 @@ Definition mem_atomicO1_def:
   ) ∧ (
     mem_atomicO1 M l cid T (SOME xclb) t_w =
     (let t_r = xclb.xclb_time in
-       ((EL (t_r-1) M).loc = l) ⇒
+       ((EL (t_r-1) M).loc = l ∨ t_r = 0) ⇒
        mem_every (λ(msg,t'). t_r < t' ∧ t' < t_w ∧ msg.loc = l ⇒ msg.cid = cid) M)
     )
 End
