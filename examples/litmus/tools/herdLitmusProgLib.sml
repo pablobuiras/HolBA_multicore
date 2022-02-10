@@ -99,6 +99,30 @@ fun fix_atomic_aqrl s =
   then replaceSubstring ("aq.rl", "aqrl") s
   else s
 
+fun is_plain_aq s =
+  if String.isSubstring "lb.aq" s
+     orelse String.isSubstring "lh.aq" s
+     orelse String.isSubstring "lw.aq" s
+     orelse String.isSubstring "ld.aq" s
+  then true
+  else false
+
+fun is_plain_rl s =
+  if String.isSubstring "sb.rl" s
+     orelse String.isSubstring "sh.rl" s
+     orelse String.isSubstring "sw.rl" s
+     orelse String.isSubstring "sd.rl" s
+  then true
+  else false
+
+fun fix_plain_aqrl ([]:string list) = []
+  | fix_plain_aqrl (h::t) =
+  if is_plain_aq h 
+  then (["fence rw,rw", (replaceSubstring (".aq", "") h), "fence r,rw"]@(fix_plain_aqrl t))
+  else if is_plain_rl h 
+  then (["fence rw,w", (replaceSubstring (".rl", "") h)]@(fix_plain_aqrl t))
+  else (h::(fix_plain_aqrl t))
+
 fun typed_prog p = inst [“:'observation_type” |-> Type`:string`] p;
 
 fun parse_prog prog_sec =
@@ -106,6 +130,7 @@ fun parse_prog prog_sec =
 	fun split c = tokens (eq c)
 	val stmts = transpose (map (split #"|") (tl (split #";" prog_sec))) ""
 	val stmts = map (map fix_atomic_aqrl) stmts
+	val stmts = map fix_plain_aqrl stmts
 	val progs = map (String.concatWith "\n") stmts
 	val bir_progs = map (typed_prog o lift_prog) progs
     in bir_progs end

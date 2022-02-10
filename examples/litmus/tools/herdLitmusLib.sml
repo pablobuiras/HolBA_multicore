@@ -114,8 +114,8 @@ fun parse text =
 	 final=final}
     end
 (*
-val filename = "../tests/non-mixed-size/BASIC_2_THREAD/MP+po+addr.litmus"
-val prog = hd $ tl progs
+val filename = "../tests/HAND/ISA-Rel-Acq.litmus"
+val filename = "../tests/BASIC_2_THREAD/MP+po+addr.litmus"
 val text = bir_fileLib.read_from_file filename;
 val (arch, name, info_sec, init_sec, prog_sec, final_sec) = split_to_sections text
 val progs = parse_prog prog_sec
