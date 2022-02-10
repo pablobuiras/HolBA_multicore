@@ -100,20 +100,16 @@ fun fix_atomic_aqrl s =
   else s
 
 fun is_plain_aq s =
-  if String.isSubstring "lb.aq" s
-     orelse String.isSubstring "lh.aq" s
-     orelse String.isSubstring "lw.aq" s
-     orelse String.isSubstring "ld.aq" s
-  then true
-  else false
+  String.isSubstring "lb.aq" s
+  orelse String.isSubstring "lh.aq" s
+  orelse String.isSubstring "lw.aq" s
+  orelse String.isSubstring "ld.aq" s
 
 fun is_plain_rl s =
-  if String.isSubstring "sb.rl" s
-     orelse String.isSubstring "sh.rl" s
-     orelse String.isSubstring "sw.rl" s
-     orelse String.isSubstring "sd.rl" s
-  then true
-  else false
+  String.isSubstring "sb.rl" s
+  orelse String.isSubstring "sh.rl" s
+  orelse String.isSubstring "sw.rl" s
+  orelse String.isSubstring "sd.rl" s
 
 fun fix_plain_aqrl ([]:string list) = []
   | fix_plain_aqrl (h::t) =
@@ -134,6 +130,7 @@ fun parse_prog prog_sec =
 	val progs = map (String.concatWith "\n") stmts
 	val bir_progs = map (typed_prog o lift_prog) progs
     in bir_progs end
+
 end
 
 (*
