@@ -31,6 +31,7 @@ val _ = Datatype‘
 *)
 
 (* Type of instruction and their arguments. *)
+(* OLD: | BirStmt_AMO bir_var_t bir_exp_t bir_exp_t bir_var_t bir_exp_t *)
 val _ = Datatype‘
   bir_statement_type_t =
   | BirStmt_Read bir_var_t bir_exp_t ((bir_cast_t # bir_immtype_t) option) bool bool bool
@@ -195,7 +196,6 @@ val get_read_args_def = Define`
   (get_read_args _ = NONE)
 `;
 
-
 (* Obtains an option type that contains the store arguments
  * needed to apply the fulfil rule *)
 val get_fulfil_args_def = Define`
@@ -284,8 +284,23 @@ val is_xcl_read_def = Define‘
      | _ => F
 ’;
 
+(*
 (* Upon the storing statement that is the first Assign in a lifted
- * Strore-type instruction, checks if the block is trying to model
+ * atomic memory operation instruction, checks if the block is trying to model
+ * an atomic memory operation *)
+val is_amo_def = Define‘
+  is_amo p pc =
+    case bir_get_current_statement p (bir_pc_next (bir_pc_next pc)) of
+      SOME (BStmtB (BStmt_Assign (BVar "MEM8" (BType_Mem Bit64 Bit8))
+		     (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
+                       (BExp_Den (BVar bvar_rs1 (BType_Imm Bit64))) BEnd_LittleEndian
+		       amo_exp))) => T
+     | _ => F
+’;
+*)
+      
+(* Upon the storing statement that is the first Assign in a lifted
+ * Store-type instruction, checks if the block is trying to model
  * an exclusive-store *)
 val is_xcl_write_def = Define‘
   is_xcl_write p pc =
@@ -410,6 +425,38 @@ QED
 (* TODO: "Generalising variable "ν_pre" in clause #0"? *)
 (* core-local steps that don't affect memory *)
 val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
+(* Should there be a separate clstep for AMOs? *)
+(*
+(* amo *)
+(!p s s' v a_e xcl M l (t:num) v_pre v_post v_addr var new_env cid opt_cast.
+   bir_get_stmt p s.bst_pc = BirStmt_AMO bvar_rs1 amo_res amo_ass amo_rd amo_ld
+ /\ SOME (a_e, opt_cast) = get_read_args amo_ld
+ /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+ ∧ mem_read M l t = SOME v
+ ∧ v_pre = MAX v_addr s.bst_v_rNew
+ ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL t' M).loc ≠ l)
+ ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
+ /\ SOME new_env = env_update_cast64 (bir_var_name amo_rd) v (bir_var_type amo_rd) (s.bst_environ)
+ (* Perform assertion before updating final state *)
+ /\ (bir_eval_exp amo_ass s.bst_environ = bir_val_true)
+ (* TODO: Perform all of the store operations *)
+ ∧ s' = s with <| bst_viewenv updated_by (\env. FUPDATE env (amo_rd, v_post));
+                  bst_environ := new_env;
+                  bst_coh := (λlo. if lo = l
+                                   then MAX (s.bst_coh l) v_post
+                                   else s.bst_coh(lo));
+                  bst_v_rOld := MAX s.bst_v_rOld v_post;
+                  bst_v_CAP := MAX s.bst_v_CAP v_addr;
+                  bst_xclb := if xcl
+                              then SOME <| xclb_time := t; xclb_view := v_post |>
+                              else s.bst_xclb;
+                  bst_pc := if xcl
+                            then (bir_pc_next o bir_pc_next) s.bst_pc
+                            else bir_pc_next s.bst_pc |>
+ ==>
+  clstep p cid s M [t] s') 
+/\
+*)
 (* read *)
 (!p s s' v a_e xcl acq rel M l (t:num) v_pre v_post v_addr var new_env cid opt_cast.
    bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast xcl acq rel
@@ -472,7 +519,6 @@ clstep p cid s M [] s')
  /\ (MAX v_pre (s.bst_coh l) < t)
  /\ v_post = t
  /\ SOME new_env = fulfil_update_env p s xcl
- (* TODO: Update viewenv by v_post or something else? *)
  /\ SOME new_viewenv = fulfil_update_viewenv p s xcl v_post
  /\ s' = s with <| bst_viewenv := new_viewenv;
                    bst_prom updated_by (FILTER (\t'. t' <> t));
@@ -860,6 +906,18 @@ val eval_certify_def = Define‘
   )
 ’;
 
+val repeat_def = Define‘
+  (repeat f 0 = f)
+  /\
+  (repeat f (SUC n) = f o (repeat f n))
+’;
+
+val iterate_def = Define‘
+  (iterate f 0 x = x)
+  /\
+  (iterate f (SUC n) x = (iterate f n (f x)))
+’;
+
 (*** Non-promising-mode execution ***)
 val eval_clsteps_def = Define‘
   (
@@ -872,8 +930,17 @@ val eval_clsteps_def = Define‘
   ) /\ (
   eval_clsteps (SUC f) cid p s M = 
   case s.bst_status of
-  | BST_Running => LIST_BIND (eval_clstep p cid s M)
-                             (λs'. eval_clsteps f cid p s' M)
+  | BST_Running =>
+    (if s.bst_pc.bpc_index = 0
+     then
+       (case bir_get_program_block_info_by_label p s.bst_pc.bpc_label of
+	 | SOME (i,bl) =>
+	    (if bl.bb_atomic = T
+	    then LIST_BIND ((repeat (\sl. (LIST_BIND sl (\s. (eval_clstep p cid s M)))) ((LENGTH bl.bb_statements) + 1)) [s]) (λs'. eval_clsteps f cid p s' M)
+	    else LIST_BIND (eval_clstep p cid s M) (λs'. eval_clsteps f cid p s' M))
+	 | _ => [])
+     else 
+       (LIST_BIND (eval_clstep p cid s M) (λs'. eval_clsteps f cid p s' M)))
   | BST_Halted _ => [s]
   | BST_JumpOutside _ => [s]
   | _ => []
@@ -885,6 +952,7 @@ val eval_clsteps_core_def = Define‘
     MAP (Core cid p) (eval_clsteps fuel cid p s M)
 ’;
 
+(******************************************)
 (********* Promising-mode steps ***********)
 
 (* Find promise write step (promise-step + fulfil) *)
@@ -934,7 +1002,7 @@ Definition eval_fpstep_def:
     | BirStmt_None => []
 End
 
-
+(* TODO: Add functionality to take into account multiple stores in an atomic block? *)
 (* Find-promise steps *)
 Definition eval_fpsteps_def:
   (
@@ -1113,8 +1181,17 @@ val eval_clstepsO1_def = Define‘
   ) /\ (
   eval_clstepsO1 (SUC f) cid p s M = 
   case s.bst_status of
-  | BST_Running => LIST_BIND (eval_clstepO1 p cid s M)
-                             (λs'. eval_clstepsO1 f cid p s' M)
+  | BST_Running =>
+    (if s.bst_pc.bpc_index = 0
+     then
+       (case bir_get_program_block_info_by_label p s.bst_pc.bpc_label of
+	 | SOME (i,bl) =>
+	    (if bl.bb_atomic = T
+	    then LIST_BIND ((repeat (\sl. (LIST_BIND sl (\s. (eval_clstepO1 p cid s M)))) ((LENGTH bl.bb_statements) + 1)) [s]) (λs'. eval_clstepsO1 f cid p s' M)
+	    else LIST_BIND (eval_clstepO1 p cid s M) (λs'. eval_clstepsO1 f cid p s' M))
+	 | _ => [])
+     else 
+       (LIST_BIND (eval_clstepO1 p cid s M) (λs'. eval_clstepsO1 f cid p s' M)))
   | BST_Halted _ => [s]
   | BST_JumpOutside _ => [s]
   | _ => []
@@ -1173,6 +1250,7 @@ Definition eval_fpstepO1_def:
     | BirStmt_None => []
 End
 
+(* TODO: Add functionality to take into account multiple stores in an atomic block? *)
 (* Find promise steps *)
 Definition eval_fpstepsO1_def:
   (
