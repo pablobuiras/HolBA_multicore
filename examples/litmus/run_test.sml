@@ -28,11 +28,24 @@ val term_EVAL = rhs o concl o EVAL
 	val cores = loop 0 (zip programs environs)
     in mk_list (cores, “:core_t”) end;
 
+fun print_list [] = ()
+  | print_list (h::t) =
+  let
+    val _ = print (h^"\n\n")
+  in
+    print_list t
+  end
+;
+
 (* Promise mode execution *)
 fun promiseRun fuel coresAndMemory =
     let
-	val newCoresAndMemory = term_EVAL “eval_pmstepO1 ^fuel ^coresAndMemory”;
+	val newCoresAndMemory = term_EVAL “eval_pmstep ^fuel ^coresAndMemory”;
 	val (l, ty) = dest_list newCoresAndMemory;
+
+        val _ = print ("Number of new promise possibilities: "^(Int.toString (length l))^"\n")
+        val promise_list = map (term_to_string o snd o dest_pair) l
+        val _ = print_list promise_list
     in
 	if null l then (* No more promises *)
 	    [coresAndMemory]
@@ -77,8 +90,12 @@ fun getStatesAndMemory coresAndMemory =
 	val states = “MAP (\t. case t of (Core cid p s) => s) ^cores”
      in (states, memory)
 
-val filename = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.litmus";
-val filename = "./tests/ATOMICS/CO/2+2W+fence.rw.rws+pospx.litmus";
+(* Non-passing AMO litmus test *)
+val filename = "./tests/AMO_X0_2_THREAD/MP+po+poaqaq+NEW.json";
+val fuel = 10;
+
+val filename = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.json";
+val filename = "./tests/ATOMICS/CO/2+2W+fence.rw.rws+pospx.json";
 val testRecord = lift_herd_litmus filename;
 val fuel = 64;
 *)
@@ -98,7 +115,7 @@ fun run_litmus fuel filename =
        val coresAndPromisesFinal = List.concat (map (nonPromiseRun fuelTerm) coresAndPromises);
        (* Get the final states of registers and memory *)
        val finalStates = map getRegistersAndMemory coresAndPromisesFinal
-       val finalStatesTerm = mk_list(finalStates, 
+       val finalStatesTerm = mk_list(finalStates,
 				     “:(bir_val_t -> bir_val_t option) # ((string -> bir_val_t option) list)”);
        (* Get the post-condition *)
        val finalPredicate = #final testRecord;

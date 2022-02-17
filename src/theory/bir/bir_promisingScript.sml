@@ -907,15 +907,14 @@ val eval_certify_def = Define‘
 ’;
 
 val repeat_def = Define‘
-  (repeat f 0 = f)
+  (repeat f 0 x = x)
   /\
-  (repeat f (SUC n) = f o (repeat f n))
+  (repeat f (SUC n) x = (repeat f n (f x)))
 ’;
-
-val iterate_def = Define‘
-  (iterate f 0 x = x)
+val repeat'_def = Define‘
+  (repeat' f 0 = f)
   /\
-  (iterate f (SUC n) x = (iterate f n (f x)))
+  (repeat' f (SUC n) = f o (repeat' f n))
 ’;
 
 (*** Non-promising-mode execution ***)
@@ -1298,7 +1297,7 @@ Definition eval_make_promiseO1_def:
     let
       (cores', M') = eval_make_promiseO1 (cores, M) msg;
     in ((Core cid p s)::cores', M')
-End    
+End
 
 (* Promise-mode step *)
 Definition eval_pmstepO1_def:
