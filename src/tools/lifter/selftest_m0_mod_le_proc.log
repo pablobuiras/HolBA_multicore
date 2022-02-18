@@ -4,7 +4,7 @@
      (WI_end 0w 0x10000w) (304w,[8w; 70w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "mov r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -25,7 +25,7 @@
      (WI_end 0w 0x10000w) (304w,[8w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "movs r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -52,7 +52,7 @@
      (WI_end 0w 0x10000w) (304w,[143w; 70w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "mov pc, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -74,7 +74,7 @@
      (WI_end 0w 0x10000w) (304w,[8w; 28w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "adds r0, r1, #0";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -103,7 +103,7 @@
      (WI_end 0w 0x10000w) (304w,[136w; 28w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "adds r0, r1, #2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -140,7 +140,7 @@
      (WI_end 0w 0x10000w) (304w,[136w; 24w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "adds r0, r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -177,7 +177,7 @@
      (WI_end 0w 0x10000w) (304w,[8w; 68w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "add r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -200,7 +200,7 @@
      (WI_end 0w 0x10000w) (304w,[143w; 68w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "add pc, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -224,7 +224,7 @@
      (WI_end 0w 0x10000w) (304w,[128w; 48w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "adds r0, #128";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -261,7 +261,7 @@
      (WI_end 0w 0x10000w) (304w,[72w; 65w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "adcs r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -309,7 +309,7 @@ B020 (add sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[32w; 176w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "add sp, #128";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -333,7 +333,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[32w; 168w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "add r0, sp, #128";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -356,7 +356,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[136w; 26w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "subs r0, r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -393,7 +393,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[200w; 30w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "subs r0, r1, #3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -430,7 +430,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[72w; 26w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "subs r0, r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -455,7 +455,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[8w; 30w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "subs r0, r1, #0";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -484,7 +484,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[128w; 56w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "subs r0, #128";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -521,7 +521,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[0w; 30w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "subs r0, #0";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -548,7 +548,7 @@ A820 (add r0, sp, #128) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[152w; 65w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "sbcs r0, r3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -600,7 +600,7 @@ B082 (sub sp, #8) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[130w; 176w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "sub sp, #8";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -624,7 +624,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[132w; 176w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "sub sp, #16";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -648,7 +648,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[81w; 66w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "rsbs r1, r2, #0";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -685,7 +685,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[89w; 67w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "muls r1, r3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -719,7 +719,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[153w; 66w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "cmp r1, r3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -752,7 +752,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[137w; 66w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "cmp r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -775,7 +775,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[0w; 41w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "cmp r1, #0";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -802,7 +802,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[12w; 41w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "cmp r1, #12";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -835,7 +835,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[217w; 66w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "cmn r1, r3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -868,7 +868,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[201w; 66w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "cmn r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -901,7 +901,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[9w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ands r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -926,7 +926,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[17w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ands r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -960,7 +960,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[81w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "eors r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -994,7 +994,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[73w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "eors r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1017,7 +1017,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[17w; 67w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "orrs r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1051,7 +1051,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[9w; 67w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "orrs r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1076,7 +1076,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[145w; 67w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "bics r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1113,7 +1113,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[137w; 67w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "bics r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1136,7 +1136,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[209w; 67w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "mvns r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1167,7 +1167,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[201w; 67w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "mvns r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1198,7 +1198,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[17w; 66w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "tst r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1228,7 +1228,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[9w; 66w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "tst r1, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1253,7 +1253,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[136w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "lsls r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1308,7 +1308,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[128w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "lsls r0, #2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1342,7 +1342,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[0w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "lsls r0, #0";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1367,7 +1367,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[200w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "lsrs r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1427,7 +1427,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[128w; 8w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "lsrs r0, #2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1463,7 +1463,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[8w; 65w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "asrs r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1525,7 +1525,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[128w; 16w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "asrs r0, #2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1561,7 +1561,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[200w; 65w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "rors r0, r1";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1605,7 +1605,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 104w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldr r1, [r0]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1631,7 +1631,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[65w; 104w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldr r1, [r0, #4]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1658,7 +1658,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 104w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldr r1, [r0, #8]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1685,7 +1685,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 137w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrh r1, [r0, #8]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1714,7 +1714,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 136w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrh r1, [r0, #0]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1741,7 +1741,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[65w; 136w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrh r1, [r0, #2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1770,7 +1770,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 120w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrb r1, [r0]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1794,7 +1794,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[65w; 120w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrb r1, [r0, #1]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1820,7 +1820,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[193w; 124w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrb r1, [r0, #19]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1846,7 +1846,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 88w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldr r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1876,7 +1876,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 90w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrh r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1907,7 +1907,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 94w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrsh r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1938,7 +1938,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 92w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrb r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1964,7 +1964,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 86w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldrsb r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -1990,7 +1990,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[2w; 73w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldr r1, [pc, #8]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2012,7 +2012,7 @@ B084 (sub sp, #16) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[2w; 153w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldr r1, [sp, #8]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2039,7 +2039,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[14w; 203w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "ldm r3, {r1, r2, r3}";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2075,7 +2075,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 96w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "str r1, [r0]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2104,7 +2104,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[65w; 96w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "str r1, [r0, #4]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2137,7 +2137,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 96w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "str r1, [r0, #8]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2170,7 +2170,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 129w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strh r1, [r0, #8]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2204,7 +2204,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 128w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strh r1, [r0, #0]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2234,7 +2234,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[65w; 128w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strh r1, [r0, #2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2268,7 +2268,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[1w; 112w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strb r1, [r0]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2295,7 +2295,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[65w; 112w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strb r1, [r0, #1]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2326,7 +2326,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[193w; 116w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strb r1, [r0, #19]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2357,7 +2357,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 80w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "str r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2392,7 +2392,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 82w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strh r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2429,7 +2429,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[129w; 84w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "strb r1, [r0, r2]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2461,7 +2461,7 @@ CB0E (ldm r3, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[2w; 145w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "str r1, [sp, #8]";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2494,7 +2494,7 @@ C10E (stm r1!, {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[14w; 193w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "stm r1!, {r1, r2, r3}";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2541,7 +2541,7 @@ B40E (push {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[14w; 180w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "push {r1, r2, r3}";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2591,7 +2591,7 @@ BC0E (pop {r1, r2, r3}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[14w; 188w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "pop {r1, r2, r3}";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2631,7 +2631,7 @@ B50E (push {r1, r2, r3, lr}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[14w; 181w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "push {r1, r2, r3, lr}";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2687,7 +2687,7 @@ BD0E (pop {r1, r2, r3, pc}) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[14w; 189w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "pop {r1, r2, r3, pc}";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2743,7 +2743,8 @@ BD0E (pop {r1, r2, r3, pc}) @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[8w; 71w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "bx r1"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "bx r1";
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2769,7 +2770,8 @@ BD0E (pop {r1, r2, r3, pc}) @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[136w; 71w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "blx r1"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "blx r1";
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2795,7 +2797,7 @@ B211 (sxth r1, r2) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[17w; 178w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "sxth r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2818,7 +2820,7 @@ B251 (sxtb r1, r2) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[81w; 178w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "sxtb r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2841,7 +2843,7 @@ B291 (uxth r1, r2) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[145w; 178w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "uxth r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2864,7 +2866,7 @@ B2D1 (uxtb r1, r2) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[209w; 178w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "uxtb r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2887,7 +2889,7 @@ BA11 (rev r1, r2) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[17w; 186w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "rev r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2909,7 +2911,7 @@ BA51 (rev16 r1, r2) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[81w; 186w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "rev16 r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2932,7 +2934,7 @@ BAD1 (revsh r1, r2) @ 0x130 - OK
      (WI_end 0w 0x10000w) (304w,[209w; 186w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm32 304w) "revsh r1, r2";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2956,7 +2958,7 @@ BAD1 (revsh r1, r2) @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[4w; 49w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "3104"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "3104"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -2992,7 +2994,7 @@ B007 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[7w; 176w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "B007"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "B007"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3015,7 +3017,7 @@ B007 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[21w; 74w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "4A15"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "4A15"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3036,7 +3038,7 @@ B007 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[17w; 64w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "4011"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "4011"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3069,7 +3071,7 @@ B510 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[16w; 181w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "B510"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "B510"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3112,7 +3114,7 @@ BA18 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[24w; 186w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "BA18"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "BA18"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3133,7 +3135,8 @@ F000F858 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[0w; 240w; 88w; 248w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "F000F858"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "F000F858";
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3156,7 +3159,7 @@ BDF7 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[247w; 189w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "BDF7"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "BDF7"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3232,7 +3235,7 @@ BDF7 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[2w; 50w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "3202"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "3202"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3268,7 +3271,7 @@ BDF7 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[92w; 99w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "635C"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "635C"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3300,7 +3303,7 @@ BDF7 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[232w; 112w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "70E8"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "70E8"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3330,7 +3333,7 @@ B285 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[133w; 178w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "B285"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "B285"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3352,7 +3355,7 @@ B285 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[40w; 128w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "8028"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "8028"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3387,7 +3390,7 @@ A1BC @ 0x130 - FAILED
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[130w; 65w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "4182"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "4182"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3438,7 +3441,7 @@ A1BC @ 0x130 - FAILED
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[0w; 16w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "1000"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "1000"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3472,7 +3475,7 @@ A1BC @ 0x130 - FAILED
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[136w; 64w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "4088"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "4088"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3526,7 +3529,7 @@ B5F7 @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[247w; 181w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "B5F7"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "B5F7"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual
@@ -3612,7 +3615,7 @@ C29C @ 0x130 - OK
 |- bir_is_lifted_inst_prog (m0_mod_bmr (F,T)) (Imm32 304w)
      (WI_end 0w 0x10000w) (304w,[156w; 194w])
      (BirProgram
-        [<|bb_label := BL_Address_HC (Imm32 304w) "C29C"; bb_atomic := F;
+        [<|bb_label := BL_Address_HC (Imm32 304w) "C29C"; bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_BinPred BIExp_LessOrEqual

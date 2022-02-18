@@ -18,7 +18,7 @@ fun bstorevar var n v =
 val bir_interleaving2_1 =
     bdefprog_list (Type`:'a`) "p_1"
                   [(blabel_str "P1",
-                   F,
+                   optionSyntax.mk_none bir_programSyntax.bir_mc_tags_t_ty,
                     [
                      bassign (bvarimm64 "R0",
                               bload64_le (bden (bvarmem64_8 "MEM")) (bden (bvarimm64 "x"))),
@@ -32,7 +32,7 @@ val bir_interleaving2_1 =
 val bir_interleaving2_2 =
     bdefprog_list (Type`:'a`) "p_2"
                   [(blabel_str "P2",
-                   F,
+                   optionSyntax.mk_none bir_programSyntax.bir_mc_tags_t_ty,
                     [
                      bassign (bvarimm64 "R0",
                               bload64_le (bden (bvarmem64_8 "MEM")) (bden (bvarimm64 "y"))),

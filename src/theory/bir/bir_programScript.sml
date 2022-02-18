@@ -56,9 +56,14 @@ val _ = Datatype `bir_stmt_t =
   | BStmtE bir_stmt_end_t
 `;
 
+val _ = Datatype `bir_mc_tags_t = <|
+  mc_acq            : bool;
+  mc_rel            : bool;
+  mc_atomic         : bool |>`;
+
 val _ = Datatype `bir_block_t = <|
   bb_label          : bir_label_t;
-  bb_atomic         : bool;
+  bb_mc_tags        : bir_mc_tags_t option;
   bb_statements     : ('a bir_stmt_basic_t) list;
   bb_last_statement : bir_stmt_end_t |>`;
 
@@ -249,6 +254,7 @@ val bir_state_init_def = Define `bir_state_init p = <|
   ; bst_v_rNew := 0
   ; bst_v_wNew := 0
   ; bst_v_wOld := 0
+  ; bst_v_Rel := 0
   ; bst_prom := []
   ; bst_inflight := []
   ; bst_counter := 0
