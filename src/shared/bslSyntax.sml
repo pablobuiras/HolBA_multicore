@@ -177,8 +177,8 @@ struct
     handle e => raise wrap_exn "bstmte" e
 
   (* Blocks (:bir_block_t) *)
-  fun bblock observe_ty (lbl_tm, is_atomic_tm, stmts_list, end_stmt_tm) =
-    mk_bir_block_list (observe_ty, lbl_tm, is_atomic_tm, stmts_list, end_stmt_tm)
+  fun bblock observe_ty (lbl_tm, mc_tags_tm, stmts_list, end_stmt_tm) =
+    mk_bir_block_list (observe_ty, lbl_tm, mc_tags_tm, stmts_list, end_stmt_tm)
     handle e => raise wrap_exn "bblock" e
   fun bblocks observe_ty blocks =
     mk_BirProgram_list (observe_ty, (List.map (bblock observe_ty) blocks))
@@ -191,7 +191,7 @@ struct
     let
       (* Instantiate the observation type for all statements *)
       val bl_list_obs_ty = List.map
-        (fn (a, is_atomic, l_stmts, b) => (a, is_atomic,
+        (fn (a, mc_tags, l_stmts, b) => (a, mc_tags,
           List.map (inst [mk_bir_program_t_ty alpha |-> mk_bir_program_t_ty obs_ty]) l_stmts, b))
         bl_list
       (* list of terms to term of list *)

@@ -9,6 +9,11 @@ fun lift_test_and_save inputfile outputfile =
     (save_litmus (outputfile, lift_herd_litmus inputfile); 
      OK)
     handle e => ERROR (exnMessage e);
+
+(* 
+val inputfile = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.litmus";
+val outputfile = "./tests/BASIC_2_THREAD/LB+fence.rw.rws.json";
+*)
 						       
 fun main () =
     let

@@ -8,7 +8,7 @@ LUI x10, 0xDEAD: 0DEAD537 @ 0x10030 - OK
      (0x10030w,[55w; 213w; 234w; 13w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0DEAD537";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x10" (BType_Imm Bit64))
                 (BExp_Const (Imm64 0xDEAD000w))];
@@ -21,7 +21,7 @@ AUIPC x10, 0xDEAD: 0DEAD517 @ 0x10030 - OK
      (0x10030w,[23w; 213w; 234w; 13w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0DEAD517";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x10" (BType_Imm Bit64))
                 (BExp_Const (Imm64 0xDEBD030w))];
@@ -34,7 +34,7 @@ JAL x1, 0x0: 000000EF @ 0x10030 - OK
      (0x10030w,[239w; 0w; 0w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "000000EF";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x1" (BType_Imm Bit64))
                 (BExp_Const (Imm64 0x10034w))];
@@ -47,7 +47,7 @@ JALR x1, 0x0: 000000E7 @ 0x10030 - OK
      (0x10030w,[231w; 0w; 0w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "000000E7";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x1" (BType_Imm Bit64))
                 (BExp_Const (Imm64 0x10034w))];
@@ -59,7 +59,7 @@ BEQ x19, x10, 8: 00A98863 @ 0x10030 - OK
      (0x10030w,[99w; 136w; 169w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00A98863";
-           bb_atomic := F; bb_statements := [];
+           bb_mc_tags := NONE; bb_statements := [];
            bb_last_statement :=
              BStmt_CJmp
                (BExp_BinPred BIExp_Equal
@@ -74,7 +74,7 @@ BNE x19, x10, 8: 00A99863 @ 0x10030 - OK
      (0x10030w,[99w; 152w; 169w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00A99863";
-           bb_atomic := F; bb_statements := [];
+           bb_mc_tags := NONE; bb_statements := [];
            bb_last_statement :=
              BStmt_CJmp
                (BExp_UnaryExp BIExp_Not
@@ -90,7 +90,7 @@ BLT x19, x10, 8: 00A9C863 @ 0x10030 - OK
      (0x10030w,[99w; 200w; 169w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00A9C863";
-           bb_atomic := F; bb_statements := [];
+           bb_mc_tags := NONE; bb_statements := [];
            bb_last_statement :=
              BStmt_CJmp
                (BExp_BinPred BIExp_SignedLessThan
@@ -105,7 +105,7 @@ BGE x19, x10, 8: 00A9D863 @ 0x10030 - OK
      (0x10030w,[99w; 216w; 169w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00A9D863";
-           bb_atomic := F; bb_statements := [];
+           bb_mc_tags := NONE; bb_statements := [];
            bb_last_statement :=
              BStmt_CJmp
                (BExp_UnaryExp BIExp_Not
@@ -121,7 +121,7 @@ BLTU x19, x10, 8: 00A9E863 @ 0x10030 - OK
      (0x10030w,[99w; 232w; 169w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00A9E863";
-           bb_atomic := F; bb_statements := [];
+           bb_mc_tags := NONE; bb_statements := [];
            bb_last_statement :=
              BStmt_CJmp
                (BExp_BinPred BIExp_LessThan
@@ -136,7 +136,7 @@ BGEU x19, x10, 8: 00A9F863 @ 0x10030 - OK
      (0x10030w,[99w; 248w; 169w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00A9F863";
-           bb_atomic := F; bb_statements := [];
+           bb_mc_tags := NONE; bb_statements := [];
            bb_last_statement :=
              BStmt_CJmp
                (BExp_UnaryExp BIExp_Not
@@ -152,7 +152,7 @@ LB x1,x2,-50: FCE10083 @ 0x10030 - OK
      (0x10030w,[131w; 0w; 225w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE10083";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x1" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -170,7 +170,7 @@ LH x1,x2,-50: FCE11083 @ 0x10030 - OK
      (0x10030w,[131w; 16w; 225w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE11083";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 1
@@ -191,7 +191,7 @@ LW x1,x2,-50: FCE12083 @ 0x10030 - OK
      (0x10030w,[131w; 32w; 225w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE12083";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -214,7 +214,7 @@ LBU x1,x2,-50: FCE14083 @ 0x10030 - OK
      (0x10030w,[131w; 64w; 225w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE14083";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x1" (BType_Imm Bit64))
                 (BExp_Cast BIExp_UnsignedCast
@@ -232,7 +232,7 @@ LHU x1,x2,-50: FCE15083 @ 0x10030 - OK
      (0x10030w,[131w; 80w; 225w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE15083";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 1
@@ -253,7 +253,7 @@ SB x14, 8(x2): 00E10423 @ 0x10030 - OK
      (0x10030w,[35w; 4w; 225w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00E10423";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
@@ -276,7 +276,7 @@ SH x14, 8(x2): 00E11423 @ 0x10030 - OK
      (0x10030w,[35w; 20w; 225w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00E11423";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 1
@@ -302,7 +302,7 @@ SW x14, 8(x2): 00E12423 @ 0x10030 - OK
      (0x10030w,[35w; 36w; 225w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00E12423";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -328,7 +328,7 @@ ADDI x15,x1,-50: FCE08793 @ 0x10030 - OK
      (0x10030w,[147w; 135w; 224w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE08793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Minus
@@ -343,7 +343,7 @@ SLTI x15,x1,5: 0050A793 @ 0x10030 - OK
      (0x10030w,[147w; 167w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050A793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_Cast BIExp_UnsignedCast
@@ -359,7 +359,7 @@ SLTIU x15,x1,5: 0050B793 @ 0x10030 - OK
      (0x10030w,[147w; 183w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050B793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_Cast BIExp_UnsignedCast
@@ -375,7 +375,7 @@ XORI x15,x1,5: 0050C793 @ 0x10030 - OK
      (0x10030w,[147w; 199w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050C793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Xor
@@ -390,7 +390,7 @@ ORI x15,x1,5: 0050E793 @ 0x10030 - OK
      (0x10030w,[147w; 231w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050E793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Or
@@ -405,7 +405,7 @@ ANDI x15,x1,5: 0050F793 @ 0x10030 - OK
      (0x10030w,[147w; 247w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050F793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_And
@@ -420,7 +420,7 @@ SLLI x15,x1,5: 00509793 @ 0x10030 - OK
      (0x10030w,[147w; 151w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00509793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_LeftShift
@@ -435,7 +435,7 @@ SRLI x15,x1,5: 0050D793 @ 0x10030 - OK
      (0x10030w,[147w; 215w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050D793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_RightShift
@@ -450,7 +450,7 @@ SRAI x15,x1,1029: 4050D793 @ 0x10030 - OK
      (0x10030w,[147w; 215w; 80w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "4050D793";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_SignedRightShift
@@ -465,7 +465,7 @@ ADD x5, x6, x7: 007302B3 @ 0x10030 - OK
      (0x10030w,[179w; 2w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007302B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Plus
@@ -480,7 +480,7 @@ SUB x5, x6, x7: 407302B3 @ 0x10030 - OK
      (0x10030w,[179w; 2w; 115w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "407302B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Minus
@@ -495,7 +495,7 @@ SLL x5, x6, x7: 007312B3 @ 0x10030 - OK
      (0x10030w,[179w; 18w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007312B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_LeftShift
@@ -511,7 +511,7 @@ SLT x5, x6, x7: 007322B3 @ 0x10030 - OK
      (0x10030w,[179w; 34w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007322B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_UnsignedCast
@@ -527,7 +527,7 @@ SLTU x5, x6, x7: 007332B3 @ 0x10030 - OK
      (0x10030w,[179w; 50w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007332B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_UnsignedCast
@@ -543,7 +543,7 @@ XOR x5, x6, x7: 007342B3 @ 0x10030 - OK
      (0x10030w,[179w; 66w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007342B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Xor
@@ -558,7 +558,7 @@ SRL x5, x6, x7: 007352B3 @ 0x10030 - OK
      (0x10030w,[179w; 82w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007352B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_RightShift
@@ -574,7 +574,7 @@ SRA x5, x6, x7: 407352B3 @ 0x10030 - OK
      (0x10030w,[179w; 82w; 115w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "407352B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_SignedRightShift
@@ -590,7 +590,7 @@ OR x5, x6, x7: 007362B3 @ 0x10030 - OK
      (0x10030w,[179w; 98w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007362B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Or
@@ -605,7 +605,7 @@ AND x5, x6, x7: 007372B3 @ 0x10030 - OK
      (0x10030w,[179w; 114w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007372B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_And
@@ -620,7 +620,7 @@ FENCE x1, x2, rw, rw: 0331008F @ 0x10030 - OK - cheat
      (0x10030w,[3w; 49w; 0w; 143w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0331008F";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements := [BStmt_Fence BM_ReadWrite BM_ReadWrite];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
@@ -631,7 +631,7 @@ FENCE.TSO: 8331008F @ 0x10030 - OK - cheat
      (0x10030w,[131w; 49w; 0w; 143w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "8331008F";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Fence BM_Read BM_Read; BStmt_Fence BM_ReadWrite BM_Write];
            bb_last_statement :=
@@ -652,7 +652,7 @@ LWU x1,x2,-50: FCE16083 @ 0x10030 - OK
      (0x10030w,[131w; 96w; 225w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE16083";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -675,7 +675,7 @@ LD x1,x2,-50: FCE13083 @ 0x10030 - OK
      (0x10030w,[131w; 48w; 225w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE13083";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -696,7 +696,7 @@ SD x14, 8(x2): 00E13423 @ 0x10030 - OK
      (0x10030w,[35w; 52w; 225w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "00E13423";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -721,7 +721,7 @@ ADDIW x15,x1,-50: FCE0879B @ 0x10030 - OK
      (0x10030w,[155w; 135w; 224w; 252w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "FCE0879B";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -738,7 +738,7 @@ SLLIW x15,x1,5: 0050979B @ 0x10030 - OK
      (0x10030w,[155w; 151w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050979B";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -755,7 +755,7 @@ SRLIW x15,x1,5: 0050D79B @ 0x10030 - OK
      (0x10030w,[155w; 215w; 80w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0050D79B";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -772,7 +772,7 @@ SRAIW x15,x1,1029: 4050D79B @ 0x10030 - OK
      (0x10030w,[155w; 215w; 80w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "4050D79B";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x15" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -789,7 +789,7 @@ ADDW x5, x6, x7: 007302BB @ 0x10030 - OK
      (0x10030w,[187w; 2w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007302BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -807,7 +807,7 @@ SUBW x5, x6, x7: 407302BB @ 0x10030 - OK
      (0x10030w,[187w; 2w; 115w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "407302BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -826,7 +826,7 @@ SLLW x5, x6, x7: 007312BB @ 0x10030 - OK
      (0x10030w,[187w; 18w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007312BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -846,7 +846,7 @@ SRLW x5, x6, x7: 007352BB @ 0x10030 - OK
      (0x10030w,[187w; 82w; 115w; 0w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "007352BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -866,7 +866,7 @@ SRAW x5, x6, x7: 407352BB @ 0x10030 - OK
      (0x10030w,[187w; 82w; 115w; 64w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "407352BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -889,7 +889,8 @@ FENCE.I x0, x0, 0: 0000100F @ 0x10030 - OK - cheat
      (0x10030w,[0w; 0w; 16w; 15w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0000100F";
-           bb_atomic := T; bb_statements := [];
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
+           bb_statements := [];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -923,7 +924,7 @@ MUL x5, x6, x7: 027302B3 @ 0x10030 - OK
      (0x10030w,[179w; 2w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027302B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_Mult
@@ -938,7 +939,7 @@ MULH x5, x6, x7: 027312B3 @ 0x10030 - OK
      (0x10030w,[179w; 18w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027312B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_HighCast
@@ -957,7 +958,7 @@ MULHSU x5, x6, x7: 027322B3 @ 0x10030 - OK
      (0x10030w,[179w; 34w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027322B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_HighCast
@@ -976,7 +977,7 @@ MULHU x5, x6, x7: 027332B3 @ 0x10030 - OK
      (0x10030w,[179w; 50w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027332B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_HighCast
@@ -995,7 +996,7 @@ DIV x5, x6, x7: 027342B3 @ 0x10030 - OK
      (0x10030w,[179w; 66w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027342B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1015,7 +1016,7 @@ DIVU x5, x6, x7: 027352B3 @ 0x10030 - OK
      (0x10030w,[179w; 82w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027352B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1035,7 +1036,7 @@ REM x5, x6, x7: 027362B3 @ 0x10030 - OK
      (0x10030w,[179w; 98w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027362B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1079,7 +1080,7 @@ REMU x5, x6, x7: 027372B3 @ 0x10030 - OK
      (0x10030w,[179w; 114w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027372B3";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1102,7 +1103,7 @@ MULW x5, x6, x7: 027302BB @ 0x10030 - OK
      (0x10030w,[187w; 2w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027302BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
@@ -1123,7 +1124,7 @@ DIVW x5, x6, x7: 027342BB @ 0x10030 - OK
      (0x10030w,[187w; 66w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027342BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1148,7 +1149,7 @@ DIVUW x5, x6, x7: 027352BB @ 0x10030 - OK
      (0x10030w,[187w; 82w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027352BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1173,7 +1174,7 @@ REMW x5, x6, x7: 027362BB @ 0x10030 - OK
      (0x10030w,[187w; 98w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027362BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1246,7 +1247,7 @@ REMUW x5, x6, x7: 027372BB @ 0x10030 - OK
      (0x10030w,[187w; 114w; 115w; 2w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "027372BB";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "x5" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1277,7 +1278,7 @@ LR.W x1, (x2): 100120AF @ 0x10030 - OK - cheat
      (0x10030w,[16w; 1w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "100120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1300,7 +1301,7 @@ SC.W x1, x3, (x2): 180120AF @ 0x10030 - OK - cheat
      (0x10030w,[24w; 1w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "180120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1344,7 +1345,7 @@ AMOSWAP.W x1, x3, (x2): 083120AF @ 0x10030 - OK - cheat
      (0x10030w,[8w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "083120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1371,7 +1372,7 @@ AMOADD.W x1, x3, (x2): 003120AF @ 0x10030 - OK - cheat
      (0x10030w,[0w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "003120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1400,7 +1401,7 @@ AMOXOR.W x1, x3, (x2): 203120AF @ 0x10030 - OK - cheat
      (0x10030w,[32w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "203120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1429,7 +1430,7 @@ AMOAND.W x1, x3, (x2): 603120AF @ 0x10030 - OK - cheat
      (0x10030w,[96w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "603120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1458,7 +1459,7 @@ AMOOR.W x1, x3, (x2): 403120AF @ 0x10030 - OK - cheat
      (0x10030w,[64w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "403120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1487,7 +1488,7 @@ AMOMIN.W x1, x3, (x2): 803120AF @ 0x10030 - OK - cheat
      (0x10030w,[128w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "803120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1519,7 +1520,7 @@ AMOMAX.W x1, x3, (x2): A03120AF @ 0x10030 - OK - cheat
      (0x10030w,[160w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "A03120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1551,7 +1552,7 @@ AMOMINU.W x1, x3, (x2): C03120AF @ 0x10030 - OK - cheat
      (0x10030w,[192w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "C03120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1583,7 +1584,7 @@ AMOMAXU.W x1, x3, (x2): E03120AF @ 0x10030 - OK - cheat
      (0x10030w,[224w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "E03120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1615,7 +1616,7 @@ AMOOR.W.aq x1, x3, (x2): 443120AF @ 0x10030 - OK - cheat
      (0x10030w,[68w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "443120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := T; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 2
@@ -1634,12 +1635,7 @@ AMOOR.W.aq x1, x3, (x2): 443120AF @ 0x10030 - OK - cheat
                    (BExp_Cast BIExp_LowCast
                       (BExp_BinExp BIExp_Or
                          (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
-              BStmt_Assign (BVar "MEM_aqrl" (BType_Mem Bit1 Bit1))
-                (BExp_Store
-                   (BExp_Den (BVar "MEM_aqrl" (BType_Mem Bit1 Bit1)))
-                   (BExp_Const (Imm1 1w)) BEnd_LittleEndian
-                   (BExp_Const (Imm1 1w))); BStmt_Fence BM_Read BM_ReadWrite];
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1649,10 +1645,9 @@ AMOSWAP.W.rl x1, x3, (x2): 0A3120AF @ 0x10030 - OK - cheat
      (0x10030w,[10w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0A3120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := T|>;
            bb_statements :=
-             [BStmt_Fence BM_ReadWrite BM_Write;
-              BStmt_Assert
+             [BStmt_Assert
                 (BExp_Aligned Bit64 2
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))));
               BStmt_Assign (BVar "x1" (BType_Imm Bit64))
@@ -1667,12 +1662,7 @@ AMOSWAP.W.rl x1, x3, (x2): 0A3120AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32));
-              BStmt_Assign (BVar "MEM_aqrl" (BType_Mem Bit1 Bit1))
-                (BExp_Store
-                   (BExp_Den (BVar "MEM_aqrl" (BType_Mem Bit1 Bit1)))
-                   (BExp_Const (Imm1 1w)) BEnd_LittleEndian
-                   (BExp_Const (Imm1 1w)))];
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1682,10 +1672,9 @@ AMOSWAP.W.aq.rl x1, x3, (x2): 0E3120AF @ 0x10030 - OK - cheat
      (0x10030w,[14w; 49w; 32w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "0E3120AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := T; mc_rel := T|>;
            bb_statements :=
-             [BStmt_Fence BM_ReadWrite BM_ReadWrite;
-              BStmt_Assert
+             [BStmt_Assert
                 (BExp_Aligned Bit64 2
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))));
               BStmt_Assign (BVar "x1" (BType_Imm Bit64))
@@ -1700,13 +1689,7 @@ AMOSWAP.W.aq.rl x1, x3, (x2): 0E3120AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32));
-              BStmt_Assign (BVar "MEM_aqrl" (BType_Mem Bit1 Bit1))
-                (BExp_Store
-                   (BExp_Den (BVar "MEM_aqrl" (BType_Mem Bit1 Bit1)))
-                   (BExp_Const (Imm1 1w)) BEnd_LittleEndian
-                   (BExp_Const (Imm1 1w)));
-              BStmt_Fence BM_ReadWrite BM_ReadWrite];
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1719,7 +1702,7 @@ LR.D x1, (x2): 100130AF @ 0x10030 - OK - cheat
      (0x10030w,[16w; 1w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "100130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1741,7 +1724,7 @@ SC.D x1, x3, (x2): 180130AF @ 0x10030 - OK - cheat
      (0x10030w,[24w; 1w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "180130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1784,7 +1767,7 @@ AMOSWAP.D x1, x3, (x2): 083130AF @ 0x10030 - OK - cheat
      (0x10030w,[8w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "083130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1809,7 +1792,7 @@ AMOADD.D x1, x3, (x2): 003130AF @ 0x10030 - OK - cheat
      (0x10030w,[0w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "003130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1836,7 +1819,7 @@ AMOXOR.D x1, x3, (x2): 203130AF @ 0x10030 - OK - cheat
      (0x10030w,[32w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "203130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1863,7 +1846,7 @@ AMOAND.D x1, x3, (x2): 603130AF @ 0x10030 - OK - cheat
      (0x10030w,[96w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "603130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1890,7 +1873,7 @@ AMOOR.D x1, x3, (x2): 403130AF @ 0x10030 - OK - cheat
      (0x10030w,[64w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "403130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1917,7 +1900,7 @@ AMOMIN.D x1, x3, (x2): 803130AF @ 0x10030 - OK - cheat
      (0x10030w,[128w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "803130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1947,7 +1930,7 @@ AMOMAX.D x1, x3, (x2): A03130AF @ 0x10030 - OK - cheat
      (0x10030w,[160w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "A03130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -1977,7 +1960,7 @@ AMOMINU.D x1, x3, (x2): C03130AF @ 0x10030 - OK - cheat
      (0x10030w,[192w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "C03130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3
@@ -2007,7 +1990,7 @@ AMOMAXU.D x1, x3, (x2): E03130AF @ 0x10030 - OK - cheat
      (0x10030w,[224w; 49w; 48w; 175w])
      (BirProgram
         [<|bb_label := BL_Address_HC (Imm64 0x10030w) "E03130AF";
-           bb_atomic := T;
+           bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
            bb_statements :=
              [BStmt_Assert
                 (BExp_Aligned Bit64 3

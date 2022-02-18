@@ -34,7 +34,7 @@ val prog1 = ("prog1", ``
        BirProgram [
          <|bb_label :=
              BL_Label "entry";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "bit1" BType_Bool)
                            (BExp_MSB Bit32 (BExp_Den (BVar "R1" (BType_Imm Bit32))))];
@@ -42,7 +42,7 @@ val prog1 = ("prog1", ``
              BStmt_Jmp (BLE_Label (BL_Address (Imm32 0x102w)))|>;
          <|bb_label :=
              BL_Address_HC (Imm32 0x102w) "abc";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "R3" (BType_Imm Bit32))
                 (BExp_Const (Imm32 25w));
@@ -52,7 +52,7 @@ val prog1 = ("prog1", ``
              BStmt_Jmp (BLE_Label (BL_Address (Imm32 0x104w))) |>;
          <|bb_label :=
              BL_Address_HC (Imm32 0x104w) "eeee";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "R3" (BType_Imm Bit32))
                 (BExp_BinExp BIExp_Plus
@@ -82,7 +82,7 @@ val prog2 = ("prog2", ``
        BirProgram [
          <|bb_label :=
              BL_Label "entry";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "bit1" BType_Bool)
                            (BExp_MSB Bit32 (BExp_Den (BVar "R1" (BType_Imm Bit32))))];
@@ -90,7 +90,7 @@ val prog2 = ("prog2", ``
              BStmt_Jmp (BLE_Label (BL_Address (Imm32 0x102w)))|>;
          <|bb_label :=
              BL_Address_HC (Imm32 0x102w) "abc";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "R3" (BType_Imm Bit32))
                 (BExp_Const (Imm32 25w));
@@ -102,7 +102,7 @@ val prog2 = ("prog2", ``
                         (BLE_Label (BL_Address (Imm32 0x106w))) |>;
          <|bb_label :=
              BL_Address_HC (Imm32 0x104w) "eeee";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "R3" (BType_Imm Bit32))
                 (BExp_BinExp BIExp_Plus
@@ -112,7 +112,7 @@ val prog2 = ("prog2", ``
              BStmt_Halt (BExp_Const (Imm32 1w)) |>;
          <|bb_label :=
              BL_Address_HC (Imm32 0x106w) "eeeeggg";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [];
            bb_last_statement :=
@@ -142,7 +142,7 @@ val prog3 = ("prog3", ``
        BirProgram [
          <|bb_label :=
              BL_Label "entry";
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "Mem" (BType_Mem Bit64 Bit8))
                            (BExp_Store (BExp_Den (BVar "Mem" (BType_Mem Bit64 Bit8)))
@@ -159,7 +159,7 @@ val prog3 = ("prog3", ``
 
          <|bb_label :=
              BL_Address (Imm32 0x102w);
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements :=
              [BStmt_Assign (BVar "R0" (BType_Imm Bit64))
                            (BExp_Cast BIExp_UnsignedCast
@@ -173,7 +173,7 @@ val prog3 = ("prog3", ``
 
          <|bb_label :=
              BL_Address (Imm32 0x200w);
-           bb_atomic := F;
+           bb_mc_tags := NONE;
            bb_statements := [];
            bb_last_statement :=
              BStmt_Halt (BExp_Const (Imm32 1w)) |>
