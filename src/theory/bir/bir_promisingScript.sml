@@ -934,9 +934,12 @@ val eval_clsteps_def = Define‘
      then
        (case bir_get_program_block_info_by_label p s.bst_pc.bpc_label of
 	 | SOME (i,bl) =>
-	    (if bl.bb_atomic = T
-	    then LIST_BIND ((repeat (\sl. (LIST_BIND sl (\s. (eval_clstep p cid s M)))) ((LENGTH bl.bb_statements) + 1)) [s]) (λs'. eval_clsteps f cid p s' M)
-	    else LIST_BIND (eval_clstep p cid s M) (λs'. eval_clsteps f cid p s' M))
+	    (case bl.bb_mc_tags of
+             | NONE => LIST_BIND (eval_clstep p cid s M) (λs'. eval_clsteps f cid p s' M)
+             | SOME mc_tags =>
+               if mc_tags.mc_atomic = T
+	       then LIST_BIND ((repeat (\sl. (LIST_BIND sl (\s. (eval_clstep p cid s M)))) ((LENGTH bl.bb_statements) + 1)) [s]) (λs'. eval_clsteps f cid p s' M)
+	       else LIST_BIND (eval_clstep p cid s M) (λs'. eval_clsteps f cid p s' M))
 	 | _ => [])
      else 
        (LIST_BIND (eval_clstep p cid s M) (λs'. eval_clsteps f cid p s' M)))
@@ -1185,9 +1188,12 @@ val eval_clstepsO1_def = Define‘
      then
        (case bir_get_program_block_info_by_label p s.bst_pc.bpc_label of
 	 | SOME (i,bl) =>
-	    (if bl.bb_atomic = T
-	    then LIST_BIND ((repeat (\sl. (LIST_BIND sl (\s. (eval_clstepO1 p cid s M)))) ((LENGTH bl.bb_statements) + 1)) [s]) (λs'. eval_clstepsO1 f cid p s' M)
-	    else LIST_BIND (eval_clstepO1 p cid s M) (λs'. eval_clstepsO1 f cid p s' M))
+	    (case bl.bb_mc_tags of
+             | NONE => LIST_BIND (eval_clstepO1 p cid s M) (λs'. eval_clstepsO1 f cid p s' M)
+             | SOME mc_tags =>
+               if mc_tags.mc_atomic = T
+	       then LIST_BIND ((repeat (\sl. (LIST_BIND sl (\s. (eval_clstepO1 p cid s M)))) ((LENGTH bl.bb_statements) + 1)) [s]) (λs'. eval_clstepsO1 f cid p s' M)
+	       else LIST_BIND (eval_clstepO1 p cid s M) (λs'. eval_clstepsO1 f cid p s' M))
 	 | _ => [])
      else 
        (LIST_BIND (eval_clstepO1 p cid s M) (λs'. eval_clstepsO1 f cid p s' M)))
