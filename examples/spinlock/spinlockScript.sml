@@ -392,11 +392,7 @@ Proof
     >> qhdtm_x_assum `FILTER` $ fs o single o GSYM
     >> fs[MEM_FILTER]
   )
-  >> gvs[clstep_cases,FLOOKUP_UPDATE]
-  >- (
-    dxrule_at_then Any assume_tac FILTER_NEQ_NOT_MEM
-    >> fs[EQ_SYM_EQ]
-  )
+  >> gvs[clstep_cases,FLOOKUP_UPDATE,FILTER_EQ_ID,EVERY_MEM]
   >- (
     drule_at_then Any (rev_drule_at Any) FILTER_NEQ_MEM_EQ
     >> impl_tac
@@ -407,7 +403,7 @@ Proof
     )
     >> rw[] >> fs[]
   )
-  >> fs[stmt_generic_step_def]
+  >> gvs[bir_get_stmt_branch,bir_get_stmt_generic,stmt_generic_step_def,AllCaseEqs()]
 QED
 
 (* a fulfil is only fulfilled once *)

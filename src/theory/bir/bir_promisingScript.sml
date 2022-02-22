@@ -99,7 +99,7 @@ val mem_atomic_def = Define‘
      mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
 ’;
 
-(* Checks 
+(* Checks
  * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL t' M).loc ≠ l)
  * letting t_max = (MAX v_pre (s.bst_coh l))
  *)
@@ -211,7 +211,7 @@ Theorem get_read_fulfil_args_exclusive:
 Proof
   Cases >>
   fs [get_read_args_def, get_fulfil_args_def]
-QED                                                         
+QED
 
 val get_xclb_view_def = Define`
   get_xclb_view (SOME xclb) = xclb.xclb_view
@@ -294,9 +294,46 @@ val is_xcl_write_def = Define‘
      | _ => F
 ’;
 
+(* properties about exclusive reads and writes *)
+
+Theorem is_xcl_read_thm:
+  !p pc a_e. is_xcl_read p pc a_e <=>
+    bir_get_current_statement p (bir_pc_next pc) =
+      SOME $ BStmtB $ BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
+        $ BExp_Store (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8)))
+          a_e BEnd_LittleEndian
+          (BExp_Const (Imm32 0x1010101w))
+Proof
+  rw[is_xcl_read_def,EQ_IMP_THM,optionTheory.IS_SOME_EXISTS]
+  >> pop_assum mp_tac
+  >> rpt (BasicProvers.PURE_TOP_CASE_TAC >> fs[])
+QED
+
+Theorem is_xcl_write_thm:
+  !p pc. is_xcl_write p pc <=>
+    IS_SOME $ bir_get_current_statement p (bir_pc_next $ bir_pc_next pc) /\
+    bir_get_current_statement p (bir_pc_next $ bir_pc_next pc) =
+      SOME $ BStmtB $ BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
+        $ BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8))
+Proof
+  rw[is_xcl_write_def,EQ_IMP_THM,optionTheory.IS_SOME_EXISTS]
+  >- (BasicProvers.full_case_tac >> fs[])
+  >> pop_assum mp_tac
+  >> rpt (BasicProvers.PURE_TOP_CASE_TAC >> fs[])
+QED
+
+Theorem is_xcl_read_is_xcl_write:
+  !p s a_e. is_xcl_read p s a_e /\ is_xcl_write p s ==> F
+Proof
+  REWRITE_TAC[is_xcl_write_thm,is_xcl_read_thm]
+  >> rpt strip_tac
+  >> fs[]
+  >> cheat
+QED
+
 
 val bir_get_stmt_def = Define‘
-  bir_get_stmt p pc = 
+  bir_get_stmt p pc =
   case bir_get_current_statement p pc of
   | SOME (BStmtB (BStmt_Assign var e)) =>
       (case get_read_args e of
@@ -415,7 +452,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                             then (bir_pc_next o bir_pc_next) s.bst_pc
                             else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M [] s') 
+  clstep p cid s M [] s')
 /\ (* exclusive-failure *)
 (!p s s' M a_e v_e cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e T
@@ -540,6 +577,136 @@ val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
 
 val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
 
+(*
+ * properties about cstep, clstep, cstep_seq
+ *)
+
+(* the timestamp of a fulfil is coupled to the fulfiled core *)
+
+Theorem cstep_fulfil_to_memory:
+  !p cid s M t s'. cstep p cid s M [t] s' M
+  ==> t < LENGTH M /\ (EL t M).cid = cid
+Proof
+  fs[bir_cstep_cases,bir_clstep_cases,PULL_EXISTS]
+QED
+
+(* memory only ever increases *)
+
+Theorem cstep_seq_IS_PREFIX:
+  !p cid sM sM'. cstep_seq p cid sM sM'
+  ==> IS_PREFIX (SND sM') (SND sM)
+Proof
+  ho_match_mp_tac bir_cstep_seq_ind >> rw[]
+  >> fs[bir_cstep_cases]
+QED
+
+Theorem cstep_seq_rtc_IS_PREFIX:
+  !p cid sM sM'. cstep_seq_rtc p cid sM sM'
+  ==> IS_PREFIX (SND sM') (SND sM)
+Proof
+  ntac 2 gen_tac
+  >> fs[cstep_seq_rtc_def]
+  >> ho_match_mp_tac relationTheory.RTC_INDUCT
+  >> rw[]
+  >> dxrule_then assume_tac cstep_seq_IS_PREFIX
+  >> imp_res_tac rich_listTheory.IS_PREFIX_TRANS
+QED
+
+(* a fulfil is only fulfilled once *)
+
+Theorem clstep_fulfil_once:
+  !p cid cid' s M t s' s''.
+  clstep p cid s M [t] s'
+  /\ clstep p cid' s' M [t] s'' ==> F
+Proof
+  rpt strip_tac
+  >> Cases_on `cid = cid'`
+  >> gvs[bir_clstep_cases]
+QED
+
+Theorem cstep_seq_rtc_fulfil_once:
+  !p cid sM2 sM3 s M t s1 cid' t' s4 M4 s5.
+  cstep p cid s M [t] s1 (SND sM2)
+  /\ clstep p cid s1 (SND sM2) [t] (FST sM2)
+  /\ cstep_seq_rtc p cid sM2 sM3
+  /\ cstep p cid' (FST sM3) (SND sM3) [t'] s4 M4
+  /\ clstep p cid' s4 M4 [t'] s5
+  ==> t <> t'
+Proof
+  rpt strip_tac
+  >> imp_res_tac cstep_seq_rtc_IS_PREFIX
+  >> gvs[bir_cstep_cases]
+  >> imp_res_tac clstep_fulfil_once
+  >> rpt $ PRED_ASSUM is_forall kall_tac
+  >> gvs[rich_listTheory.IS_PREFIX_APPEND]
+QED
+
+(* set of promises contains only elements smaller then the memory *)
+
+Theorem stmt_generic_step_bst_prom_EQ:
+  !stm p s oo s'. stmt_generic_step stm
+  /\ bir_exec_stmt p stm s = (oo,s')
+  ==> s.bst_prom = s'.bst_prom
+Proof
+  Cases >> rpt strip_tac
+  >- (
+    qmatch_asmsub_rename_tac `BStmtB b`
+    >> Cases_on `b`
+    >> gvs[stmt_generic_step_def,bir_programTheory.bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,AllCaseEqs(),bir_programTheory.bir_exec_stmtB_def,bir_programTheory.bir_exec_stmt_assert_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_assume_def,bir_programTheory.bir_exec_stmt_observe_def]
+    >> BasicProvers.every_case_tac
+    >> fs[]
+  )
+  >> qmatch_asmsub_rename_tac `BStmtE b`
+  >> Cases_on `b`
+  >> gvs[stmt_generic_step_def,bir_programTheory.bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,AllCaseEqs(),bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_programTheory.bir_exec_stmt_halt_def]
+QED
+
+Theorem bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ:
+  !p cond_e lbl1 lbl2 s oo s'.
+  bir_exec_stmt p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s = (oo,s')
+  ==> s.bst_prom = s'.bst_prom
+Proof
+  EVAL_TAC
+  >> rw[AllCaseEqs()]
+  >> fs[]
+QED
+
+Theorem clstep_EVERY_LENGTH_bst_prom_inv:
+  !p cid s M prom s'. clstep p cid s M prom s'
+  /\ EVERY (λx. x <= LENGTH $ M) s.bst_prom
+  ==> EVERY (λx. x <= LENGTH $ M) s'.bst_prom
+Proof
+  rw[bir_clstep_cases]
+  >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
+  >- (
+    qhdtm_x_assum `EVERY` mp_tac
+    >> fs[EVERY_FILTER]
+    >> match_mp_tac EVERY_MONOTONIC
+    >> fs[]
+  )
+  >- (drule_all_then assume_tac bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ >> fs[])
+  >> qmatch_assum_rename_tac `EVERY _ s.bst_prom`
+  >> qmatch_goalsub_abbrev_tac `EVERY _ s'.bst_prom`
+  >> qsuff_tac `s.bst_prom = s'.bst_prom` >- (rw[] >> gs[])
+  >> irule stmt_generic_step_bst_prom_EQ
+  >> goal_assum $ drule_at Any
+  >> gvs[stmt_generic_step_def,bir_get_stmt_def,AllCaseEqs()]
+QED
+
+Theorem clstep_bst_prom_NOT_EQ:
+  !p cid s M t s'. clstep p cid s M [t] s' ==> s.bst_prom <> s'.bst_prom
+Proof
+  rw[bir_clstep_cases,bir_get_stmt_write]
+  >> fs[Once EQ_SYM_EQ,FILTER_NEQ_ID]
+QED
+
+Theorem clstep_LENGTH_prom:
+  !p cid s M prom s'. clstep p cid s M prom s' ==> prom = [] \/ ?t. prom = [t]
+Proof
+  rw[bir_clstep_cases]
+QED
+
+
 (* cstep_seq invariant *)
 
 Theorem bir_exec_stmt_jmp_bst_prom:
@@ -553,7 +720,7 @@ Proof
 QED
 
 Theorem clstep_bst_prom_EQ:
-!p cid st M st'. 
+!p cid st M st'.
   clstep p cid st M [] st' ==> st.bst_prom = st'.bst_prom
 Proof
   rw[bir_clstep_cases]
@@ -575,8 +742,10 @@ Proof
 QED
 
 Theorem cstep_seq_bst_prom_EQ:
-  !p cid sM sM'. cstep_seq p cid sM sM' /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
-  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom /\ (FST sM).bst_prom = (FST sM').bst_prom
+  !p cid sM sM'. cstep_seq p cid sM sM'
+  /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
+  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom
+    /\ (FST sM).bst_prom = (FST sM').bst_prom
 Proof
   fs[GSYM AND_IMP_INTRO]
   >> ho_match_mp_tac bir_cstep_seq_ind
@@ -597,8 +766,10 @@ Proof
 QED
 
 Theorem cstep_seq_rtc_bst_prom_EQ:
-  !p cid sM sM'. cstep_seq_rtc p cid sM sM' /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
-  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom /\ (FST sM).bst_prom = (FST sM').bst_prom
+  !p cid sM sM'. cstep_seq_rtc p cid sM sM'
+  /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
+  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom
+    /\ (FST sM).bst_prom = (FST sM').bst_prom
 Proof
   fs[GSYM AND_IMP_INTRO,cstep_seq_rtc_def]
   >> ntac 2 gen_tac
@@ -689,7 +860,7 @@ val eval_clstep_read_def = Define‘
                                                              else bir_pc_next;
 				      bst_xclb    := if xcl
 						     then SOME <| xclb_time := t; xclb_view := v_post |>
-						     else s.bst_xclb |>] 
+						     else s.bst_xclb |>]
 		        | _ => [])
 		   | _ => [])
       | _ => []
@@ -728,7 +899,7 @@ val eval_clstep_fulfil_def = Define‘
              LIST_BIND ts
                        (\v_post.
                           case (fulfil_update_env p s xcl, fulfil_update_viewenv p s xcl v_post) of
-                          | (SOME new_env, SOME new_viewenv) => 
+                          | (SOME new_env, SOME new_viewenv) =>
                               [s with <| bst_viewenv := new_viewenv;
                                          bst_environ := new_env;
                                          bst_prom   updated_by (FILTER (\t'. t' <> v_post));
@@ -791,7 +962,7 @@ val eval_clstep_def = Define‘
   eval_clstep p cid s M =
     case bir_get_stmt p s.bst_pc of
     | BirStmt_Read var a_e cast_opt xcl =>
-        eval_clstep_read s M var a_e xcl 
+        eval_clstep_read s M var a_e xcl
     | BirStmt_Write a_e v_e xcl =>
         eval_clstep_fulfil p cid s M a_e v_e xcl ++
         eval_clstep_xclfail p s xcl
@@ -830,7 +1001,7 @@ val eval_clsteps_def = Define‘
   | BST_JumpOutside _ => [s]
   | _ => []
   ) /\ (
-  eval_clsteps (SUC f) cid p s M = 
+  eval_clsteps (SUC f) cid p s M =
   case s.bst_status of
   | BST_Running => LIST_BIND (eval_clstep p cid s M)
                              (λs'. eval_clsteps f cid p s' M)
@@ -899,7 +1070,7 @@ Definition eval_fpsteps_def:
   eval_fpsteps 0 t p cid s M promises =
   if NULL s.bst_prom then promises else []
   ) ∧ (
-  eval_fpsteps (SUC f) t p cid s M promises = 
+  eval_fpsteps (SUC f) t p cid s M promises =
   case s.bst_status of
   | BST_Running =>
       LIST_BIND (eval_fpstep p cid s M)
@@ -940,7 +1111,7 @@ Definition eval_make_promise_def:
     let
       (cores', M') = eval_make_promise (cores, M) msg;
     in ((Core cid p s)::cores', M')
-End    
+End
 
 (* Promise-mode step *)
 Definition eval_pmstep_def:
@@ -956,7 +1127,7 @@ Definition is_final_core_def:
   | BST_Halted _ => NULL s.bst_prom
   | _ => F
 End
-        
+
 (* Optimized atomic *)
 Definition mem_atomicO1_def:
   (
@@ -994,7 +1165,7 @@ Definition eval_clstep_fulfilO1_def:
            LIST_BIND t
                      (λv_post.
                         case (fulfil_update_env p s xcl, fulfil_update_viewenv p s xcl v_post) of
-                        | (SOME new_env, SOME new_viewenv) => 
+                        | (SOME new_env, SOME new_viewenv) =>
                             [s with <| bst_viewenv := new_viewenv;
                                        bst_environ := new_env;
                                        bst_prom   updated_by (FILTER (\t'. t' <> v_post));
@@ -1009,7 +1180,7 @@ Definition eval_clstep_fulfilO1_def:
                                                              else bir_pc_next;
                                        bst_xclb := if xcl then NONE else s.bst_xclb |>]
                         | _ => []
-                     ) 
+                     )
         )
     | _ => []
 End
@@ -1033,10 +1204,10 @@ Definition eval_clstepO1_def:
   eval_clstepO1 p cid s M =
     case bir_get_stmt p s.bst_pc of
     | BirStmt_Read var a_e cast_opt xcl =>
-        eval_clstep_read s M var a_e xcl 
+        eval_clstep_read s M var a_e xcl
     | BirStmt_Write a_e v_e xcl =>
         eval_clstep_fulfilO1 p cid s M a_e v_e xcl ++
-        eval_clstep_xclfailO1 p s xcl 
+        eval_clstep_xclfailO1 p s xcl
     | BirStmt_Expr var e =>
         eval_clstep_exp s var e
     | BirStmt_Fence K1 K2 =>
@@ -1058,7 +1229,7 @@ val eval_clstepsO1_def = Define‘
   | BST_JumpOutside _ => [s]
   | _ => []
   ) /\ (
-  eval_clstepsO1 (SUC f) cid p s M = 
+  eval_clstepsO1 (SUC f) cid p s M =
   case s.bst_status of
   | BST_Running => LIST_BIND (eval_clstepO1 p cid s M)
                              (λs'. eval_clstepsO1 f cid p s' M)
@@ -1124,7 +1295,7 @@ Definition eval_fpstepsO1_def:
   eval_fpstepsO1 0 t p cid s M promises =
   if NULL s.bst_prom then promises else []
   ) ∧ (
-  eval_fpstepsO1 (SUC f) t p cid s M promises = 
+  eval_fpstepsO1 (SUC f) t p cid s M promises =
   case s.bst_status of
   | BST_Running =>
       LIST_BIND (eval_fpstepO1 p cid s M)
@@ -1165,7 +1336,7 @@ Definition eval_make_promiseO1_def:
     let
       (cores', M') = eval_make_promiseO1 (cores, M) msg;
     in ((Core cid p s)::cores', M')
-End    
+End
 
 (* Promise-mode step *)
 Definition eval_pmstepO1_def:
