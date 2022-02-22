@@ -135,6 +135,12 @@ sig
    (* bir_block_t *)
    (***************)
 
+   val bir_mc_tags_t_ty : hol_type
+   val dest_bir_mc_tags : term -> term * term * term
+   val is_bir_mc_tags : term -> bool
+   val mk_bir_mc_tags : term * term * term -> term
+   val bir_mc_tags_NONE : term
+
    val mk_bir_block_t_ty   : hol_type -> hol_type
    val dest_bir_block_t_ty : hol_type -> hol_type
    val is_bir_block_t_ty   : hol_type -> bool

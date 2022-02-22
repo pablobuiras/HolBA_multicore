@@ -256,6 +256,8 @@ sig
      *
      * Note: If you don't use BStmt_Observe, use any hol_type, or just 'a.
      *)
+    val bmc_none: term
+
     val bblock:   hol_type -> (term * term * term list * term) -> term
     val bblocks:  hol_type -> (term * term * term list * term) list -> term
 

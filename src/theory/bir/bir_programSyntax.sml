@@ -90,7 +90,30 @@ val is_bir_stmt_t_ty = can dest_bir_stmt_t_ty;
 val (BStmtB_tm,  mk_BStmtB, dest_BStmtB, is_BStmtB)  = syntax_fns1 "BStmtB";
 val (BStmtE_tm,  mk_BStmtE, dest_BStmtE, is_BStmtE)  = syntax_fns1 "BStmtE";
 
+val bir_mc_tags_t_ty = mk_type ("bir_mc_tags_t", []);
 
+fun dest_bir_mc_tags tm = let
+  val (ty, l) = TypeBase.dest_record tm
+  (* TODO: Check if type OK here? *)
+  val mc_atomic = Lib.assoc "mc_atomic" l
+  val mc_acq = Lib.assoc "mc_acq" l
+  val mc_rel = Lib.assoc "mc_rel" l
+in
+  (mc_atomic, mc_acq, mc_rel)
+end handle e => raise wrap_exn "dest_bir_mc_tags" e;
+
+val is_bir_mc_tags = can dest_bir_mc_tags;
+
+fun mk_bir_mc_tags (tm_is_atomic, tm_is_acq, tm_is_rel) = let
+  val ty = bir_mc_tags_t_ty;
+  val l = [("mc_atomic", tm_is_atomic),
+           ("mc_acq", tm_is_acq),
+           ("mc_rel", tm_is_rel)];
+in
+  TypeBase.mk_record (ty, l)
+end handle e => raise wrap_exn "mk_bir_mc_tags" e;
+
+val bir_mc_tags_NONE = optionSyntax.mk_none bir_mc_tags_t_ty;
 
 (* bir_block_t *)
 
@@ -103,26 +126,25 @@ fun dest_bir_block_t_ty ty =
 
 val is_bir_block_t_ty = can dest_bir_block_t_ty;
 
-
 fun dest_bir_block tm = let
   val (ty, l) = TypeBase.dest_record tm
   val _ = if is_bir_block_t_ty ty then () else fail()
   val lbl = Lib.assoc "bb_label" l
-  val is_atomic = Lib.assoc "bb_atomic" l
+  val mc_tags = Lib.assoc "bb_mc_tags" l
   val stmts = Lib.assoc "bb_statements" l
   val last_stmt = Lib.assoc "bb_last_statement" l
 in
-  (lbl, is_atomic, stmts, last_stmt)
+  (lbl, mc_tags, stmts, last_stmt)
 end handle e => raise wrap_exn "dest_bir_block" e;
 
 val is_bir_block = can dest_bir_block;
 
-fun mk_bir_block (tm_lbl, tm_is_atomic, tm_stmts, tm_last_stmt) = let
+fun mk_bir_block (tm_lbl, tm_mc_tags, tm_stmts, tm_last_stmt) = let
   val ty0 = dest_bir_stmt_basic_t_ty (listSyntax.dest_list_type (type_of tm_stmts))
   val ty = mk_bir_block_t_ty ty0
 
   val l = [("bb_label", tm_lbl),
-           ("bb_atomic", tm_is_atomic),
+           ("bb_mc_tags", tm_mc_tags),
            ("bb_statements", tm_stmts),
            ("bb_last_statement", tm_last_stmt)];
 in
@@ -130,18 +152,18 @@ in
 end handle e => raise wrap_exn "mk_bir_block" e;
 
 fun dest_bir_block_list tm = let
-  val (tm_lbl, tm_is_atomic, tm_stmts, tm_last_stmt) = dest_bir_block tm;
+  val (tm_lbl, tm_mc_tags, tm_stmts, tm_last_stmt) = dest_bir_block tm;
   val (l_stmts, ty') = listSyntax.dest_list tm_stmts;
   val ty'' = dest_bir_stmt_basic_t_ty ty'
 in
-  (ty'', tm_lbl, tm_is_atomic, l_stmts, tm_last_stmt)
+  (ty'', tm_lbl, tm_mc_tags, l_stmts, tm_last_stmt)
 end handle e => raise wrap_exn "dest_bir_block_list" e;
 
-fun mk_bir_block_list (ty, tm_lbl, tm_is_atomic, l_stmts, tm_last_stmt) = let
+fun mk_bir_block_list (ty, tm_lbl, tm_mc_tags, l_stmts, tm_last_stmt) = let
   val ty' = mk_bir_stmt_basic_t_ty ty
   val tm_stmts = listSyntax.mk_list (l_stmts, ty')
 in
-  mk_bir_block (tm_lbl, tm_is_atomic, tm_stmts, tm_last_stmt)
+  mk_bir_block (tm_lbl, tm_mc_tags, tm_stmts, tm_last_stmt)
 end handle e => raise wrap_exn "mk_bir_block_list" e;
 
 
