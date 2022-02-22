@@ -322,7 +322,7 @@ Proof
   >> gvs[clstep_cases,MEM_FILTER,FLOOKUP_UPDATE]
   >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
   >> spose_not_then assume_tac
-  >> gvs[]
+  >> gvs[bir_get_stmt_def,AllCaseEqs()]
 QED
 
 Theorem is_promise_is_fulfil:
@@ -490,10 +490,10 @@ QED
 
 Definition is_read_xcl_def:
   is_read_xcl cid t sys1 sys2 <=>
-  ?st st' p var e.
+  ?st st' p var e a_e.
     FLOOKUP sys1 cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
-    /\ is_xcl_read p st
+    /\ is_xcl_read p st.bst_pc a_e
     /\ bir_get_current_statement p st.bst_pc =
         SOME $ BStmtB $ BStmt_Assign var e
 End
@@ -505,7 +505,7 @@ Definition is_fulfil_xcl_def:
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
-    /\ is_xcl_write p st
+    /\ is_xcl_write p st.bst_pc
     /\ IS_SOME st.bst_xclb
     /\ bir_get_current_statement p st.bst_pc =
         SOME $ BStmtB $ BStmt_Assign var e
@@ -533,10 +533,19 @@ Proof
   >> gvs[parstep_nice_def,parstep_cases,is_fulfil_xcl_def,FLOOKUP_UPDATE]
   >> gvs[cstep_cases,parstep_nice_def,parstep_cases,clstep_cases,FLOOKUP_UPDATE,bir_programTheory.bir_state_t_accfupds]
   >> imp_res_tac is_xcl_read_is_xcl_write >> fs[]
-  >> gvs[FLOOKUP_UPDATE,stmt_generic_step_def]
+  >> gvs[FLOOKUP_UPDATE,stmt_generic_step_def,bir_get_stmt_def,AllCaseEqs()]
   >- (
     drule_at Any FILTER_NEQ_NOT_MEM
     >> fs[EQ_SYM_EQ]
+  )
+  >- (
+    drule_at Any FILTER_NEQ_NOT_MEM
+    >> impl_tac
+    >- (
+      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
+      >> fs[]
+    )
+    >> fs[]
   )
   >- (
     dxrule_at_then Any (drule_at Any) FILTER_NEQ_MEM_EQ
@@ -548,6 +557,15 @@ Proof
     )
     >> rw[]
     >> goal_assum drule
+  )
+  >- (
+    drule_at Any FILTER_NEQ_NOT_MEM
+    >> impl_tac
+    >- (
+      CONV_TAC $ RATOR_CONV $ ONCE_DEPTH_CONV SYM_CONV
+      >> fs[]
+    )
+    >> fs[]
   )
   >> drule_then (drule_then assume_tac) is_fulfil_memory
   >> gs[]
@@ -569,14 +587,19 @@ Proof
   >> Cases_on `cid = cid'`
   >> gvs[FLOOKUP_UPDATE,clstep_cases,cstep_cases,parstep_nice_def,parstep_cases,is_read_xcl_def,optionTheory.IS_SOME_EXISTS]
   >- (
+    gvs[bir_get_stmt_def,AllCaseEqs()]
+    >> gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def]
+    >> goal_assum $ drule_at Any
+  )
+  >- (
     fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def]
     >> BasicProvers.every_case_tac
     >> fs[Once EQ_SYM_EQ]
   )
-  >> qmatch_assum_rename_tac `stmt_generic_step stmt`
+  >> qmatch_assum_rename_tac `bir_exec_stmt p stmt s = _`
   >> Cases_on `stmt`
   >- (
-    qmatch_assum_rename_tac `stmt_generic_step $ BStmtB b`
+    qmatch_assum_rename_tac `bir_exec_stmt p (BStmtB b) s = _`
     >> Cases_on `b`
     >> fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_programTheory.bir_state_is_terminated_def,bir_programTheory.bir_exec_stmtB_def]
     >> BasicProvers.every_case_tac

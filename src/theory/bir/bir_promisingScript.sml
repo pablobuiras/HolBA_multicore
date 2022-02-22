@@ -275,12 +275,12 @@ val xclfail_update_viewenv_def = Define`
  * Load-type instruction, checks if the block is trying to model
  * an exclusive-load *)
 val is_xcl_read_def = Define‘
-  is_xcl_read p pc =
+  is_xcl_read p pc a_e =
     case bir_get_current_statement p (bir_pc_next pc) of
       SOME (BStmtB (BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
 		     (BExp_Store (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8)))
-                       (BExp_Den (BVar varname (BType_Imm Bit64))) BEnd_LittleEndian
-		       (BExp_Const (Imm32 0x1010101w))))) => T
+                       var BEnd_LittleEndian
+		       (BExp_Const (Imm32 0x1010101w))))) => var = a_e
      | _ => F
 ’;
 
@@ -301,7 +301,7 @@ val bir_get_stmt_def = Define‘
   case bir_get_current_statement p pc of
   | SOME (BStmtB (BStmt_Assign var e)) =>
       (case get_read_args e of
-       | SOME (a_e, cast_opt) => BirStmt_Read var a_e cast_opt (is_xcl_read p pc)
+       | SOME (a_e, cast_opt) => BirStmt_Read var a_e cast_opt (is_xcl_read p pc a_e)
        | NONE =>
            (case get_fulfil_args e of
             | SOME (a_e, v_e) => BirStmt_Write a_e v_e (is_xcl_write p pc)
@@ -318,7 +318,7 @@ Theorem bir_get_stmt_read:
  (bir_get_stmt p pc = BirStmt_Read var a_e cast_opt xcl) ⇔
  (?e. bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
  ∧ get_read_args e = SOME (a_e, cast_opt)
- ∧ is_xcl_read p pc = xcl)
+ ∧ is_xcl_read p pc a_e = xcl)
 Proof
   gvs [bir_get_stmt_def,AllCaseEqs(),
        GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM]
@@ -390,6 +390,11 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 (* read *)
 (!p s s' v a_e xcl M l (t:num) v_pre v_post v_addr var new_env cid opt_cast.
    bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast xcl
+ (* NOTE: The fact that get_read_args is not NONE means also
+  *       that the expression e constitutes a load operation *)
+ (* If next statement is the dummy exclusive-load statement,
+  * we are dealing with an exclusive load *)
+ /\ xcl = is_xcl_read p s.bst_pc a_e
  /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX v_addr s.bst_v_rNew
@@ -560,6 +565,13 @@ Proof
     >> BasicProvers.every_case_tac
     >> gvs[bir_state_set_typeerror_def,CaseEq"option"]
   )
+  >> qmatch_assum_rename_tac `stmt_generic_step $ BStmtE b`
+  >> Cases_on `b`
+  >> fs[stmt_generic_step_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,bir_exec_stmt_def,bir_exec_stmt_halt_def]
+  >> BasicProvers.every_case_tac
+  >> gvs[bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def]
+  >> BasicProvers.every_case_tac
+  >> gvs[bir_state_set_typeerror_def,CaseEq"option"]
 QED
 
 Theorem cstep_seq_bst_prom_EQ:
