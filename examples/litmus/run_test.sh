@@ -7,26 +7,33 @@ NC='\033[0m'
 LITMUS=${1}.litmus
 JSON=${1}.json
 
-if [ ! -f $JSON ]; then
-        ./lift_test $LITMUS $JSON 2>/dev/null >/dev/null
+if [ -z "$1" ]; then
+        echo -e "Missing argument"
+        exit 1
+elif [ ! -f $JSON ]; then
+        echo -e "$1 ${RED}Missing .json file.${NC}"
+        exit 2
+elif [ ! -f $LITMUS ]; then
+        echo -e "$1 ${RED}Missing .litmus file.${NC}"
+        exit 3
+elif [ -z "$(command -v herd7)" ]; then
+        echo -e "$1 ${RED}Command herd7 missing.${NC}"
+        exit 4
 fi
 
-if [ ! -f $JSON ]; then
-        echo $1 Error
-        exit 0
-fi
+RES=$(./run_test $JSON)
+STATUS=$?
 
-ACTUAL=$(./run_test $JSON | grep -oE "(Ok|No|ExecError)")
-
-if [ "$ACTUAL" = "ExecError" ]; then
-        echo $1 ExecError
-        exit 0
+if [ $? -ne 0 ]; then
+        echo -e "$1 ${RED}ExecError${NC}"
+        exit 5
 fi 
 
+ACTUAL=$(echo "$RES" | grep -oE "(Ok|No)")
 EXPECTED=$(herd7 $LITMUS | grep -oE "(Ok|No)")
 
 if [ "$EXPECTED" = "$ACTUAL" ]; then
-        echo -e "$1 ${GREEN}Ok${NC} (expected $EXPECTED, found $ACTUAL)"
+        echo -e "$1 ${GREEN}PASSED${NC} (expected $EXPECTED, found $ACTUAL)"
 else
-        echo -e "$1 ${RED}No${NC} (expected $EXPECTED, found $ACTUAL)"
+        echo -e "$1 ${RED}FAILED${NC} (expected $EXPECTED, found $ACTUAL)"
 fi
