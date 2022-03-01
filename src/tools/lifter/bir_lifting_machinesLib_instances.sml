@@ -705,7 +705,7 @@ local
    * into a more manageable format. *)
   (* DEBUG (when called from riscv_step_hex')
    
-     val thm = hd step_thms0 
+       val thm = hd step_thms0
 
   *)
   fun process_riscv_thm is_multicore vn pc_mem_thms thm = let
@@ -756,6 +756,7 @@ in
 
   val (ms_ty, addr_sz_ty, mem_val_sz_ty)  = dest_bir_lifting_machine_rec_t_ty (type_of (prim_mk_const{Name="riscv_bmr", Thy="bir_lifting_machines"}))
   val vn = mk_var ("ms", ms_ty);
+  val is_multicore = false;
   val hex_code = "FCE14083" (* "lbu x1,x2,-50" *)
 
   val hex_code = "340090F3" (* "csrrw x1,mscratch, x1" *)
@@ -764,11 +765,16 @@ in
 
   val hex_code = "00029263" (* "bne x5, x0, 4" *)
 
+  val hex_code = "00E12423" (* "sw x14, 8(x2)" *)
+
+  val hex_code = "0003A023" (* "sw x0, 0(t2)" *)
+
 *)
   fun riscv_step_hex' is_multicore vn hex_code = let
     val pc_mem_thms = prepare_mem_contains_thms vn hex_code
 
     val step_thms0 = [(riscv_step_rem_ss_hex ["word arith", "word ground", "word logic", "word shift", "word subtract"]) hex_code]
+
     val step_thms1 =
       List.map (process_riscv_thm is_multicore vn pc_mem_thms) step_thms0
   in

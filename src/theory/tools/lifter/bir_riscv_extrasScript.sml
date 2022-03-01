@@ -16,9 +16,7 @@ open combinTheory
 open bir_expTheory;
 open bir_exp_memTheory;
 open bir_bool_expTheory;
-
-(* TODO: This file is still WIP. Draw inspiration from
- *       the corresponding ARM8 and M0 files. *)
+open bir_auxiliaryTheory;
 
 (* In order to produce decent BIR code from step theorems,
  * the concepts described by the step theorems need to be
@@ -114,7 +112,7 @@ ASM_SIMP_TAC std_ss [bir_is_lifted_imm_exp_LOAD_NO_ENDIAN]
 (**********)
 
 (* TODO: Can use same as for ARMv8? *)
-val riscv_mem_store_dword_def = Define `riscv_mem_store_dword (a:word64) w (mmap : (word64 -> word8)) =
+val riscv_mem_store_dword_def = Define `riscv_mem_store_dword (a:word64) (w:word64) (mmap : (word64 -> word8)) =
    (a + 7w =+ (63 >< 56) w)
   ((a + 6w =+ (55 >< 48) w)
   ((a + 5w =+ (47 >< 40) w)
@@ -124,19 +122,15 @@ val riscv_mem_store_dword_def = Define `riscv_mem_store_dword (a:word64) w (mmap
   ((a + 1w =+ (15 >< 8)  w)
   ((a + 0w  =+ (7  >< 0)  w) mmap)))))))`;
 
-val riscv_mem_store_word_def = Define `riscv_mem_store_word (a:word64) w (mmap : (word64 -> word8)) =
+val riscv_mem_store_word_def = Define `riscv_mem_store_word (a:word64) (w:word64) (mmap : (word64 -> word8)) =
    (a + 3w =+ (31 >< 24) w)
   ((a + 2w =+ (23 >< 16) w)
   ((a + 1w =+ (15 >< 8)  w)
   ((a + 0w =+ (7  >< 0)  w) mmap)))`;
 
-val riscv_mem_store_half_def = Define `riscv_mem_store_half (a:word64) w (mmap : (word64 -> word8)) =
+val riscv_mem_store_half_def = Define `riscv_mem_store_half (a:word64) (w:word64) (mmap : (word64 -> word8)) =
    (a + 1w =+ (15 >< 8)  w)
   ((a + 0w =+ (7  >< 0)  w) mmap)`;
-(*
-val riscv_mem_store_byte_def = Define `riscv_mem_store_byte (a:word64) w (mmap : (word64 -> word8)) =
-  ((a + 0w =+ (7  >< 0)  w) mmap)`;
-*)
 
 (* The below theorem are for rewriting the memory representations
  * in the step theorem produced by the lifter.
@@ -145,7 +139,7 @@ val riscv_mem_store_byte_def = Define `riscv_mem_store_byte (a:word64) w (mmap :
  * due to differences in the models. *)
 
 val mem_half_word_rev = store_thm("mem_half_word_rev",
-``!(a:word64) w (mmap:(word64 -> word8)).
+``!(a:word64) (w:word64) (mmap:(word64 -> word8)).
   (a  + 0w =+ (7 >< 0)  w)
   ((a + 1w =+ (15  >< 8)  w) mmap) =
     (a + 1w =+ (15 >< 8)  w)
@@ -197,7 +191,7 @@ val WORD_CONTR_TAC =
   );
 
 val mem_word_rev = store_thm("mem_word_rev",
-``!(a:word64) w (mmap:(word64 -> word8)).
+``!(a:word64) (w:word64) (mmap:(word64 -> word8)).
   (a  + 0w =+ (7 >< 0) w)
   ((a + 1w =+ (15 >< 8) w)
   ((a + 2w =+ (23 >< 16)  w)
@@ -217,7 +211,7 @@ WORD_CONTR_TAC
 val mem_word_rev_simp = SIMP_RULE (std_ss++wordsLib.WORD_ss++wordsLib.WORD_ARITH_EQ_ss) [] mem_word_rev;
 
 val mem_dword_rev = store_thm("mem_dword_rev",
-``!(a:word64) w (mmap:(word64 -> word8)).
+``!(a:word64) (w:word64) (mmap:(word64 -> word8)).
   (a  + 0w =+ (7 >< 0) w)
   ((a + 1w =+ (15 >< 8) w)
   ((a + 2w =+ (23 >< 16) w)
@@ -255,6 +249,12 @@ let
     mem_word_rev_simp,
     mem_dword_rev_simp];
 
+  val mem_rev_simp_zero_FOLDS = LIST_CONJ 
+    (map (GEN_ALL o (SIMP_RULE (std_ss++wordsLib.WORD_ss) []) o (SPECL [``a:word64``, ``0w:word64``]))
+    [mem_half_word_rev_simp,
+     mem_word_rev_simp,
+     mem_dword_rev_simp]);
+
   val thm0 = GSYM mem_store_byte_def
   fun mk_thm_GEN thm =
     REWRITE_RULE [GSYM mem_store_byte_def] (GSYM thm)
@@ -266,9 +266,9 @@ let
   ];
 
   val elim_zero_thm =
-    GEN_ALL (SIMP_CONV (std_ss++wordsLib.WORD_ss) [] ``riscv_mem_store_byte (a+0w) w mmap``);
+    GEN_ALL (SIMP_CONV (std_ss++wordsLib.WORD_ss) [] ``mem_store_byte (a+0w) w mmap``);
   val def_THMS = REWRITE_RULE [elim_zero_thm] def_THMS_apz;
-
+  
   (* These theorems come into play when, for example, half of a word store has been recognized as
    * a half-word store. *)
   fun mk_partial_thm def_thm tm = GEN_ALL (GSYM (
@@ -279,7 +279,23 @@ let
   val THM2 = REWRITE_RULE [THM1, THM0] (
      mk_partial_thm riscv_mem_store_dword_def ``riscv_mem_store_dword a w mmap``);
 
-in LIST_CONJ [mem_rev_simp_FOLDS, def_THMS_apz, def_THMS, THM0, THM1, THM2] end);
+  fun mk_zero_thm def_thm tm = GEN_ALL (GSYM (
+     SIMP_CONV (std_ss++wordsLib.WORD_ss) [def_thm,
+        GSYM mem_store_byte_def] tm))
+
+  val word_add1_neq = prove(``a + 1w <> a``, blastLib.BBLAST_TAC >> fs[word1_distinct])
+  val upd_add1_comm = GEN_ALL (HO_MATCH_MP UPDATE_COMMUTES word_add1_neq )
+
+  fun mk_zero_thm def_thm tm = GEN_ALL (GSYM (
+     SIMP_CONV (std_ss++wordsLib.WORD_ss) [def_thm, upd_add1_comm, GSYM mem_store_byte_def] tm))
+
+  val zero_THM0 = mk_zero_thm riscv_mem_store_half_def ``riscv_mem_store_half a 0w mmap``;
+  
+  val zero_THM1 = REWRITE_RULE [zero_THM0] (mk_zero_thm riscv_mem_store_word_def ``riscv_mem_store_word a 0w mmap``);
+  val zero_THM2 = REWRITE_RULE [zero_THM1, zero_THM0] (
+     mk_zero_thm riscv_mem_store_dword_def ``riscv_mem_store_dword a 0w mmap``);
+
+in LIST_CONJ [mem_rev_simp_FOLDS, mem_rev_simp_zero_FOLDS, def_THMS_apz, def_THMS, THM0, THM1, THM2, zero_THM0, zero_THM1, zero_THM2] end);
 
 val riscv_LIFT_STORE_DWORD = store_thm ("riscv_LIFT_STORE_DWORD",
 ``!env em ea va ev vv ms mem_f.
