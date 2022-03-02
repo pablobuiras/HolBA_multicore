@@ -730,25 +730,25 @@ Theorem is_read_xcl_parstep_nice_eq:
                     env |+
                     (var,
                      MAX (MAX v_addr s.bst_v_rNew)
-                       (mem_read_view a rk (s.bst_fwdb l) t)));
+                       (mem_read_view (s.bst_fwdb l) t)));
              bst_coh :=
                (λlo.
                     if lo = l then
                       MAX (s.bst_coh l)
                         (MAX (MAX v_addr s.bst_v_rNew)
-                           (mem_read_view a rk (s.bst_fwdb l) t))
+                           (mem_read_view (s.bst_fwdb l) t))
                     else s.bst_coh lo);
              bst_v_rOld :=
                MAX s.bst_v_rOld
                  (MAX (MAX v_addr s.bst_v_rNew)
-                    (mem_read_view a rk (s.bst_fwdb l) t));
+                    (mem_read_view (s.bst_fwdb l) t));
              bst_v_CAP := MAX s.bst_v_CAP v_addr;
              bst_xclb :=
                SOME
                  <|xclb_time := t;
                    xclb_view :=
                      MAX (MAX v_addr s.bst_v_rNew)
-                       (mem_read_view a rk (s.bst_fwdb l) t)|> |>)
+                       (mem_read_view (s.bst_fwdb l) t)|> |>)
     /\  SOME new_env =
         env_update_cast64 (bir_var_name var) v (bir_var_type var) s.bst_environ
     /\  (∀t'.
@@ -770,7 +770,6 @@ Proof
   >> gvs[cstep_cases,clstep_cases,is_read_xcl_def,optionTheory.IS_SOME_EXISTS,is_read_xcl_def,FLOOKUP_UPDATE]
   >> rpt $ goal_assum $ drule_at Any
   >> dsimp[bir_programTheory.bir_state_t_component_equality,pairTheory.ELIM_UNCURRY,FUN_EQ_THM,mem_read_view_def]
-  (* TODO remove free variables from definition mem_read_view_def *)
 QED
 
 (* only exclusive loads set the exclusive bank *)
@@ -910,12 +909,20 @@ QED
 (* the labels of the spinlock program *)
 
 Theorem bir_spinlock_prog_labels:
-  !l. IS_SOME $ bir_get_program_block_info_by_label bir_spinlock_prog l
-  ==> ?c. l = BL_Address $ Imm64 c /\ c IN {0w; 4w; 8w; 12w; 16w; 20w; 24w}
+  !l. IS_SOME $ bir_get_program_block_info_by_label (bir_spinlock_prog:'a bir_program_t) l
+  <=> ?c. l = BL_Address $ Imm64 c /\ c IN {0w; 4w; 8w; 12w; 16w; 20w; 24w}
 Proof
   EVAL_TAC
   >> dsimp[]
   >> rw[]
+QED
+
+Theorem bir_get_stmt_bir_spinlock_prog:
+  !x y. bir_get_stmt (bir_spinlock_prog:'a bir_program_t) x = y /\ y <> BirStmt_None
+  ==> ?c. x.bpc_label = BL_Address $ Imm64 c /\ c IN {0w; 4w; 8w; 12w; 16w; 20w; 24w}
+Proof
+  rw[GSYM bir_spinlock_prog_labels,bir_get_stmt_def]
+  >> gs[bir_programTheory.bir_get_current_statement_def,CaseEq"option",quantHeuristicsTheory.IS_SOME_EQ_NOT_NONE]
 QED
 
 Theorem bir_get_program_block_info_by_label' =
@@ -923,13 +930,16 @@ Theorem bir_get_program_block_info_by_label' =
     (fn x => EVAL ``bir_get_program_block_info_by_label bir_spinlock_prog $ BL_Address $ Imm64 ^(Term x)``)
     [`0w:word64`, `4w:word64`, `8w:word64`, `12w:word64`, `16w:word64`, `20w:word64`, `24w:word64`]
 
+Theorem bir_labels_of_program_bir_spinlock_prog =
+  EVAL ``bir_labels_of_program (bir_spinlock_prog:'a bir_program_t)``
+
 (* all reads in the spinlock program *)
 
 Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ:
-  !st var a_e opt_cast xcl.
-  bir_get_stmt (bir_spinlock_prog:string bir_program_t) st.bst_pc
+  !pc var a_e opt_cast xcl.
+  bir_get_stmt (bir_spinlock_prog:string bir_program_t) pc
   = BirStmt_Read var a_e opt_cast xcl
-  <=> st.bst_pc = <| bpc_index := 1; bpc_label := BL_Address $ Imm64 12w|>
+  <=> pc = <| bpc_index := 1; bpc_label := BL_Address $ Imm64 12w|>
     /\ var = BVar "x5" $ BType_Imm Bit64
     /\ opt_cast = SOME (BIExp_SignedCast,Bit64)
     /\ a_e = BExp_Den spinlock_var
@@ -941,7 +951,7 @@ Proof
     fs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def]
     >> BasicProvers.every_case_tac
     >> fs[]
-    >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] bir_spinlock_prog_labels
+    >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] $ iffLR bir_spinlock_prog_labels
     >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
     >> gs[bir_programTheory.bir_programcounter_t_component_equality,LT5,LT3,get_read_args_def,bir_auxiliaryTheory.NUM_LSONE_EQZ]
     >> gs[is_xcl_read_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label']
@@ -952,16 +962,16 @@ QED
 (* all writes in the spinlock program *)
 
 Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ:
-  !st a_e v_e xcl.
-  bir_get_stmt (bir_spinlock_prog:string bir_program_t) st.bst_pc
+  !pc a_e v_e xcl.
+  bir_get_stmt (bir_spinlock_prog:string bir_program_t) pc
   = BirStmt_Write a_e v_e xcl
   <=> (
-    st.bst_pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 12w|>
+    pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 12w|>
     /\ a_e = BExp_Den spinlock_var
     /\ v_e = BExp_Const (Imm32 0x1010101w)
     /\ ~xcl
   ) \/ (
-    st.bst_pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 20w|>
+    pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 20w|>
     /\ a_e = BExp_Den spinlock_var
     /\ v_e = BExp_Cast BIExp_LowCast (BExp_Den $ BVar "x0" $ BType_Imm Bit64) Bit32
     /\ xcl
@@ -973,7 +983,7 @@ Proof
     fs[bir_get_stmt_write,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def]
     >> BasicProvers.every_case_tac
     >> fs[]
-    >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] bir_spinlock_prog_labels
+    >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] $ iffLR bir_spinlock_prog_labels
     >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
     >> gs[bir_programTheory.bir_programcounter_t_component_equality,LT5,LT3,get_fulfil_args_def,bir_auxiliaryTheory.NUM_LSONE_EQZ]
     >> gs[is_xcl_write_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label']
@@ -1177,7 +1187,7 @@ Proof
   >> Cases_on `s.bst_pc.bpc_index < 5` >> gs[]
   >> gs[LT5]
   >> gvs[bir_eval_exp_view_def,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,bir_programTheory.bir_pc_next_def]
-  >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] bir_spinlock_prog_labels
+  >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] $ iffLR bir_spinlock_prog_labels
   >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
   >> gs[get_fulfil_args_def]
   >> cheat
