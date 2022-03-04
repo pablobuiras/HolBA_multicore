@@ -1113,11 +1113,10 @@ fun get_amo_bstmts mu_b mu_e hex_code =
       then
 	[(* 1. Load data value from address in rs1, place value into rd *)
 	 bassert (baligned Bit64_tm (numSyntax.term_of_int 2, bden bvar_rs1)),
-
+	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 4)),
 	 bassign (bvar_rd, bscast64 (bload32_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1)))),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
-	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 4)),
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
 						(bden bvar_rs1)
 						(blowcast32 atomic_op_res))
@@ -1126,11 +1125,10 @@ fun get_amo_bstmts mu_b mu_e hex_code =
       then
 	[(* 1. Load data value from address in rs1, place value into rd *)
 	 bassert (baligned Bit64_tm (numSyntax.term_of_int 3, bden bvar_rs1)),
-
+	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 8)),
 	 bassign (bvar_rd, bload64_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1))),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
-	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 8)),
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
 						(bden bvar_rs1)
 						atomic_op_res)
@@ -1234,7 +1232,7 @@ fun lift_fence mu_b mu_e pc hex_code =
   let
     val bstmt_list = get_fence_bstmts hex_code
   in
-    lift_by_cheat mu_b mu_e pc hex_code T F F bstmt_list
+    lift_by_cheat mu_b mu_e pc hex_code F F F bstmt_list
   end
 
 (* Lifts an atomic memory operation instruction by producing a cheat. *)
@@ -1250,7 +1248,7 @@ fun lift_lrsc mu_b mu_e pc hex_code =
   let
     val (bstmt_list, is_aq, is_rl) = get_lrsc_bstmts mu_b mu_e hex_code
   in
-    lift_by_cheat mu_b mu_e pc hex_code T (bitstringSyntax.term_of_bool is_aq) (bitstringSyntax.term_of_bool is_rl) bstmt_list
+    lift_by_cheat mu_b mu_e pc hex_code F (bitstringSyntax.term_of_bool is_aq) (bitstringSyntax.term_of_bool is_rl) bstmt_list
   end
 
 in
