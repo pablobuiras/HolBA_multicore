@@ -906,6 +906,19 @@ Proof
   >> gs[core_runs_spinlock_def,core_runs_prog_def]
 QED
 
+Theorem wf_trace_core_runs_spinlock_FLOOKUP':
+  !tr i cid p s. wf_trace tr
+  /\ i < LENGTH tr
+  /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
+  /\ cores_run_spinlock $ FST $ HD tr
+  ==> core_runs_spinlock cid $ FST $ HD tr
+Proof
+  rw[cores_run_spinlock_def]
+  >> drule_then drule wf_trace_cid_backward
+  >> disch_then $ qspec_then `0` assume_tac
+  >> gs[]
+QED
+
 (* the labels of the spinlock program *)
 
 Theorem bir_spinlock_prog_labels:

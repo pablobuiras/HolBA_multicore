@@ -140,6 +140,13 @@ QED
  * well-formed traces and implications of well-formedness
  *)
 
+Theorem parstep_nice_EX_FLOOKUP:
+  !cid s1 s2. parstep_nice cid s1 s2
+  ==> ?p st. FLOOKUP (FST s1) cid = SOME (Core cid p st)
+Proof
+  rw[parstep_nice_def,parstep_cases] >> fs[]
+QED
+
 Theorem parstep_nice_FLOOKUP:
   !cid s1 s2 cid' p st. parstep_nice cid s1 s2
   /\ FLOOKUP (FST s1) cid' = SOME (Core cid' p st)
