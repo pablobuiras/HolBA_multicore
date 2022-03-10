@@ -705,7 +705,7 @@ local
    * into a more manageable format. *)
   (* DEBUG (when called from riscv_step_hex')
    
-     val thm = hd step_thms0 
+       val thm = hd step_thms0
 
   *)
   fun process_riscv_thm is_multicore vn pc_mem_thms thm = let
@@ -756,6 +756,7 @@ in
 
   val (ms_ty, addr_sz_ty, mem_val_sz_ty)  = dest_bir_lifting_machine_rec_t_ty (type_of (prim_mk_const{Name="riscv_bmr", Thy="bir_lifting_machines"}))
   val vn = mk_var ("ms", ms_ty);
+  val is_multicore = false;
   val hex_code = "FCE14083" (* "lbu x1,x2,-50" *)
 
   val hex_code = "340090F3" (* "csrrw x1,mscratch, x1" *)
@@ -764,11 +765,16 @@ in
 
   val hex_code = "00029263" (* "bne x5, x0, 4" *)
 
+  val hex_code = "00E12423" (* "sw x14, 8(x2)" *)
+
+  val hex_code = "0003A023" (* "sw x0, 0(t2)" *)
+
 *)
   fun riscv_step_hex' is_multicore vn hex_code = let
     val pc_mem_thms = prepare_mem_contains_thms vn hex_code
 
     val step_thms0 = [(riscv_step_rem_ss_hex ["word arith", "word ground", "word logic", "word shift", "word subtract"]) hex_code]
+
     val step_thms1 =
       List.map (process_riscv_thm is_multicore vn pc_mem_thms) step_thms0
   in
@@ -1091,38 +1097,14 @@ fun mk_atomic_binop bvar_rd bvar_rs2 funct5 =
   then bite (blt (bden bvar_rd, bden bvar_rs2), bden bvar_rs2, bden bvar_rd)
   else  raise ERR "mk_atomic_binop" ("Unsupported funct5 bits: "^funct5)
 
-(* Dummy assignment to shadow memory for .aq and .rl flags *)
-val mem_aqrl_bstmtl =
-  [bassign (bvarmem (1,1) "MEM_aqrl",
-           bstore_le (bden (bvarmem (1,1) "MEM_aqrl")) (bconst1 1) (bconst1 1))];
-
-(* Adds effects of eventual acquire/release flags *)
-fun add_aqrl bir_block_base is_aq is_rl =
-  (* Case 1: .aq.rl: instruction is sequentially consistent *)
-  if is_aq andalso is_rl
-  then ([mk_BStmt_Fence (BM_ReadWrite_tm, BM_ReadWrite_tm)]@
-	bir_block_base@mem_aqrl_bstmtl@
-	[mk_BStmt_Fence (BM_ReadWrite_tm, BM_ReadWrite_tm)])
-  (* Case 2: .rl: flush r/w before executing *)
-  else if is_rl
-  then ([mk_BStmt_Fence (BM_ReadWrite_tm, BM_Write_tm)]@
-	bir_block_base@mem_aqrl_bstmtl)
-  (* Case 3: .aq: prevent early r/w after *)
-  else if is_aq
-  then (bir_block_base@mem_aqrl_bstmtl@
-	[mk_BStmt_Fence (BM_Read_tm, BM_ReadWrite_tm)])
-  (* Case 3: No flags *)
-  else bir_block_base
-;
-
 fun get_amo_bstmts mu_b mu_e hex_code =
   let
     val (funct5, aq, rl, rs2, rs1, funct3, rd, _) = parse_amo hex_code
     val bvar_rd = bvarimm64 (mk_gpr_var_name rd)
     val bvar_rs1 = bvarimm64 (mk_gpr_var_name rs1)
     val bvar_rs2 = bvarimm64 (mk_gpr_var_name rs2)
-    val is_rl = str_to_bool rl
     val is_aq = str_to_bool aq
+    val is_rl = str_to_bool rl
     val atomic_op_res = mk_atomic_binop bvar_rd bvar_rs2 funct5
     (* Stores the base functionality of the atomic instructions, sans effect of .aq and .rl flags *)
     val bir_block_base =
@@ -1131,11 +1113,10 @@ fun get_amo_bstmts mu_b mu_e hex_code =
       then
 	[(* 1. Load data value from address in rs1, place value into rd *)
 	 bassert (baligned Bit64_tm (numSyntax.term_of_int 2, bden bvar_rs1)),
-
+	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 4)),
 	 bassign (bvar_rd, bscast64 (bload32_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1)))),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
-	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 4)),
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
 						(bden bvar_rs1)
 						(blowcast32 atomic_op_res))
@@ -1144,18 +1125,17 @@ fun get_amo_bstmts mu_b mu_e hex_code =
       then
 	[(* 1. Load data value from address in rs1, place value into rd *)
 	 bassert (baligned Bit64_tm (numSyntax.term_of_int 3, bden bvar_rs1)),
-
+	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 8)),
 	 bassign (bvar_rd, bload64_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1))),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
-	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 8)),
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
 						(bden bvar_rs1)
 						atomic_op_res)
 	]
       else raise ERR "get_amo_bstmts" ("Atomic instruction "^hex_code^" has unsupported funct3 bits: "^funct3)
   in
-    (add_aqrl bir_block_base is_aq is_rl)
+    (bir_block_base, is_aq, is_rl)
   end
 
 fun get_lrsc_bstmts mu_b mu_e hex_code =
@@ -1165,8 +1145,8 @@ fun get_lrsc_bstmts mu_b mu_e hex_code =
     val bvar_rs1 = bvarimm64 (mk_gpr_var_name rs1)
     (* TODO: rs2 in LR *)
     val bvar_rs2 = bvarimm64 (mk_gpr_var_name rs2)
-    val is_rl = str_to_bool rl
     val is_aq = str_to_bool aq
+    val is_rl = str_to_bool rl
     (* "01010101" in hex *)
     val ones_32 = bconst32 16843009
     val ones_64 = bconst64 72340172838076673
@@ -1210,12 +1190,12 @@ fun get_lrsc_bstmts mu_b mu_e hex_code =
 	  ]
       else raise ERR "get_lrsc_bstmts" ("LR/SC instruction "^hex_code^" has unsupported funct5 bits: "^funct5)
   in
-    (add_aqrl bir_block_base is_aq is_rl)
+    (bir_block_base, is_aq, is_rl)
   end
 ;
 
 (* Generic function for lifting an instruction to custom BIR basic statement list using cheat *)
-fun lift_by_cheat mu_b mu_e pc hex_code is_atomic_tm bstmt_list =
+fun lift_by_cheat mu_b mu_e pc hex_code is_atomic_tm is_acq_tm is_rel_tm bstmt_list =
   let
     val riscv_bmr_tm = ``riscv_bmr``; (* TODO: Obtain this in a smarter way *)
     val pc_word = wordsSyntax.mk_wordi (pc, 64)
@@ -1225,11 +1205,12 @@ fun lift_by_cheat mu_b mu_e pc hex_code is_atomic_tm bstmt_list =
       bir_interval_expSyntax.mk_WI_end (wordsSyntax.mk_wordii (Arbnum.toInt mu_b, 64),
                                         wordsSyntax.mk_wordii (Arbnum.toInt mu_e, 64))
     val byte_instruction = get_byte_word_l hex_code
+    val mc_tags = mk_bir_mc_tags (is_atomic_tm, is_acq_tm, is_rel_tm)
     val prog =
       mk_BirProgram_list (block_observe_ty,
 	[mk_bir_block_list (block_observe_ty,
 			    mk_BL_Address_HC (pc_imm, stringSyntax.fromMLstring hex_code),
-                            is_atomic_tm,
+                            optionSyntax.mk_some mc_tags,
 			    (map (inst [Type.alpha |-> block_observe_ty]) bstmt_list),
 			    mk_BStmt_Jmp (mk_BLE_Label (mk_BL_Address pc_next_imm))
 	)]
@@ -1251,23 +1232,23 @@ fun lift_fence mu_b mu_e pc hex_code =
   let
     val bstmt_list = get_fence_bstmts hex_code
   in
-    lift_by_cheat mu_b mu_e pc hex_code T bstmt_list
+    lift_by_cheat mu_b mu_e pc hex_code F F F bstmt_list
   end
 
 (* Lifts an atomic memory operation instruction by producing a cheat. *)
 fun lift_amo mu_b mu_e pc hex_code =
   let
-    val bstmt_list = get_amo_bstmts mu_b mu_e hex_code
+    val (bstmt_list, is_aq, is_rl) = get_amo_bstmts mu_b mu_e hex_code
   in
-    lift_by_cheat mu_b mu_e pc hex_code T bstmt_list
+    lift_by_cheat mu_b mu_e pc hex_code T (bitstringSyntax.term_of_bool is_aq) (bitstringSyntax.term_of_bool is_rl) bstmt_list
   end
 
 (* Lifts a load-reserve or store-conditional by producing a cheat. *)
 fun lift_lrsc mu_b mu_e pc hex_code =
   let
-    val bstmt_list = get_lrsc_bstmts mu_b mu_e hex_code
+    val (bstmt_list, is_aq, is_rl) = get_lrsc_bstmts mu_b mu_e hex_code
   in
-    lift_by_cheat mu_b mu_e pc hex_code T bstmt_list
+    lift_by_cheat mu_b mu_e pc hex_code F (bitstringSyntax.term_of_bool is_aq) (bitstringSyntax.term_of_bool is_rl) bstmt_list
   end
 
 in

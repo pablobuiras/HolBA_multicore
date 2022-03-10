@@ -36,7 +36,7 @@ fun patch_halt prog =
     val obs_ty = (hd o snd o dest_type) ty;
     val (lbl,_,_,_) = bir_programSyntax.dest_bir_block (List.last blocks);
     val new_last_block =  bir_programSyntax.mk_bir_block
-              (lbl, “F”, mk_list ([], mk_type ("bir_stmt_basic_t", [obs_ty])),
+              (lbl, bir_programSyntax.bir_mc_tags_NONE, mk_list ([], mk_type ("bir_stmt_basic_t", [obs_ty])),
                ``BStmt_Halt (BExp_Const (Imm32 0x000000w))``);
 
     val blocks' = (List.take (blocks, (List.length blocks) - 1))@[new_last_block];

@@ -217,7 +217,7 @@ open bir_lifterSimps;
 
   in
     LIST_CONJ (
-     (mk_lift_thm mr_mem_lf_of_ms) :: (* RISC-V TODO: OK. *)
+     (mk_lift_thm mr_mem_lf_of_ms) ::
      (mk_lift_thm (rand mr_pc_lf_of_ms)) ::
      map (mk_lift_thm o rand o snd) mr_imms_lf_of_ms)
   end;
@@ -240,17 +240,19 @@ open bir_lifterSimps;
 (* For debugging RISC-V:
   (* TODO: Make shortcuts for debugging other things than preconds *)
 
-  val hex_code = String.map Char.toUpper "FCE0879B"; (* "addiw x15,x1,-50" *)
+  val hex_code = String.map Char.toUpper "0003A023"; (* sw x0, 0(t2) *)
+  val hex_code = String.map Char.toUpper "00E12423"; (* sw x14, 8(x2) *)
 
   val hex_code_desc = hex_code;
-  val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc
+  val is_multicore = false;
+  val (next_thms, mm_tm, label_tm) = mk_inst_lifting_theorems hex_code hex_code_desc is_multicore
   val (lb, ms_case_cond_t, next_thm) = el 1 (preprocess_next_thms label_tm next_thms)
   val next_thm0 = REWRITE_RULE [ASSUME ms_case_cond_t] next_thm
   val (preconds, next_tm) = strip_imp_only (concl next_thm0)
   val tm = (* Put term returned by exception here, don't forget type information... *)
 
-val tm = ``Imm64
-                (w2w ((riscv_mem_half ms.MEM8 (ms.c_gpr ms.procID 2w - 50w)):word16))``;
+val tm = ``riscv_mem_store_word (ms.c_gpr ms.procID 7w + 0w) 0w ms.MEM8``;
+val tm = ``riscv_mem_store_word (ms.c_gpr ms.procID 2w + 8w) (ms.c_gpr ms.procID 14w) ms.MEM8``;
 
   (* In case of several preconds, continue with the following for 2, 3, 4, ...*)
   (* val tm = el 2 preconds *)
@@ -1327,7 +1329,7 @@ fun get_patched_step_hex ms_v hex_code is_multicore =
   (* Lifting an instruction *)
   (**************************)
 
-  (* Lifting single instructings, is the main workhorse of this library.
+  (* Lifting single instructions, is the main workhorse of this library.
      The top-level interface provides a function "bir_lift_instr" that given
 
      - a memory region not to touch
@@ -1388,8 +1390,11 @@ fun get_patched_step_hex ms_v hex_code is_multicore =
 (* For debugging RISC-V:
 
   val (mu_thm:thm, mm_precond_thm:thm) = test_RISCV.bir_lift_instr_prepare_mu_thms (mu_b, mu_e)
+  val hex_code = String.map Char.toUpper "0003A023"; (* sw x0, 0(t2) *)
+  val hex_code = String.map Char.toUpper "00E12423"; (* sw x14, 8(x2) *)
   val hex_code = String.map Char.toUpper "007302B3";
   val hex_code_desc = hex_code;
+  val is_multicore = false;
 
 *)
   fun bir_lift_instr_mu_gen_pc_compute (mu_thm:thm, mm_precond_thm : thm) hex_code hex_code_desc is_multicore =

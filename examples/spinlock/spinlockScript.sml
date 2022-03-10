@@ -134,49 +134,32 @@ QED
 Theorem is_fulfil_parstep_nice_eq:
   !tr cid t i. wf_trace tr /\ SUC i < LENGTH tr
     /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-    ==>  ?p s var xcl e v_e v_data v_addr v l new_viewenv new_env a_e.
-    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl
+    ==>  ?p s var xcl e v_e v_data v_addr v l new_viewenv new_env a_e rel_acq rel acq.
+      bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl acq rel
     /\ xcl = is_xcl_write p s.bst_pc
+    /\ rel = is_rel p s.bst_pc 
+    /\ acq = is_acq p s.bst_pc
+    /\ rel_acq = (rel /\ acq)
     /\  MEM t s.bst_prom
-    /\  is_certified p cid
-          (s with
-           <|bst_pc :=
-               if xcl then
-                 bir_pc_next (bir_pc_next (bir_pc_next s.bst_pc))
-               else bir_pc_next s.bst_pc; bst_environ := new_env;
-             bst_viewenv := new_viewenv;
-             bst_coh :=
-               (λlo. if lo = l then MAX (s.bst_coh l) t else s.bst_coh lo);
-             bst_v_wOld := MAX s.bst_v_wOld t;
-             bst_v_CAP := MAX s.bst_v_CAP v_addr;
-             bst_prom updated_by FILTER (λt'. t' ≠ t);
-             bst_fwdb :=
-               (λlo.
-                    if lo = l then
-                      <|fwdb_time := t; fwdb_view := MAX v_addr v_data;
-                        fwdb_xcl := xcl |>
-                    else s.bst_fwdb lo);
-             bst_xclb := if xcl then NONE else s.bst_xclb|>)
-          (SND (EL (SUC i) tr))
-    /\  SOME new_viewenv =
-        fulfil_update_viewenv p s xcl t
-    /\  SOME new_env = fulfil_update_env p s xcl
-    /\  s.bst_coh l < t
-    /\  (if xcl then get_xclb_view s.bst_xclb else 0) < t
-    /\  s.bst_v_CAP < t
-    /\  s.bst_v_wNew < t
-    /\  v_data < t
-    /\  v_addr < t
-    /\  t < LENGTH (SND (EL (SUC i) tr)) + 1
-    /\  EL (PRE t) (SND (EL (SUC i) tr)) = <|loc := l; val := v; cid := cid|>
-    /\  (xcl ==> fulfil_atomic_ok (SND (EL (SUC i) tr)) l cid s t)
-    /\  (SOME v,v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
-    /\  (SOME l,v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
-    /\  get_fulfil_args e = SOME (a_e,v_e)
     /\  bir_get_current_statement p s.bst_pc =
         SOME (BStmtB (BStmt_Assign var e))
-    /\  atomicity_ok cid (FST (EL i tr))
-    /\  FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
+    /\  get_fulfil_args e = SOME (a_e,v_e)
+    /\  EL (PRE t) (SND (EL (SUC i) tr)) = <|loc := l; val := v; cid := cid|>
+    /\  (xcl ==> fulfil_atomic_ok (SND (EL (SUC i) tr)) l cid s t)
+    /\  t < LENGTH (SND (EL (SUC i) tr)) + 1
+    /\  (SOME v,v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
+    /\  (SOME l,v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+    /\  (if acq /\ rel /\ xcl then s.bst_v_Rel else 0) < t
+    /\  (if rel then MAX s.bst_v_rOld s.bst_v_wOld else 0) < t
+    /\  SOME new_viewenv =
+        fulfil_update_viewenv p s xcl t
+    /\  (if xcl then get_xclb_view s.bst_xclb else 0) < t
+    /\  SOME new_env = fulfil_update_env p s xcl
+    /\  s.bst_coh l < t
+    /\  s.bst_v_wNew < t
+    /\  s.bst_v_CAP < t
+    /\  v_data < t
+    /\  v_addr < t
     /\  FST (EL (SUC i) tr) =
         FST (EL i tr) |+
         (cid,
@@ -190,8 +173,24 @@ Theorem is_fulfil_parstep_nice_eq:
               bst_coh :=
                 (λlo. if lo = l then MAX (s.bst_coh l) t else s.bst_coh lo);
               bst_v_wOld := MAX s.bst_v_wOld t;
-              bst_v_CAP := MAX s.bst_v_CAP v_addr;
-              bst_prom updated_by FILTER (λt'. t' ≠ t);
+              bst_v_rNew :=
+                if
+                  acq /\ rel /\
+                  xcl
+                then
+                  MAX s.bst_v_rNew t
+                else s.bst_v_rNew;
+              bst_v_wNew :=
+                if
+                  acq /\ rel /\
+                  xcl
+                then
+                  MAX s.bst_v_wNew t
+                else s.bst_v_wNew; bst_v_CAP := MAX s.bst_v_CAP v_addr;
+              bst_v_Rel :=
+                MAX s.bst_v_Rel
+                  (if acq /\ rel then t else 0);
+              bst_prom updated_by FILTER (λt'. t' <> t);
               bst_fwdb :=
                 (λlo.
                      if lo = l then
@@ -200,12 +199,12 @@ Theorem is_fulfil_parstep_nice_eq:
                      else s.bst_fwdb lo);
               bst_xclb :=
                 if xcl then NONE else s.bst_xclb|>))
-    /\  SND (EL i tr) = SND (EL (SUC i) tr)
+    /\  FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
 Proof
   rpt strip_tac
   >> drule_all_then assume_tac is_fulfil_parstep_nice_imp
   >> drule_all_then assume_tac is_fulfil_memory
-  >> gvs[parstep_nice_def,parstep_cases,clstep_cases,cstep_cases,is_fulfil_def,FLOOKUP_UPDATE,bir_programTheory.bir_state_t_accfupds,stmt_generic_step_def,bir_get_stmt_branch,bir_get_stmt_generic,FILTER_EQ_ID,EVERY_MEM,bir_get_stmt_write]
+  >> gvs[parstep_nice_def,parstep_cases,clstep_cases,cstep_cases,is_fulfil_def,FLOOKUP_UPDATE,bir_programTheory.bir_state_t_accfupds,stmt_generic_step_def,bir_get_stmt_branch,bir_get_stmt_generic,FILTER_EQ_ID,EVERY_MEM,AC CONJ_ASSOC CONJ_COMM,FUPD11_SAME_KEY_AND_BASE]
   >> dxrule_at_then Any (drule_at Any) FILTER_NEQ_MEM_EQ
   >> impl_tac
   >- (
@@ -214,7 +213,8 @@ Proof
     >> fs[]
   )
   >> disch_then $ fs o single
-  >> rpt $ goal_assum $ drule_at Any
+  >> gvs[bir_get_stmt_write]
+  >> rpt $ goal_assum $ rev_drule_at Any
   >> fs[]
 QED
 
@@ -519,8 +519,8 @@ QED
 Theorem is_fulfil_to_memory:
   !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  ==> 0 < t /\ t < (LENGTH $ SND $ EL i tr) + 1
-    /\ (EL (PRE t) $ SND $ EL i tr).cid = cid
+  ==> 0 < t /\ t < (LENGTH $ SND $ EL (SUC i) tr) + 1
+    /\ (EL (PRE t) $ SND $ EL (SUC i) tr).cid = cid
 Proof
   rpt gen_tac >> strip_tac
   >> drule_all_then strip_assume_tac is_fulfil_parstep_nice_eq
@@ -644,10 +644,10 @@ QED
 
 Definition is_read_xcl_def:
   is_read_xcl cid t sys1 sys2 <=>
-  ?st st' p var a_e cast_opt.
+  ?st st' p var a_e cast_opt acq rel.
     FLOOKUP sys1 cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
-    /\ bir_get_stmt p st.bst_pc = BirStmt_Read var a_e cast_opt T
+    /\ bir_get_stmt p st.bst_pc = BirStmt_Read var a_e cast_opt T acq rel
     /\ IS_SOME st'.bst_xclb
     /\ (THE st'.bst_xclb).xclb_time = t
     /\ IS_NONE st.bst_xclb
@@ -655,12 +655,12 @@ End
 
 Definition is_fulfil_xcl_def:
   is_fulfil_xcl cid t sys1 sys2 <=>
-  ?st st' p a_e v_e.
+  ?st st' p a_e v_e acq rel.
     FLOOKUP sys1 cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
-    /\ bir_get_stmt p st.bst_pc = BirStmt_Write a_e v_e T
+    /\ bir_get_stmt p st.bst_pc = BirStmt_Write a_e v_e T acq rel
     /\ IS_SOME st.bst_xclb
 End
 
@@ -675,13 +675,14 @@ Theorem is_fulfil_xcl_atomic:
   !tr i cid t p st.  wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
-  ==> fulfil_atomic_ok (SND $ EL i tr) ((EL (PRE t) $ SND $ EL i tr).loc) cid st t
+  ==> fulfil_atomic_ok (SND $ EL (SUC i) tr)
+        ((EL (PRE t) $ SND $ EL (SUC i) tr).loc) cid st t
     /\ is_xcl_write p st.bst_pc
 Proof
   rpt gen_tac >> strip_tac
   >> imp_res_tac is_fulfil_xcl_is_fulfil
   >> drule_at_then Any assume_tac is_fulfil_parstep_nice_eq
-  >> gs[is_fulfil_xcl_def,bir_get_stmt_write]
+  >> gvs[is_fulfil_xcl_def,bir_get_stmt_write]
 QED
 
 (* parstep and read transitions have same ids *)
@@ -720,43 +721,70 @@ QED
 Theorem is_read_xcl_parstep_nice_eq:
   !tr cid t i. wf_trace tr /\ SUC i < LENGTH tr
     /\ is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-    ==> ?p s st' opt_cast ν_pre v_addr new_env l a_e var v.
+    ==> ?p s st' opt_cast ν_pre v_addr new_env l a_e var v zcq rel acq.
     is_certified p cid st' (SND (EL (SUC i) tr))
     /\ st' = (s with
            <|bst_pc := bir_pc_next (bir_pc_next s.bst_pc);
              bst_environ := new_env;
              bst_viewenv updated_by
-               (λenv.
-                    env |+
-                    (var,
-                     MAX (MAX v_addr s.bst_v_rNew)
-                       (mem_read_view (s.bst_fwdb l) t)));
+               (\env. env |+ (var,
+                     MAX (MAX (MAX (MAX v_addr s.bst_v_rNew)
+                             (if acq /\ rel then s.bst_v_Rel else 0))
+                          (if acq /\ rel then MAX s.bst_v_rOld s.bst_v_wOld
+                           else 0)) (mem_read_view (s.bst_fwdb l) t)));
              bst_coh :=
-               (λlo.
+               (\lo.
                     if lo = l then
-                      MAX (s.bst_coh l)
-                        (MAX (MAX v_addr s.bst_v_rNew)
-                           (mem_read_view (s.bst_fwdb l) t))
+                      MAX (s.bst_coh l) $ MAX (MAX
+                              (MAX (MAX v_addr s.bst_v_rNew)
+                                 (if acq /\ rel then s.bst_v_Rel else 0))
+                              (if acq /\ rel then MAX s.bst_v_rOld s.bst_v_wOld else 0))
+                          (mem_read_view (s.bst_fwdb l) t)
                     else s.bst_coh lo);
              bst_v_rOld :=
                MAX s.bst_v_rOld
-                 (MAX (MAX v_addr s.bst_v_rNew)
-                    (mem_read_view (s.bst_fwdb l) t));
-             bst_v_CAP := MAX s.bst_v_CAP v_addr;
+                 (MAX (MAX (MAX (MAX v_addr s.bst_v_rNew)
+                          (if acq /\ rel then s.bst_v_Rel else 0))
+                       (if acq /\ rel then MAX s.bst_v_rOld s.bst_v_wOld
+                        else 0)) (mem_read_view (s.bst_fwdb l) t));
+             bst_v_rNew :=
+               if acq then
+                 MAX s.bst_v_rNew
+                   (MAX (MAX (MAX (MAX v_addr s.bst_v_rNew)
+                            (if rel then s.bst_v_Rel else 0))
+                         (if rel then MAX s.bst_v_rOld s.bst_v_wOld else 0))
+                      (mem_read_view (s.bst_fwdb l) t))
+               else s.bst_v_rNew;
+             bst_v_wNew :=
+               if acq then
+                 MAX s.bst_v_wNew
+                   (MAX (MAX (MAX (MAX v_addr s.bst_v_rNew)
+                            (if rel then s.bst_v_Rel else 0))
+                         (if rel then MAX s.bst_v_rOld s.bst_v_wOld else 0))
+                      (mem_read_view (s.bst_fwdb l) t))
+               else s.bst_v_wNew; bst_v_CAP := MAX s.bst_v_CAP v_addr;
+             bst_v_Rel :=
+               MAX s.bst_v_Rel
+                 (if rel /\ acq then
+                    MAX (MAX (MAX (MAX v_addr s.bst_v_rNew) s.bst_v_Rel)
+                         (MAX s.bst_v_rOld s.bst_v_wOld))
+                      (mem_read_view (s.bst_fwdb l) t)
+                  else 0);
              bst_xclb :=
                SOME
                  <|xclb_time := t;
                    xclb_view :=
-                     MAX (MAX v_addr s.bst_v_rNew)
-                       (mem_read_view (s.bst_fwdb l) t)|> |>)
+                     MAX (MAX (MAX (MAX v_addr s.bst_v_rNew)
+                             (if acq /\ rel then s.bst_v_Rel else 0))
+                          (if acq /\ rel then MAX s.bst_v_rOld s.bst_v_wOld
+                           else 0)) (mem_read_view (s.bst_fwdb l) t)|> |>)
     /\  SOME new_env =
         env_update_cast64 (bir_var_name var) v (bir_var_type var) s.bst_environ
-    /\  (∀t'.
-          t < t' ∧ (t' ≤ ν_pre ∨ t' ≤ s.bst_coh l) ⇒
-          (EL t' (SND (EL i tr))).loc ≠ l)
+    /\  (!t''. t < t'' /\ (t'' <= ν_pre \/ t'' <= s.bst_coh l) ==>
+          (EL t'' (SND (EL i tr))).loc <> l)
     /\  mem_read (SND (EL i tr)) l t = SOME v
     /\  (SOME l,v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
-    /\  bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast T
+    /\  bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast T acq rel
     /\  SND (EL (SUC i) tr) = SND (EL i tr)
     /\  atomicity_ok cid (FST (EL i tr))
     /\  FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
@@ -949,16 +977,18 @@ Theorem bir_labels_of_program_bir_spinlock_prog =
 (* all reads in the spinlock program *)
 
 Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ:
-  !pc var a_e opt_cast xcl.
-  bir_get_stmt (bir_spinlock_prog:string bir_program_t) pc
-  = BirStmt_Read var a_e opt_cast xcl
+  !pc var a_e opt_cast xcl acq rel.
+  bir_get_stmt (bir_spinlock_prog:'a bir_program_t) pc
+  = BirStmt_Read var a_e opt_cast xcl acq rel
   <=> pc = <| bpc_index := 1; bpc_label := BL_Address $ Imm64 12w|>
     /\ var = BVar "x5" $ BType_Imm Bit64
     /\ opt_cast = SOME (BIExp_SignedCast,Bit64)
     /\ a_e = BExp_Den spinlock_var
     /\ xcl
+    /\ acq = is_acq (bir_spinlock_prog:'a bir_program_t) pc
+    /\ rel = is_rel (bir_spinlock_prog:'a bir_program_t) pc
 Proof
-  fs[EQ_IMP_THM]
+  fs[Once EQ_IMP_THM]
   >> rpt gen_tac >> ntac 2 strip_tac
   >- (
     fs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def]
@@ -975,22 +1005,26 @@ QED
 (* all writes in the spinlock program *)
 
 Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ:
-  !pc a_e v_e xcl.
-  bir_get_stmt (bir_spinlock_prog:string bir_program_t) pc
-  = BirStmt_Write a_e v_e xcl
+  !pc a_e v_e xcl acq rel.
+  bir_get_stmt (bir_spinlock_prog:'a bir_program_t) pc
+  = BirStmt_Write a_e v_e xcl acq rel
   <=> (
     pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 12w|>
     /\ a_e = BExp_Den spinlock_var
     /\ v_e = BExp_Const (Imm32 0x1010101w)
     /\ ~xcl
+    /\ acq = is_acq (bir_spinlock_prog:'a bir_program_t) pc
+    /\ rel = is_rel (bir_spinlock_prog:'a bir_program_t) pc
   ) \/ (
     pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 20w|>
     /\ a_e = BExp_Den spinlock_var
     /\ v_e = BExp_Cast BIExp_LowCast (BExp_Den $ BVar "x0" $ BType_Imm Bit64) Bit32
     /\ xcl
+    /\ acq = is_acq (bir_spinlock_prog:'a bir_program_t) pc
+    /\ rel = is_rel (bir_spinlock_prog:'a bir_program_t) pc
   )
 Proof
-  fs[EQ_IMP_THM]
+  fs[Once EQ_IMP_THM]
   >> rpt gen_tac >> ntac 2 strip_tac
   >- (
     fs[bir_get_stmt_write,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def]
@@ -1012,8 +1046,8 @@ Theorem core_runs_spinlock_is_fulfil_xcl_memory_location:
   /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> bir_eval_exp (BExp_Den spinlock_var) st.bst_environ
-    = SOME $ (EL (PRE t) $ SND $ EL i tr).loc
-    /\ ?v. (EL (PRE t) $ SND $ EL i tr).val = BVal_Imm v
+    = SOME $ (EL (PRE t) $ SND $ EL (SUC i) tr).loc
+    /\ ?v. (EL (PRE t) $ SND $ EL (SUC i) tr).val = BVal_Imm v
 Proof
   rpt gen_tac >> strip_tac
   >> drule_all_then assume_tac is_fulfil_xcl_is_fulfil
@@ -1021,7 +1055,6 @@ Proof
   >> drule_at Any wf_trace_core_runs_spinlock_FLOOKUP
   >> disch_then $ drule_at_then Any assume_tac
   >> gvs[is_fulfil_xcl_def,FLOOKUP_UPDATE,bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ,bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ]
-  >> qhdtm_x_assum `is_certified` kall_tac
   >> qpat_x_assum `FST _ = _` kall_tac
   >> fs[bir_expTheory.bir_eval_exp_def,bir_eval_exp_view_def,bir_envTheory.bir_env_read_def]
   >> BasicProvers.every_case_tac
@@ -1292,14 +1325,14 @@ Proof
   >> rev_drule_at_then (Pat `FLOOKUP _ _ = _`) assume_tac wf_trace_core_runs_spinlock_FLOOKUP
   >> drule_at_then (Pat `FLOOKUP _ _ = _`) assume_tac wf_trace_core_runs_spinlock_FLOOKUP
   >> gvs[bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ]
-  >> qmatch_assum_rename_tac `fulfil_atomic_ok (SND $ EL i' tr) _ cid' _ t'`
-  >> qmatch_assum_rename_tac `fulfil_atomic_ok (SND $ EL i tr) _ cid _ t`
-  >> `(EL (PRE t) (SND $ EL i tr)).loc = k /\ (EL (PRE t') (SND $ EL i' tr)).loc = k` by (
+  >> qmatch_assum_rename_tac `fulfil_atomic_ok (SND $ EL (SUC i') tr) _ cid' _ t'`
+  >> qmatch_assum_rename_tac `fulfil_atomic_ok (SND $ EL (SUC i) tr) _ cid _ t`
+  >> `(EL (PRE t) (SND $ EL (SUC i) tr)).loc = k /\ (EL (PRE t') (SND $ EL (SUC i') tr)).loc = k` by (
     ntac 2 $ dxrule_at_then (Pat `is_fulfil _ _ _ _`) assume_tac is_fulfil_to_memory
     >> drule cores_run_spinlock_unique_loc
     >> disch_then $ (fn x =>
-      qspecl_then [`k`,`i'`,`EL (PRE t') $ SND $ EL i' tr`] assume_tac x
-      >> qspecl_then [`k`,`i`,`EL (PRE t) $ SND $ EL i tr`] assume_tac x
+      qspecl_then [`k`,`SUC i'`,`EL (PRE t') $ SND $ EL (SUC i') tr`] assume_tac x
+      >> qspecl_then [`k`,`SUC i`,`EL (PRE t) $ SND $ EL (SUC i) tr`] assume_tac x
     )
     >> gvs[EL_MEM]
   )

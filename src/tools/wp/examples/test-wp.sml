@@ -14,12 +14,12 @@ val wp_tests =
     (* program term *)
     ``BirProgram [
       <|bb_label := BL_Label "entry";
-        bb_atomic := F;
+        bb_mc_tags := NONE;
 	bb_statements := [];
 	bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "mem_store"))
       |>;
       <|bb_label := BL_Label "mem_store"; (* init *)
-        bb_atomic := F;
+        bb_mc_tags := NONE;
 	bb_statements := [
 	  BStmt_Assign (BVar "MEM" (BType_Mem Bit32 Bit8))
 	    (BExp_Store
@@ -31,7 +31,7 @@ val wp_tests =
 	bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "mem_load"))
       |>;
       <|bb_label := BL_Label "mem_load";
-        bb_atomic := F;
+        bb_mc_tags := NONE;
 	bb_statements := [
 	  BStmt_Assign (BVar "x" (BType_Imm Bit16))
 	    (BExp_Load
@@ -43,7 +43,7 @@ val wp_tests =
 	bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "end"))
       |>;
       <|bb_label := BL_Label "end";
-        bb_atomic := F;
+        bb_mc_tags := NONE;
 	bb_statements := [];
 	bb_last_statement := BStmt_Halt (BExp_Const (Imm32 0w))
       |>
@@ -80,15 +80,15 @@ val wp_tests =
     "cjmp",
     (* program term *)
     ``BirProgram
-       [<|bb_label := BL_Label "entry"; bb_atomic := F; bb_statements := [];
+       [<|bb_label := BL_Label "entry"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "assign_x_1"))|>;
         <|bb_label := BL_Label "assign_x_1";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [BStmt_Assign (BVar "x" (BType_Imm Bit32))
                (BExp_Const (Imm32 1w))];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "cjmp"))|>;
-        <|bb_label := BL_Label "cjmp"; bb_atomic := F; bb_statements := [];
+        <|bb_label := BL_Label "cjmp"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement :=
             BStmt_CJmp
               (BExp_BinPred BIExp_Equal
@@ -97,20 +97,20 @@ val wp_tests =
               (BLE_Label (BL_Label "assign_y_100"))
               (BLE_Label (BL_Label "assign_y_200"))|>;
         <|bb_label := BL_Label "assign_y_100";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [BStmt_Assign (BVar "y" (BType_Imm Bit32))
                (BExp_Const (Imm32 100w))];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "epilogue"))|>;
         <|bb_label := BL_Label "assign_y_200";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [BStmt_Assign (BVar "y" (BType_Imm Bit32))
                (BExp_Const (Imm32 200w))];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "epilogue"))|>;
-        <|bb_label := BL_Label "epilogue"; bb_atomic := F; bb_statements := [];
+        <|bb_label := BL_Label "epilogue"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "end"))|>;
-        <|bb_label := BL_Label "end"; bb_atomic := F; bb_statements := [];
+        <|bb_label := BL_Label "end"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement := BStmt_Halt (BExp_Const (Imm32 0w))|>]``,
     (* Precondition *)
     (``BL_Label "entry"``, ``BExp_Const (Imm1 1w)``),
@@ -140,15 +140,15 @@ val wp_tests =
     "gauss_no_mem_s3",
     (* program term *)
     ``BirProgram
-       [<|bb_label := BL_Label "entry"; bb_atomic := F; bb_statements := [];
+       [<|bb_label := BL_Label "entry"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "ret_eq_0"))|>;
         <|bb_label := BL_Label "ret_eq_0";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [BStmt_Assign (BVar "ret" (BType_Imm Bit16))
                (BExp_Const (Imm16 0w))];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "end"))|>;
-        <|bb_label := BL_Label "end"; bb_atomic := F; bb_statements := [];
+        <|bb_label := BL_Label "end"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement := BStmt_Halt (BExp_Const (Imm32 0w))|>]``,
     (* Precondition *)
     (``BL_Label "entry"``,
@@ -190,10 +190,10 @@ val wp_tests =
     "gauss_no_mem_s2",
     (* program term *)
     ``BirProgram
-       [<|bb_label := BL_Label "entry"; bb_atomic := F; bb_statements := [];
+       [<|bb_label := BL_Label "entry"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "ret_add_x"))|>;
         <|bb_label := BL_Label "ret_add_x";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [BStmt_Assign (BVar "ret" (BType_Imm Bit16))
                (BExp_BinExp BIExp_Plus
@@ -201,14 +201,14 @@ val wp_tests =
                   (BExp_Den (BVar "x" (BType_Imm Bit16))))];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "x_dec"))|>;
         <|bb_label := BL_Label "x_dec";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [BStmt_Assign (BVar "x" (BType_Imm Bit16))
                (BExp_BinExp BIExp_Minus
                   (BExp_Den (BVar "x" (BType_Imm Bit16)))
                   (BExp_Const (Imm16 1w)))];
           bb_last_statement := BStmt_Jmp (BLE_Label (BL_Label "end"))|>;
-        <|bb_label := BL_Label "end"; bb_atomic := F; bb_statements := [];
+        <|bb_label := BL_Label "end"; bb_mc_tags := NONE; bb_statements := [];
           bb_last_statement := BStmt_Halt (BExp_Const (Imm32 0w))|>]``,
     (* Precondition *)
     (``BL_Label "entry"``,
