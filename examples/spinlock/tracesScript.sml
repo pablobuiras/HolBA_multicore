@@ -184,7 +184,8 @@ Proof
     >> BasicProvers.every_case_tac
     >> fs[]
   )
-  >> ntac 2 $ qpat_x_assum `_ = _ |+ _` kall_tac
+  >> gvs[FUPD11_SAME_BASE]
+  >> ntac 2 $ qpat_x_assum `_ |+ _ = _` kall_tac
   >> fs[cstep_cases]
   >> imp_res_tac clstep_LENGTH_prom
   >> gvs[]
@@ -204,11 +205,28 @@ Definition empty_xclb_def:
   ==> st.bst_xclb = NONE
 End
 
-Definition wf_sys_def:
-  wf_sys s <=>
-    !cid cid' p st. FLOOKUP s cid = SOME $ Core cid' p st
+(* enforce restriction on core id *)
+
+Definition wf_trace1_def:
+  wf_trace1 tr =
+    !i cid cid' p st. i < LENGTH tr
+      /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid' p st
       ==> cid = cid'
 End
+
+Theorem wf_trace1_FLOOKUP:
+  !tr i id x. wf_trace1 tr
+  /\ FLOOKUP (FST $ EL i tr) id = SOME x
+  /\ i < LENGTH tr
+  ==> ?p st. x = Core id p st
+Proof
+  rw[wf_trace1_def]
+  >> qmatch_assum_rename_tac `FLOOKUP _ _ = SOME x`
+  >> Cases_on `x`
+  >> res_tac
+  >> fs[]
+QED
+
 
 (* well-formed traces are certified and thread id's are unique identifiers *)
 Definition wf_trace_def:

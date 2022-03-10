@@ -1,23 +1,25 @@
 
 open HolKernel Parse boolLib bossLib;
 
-open bir_lifter_interfaceLib;
+open rich_listTheory listTheory arithmeticTheory finite_mapTheory ;
+open bir_lifter_interfaceLib bir_promisingTheory ;
+open tracesTheory tracestepTheory spinlockTheory;
 
-val _ = Parse.current_backend := PPBackEnd.vt100_terminal;
-val _ = set_trace "bir_inst_lifting.DEBUG_LEVEL" 2;
+(*
+ * spinlock correctness proof
+ *)
 
 val _ = new_theory "spinlock2";
 
 (*
-val (bir_spinlock_progbin_def, bir_spinlock_prog_def, bir_is_lifted_prog_spinlock) = lift_da_and_store_mc_riscv
-          "spinlock"
-          "spinlock.da"
+val _ = Parse.current_backend := PPBackEnd.vt100_terminal;
+val _ = set_trace "bir_inst_lifting.DEBUG_LEVEL" 2;
+
+val (bir_spinlockfull_progbin_def, bir_spinlockfull_prog_def, bir_is_lifted_prog_spinlockfull) = lift_da_and_store_mc_riscv
+          "spinlockfull"
+          "spinlockfull.da"
           ((Arbnum.fromInt 0), (Arbnum.fromInt 0x1000000));
 *)
-
-open bir_promisingTheory rich_listTheory listTheory arithmeticTheory tracesTheory;
-open finite_mapTheory;
-open spinlockTheory;
 
 (* simplifying terms through rewrites *)
 
@@ -337,26 +339,6 @@ QED
 Definition invariant_def:
   invariant cores = unique cores in_crit
 End
-
-Definition wf_trace1_def:
-  wf_trace1 tr =
-    !i cid cid' p st. i < LENGTH tr
-      /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid' p st
-      ==> cid = cid'
-End
-
-Theorem wf_trace1_FLOOKUP:
-  !tr i id x. wf_trace1 tr
-  /\ FLOOKUP (FST $ EL i tr) id = SOME x
-  /\ i < LENGTH tr
-  ==> ?p st. x = Core id p st
-Proof
-  rw[wf_trace1_def]
-  >> qmatch_assum_rename_tac `FLOOKUP _ _ = SOME x`
-  >> Cases_on `x`
-  >> res_tac
-  >> fs[]
-QED
 
 Theorem init_unique_in_crit_imp:
   !i tr. wf_trace tr /\ wf_trace1 tr
