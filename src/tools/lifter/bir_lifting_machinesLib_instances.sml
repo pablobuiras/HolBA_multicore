@@ -1103,35 +1103,40 @@ fun get_amo_bstmts mu_b mu_e hex_code =
     val bvar_rd = bvarimm64 (mk_gpr_var_name rd)
     val bvar_rs1 = bvarimm64 (mk_gpr_var_name rs1)
     val bvar_rs2 = bvarimm64 (mk_gpr_var_name rs2)
+    val bvar_tmp = bvarimm64 "tmp"
     val is_aq = str_to_bool aq
     val is_rl = str_to_bool rl
-    val atomic_op_res = mk_atomic_binop bvar_rd bvar_rs2 funct5
+    val atomic_op_res = mk_atomic_binop bvar_tmp bvar_rs2 funct5
     (* Stores the base functionality of the atomic instructions, sans effect of .aq and .rl flags *)
     val bir_block_base =
       (* Check if atomic instruction is 32- or 64-bit (.W or .D) *)
       if funct3 = "010" (* .W (RV32) *)
       then
-	[(* 1. Load data value from address in rs1, place value into rd *)
+	[(* 1. Load data value from address in rs1, place value into temporary register *)
 	 bassert (baligned Bit64_tm (numSyntax.term_of_int 2, bden bvar_rs1)),
 	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 4)),
-	 bassign (bvar_rd, bscast64 (bload32_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1)))),
+	 bassign (bvar_tmp, bscast64 (bload32_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1)))),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
 						(bden bvar_rs1)
-						(blowcast32 atomic_op_res))
+						(blowcast32 atomic_op_res)),
+         (* 3. Place value of temporary register in rd. *)
+         bassign (bvar_rd, bden (bvar_tmp))
 	]
       else if funct3 = "011" (* .D (RV64) *)
       then
 	[(* 1. Load data value from address in rs1, place value into rd *)
 	 bassert (baligned Bit64_tm (numSyntax.term_of_int 3, bden bvar_rs1)),
 	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 8)),
-	 bassign (bvar_rd, bload64_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1))),
+	 bassign (bvar_tmp, bload64_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1))),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
 						(bden bvar_rs1)
-						atomic_op_res)
+						atomic_op_res),
+         (* 3. Place value of temporary register in rd. *)
+         bassign (bvar_rd, bden (bvar_tmp))
 	]
       else raise ERR "get_amo_bstmts" ("Atomic instruction "^hex_code^" has unsupported funct3 bits: "^funct3)
   in
