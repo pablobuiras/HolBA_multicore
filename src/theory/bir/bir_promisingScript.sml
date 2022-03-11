@@ -25,6 +25,7 @@ val _ = Datatype‘
   bir_statement_type_t =
   | BirStmt_Read bir_var_t bir_exp_t ((bir_cast_t # bir_immtype_t) option) bool bool bool
   | BirStmt_Write bir_exp_t bir_exp_t bool bool bool
+  | BirStmt_Amo bir_var_t bir_exp_t bir_exp_t bool bool
   | BirStmt_Expr bir_var_t bir_exp_t
   | BirStmt_Fence bir_memop_t bir_memop_t
   | BirStmt_Branch bir_exp_t bir_label_exp_t bir_label_exp_t
@@ -488,6 +489,51 @@ clstep p cid s M [] s')
                              else bir_pc_next s.bst_pc |>
  ==>
   clstep p cid s M [t] s')
+/\ (* AMO fulfil *)
+(!p cid s s' M acq rel var l a_e v v_e v_rPre v_rPost v_wPre v_wPost (t_w:num) (t_r :num) new_environ new_viewenv.
+   bir_get_stmt p s.bst_pc = BirStmt_Amo var a_e v_e acq rel
+
+   (* Get location *)
+   /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+
+   (* Read part *)
+   /\ mem_read M l t_r = v_r
+   /\ (!t'. t_r < t' /\ t' <= MAX v_rPre (s.bst_coh l))
+   /\ v_rPre = MAX v_addr (MAX s.bst_v_rNew (if acq /\ rel then s.bst_v_Rel else 0))
+   /\ v_rPost = MAX v_rPre (MAX t_r (mem_read_view (s.bst_fwdb l) t_r))
+                    
+   (* register and register view update *)
+   /\ SOME new_environ = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
+   /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_post)
+
+   (* Write part *)
+   /\ MEM t_w s.bst_prom
+   /\ (SOME v, v_data) = bir_eval_exp_view a_e new_environ new_viewenv
+   /\ EL t_w M = <| loc := l; val := v; cid := cid |>
+   /\ v_wPre = MAX v_addr (MAX v_data (MAX s.bst_v_CAP (MAX v_rPost (MAX s.bst_v_wNew (if rel then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)))))
+   /\ v_wPost = t_w
+   /\ MAX v_wPre (MAX (s.bst_coh l) v_rPost) < t_w
+   (* Atomic part *)
+   /\ mem_atomic M l cid t_r t_w
+   (* State update *)
+   /\ s' = s with <| bst_viewenv := new_viewenv;
+                     bst_prom updated_by (FILTER (\t'. t' <> t_w));
+                     bst_environ := new_environ;
+                     bst_coh := (\lo. if lo = l then MAX (s.bst_coh l) v_post else s.bst_coh lo);
+                     bst_v_Rel updated_by (MAX (if acq /\ rel then v_wPost else 0));
+                     bst_v_rOld updated_by (MAX v_rPost);
+                     bst_v_rNew updated_by (MAX (if acq then v_rPost else 0));
+                     bst_v_wNew updated_by (MAX (if acq then v_rPost else 0));
+                     bst_v_CAP updated_by (MAX v_addr);
+                     bst_v_wOld updated_by (MAX v_wPost);
+                     bst_fwdb := (\lo. if lo = l
+                                       then <| fwdb_time := t_w;
+                                               fwdb_view := MAX v_addr v_data;
+                                               fwdb_xcl := T |> else s.bst_fwdb lo);
+                     bst_pc updated_by (bir_pc_next o bir_pc_next) |>
+ ==>
+ clstep p cid s M [t_w] s'
+)
 /\ (* fence *)
 (!p s s' K1 K2 M cid v.
    bir_get_stmt p s.bst_pc = BirStmt_Fence K1 K2
@@ -599,11 +645,11 @@ Proof
   >> strip_tac >> conj_asm1_tac
   >- (
     pop_assum mp_tac
-    >> gvs[bir_cstep_cases,bir_clstep_cases,rich_listTheory.FILTER_APPEND,EVERY_FILTER]
+    >> gvs[bir_cstep_cases,bir_clstep_cases,rich_listTheory.FILTER_APPEND,EVERY_FILTER, rich_listTheory.FILTER_IDEM]
     >> match_mp_tac EVERY_MONOTONIC
     >> fs[]
   )
-  >> gvs[bir_clstep_cases,bir_cstep_cases,bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,bir_state_set_typeerror_def,stmt_generic_step_def,bir_exec_stmt_jmp_bst_prom,rich_listTheory.FILTER_APPEND]
+  >> gvs[bir_clstep_cases,bir_cstep_cases,bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,bir_state_set_typeerror_def,stmt_generic_step_def,bir_exec_stmt_jmp_bst_prom,rich_listTheory.FILTER_APPEND, rich_listTheory.FILTER_IDEM, MEM_FILTER]
   >> fs[Once EQ_SYM_EQ,FILTER_EQ_ID]
   >> qpat_x_assum `EVERY _ _.bst_prom` mp_tac
   >> match_mp_tac EVERY_MONOTONIC
