@@ -273,12 +273,15 @@ Theorem reachable_pc_sl_step:
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
-  ==> sl_step (bst_pc_tuple st.bst_pc) (bst_pc_tuple st'.bst_pc)
+  ==> reachable_pc st.bst_pc
+    /\ reachable_pc st'.bst_pc
+    /\ sl_step (bst_pc_tuple st.bst_pc) (bst_pc_tuple st'.bst_pc)
 Proof
-  rpt strip_tac
+  rpt gen_tac >> strip_tac
   >> rev_drule_at_then (Pat `FLOOKUP _ _ = _`) assume_tac wf_trace_reachable_pc
+  >> drule_at_then (Pat `FLOOKUP _ _ = _`) assume_tac wf_trace_reachable_pc
   >> gs[]
-  >> drule_all_then irule reachable_pc_sim
+  >> rev_drule_all_then irule reachable_pc_sim
 QED
 
 (* unique properties *)

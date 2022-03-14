@@ -5,7 +5,7 @@ open bir_promisingTheory rich_listTheory listTheory arithmeticTheory tracesTheor
 open finite_mapTheory tracestepTheory;
 
 (*
- * correctness of spinlock.da (backwards reasoning) 
+ * correctness of spinlock.da (backwards reasoning)
  *)
 
 val _ = new_theory "spinlock";
@@ -116,8 +116,8 @@ Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ:
     /\ opt_cast = SOME (BIExp_SignedCast,Bit64)
     /\ a_e = BExp_Den spinlock_var
     /\ xcl
-    /\ acq = is_acq (bir_spinlock_prog:'a bir_program_t) pc
-    /\ rel = is_rel (bir_spinlock_prog:'a bir_program_t) pc
+    /\ acq = F
+    /\ rel = F
 Proof
   fs[Once EQ_IMP_THM]
   >> rpt gen_tac >> ntac 2 strip_tac
@@ -128,9 +128,9 @@ Proof
     >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] $ iffLR bir_spinlock_prog_labels
     >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
     >> gs[bir_programTheory.bir_programcounter_t_component_equality,LT5,LT3,get_read_args_def,bir_auxiliaryTheory.NUM_LSONE_EQZ]
-    >> gs[is_xcl_read_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label']
+    >> gs[is_xcl_read_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label',is_acq_def,is_rel_def]
   )
-  >> fs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_read_args_def,is_xcl_read_thm,bir_programTheory.bir_pc_next_def]
+  >> fs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_read_args_def,is_xcl_read_thm,bir_programTheory.bir_pc_next_def,is_acq_def,is_rel_def]
 QED
 
 (* all writes in the spinlock program *)
@@ -144,15 +144,15 @@ Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ:
     /\ a_e = BExp_Den spinlock_var
     /\ v_e = BExp_Const (Imm32 0x1010101w)
     /\ ~xcl
-    /\ acq = is_acq (bir_spinlock_prog:'a bir_program_t) pc
-    /\ rel = is_rel (bir_spinlock_prog:'a bir_program_t) pc
+    /\ acq = F
+    /\ rel = F
   ) \/ (
     pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 20w|>
     /\ a_e = BExp_Den spinlock_var
     /\ v_e = BExp_Cast BIExp_LowCast (BExp_Den $ BVar "x0" $ BType_Imm Bit64) Bit32
     /\ xcl
-    /\ acq = is_acq (bir_spinlock_prog:'a bir_program_t) pc
-    /\ rel = is_rel (bir_spinlock_prog:'a bir_program_t) pc
+    /\ acq = F
+    /\ rel = F
   )
 Proof
   fs[Once EQ_IMP_THM]
@@ -164,9 +164,9 @@ Proof
     >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] $ iffLR bir_spinlock_prog_labels
     >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
     >> gs[bir_programTheory.bir_programcounter_t_component_equality,LT5,LT3,get_fulfil_args_def,bir_auxiliaryTheory.NUM_LSONE_EQZ]
-    >> gs[is_xcl_write_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label']
+    >> gs[is_xcl_write_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label',is_acq_def,is_rel_def]
   )
-  >> fs[bir_get_stmt_write,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_fulfil_args_def,is_xcl_write_thm,bir_programTheory.bir_pc_next_def]
+  >> fs[bir_get_stmt_write,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_fulfil_args_def,is_xcl_write_thm,bir_programTheory.bir_pc_next_def,is_rel_def,is_acq_def]
 QED
 
 (* an exclusive fulfil writes to the spinlock_var *)
