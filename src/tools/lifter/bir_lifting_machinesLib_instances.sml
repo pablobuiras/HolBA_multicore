@@ -957,199 +957,89 @@ fun get_fence_bstmts hex_code =
 fun mk_gpr_var_name bit_code =
   ("x"^(Arbnum.toString (Arbnum.fromBinString bit_code)))
 
-(*
+(* DEBUG:
 val ity = Bit64_tm
 val rd = "00001"
 val rs1 = "00011"
 val rs2 = "00111"
-
- 1. Load data value from address in rs1, place value into rd,
- 2. apply binary operator to the loaded value and the original value in rs2,
- 3. then store the result back to the address in rs1.
-
-open bslSyntax;
-
-val brd = mk_gpr_var_name rd
-val brs1 = mk_gpr_var_name rs1
-val brs2 = mk_gpr_var_name rs2
-
-val bvar_rd = bvarimm64 brd
-val bvar_rs1 = bvarimm64 brs1
-val bvar_rs2 = bvarimm64 brs2
-
-LOAD 32-BIT:
-
-  BStmt_Assert
-    (BExp_Aligned Bit64 2
-	  (BExp_Den (BVar "rs1" (BType_Imm Bit64))));
-  BStmt_Assign (BVar "rd" (BType_Imm Bit64))
-    (BExp_Cast BIExp_SignedCast
-       (BExp_Load
-	  (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
-	  (BExp_Den (BVar "rs1" (BType_Imm Bit64)))
-          BEnd_LittleEndian
-	  Bit32) Bit64)
-
-  Abbreviate Load ops (32-bit):
-
-    bassert (baligned Bit64_tm (numSyntax.term_of_int 2, bden bvar_rs1))
-
-    bassign (bvarimm64 brd, bscast64 (bload32_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1))))
-
-    Done! (inspired by lifting of "LW x1,x2,0")
-
-LOAD 64-BIT:
-
-  BStmt_Assert
-    (BExp_Aligned Bit64 3
-       (BExp_Den (BVar "rs1" (BType_Imm Bit64))));
-  BStmt_Assign (BVar "x1" (BType_Imm Bit64))
-    (BExp_Load
-       (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
-       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
-       BEnd_LittleEndian Bit64)
-
-  Abbreviate Load ops (64-bit):
-
-    bassert (baligned Bit64_tm (numSyntax.term_of_int 3, bden bvar_rs1))
-
-    bassign (bvarimm64 brd, bload64_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1)))
-
-    Done! (inspired by lifting of "LD x1,x2,0")
-
-STORE 32-BIT:
-
-  BStmt_Assert
-    (BExp_Aligned Bit64 2
-       (BExp_Den (BVar "rs1" (BType_Imm Bit64))));
-
-  bassert (baligned Bit64_tm (numSyntax.term_of_int 2, bden bvar_rs1))
-
-  BStmt_Assert
-    (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
-       (BExp_BinExp BIExp_Plus
-	  (BExp_Den (BVar "rs1" (BType_Imm Bit64)))
-	  (BExp_Const (Imm64 8w))) 4);
-
-  bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.term_of_int 0, numSyntax.term_of_int 16777216, bden bvar_rs1, numSyntax.term_of_int 4))
-
-  BStmt_Assign (BVar "MEM8" (BType_Mem Bit64 Bit8))
-    (BExp_Store
-       (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
-       (BExp_Den (BVar "rs1" (BType_Imm Bit64)))
-       BEnd_LittleEndian
-       (BExp_Cast BIExp_LowCast
-	  (BExp_Den (BVar "result" (BType_Imm Bit64))) Bit32))
-
-val atomic_op_res = bplus (bden (bvarimm64 brd), bden (bvarimm64 brs2))
-
-    bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
-                                           (bden bvar_rs1)
-                                           (blowcast32 atomic_op_res))
-
-STORE 64-BIT:
-
-  BStmt_Assert
-    (BExp_Aligned Bit64 3
-      (BExp_Den (BVar "rs1" (BType_Imm Bit64))));
-
-  bassert (baligned Bit64_tm (numSyntax.term_of_int 3, bden bvar_rs1))
-
-  BStmt_Assert
-    (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
-      (BExp_Den (BVar "rs1" (BType_Imm Bit64))) 8);
-
-  bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 8))
-
-  BStmt_Assign (BVar "MEM8" (BType_Mem Bit64 Bit8))
-    (BExp_Store
-       (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
-       (BExp_Den (BVar "rs1" (BType_Imm Bit64)))
-       BEnd_LittleEndian
-       (BExp_Den (BVar "x14" (BType_Imm Bit64))))
-
-val atomic_op_res = bplus (bden (bvarimm64 brd), bden (bvarimm64 brs2))
-
-    bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
-                                           (bden bvar_rs1)
-                                           atomic_op_res)
-
 *)
 
-fun mk_atomic_binop bvar_rd bvar_rs2 funct5 =
+fun mk_atomic_binop bexp_rd bexp_rs2 funct5 =
   if funct5 = "00001"
-  then (bden bvar_rs2)
+  then bexp_rs2
   else if funct5 = "00000"
-  then bplus (bden bvar_rd, bden bvar_rs2)
+  then bplus (bexp_rd, bexp_rs2)
   else if funct5 = "00100"
-  then bxor (bden bvar_rd, bden bvar_rs2)
+  then bxor (bexp_rd, bexp_rs2)
   else if funct5 = "01100"
-  then band (bden bvar_rd, bden bvar_rs2)
+  then band (bexp_rd, bexp_rs2)
   else if funct5 = "01000"
-  then bor (bden bvar_rd, bden bvar_rs2)
+  then bor (bexp_rd, bexp_rs2)
   else if funct5 = "10000"
-  then bite (bslt (bden bvar_rd, bden bvar_rs2), bden bvar_rd, bden bvar_rs2)
+  then bite (bslt (bexp_rd, bexp_rs2), bexp_rd, bexp_rs2)
   else if funct5 = "10100"
-  then bite (bslt (bden bvar_rd, bden bvar_rs2), bden bvar_rs2, bden bvar_rd)
+  then bite (bslt (bexp_rd, bexp_rs2), bexp_rs2, bexp_rd)
   else if funct5 = "11000"
-  then bite (blt (bden bvar_rd, bden bvar_rs2), bden bvar_rd, bden bvar_rs2)
+  then bite (blt (bexp_rd, bexp_rs2), bexp_rd, bexp_rs2)
   else if funct5 = "11100"
-  then bite (blt (bden bvar_rd, bden bvar_rs2), bden bvar_rs2, bden bvar_rd)
+  then bite (blt (bexp_rd, bexp_rs2), bexp_rs2, bexp_rd)
   else  raise ERR "mk_atomic_binop" ("Unsupported funct5 bits: "^funct5)
+
+fun is_zeroreg reg =
+  (Arbnum.fromBinString reg = (Arbnum.fromInt 0))
+;
 
 fun get_amo_bstmts mu_b mu_e hex_code =
   let
     val (funct5, aq, rl, rs2, rs1, funct3, rd, _) = parse_amo hex_code
-    val bvar_rd = bvarimm64 (mk_gpr_var_name rd)
-    val bvar_rs1 = bvarimm64 (mk_gpr_var_name rs1)
-    val bvar_rs2 = bvarimm64 (mk_gpr_var_name rs2)
+    val bvar_rd = bvarimm64 $ mk_gpr_var_name rd
+    val bexp_rs1 = if is_zeroreg rs1 then bconstii 64 0 else bden $ bvarimm64 $ mk_gpr_var_name rs1
+    val bexp_rs2 = if is_zeroreg rs2 then bconstii 64 0 else bden $ bvarimm64 $ mk_gpr_var_name rs2
     val bvar_tmp = bvarimm64 "tmp"
+    val bexp_tmp = bden $ bvar_tmp
     val is_aq = str_to_bool aq
     val is_rl = str_to_bool rl
-    val atomic_op_res = mk_atomic_binop bvar_tmp bvar_rs2 funct5
+    val atomic_op_res = mk_atomic_binop bexp_tmp bexp_rs2 funct5
     (* Stores the base functionality of the atomic instructions, sans effect of .aq and .rl flags *)
     val bir_block_base =
       (* Check if atomic instruction is 32- or 64-bit (.W or .D) *)
       if funct3 = "010" (* .W (RV32) *)
       then
 	[(* 1. Load data value from address in rs1, place value into temporary register *)
-	 bassert (baligned Bit64_tm (numSyntax.term_of_int 2, bden bvar_rs1)),
-	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 4)),
-	 bassign (bvar_tmp, bscast64 (bload32_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1)))),
+	 bassert (baligned Bit64_tm (numSyntax.term_of_int 2, bexp_rs1)),
+	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bexp_rs1, numSyntax.term_of_int 4)),
+	 bassign (bvar_tmp, bscast64 (bload32_le (bden (bvarmem64_8 "MEM8")) bexp_rs1)),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
-						(bden bvar_rs1)
-						(blowcast32 atomic_op_res)),
-         (* 3. Place value of temporary register in rd. *)
-         bassign (bvar_rd, bden (bvar_tmp))
+						bexp_rs1
+						(blowcast32 atomic_op_res))
 	]
       else if funct3 = "011" (* .D (RV64) *)
       then
-	[(* 1. Load data value from address in rs1, place value into rd *)
-	 bassert (baligned Bit64_tm (numSyntax.term_of_int 3, bden bvar_rs1)),
-	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int 8)),
-	 bassign (bvar_tmp, bload64_le (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1))),
+	[(* 1. Load data value from address in rs1, place value into temporary register *)
+	 bassert (baligned Bit64_tm (numSyntax.term_of_int 3, bexp_rs1)),
+	 bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bexp_rs1, numSyntax.term_of_int 8)),
+	 bassign (bvar_tmp, bload64_le (bden (bvarmem64_8 "MEM8")) bexp_rs1),
 	 (* 2. Apply binary operation to the loaded value and the original value in rs2,
 	       then store the result back to the address in rs1 *)
 	 bassign (bvarmem64_8 "MEM8", bstore_le (bden (bvarmem64_8 "MEM8"))
-						(bden bvar_rs1)
-						atomic_op_res),
-         (* 3. Place value of temporary register in rd. *)
-         bassign (bvar_rd, bden (bvar_tmp))
+						bexp_rs1
+						atomic_op_res)
 	]
       else raise ERR "get_amo_bstmts" ("Atomic instruction "^hex_code^" has unsupported funct3 bits: "^funct3)
+    (* 3. Place value of temporary register in rd *)
+    val bir_block_rd = if is_zeroreg rd then [] else [bassign (bvar_rd, bexp_tmp)]
   in
-    (bir_block_base, is_aq, is_rl)
+    (bir_block_base@bir_block_rd, is_aq, is_rl)
   end
 
 fun get_lrsc_bstmts mu_b mu_e hex_code =
   let
     val (funct5, aq, rl, rs2, rs1, funct3, rd, _) = parse_amo hex_code
-    val bvar_rd = bvarimm64 (mk_gpr_var_name rd)
-    val bvar_rs1 = bvarimm64 (mk_gpr_var_name rs1)
-    (* TODO: rs2 in LR *)
-    val bvar_rs2 = bvarimm64 (mk_gpr_var_name rs2)
+    val bvar_rd = bvarimm64 $ mk_gpr_var_name rd
+    val bexp_rs1 = if is_zeroreg rs1 then bconstii 64 0 else bden $ bvarimm64 $ mk_gpr_var_name rs1
+    val bexp_rs2 = if is_zeroreg rs2 then bconstii 64 0 else bden $ bvarimm64 $ mk_gpr_var_name rs2
     val is_aq = str_to_bool aq
     val is_rl = str_to_bool rl
     (* "01010101" in hex *)
@@ -1170,27 +1060,35 @@ fun get_lrsc_bstmts mu_b mu_e hex_code =
       then if rs2 = "00000"
 	then
 	  [(* 1. Load data value from address in rs1, place value into rd *)
-	   bassert (baligned Bit64_tm (numSyntax.term_of_int al, bden bvar_rs1)),
-	   bassign (bvar_rd, load_exp (bden (bvarmem64_8 "MEM8")) (bden (bvar_rs1))),
-	   (* 2. Set reservation of memory *)
-	   bassign (bvarmem64_8 "MEM8_R", bstore_le mem_zero (bden (bvar_rs1)) ones)
+	   bassert (baligned Bit64_tm (numSyntax.term_of_int al, bexp_rs1))
+          ]@(if is_zeroreg rd
+             then []
+             else
+	       [bassign (bvar_rd, load_exp (bden (bvarmem64_8 "MEM8")) bexp_rs1)]
+            )@
+          [(* 2. Set reservation of memory *)
+	   bassign (bvarmem64_8 "MEM8_R", bstore_le mem_zero bexp_rs1 ones)
 	  ]
 	else raise ERR "get_lrsc_bstmts" ("LR instruction "^hex_code^" has non-zero rs2 bits: "^rs2)
       else if funct5 = "00011" (* SC *)
       then
 	  [(* 1. Store value in rs2 into address in rs1 *)
-	   bassert (baligned Bit64_tm (numSyntax.term_of_int al, bden bvar_rs1)),
-	   bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bden bvar_rs1, numSyntax.term_of_int bytes)),
+	   bassert (baligned Bit64_tm (numSyntax.term_of_int al, bexp_rs1)),
+	   bassert (mk_BExp_unchanged_mem_interval_distinct (Bit64_tm, numSyntax.mk_numeral mu_b, numSyntax.mk_numeral mu_e, bexp_rs1, numSyntax.term_of_int bytes)),
 	   bassign (bvarmem64_8 "MEM8", 
-		    bite (beq (res_load_exp mem_reserved (bden (bvar_rs1)),
+		    bite (beq (res_load_exp mem_reserved bexp_rs1,
 			       ones),
-			  bstore_le (bden (bvarmem64_8 "MEM8")) (bden bvar_rs1) (cast (bden bvar_rs2)),
+			  bstore_le (bden (bvarmem64_8 "MEM8")) bexp_rs1 (cast bexp_rs2),
 			  bden (bvarmem64_8 "MEM8")
 			 )
-	   ),
+	   )
 	   (* 2. Assign code (zero on success, non-zero on failure) to success register *)
-	   bassign (bvar_rd, bite (beq (res_load_exp mem_reserved (bden (bvar_rs1)), ones), bconst64 0, ones_64)),
-	   (* 3. Reset reservation of memory *)
+          ]@(if is_zeroreg rd
+             then []
+             else
+	       [bassign (bvar_rd, bite (beq (res_load_exp mem_reserved bexp_rs1, ones), bconst64 0, ones_64))]
+            )@
+	  [(* 3. Reset reservation of memory *)
 	   bassign (bvarmem64_8 "MEM8_R", mem_zero)
 	  ]
       else raise ERR "get_lrsc_bstmts" ("LR/SC instruction "^hex_code^" has unsupported funct5 bits: "^funct5)
