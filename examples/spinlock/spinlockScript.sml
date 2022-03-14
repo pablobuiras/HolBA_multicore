@@ -37,24 +37,7 @@ QED
 Definition core_runs_prog_def:
   core_runs_prog cid s prog =
     ?st. FLOOKUP s cid = SOME $ Core cid prog st
-    /\ st = <|
-      bst_pc      := bir_program$bir_pc_first prog
-    ; bst_environ  := bir_env_default $ bir_envty_of_vs $
-                        bir_varset_of_program prog
-    ; bst_status := BST_Running
-    ; bst_viewenv := FEMPTY
-    ; bst_coh := \x.0
-    ; bst_v_rOld := 0
-    ; bst_v_CAP := 0
-    ; bst_v_rNew := 0
-    ; bst_v_wNew := 0
-    ; bst_v_wOld := 0
-    ; bst_prom := []
-    ; bst_inflight := []
-    ; bst_fwdb := (\l. <| fwdb_time:= 0; fwdb_view:=0; fwdb_xcl:=F |>)
-    ; bst_counter := 0
-    ; bst_xclb := NONE
-  |>
+    /\ st = bir_state_init prog
 End
 
 Definition core_runs_spinlock_def:
@@ -226,7 +209,7 @@ Theorem core_runs_spinlock_spinlock_var_default_value:
 Proof
   rpt gen_tac >> strip_tac
   >> gvs[core_runs_spinlock_def,core_runs_prog_def,spinlock_var_def]
-  >> fs[bir_envTheory.bir_env_default_def,varset_of_spinlock_prog,bir_envTheory.bir_envty_of_vs_def]
+  >> fs[bir_envTheory.bir_env_default_def,varset_of_spinlock_prog,bir_envTheory.bir_envty_of_vs_def,bir_programTheory.bir_state_init_def]
   >> dsimp[bir_envTheory.bir_var_name_def,bir_valuesTheory.bir_default_value_of_type_def,bir_envTheory.bir_var_type_def,bir_immTheory.n2bs_def]
 QED
 
