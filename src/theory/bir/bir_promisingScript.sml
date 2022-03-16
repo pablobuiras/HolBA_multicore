@@ -306,33 +306,61 @@ val is_rel_def = Define‘
      | _ => F
 ’;
 
+val is_amo_def = Define‘
+  is_amo p pc =
+    case bir_get_program_block_info_by_label p pc.bpc_label of
+      SOME (i, bb) =>
+        (case bb.bb_mc_tags of
+         SOME mc_tags => mc_tags.mc_atomic
+         | _ => F)
+     | _ => F
+’;
+
 val bir_get_stmt_def = Define‘
   bir_get_stmt p pc = 
   case bir_get_current_statement p pc of
   | SOME (BStmtB (BStmt_Assign var e)) =>
+      if is_amo p pc then
       (case get_read_args e of
+       | SOME (a_e, cast_opt) =>
+           (case bir_get_current_statement p (bir_pc_next pc) of
+           | SOME (BStmtB (BStmt_Assign var' e)) =>
+               (case get_fulfil_args e of
+               | SOME (a_e', v_e) =>
+                   if a_e = a_e'
+                   then BirStmt_Amo var a_e v_e (is_acq p pc) (is_rel p pc)
+                   else BirStmt_None
+               | NONE => BirStmt_None)
+           | _ => BirStmt_None)
+       | NONE =>
+           (case get_fulfil_args e of
+            | SOME (a_e, v_e) => BirStmt_None
+            | NONE => BirStmt_Expr var e))
+      else
+       (case get_read_args e of
        | SOME (a_e, cast_opt) => BirStmt_Read var a_e cast_opt (is_xcl_read p pc) (is_acq p pc) (is_rel p pc)
        | NONE =>
            (case get_fulfil_args e of
-            | SOME (a_e, v_e) => BirStmt_Write a_e v_e (is_xcl_write p pc) (is_acq p pc) (is_rel p pc)
-            | NONE => BirStmt_Expr var e))
+           | SOME (a_e, v_e) => BirStmt_Write a_e v_e (is_xcl_write p pc) (is_acq p pc) (is_rel p pc)
+           | NONE => BirStmt_Expr var e))
   | SOME (BStmtB (BStmt_Fence K1 K2)) => BirStmt_Fence K1 K2
   | SOME (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) => BirStmt_Branch cond_e lbl1 lbl2
   | SOME stmt => BirStmt_Generic stmt
   | NONE => BirStmt_None
 ’;
 
-
 Theorem bir_get_stmt_read:
-∀p pc stmt var e a_e cast_opt xcl acq rel.
+∀p pc stmt var a_e cast_opt xcl acq rel.
  (bir_get_stmt p pc = BirStmt_Read var a_e cast_opt xcl acq rel) ⇔
- (?e. bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
+ (∃e.
+ bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
+ /\ ~is_amo p pc
  /\ get_read_args e = SOME (a_e, cast_opt)
  /\ is_xcl_read p pc = xcl
  /\ is_acq p pc = acq
  /\ is_rel p pc = rel)
 Proof
-  gvs [bir_get_stmt_def,AllCaseEqs(),
+  gvs [bir_get_stmt_def, AllCaseEqs(),
        GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM]
 QED
 
@@ -340,6 +368,7 @@ Theorem bir_get_stmt_write:
 ∀p pc stmt a_e v_e xcl acq rel.
  (bir_get_stmt p pc = BirStmt_Write a_e v_e xcl acq rel) ⇔
  (∃var e. bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
+ /\ ~is_amo p pc
  /\ get_fulfil_args e = SOME (a_e, v_e)
  /\ is_xcl_write p pc = xcl
  /\ is_acq p pc = acq
@@ -350,14 +379,30 @@ Proof
   rw [get_read_fulfil_args_exclusive]
 QED
 
+Theorem bir_get_stmt_amo:
+∀p pc var stmt a_e v_e xcl acq rel.
+ (bir_get_stmt p pc = BirStmt_Amo var a_e v_e acq rel) ⇔
+ (∃e cast_opt var' e'.
+    bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
+ /\ is_amo p pc
+ /\ get_read_args e = SOME (a_e, cast_opt)
+ /\ bir_get_current_statement p (bir_pc_next pc) = SOME (BStmtB (BStmt_Assign var' e'))
+ /\ get_fulfil_args e' = SOME (a_e, v_e)
+ /\ is_acq p pc = acq
+ /\ is_rel p pc = rel)
+Proof
+  gvs [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM] 
+QED
+
 Theorem bir_get_stmt_expr:
 ∀p pc var e.
  (bir_get_stmt p pc = BirStmt_Expr var e) ⇔
  (bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
- ∧ get_read_args e = NONE
- ∧ get_fulfil_args e = NONE)
+ /\ get_read_args e = NONE
+ /\ get_fulfil_args e = NONE)
 Proof
-  fs [bir_get_stmt_def,AllCaseEqs()]
+  rw [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM] >>
+  Cases_on ‘is_amo p pc’ >> (rw [])
 QED
 
 Theorem bir_get_stmt_fence:
@@ -390,13 +435,15 @@ Proof
   )
 QED
 
+(* FIX THIS???
 Theorem bir_get_stmt_none:
 ∀p pc.
  (bir_get_stmt p pc = BirStmt_None) ⇔
- bir_get_current_statement p pc = NONE
+ bir_get_current_statement p pc = NONE \/
 Proof
-  fs [bir_get_stmt_def,AllCaseEqs()]
+  fs [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM]
 QED
+*)
 
 (* TODO: "Generalising variable "ν_pre" in clause #0"? *)
 (* core-local steps that don't affect memory *)
