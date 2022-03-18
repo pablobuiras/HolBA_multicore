@@ -537,46 +537,55 @@ clstep p cid s M [] s')
  ==>
   clstep p cid s M [t] s')
 /\ (* AMO fulfil *)
-(!p cid s s' M acq rel var l a_e v v_e v_rPre v_rPost v_wPre v_wPost (t_w:num) (t_r :num) new_environ new_viewenv.
+(!p cid s s' M acq rel var l a_e v_r v_w v_e v_rPre v_rPost v_wPre v_wPost (t_w:num) (t_r :num) new_environ new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Amo var a_e v_e acq rel
 
    (* Get location *)
    /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
 
    (* Read part *)
-   /\ mem_read M l t_r = v_r
-   /\ (!t'. t_r < t' /\ t' <= MAX v_rPre (s.bst_coh l))
-   /\ v_rPre = MAX v_addr (MAX s.bst_v_rNew (if acq /\ rel then s.bst_v_Rel else 0))
-   /\ v_rPost = MAX v_rPre (MAX t_r (mem_read_view (s.bst_fwdb l) t_r))
+   /\ mem_read M l t_r = SOME v_r (* v_r value read *)
+   /\ v_rPre = MAX v_addr (
+        MAX s.bst_v_rNew
+        (if acq /\ rel then (MAX s.bst_v_Rel (MAX s.bst_v_rOld s.bst_v_wOld)) else 0))
+   /\ v_rPost = MAX v_rPre (mem_read_view (s.bst_fwdb l) t_r)
                     
    (* register and register view update *)
-   /\ SOME new_environ = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
+   /\ SOME new_environ = env_update_cast64 (bir_var_name var) v_r (bir_var_type var) (s.bst_environ)
    /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_post)
 
    (* Write part *)
    /\ MEM t_w s.bst_prom
-   /\ (SOME v, v_data) = bir_eval_exp_view a_e new_environ new_viewenv
-   /\ EL t_w M = <| loc := l; val := v; cid := cid |>
-   /\ v_wPre = MAX v_addr (MAX v_data (MAX s.bst_v_CAP (MAX v_rPost (MAX s.bst_v_wNew (if rel then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)))))
+   (* v_w value to write, v_e value expression *)
+   /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv
+   /\ EL t_w M = <| loc := l; val := v_w; cid := cid |>
+   /\ v_wPre = MAX v_addr (
+        MAX v_data (
+        MAX s.bst_v_CAP (
+        MAX v_rPost (
+        MAX s.bst_v_wNew (
+        MAX (if rel then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
+             (if (acq /\ rel) then s.bst_v_Rel else 0))))))
    /\ v_wPost = t_w
-   /\ MAX v_wPre (MAX (s.bst_coh l) v_rPost) < t_w
-   (* Atomic part *)
-   /\ mem_atomic M l cid t_r t_w
+   /\ MAX v_wPre (s.bst_coh l) < t_w
+
+   (* No writes to memory location between read and write *)
+   /\ (!t'. t_r < t' /\ t' < t_w ==> (EL t' M).loc = l)
+
    (* State update *)
    /\ s' = s with <| bst_viewenv := new_viewenv;
-                     bst_prom updated_by (FILTER (\t'. t' <> t_w));
                      bst_environ := new_environ;
-                     bst_coh := (\lo. if lo = l then MAX (s.bst_coh l) v_post else s.bst_coh lo);
-                     bst_v_Rel updated_by (MAX (if acq /\ rel then v_wPost else 0));
-                     bst_v_rOld updated_by (MAX v_rPost);
-                     bst_v_rNew updated_by (MAX (if acq then v_rPost else 0));
-                     bst_v_wNew updated_by (MAX (if acq then v_rPost else 0));
-                     bst_v_CAP updated_by (MAX v_addr);
-                     bst_v_wOld updated_by (MAX v_wPost);
-                     bst_fwdb := (\lo. if lo = l
-                                       then <| fwdb_time := t_w;
-                                               fwdb_view := MAX v_addr v_data;
-                                               fwdb_xcl := T |> else s.bst_fwdb lo);
+                     bst_prom    updated_by (FILTER (\t'. t' <> t_w));
+                     bst_coh     updated_by (l =+ MAX (s.bst_coh l) v_post);
+                     bst_v_Rel   updated_by (MAX (if acq /\ rel then v_wPost else 0));
+                     bst_v_rOld  updated_by (MAX v_rPost);
+                     bst_v_rNew  updated_by (MAX (if acq then (if rel then v_wPost else v_rPost)else 0));
+                     bst_v_wNew  updated_by (MAX (if acq then (if rel then v_wPost else v_rPost)else 0));
+                     bst_v_CAP   updated_by (MAX v_addr);
+                     bst_v_wOld  updated_by (MAX v_wPost);
+                     bst_fwdb    updated_by (l =+ <| fwdb_time := t_w;
+                                                     fwdb_view := MAX v_addr v_data;
+                                                     fwdb_xcl := T |>);
                      bst_pc updated_by (bir_pc_next o bir_pc_next) |>
  ==>
  clstep p cid s M [t_w] s'
