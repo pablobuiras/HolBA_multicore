@@ -92,7 +92,7 @@ val mem_atomic_def = Define‘
 ’;
 
 (* Checks 
- * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL t' M).loc ≠ l)
+ * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
  * letting t_max = (MAX v_pre (s.bst_coh l))
  *)
 val mem_readable_def = Define‘
@@ -455,7 +455,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
- ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL t' M).loc ≠ l)
+ ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
  ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
  (* TODO: Update viewenv by v_addr or v_post? *)
@@ -495,7 +495,7 @@ clstep p cid s M [] s')
  /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
  /\ (xcl ==> fulfil_atomic_ok M l cid s t)
  /\ MEM t s.bst_prom
- /\ EL t M = <| loc := l; val := v; cid := cid  |>
+ /\ EL (t-1) M = <| loc := l; val := v; cid := cid  |>
  (* TODO: Use get_xclb_view or separate conjunct to extract option type? *)
  /\ v_pre = MAX (MAX (MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
                           (if rel
@@ -558,7 +558,7 @@ clstep p cid s M [] s')
    /\ MEM t_w s.bst_prom
    (* v_w value to write, v_e value expression *)
    /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv
-   /\ EL t_w M = <| loc := l; val := v_w; cid := cid |>
+   /\ EL (t_w-1) M = <| loc := l; val := v_w; cid := cid |>
    /\ v_wPre = MAX v_addr (
         MAX v_data (
         MAX s.bst_v_CAP (
@@ -570,7 +570,7 @@ clstep p cid s M [] s')
    /\ MAX v_wPre (s.bst_coh l) < t_w
 
    (* No writes to memory location between read and write *)
-   /\ (!t'. t_r < t' /\ t' < t_w ==> (EL t' M).loc = l)
+   /\ (!t'. t_r < t' /\ t' < t_w ==> (EL (t'-1) M).loc = l)
 
    (* State update *)
    /\ s' = s with <| bst_viewenv := new_viewenv;
