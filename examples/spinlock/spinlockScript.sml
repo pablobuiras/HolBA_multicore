@@ -174,7 +174,7 @@ QED
 Theorem core_runs_spinlock_is_fulfil_xcl_memory_location:
   !tr i cid t p st. wf_trace tr /\ SUC i < LENGTH tr
   /\ core_runs_spinlock cid $ FST $ HD tr
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> bir_eval_exp (BExp_Den spinlock_var) st.bst_environ
     = SOME $ (EL (PRE t) $ SND $ EL (SUC i) tr).loc
@@ -218,7 +218,7 @@ QED
 Theorem core_runs_spinlock_is_read_xcl_memory_location:
   !tr i cid t p st x. wf_trace tr /\ SUC i < LENGTH tr
   /\ core_runs_spinlock cid $ FST $ HD tr
-  /\ is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_read_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st
   ==> bir_eval_exp (BExp_Den spinlock_var) st.bst_environ
     = SOME $ (EL (PRE t) $ SND $ EL i tr).loc
@@ -250,8 +250,8 @@ QED
 Theorem core_runs_spinlock_is_fulfil_xcl_once:
   !tr i j cid t t'. wf_trace tr /\ SUC i < LENGTH tr /\ SUC j < LENGTH tr
   /\ core_runs_spinlock cid (FST $ HD tr)
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ is_fulfil_xcl cid t' (FST $ EL j tr) (FST $ EL (SUC j) tr)
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil_xcl cid t' (EL j tr) (FST $ EL (SUC j) tr)
   ==> t = t' /\ j = i
 Proof
   rpt gen_tac >> strip_tac
@@ -270,8 +270,8 @@ QED
 Theorem core_runs_spinlock_is_fulfil_xcl_is_read_xcl_default_value:
   !tr cid t i j p st st'. wf_trace tr /\ SUC j < LENGTH tr
   /\ core_runs_spinlock cid $ FST $ HD tr
-  /\ is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ is_fulfil_xcl cid t (FST $ EL j tr) (FST $ EL (SUC j) tr)
+  /\ is_read_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil_xcl cid t (EL j tr) (FST $ EL (SUC j) tr)
   /\ i < j
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
@@ -293,7 +293,7 @@ QED
 Theorem cores_run_spinlock_is_fulfil_xcl_initial_xclb:
   !tr cid t i s p st. wf_trace tr /\ SUC i < LENGTH tr
   /\ core_runs_spinlock cid $ FST $ HD tr
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> IS_SOME st.bst_xclb /\ (THE st.bst_xclb).xclb_time = 0
 Proof
@@ -319,7 +319,7 @@ Theorem core_runs_spinlock_bst_status_BST_JumpOutside_is_fulfil_xcl:
   /\ FLOOKUP (FST $ LAST tr) cid = SOME $ Core cid p st
   /\ st.bst_status = BST_JumpOutside l
   ==> ?i t. SUC i < LENGTH tr
-    /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+    /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
 Proof
   rpt strip_tac
   >> spose_not_then assume_tac
@@ -381,22 +381,20 @@ bir_programTheory.bir_state_t_accfupds
 QED
 
 (* any spinlock core only ever writes to the mutex variable memory location *)
-(* TODO set correct address k  *)
 Theorem cores_run_spinlock_is_fulfil_xcl_memory_location':
   !tr cid t i s p st. wf_trace tr /\ SUC i < LENGTH tr
   /\ core_runs_spinlock cid $ FST $ HD tr
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  ==> (EL (PRE t) $ SND $ EL i tr).loc = k
-    /\ (EL (PRE t) $ SND $ EL i tr).cid = cid
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
+  ==> (EL (PRE t) $ SND $ EL i tr).cid = cid
 Proof
   rpt gen_tac >> strip_tac
   >> imp_res_tac is_fulfil_xcl_is_fulfil
   >> imp_res_tac is_fulfil_memory
   >> dxrule_at_then (Pos $ el 3) assume_tac is_fulfil_parstep_nice_imp
-  >> dxrule_at_then (Pos $ el 3) assume_tac is_fulfil_xcl_atomic
-  >> gvs[is_fulfil_xcl_def,parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases,clstep_cases,stmt_generic_step_def]
-  >> gs[]
-  >> cheat
+  >> drule_at (Pat `core_runs_spinlock _ _`) wf_trace_core_runs_spinlock_FLOOKUP
+  >> disch_then $ drule_at_then (Pat `_ < _:num`) assume_tac
+  >> drule_at_then (Pos $ el 3) assume_tac is_fulfil_xcl_atomic
+  >> gvs[is_fulfil_xcl_def,parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases,clstep_cases]
 QED
 
 (* all spinlock cores write to the same location *)
@@ -432,8 +430,8 @@ Theorem core_runs_spinlock_is_fulfil_xcl_timestamp_order:
   /\ cores_run_spinlock (FST $ HD tr)
   /\ core_runs_spinlock cid (FST $ HD tr)
   /\ core_runs_spinlock cid' (FST $ HD tr)
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ is_fulfil_xcl cid' t' (FST $ EL i' tr) (FST $ EL (SUC i') tr)
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil_xcl cid' t' (EL i' tr) (FST $ EL (SUC i') tr)
   /\ is_promise cid t (EL j tr) (EL (SUC j) tr)
   /\ is_promise cid' t' (EL j' tr) (EL (SUC j') tr)
   /\ i <> i' /\ j < i /\ j' < i' /\ SUC i' < LENGTH tr /\ SUC i < LENGTH tr

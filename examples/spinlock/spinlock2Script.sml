@@ -357,13 +357,6 @@ Proof
   >> gs[]
 QED
 
-Definition same_state_def:
-  same_state cid st1 st2 =
-    !p st.
-      FLOOKUP st1 cid = SOME $ Core cid p st
-      /\ FLOOKUP st2 cid = SOME $ Core cid p st
-End
-
 Theorem init_unique:
   !i tr. wf_trace tr /\ wf_trace1 tr
   /\ SUC i < LENGTH tr

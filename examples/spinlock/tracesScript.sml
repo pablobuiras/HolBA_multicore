@@ -428,13 +428,17 @@ QED
 
 (* memory only ever increases *)
 
-Theorem wf_trace_IS_PREFIX_SND_EL:
-  !tr i j. wf_trace tr /\ i < j /\ j < LENGTH tr
+Theorem wf_trace_IS_PREFIX_SND_EL':
+  !tr i j. wf_trace tr /\ i <= j /\ j < LENGTH tr
   ==> IS_PREFIX (SND $ EL j tr) (SND $ EL i tr)
 Proof
   rpt gen_tac
   >> Induct_on `j - i`
   >> rw[SUB_LEFT_EQ] >> fs[PULL_FORALL,AND_IMP_INTRO]
+  >- (
+    dxrule_all_then assume_tac $ iffLR $ GSYM EQ_LESS_EQ
+    >> fs[]
+  )
   >> `i + SUC v = SUC $ i + v` by fs[]
   >> pop_assum $ fs o single
   >> first_x_assum $ qspecl_then [`v+i`,`i`] assume_tac
@@ -444,6 +448,18 @@ Proof
   >> Cases_on `v=0`
   >> gvs[]
   >> fs[IS_PREFIX_APPEND]
+QED
+
+Theorem wf_trace_IS_PREFIX_SND_EL =
+  SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [LESS_OR_EQ] wf_trace_IS_PREFIX_SND_EL'
+
+Theorem wf_trace_memory_LENGTH:
+  !tr i j. wf_trace tr /\ i <= j /\ j < LENGTH tr
+  ==> LENGTH (SND $ EL i tr) <= LENGTH (SND $ EL j tr)
+Proof
+  rpt strip_tac
+  >> drule_all wf_trace_IS_PREFIX_SND_EL'
+  >> fs[IS_PREFIX_LENGTH]
 QED
 
 Theorem wf_trace_EL_SND_EQ_EL_SND:

@@ -7,6 +7,13 @@ val _ = new_theory "tracestep";
 open bir_promisingTheory rich_listTheory listTheory arithmeticTheory tracesTheory;
 open finite_mapTheory;
 
+Theorem IS_PREFIX_EL:
+  !l2 l1 n. IS_PREFIX l2 l1 /\ n < LENGTH l1
+  ==> EL n l1 = EL n l2
+Proof
+  fs[IS_PREFIX_APPEND,EL_APPEND1,PULL_EXISTS]
+QED
+
 Theorem LT3 =
   (REWRITE_CONV [GSYM rich_listTheory.COUNT_LIST_COUNT,
     GSYM pred_setTheory.IN_COUNT]
@@ -18,23 +25,106 @@ Theorem LT5 =
     THENC EVAL) ``n < 5n``
 
 (*
+ * equality of projection of states
+ *)
+
+Definition same_state_prop_def:
+  same_state_prop cid st1 st2 f =
+    !p p' st st'.
+      FLOOKUP st1 cid = SOME $ Core cid p st
+      /\ FLOOKUP st2 cid = SOME $ Core cid p' st'
+      ==> f st = f st'
+End
+
+Definition same_state_prop_range_def:
+  same_state_prop_range cid tr i j f <=>
+    i <= j /\ !k. i <= k /\ k < j
+      ==> same_state_prop cid (FST $ EL k tr) (FST $ EL (SUC k) tr) f
+End
+
+Theorem same_state_prop_range_add:
+  same_state_prop_range cid tr i j f
+  /\ same_state_prop_range cid tr j k f
+  ==> same_state_prop_range cid tr i k f
+Proof
+  rw[same_state_prop_range_def]
+  >> qmatch_assum_rename_tac `kk < k`
+  >> Cases_on `j <= kk`
+  >- (first_x_assum irule >> fs[])
+  >> fs[NOT_LESS_EQUAL]
+QED
+
+Theorem same_state_prop_range_SUC:
+  same_state_prop_range cid tr i (SUC j) f
+  /\ i <= j
+  ==> same_state_prop_range cid tr i j f
+Proof
+  rw[same_state_prop_range_def]
+QED
+
+Theorem same_state_prop_range_prop:
+  wf_trace tr /\ SUC k < LENGTH tr
+  /\ same_state_prop_range cid tr i (SUC k) f
+  /\ same_state_prop cid (FST (EL i tr)) (FST $ EL k tr) f
+  ==> same_state_prop cid (FST (EL i tr)) (FST (EL (SUC k) tr)) f
+Proof
+  rw[same_state_prop_def,same_state_prop_range_def]
+  >> drule_at_then (Pat `FLOOKUP _ _ = _`) assume_tac wf_trace_cid_backward1
+  >> dxrule_then strip_assume_tac $ iffLR LESS_OR_EQ
+  >> gvs[PULL_FORALL,AND_IMP_INTRO]
+  >> first_x_assum $ drule_at $ Pat `FLOOKUP _ _ = _`
+  >> fs[]
+QED
+
+Theorem same_state_prop_indexes:
+  !i j cid tr f.
+  wf_trace tr /\ j < LENGTH tr
+  /\ same_state_prop_range cid tr i j f
+  ==> same_state_prop cid (FST $ EL i tr) (FST $ EL j tr) f
+Proof
+  rpt gen_tac
+  >> Induct_on `j - i`
+  >> rpt strip_tac
+  >- (
+    fs[same_state_prop_range_def,relationTheory.reflexive_def]
+    >> dxrule_all_then assume_tac $ iffLR $ GSYM arithmeticTheory.EQ_LESS_EQ
+    >> rw[same_state_prop_def]
+    >> gs[]
+  )
+  >> gvs[AND_IMP_INTRO,Once SUB_LEFT_EQ]
+  >> first_x_assum $ qspecl_then [`i+v`,`i`] mp_tac
+  >> impl_tac
+  >- (
+    fs[]
+    >> irule same_state_prop_range_SUC
+    >> fs[ADD1]
+  )
+  >> strip_tac
+  >> drule_at (Pat `same_state_prop _ _ _ _`) same_state_prop_range_prop
+  >> fs[ADD1]
+QED
+
+(*
  * characterisation of fulfil and promise rules
  *)
 
 Definition is_fulfil_def:
-  is_fulfil cid t sys1 sys2 =
+  is_fulfil cid t sys1mem sys2 =
   ?st st' p var e.
-    FLOOKUP sys1 cid = SOME $ Core cid p st
+    FLOOKUP (FST sys1mem) cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
     /\ bir_get_current_statement p st.bst_pc =
         SOME $ BStmtB $ BStmt_Assign var e
+    /\ PRE t < LENGTH $ SND $ sys1mem
+    /\ 0 < t
+    /\ (EL (PRE t) $ SND $ sys1mem).cid = cid
 End
 
 Theorem is_fulfil_MEM_bst_prom:
   !cid t sys1 sys2. is_fulfil cid t sys1 sys2
-  ==> ?p st. FLOOKUP sys1 cid = SOME $ Core cid p st /\ MEM t st.bst_prom
+  ==> ?p st. FLOOKUP (FST sys1) cid = SOME $ Core cid p st /\ MEM t st.bst_prom
 Proof
   fs[is_fulfil_def,PULL_EXISTS]
 QED
@@ -53,7 +143,7 @@ End
 
 Theorem is_fulfil_state_changed:
   !tr cid t p st st' i. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   ==> st <> st'
@@ -82,7 +172,7 @@ QED
 
 Theorem is_fulfil_parstep_nice:
   !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
   ==> cid = cid'
 Proof
@@ -102,7 +192,7 @@ QED
 
 Theorem is_fulfil_parstep_nice_imp:
   !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
 Proof
   rpt strip_tac
@@ -113,7 +203,7 @@ QED
 
 Theorem is_fulfil_memory:
   !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   ==> SND $ EL i tr = SND $ EL (SUC i) tr
 Proof
   rpt strip_tac
@@ -125,11 +215,11 @@ QED
 
 Theorem is_fulfil_parstep_nice_eq:
   !tr cid t i. wf_trace tr /\ SUC i < LENGTH tr
-    /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+    /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
     ==>  ?p s var xcl e v_e v_data v_addr v l new_viewenv new_env a_e rel_acq rel acq.
       bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl acq rel
     /\ xcl = is_xcl_write p s.bst_pc
-    /\ rel = is_rel p s.bst_pc 
+    /\ rel = is_rel p s.bst_pc
     /\ acq = is_acq p s.bst_pc
     /\ rel_acq = (rel /\ acq)
     /\  MEM t s.bst_prom
@@ -263,7 +353,7 @@ QED
 Theorem is_fulfil_inv:
   !tr cid cid' t p p2 p2' st st' st2 st2' i.
   wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p2 st2
@@ -378,7 +468,7 @@ QED
 
 Theorem is_fulfil_is_promise:
   !i tr cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   ==> ?j. j < i /\ is_promise cid t (EL j tr) (EL (SUC j) tr)
 Proof
   rpt strip_tac
@@ -412,7 +502,7 @@ QED
 
 Theorem NOT_is_fulfil_MEM_bst_prom:
   !i tr cid p st p' st' t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ ~is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ ~is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ MEM t st.bst_prom
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
@@ -439,7 +529,7 @@ Theorem is_promise_is_fulfil:
   !i tr cid t. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
   ==> ?j. i < j /\ SUC j < LENGTH tr
-    /\ is_fulfil cid t (FST $ EL j tr) (FST $ EL (SUC j) tr)
+    /\ is_fulfil cid t (EL j tr) (FST $ EL (SUC j) tr)
 Proof
   rpt strip_tac
   >> CCONTR_TAC
@@ -510,13 +600,13 @@ QED
 
 Theorem is_fulfil_to_memory:
   !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   ==> 0 < t /\ t < (LENGTH $ SND $ EL (SUC i) tr) + 1
     /\ (EL (PRE t) $ SND $ EL (SUC i) tr).cid = cid
 Proof
   rpt gen_tac >> strip_tac
   >> drule_all_then strip_assume_tac is_fulfil_parstep_nice_eq
-  >> fs[]
+  >> gs[arithmeticTheory.PRE_SUB1]
 QED
 
 (* a fulfil is only fulfilled once *)
@@ -524,15 +614,15 @@ QED
 Theorem is_fulfil_once:
   !tr i j t cid cid'. wf_trace tr
   /\ SUC i < LENGTH tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ SUC j < LENGTH tr /\ i <> j
-  ==> ~is_fulfil cid' t (FST $ EL j tr) (FST $ EL (SUC j) tr)
+  ==> ~is_fulfil cid' t (EL j tr) (FST $ EL (SUC j) tr)
 Proof
   rpt strip_tac
   >> wlog_tac `i < j` [`i`,`j`,`cid`,`cid'`]
   >- metis_tac[NOT_NUM_EQ,LESS_EQ]
-  >> qmatch_assum_rename_tac `is_fulfil cid t (FST $ EL i tr) _`
-  >> qmatch_assum_rename_tac `is_fulfil cid' t (FST $ EL j tr) _`
+  >> qmatch_assum_rename_tac `is_fulfil cid t (EL i tr) _`
+  >> qmatch_assum_rename_tac `is_fulfil cid' t (EL j tr) _`
   >> drule_at (Pos $ el 3) is_fulfil_to_memory
   >> rev_drule_at (Pos $ el 3) is_fulfil_to_memory
   >> drule_at (Pos $ el 3) is_fulfil_memory
@@ -543,7 +633,6 @@ Proof
     >> rw[IS_PREFIX_APPEND]
     >> fs[EL_APPEND1]
   )
-  >> ntac 2 $ qpat_x_assum `_.cid = _` kall_tac
   >> gvs[]
   >> Cases_on `j = SUC i`
   >> gvs[FLOOKUP_UPDATE,is_fulfil_def]
@@ -554,9 +643,10 @@ Proof
     ntac 2 $ qhdtm_x_assum `FILTER` $ fs o single o GSYM
     >> fs[MEM_FILTER]
   )
+  >> qmatch_assum_abbrev_tac `cid = _.cid`
   >> qspecl_then [`SUC i`,`j`,`tr`,`cid`] assume_tac
     wf_trace_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
-  >> gs[EVERY_MEM,AND_IMP_INTRO]
+  >> gs[EVERY_MEM,AND_IMP_INTRO,Abbr`cid`]
   >> first_x_assum drule
   >> impl_tac
   >- (
@@ -570,8 +660,8 @@ QED
 
 Theorem is_fulfil_same:
   !tr cid cid' t t' i. wf_trace tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
-  /\ is_fulfil cid' t' (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid' t' (EL i tr) (FST $ EL (SUC i) tr)
   /\ SUC i < LENGTH tr
   ==> cid = cid' /\ t = t'
 Proof
@@ -610,7 +700,7 @@ QED
 (* For a thread cid, the coh(l) of an address l fulfiled to is strictly larger than t *)
 Theorem is_fulfil_bst_coh:
   !tr i j cid t p st. wf_trace tr
-  /\ is_fulfil cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ i < j /\ j < LENGTH tr
   /\ FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st
   ==> t < st.bst_coh((EL t $ SND $ EL (SUC i) tr).loc)
@@ -635,29 +725,37 @@ QED
  *)
 
 Definition is_read_xcl_def:
-  is_read_xcl cid t sys1 sys2 <=>
+  is_read_xcl cid t sys1mem sys2 <=>
   ?st st' p var a_e cast_opt acq rel.
-    FLOOKUP sys1 cid = SOME $ Core cid p st
+    FLOOKUP (FST sys1mem) cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ bir_get_stmt p st.bst_pc = BirStmt_Read var a_e cast_opt T acq rel
     /\ IS_SOME st'.bst_xclb
     /\ (THE st'.bst_xclb).xclb_time = t
     /\ IS_NONE st.bst_xclb
+    /\ (0 < t
+      ==>
+        PRE t < LENGTH $ SND sys1mem
+        /\ (EL (PRE t) $ SND sys1mem).cid = cid)
 End
 
 Definition is_fulfil_xcl_def:
-  is_fulfil_xcl cid t sys1 sys2 <=>
+  is_fulfil_xcl cid t sys1mem sys2 <=>
   ?st st' p a_e v_e acq rel.
-    FLOOKUP sys1 cid = SOME $ Core cid p st
+    FLOOKUP (FST sys1mem) cid = SOME $ Core cid p st
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
     /\ bir_get_stmt p st.bst_pc = BirStmt_Write a_e v_e T acq rel
     /\ IS_SOME st.bst_xclb
+    /\ PRE t < LENGTH $ SND $ sys1mem
+    /\ 0 < t
+    /\ (EL (PRE t) $ SND $ sys1mem).cid = cid
 End
 
 Theorem is_fulfil_xcl_is_fulfil:
-  !cid t sys1 sys2. is_fulfil_xcl cid t sys1 sys2 ==> is_fulfil cid t sys1 sys2
+  !cid t sys1mem sys2. is_fulfil_xcl cid t sys1mem sys2
+  ==> is_fulfil cid t sys1mem sys2
 Proof
   rw[is_fulfil_xcl_def,is_fulfil_def,bir_get_stmt_write]
   >> rpt $ goal_assum $ drule_at Any
@@ -665,11 +763,12 @@ QED
 
 Theorem is_fulfil_xcl_atomic:
   !tr i cid t p st.  wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> fulfil_atomic_ok (SND $ EL (SUC i) tr)
         ((EL (PRE t) $ SND $ EL (SUC i) tr).loc) cid st t
     /\ is_xcl_write p st.bst_pc
+    /\  (EL (PRE t) $ SND $ EL (SUC i) tr).cid = cid
 Proof
   rpt gen_tac >> strip_tac
   >> imp_res_tac is_fulfil_xcl_is_fulfil
@@ -681,7 +780,7 @@ QED
 
 Theorem is_read_xcl_parstep_nice:
   !tr i cid cid' t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_read_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
   ==> cid = cid'
 Proof
@@ -699,7 +798,7 @@ QED
 
 Theorem is_read_xcl_parstep_nice_imp:
   !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_read_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
 Proof
   rpt strip_tac
@@ -712,7 +811,7 @@ QED
 
 Theorem is_read_xcl_parstep_nice_eq:
   !tr cid t i. wf_trace tr /\ SUC i < LENGTH tr
-    /\ is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+    /\ is_read_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
     ==> ?p s st' opt_cast ν_pre v_addr new_env l a_e var v zcq rel acq.
     is_certified p cid st' (SND (EL (SUC i) tr))
     /\ st' = (s with
@@ -800,26 +899,13 @@ Theorem xclb_NONE_SOME_is_read_xclb:
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   /\ IS_SOME st'.bst_xclb
   /\ st.bst_xclb = NONE
-  ==> ?t. is_read_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  ==> ?t. is_read_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
 Proof
   rpt strip_tac
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
   >> fs[parstep_nice_def,parstep_cases,DISJ_EQ_IMP]
-  >> Cases_on `cid = cid'`
+  >> reverse $ Cases_on `cid = cid'`
   >> gvs[FLOOKUP_UPDATE,clstep_cases,cstep_cases,parstep_nice_def,parstep_cases,is_read_xcl_def,optionTheory.IS_SOME_EXISTS]
-  >- (
-    gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs()]
-  )
-  >> qmatch_assum_rename_tac `bir_exec_stmt p stmt s = _`
-  >> Cases_on `stmt`
-  >- (
-    qmatch_assum_rename_tac `bir_exec_stmt p (BStmtB b) s = _`
-    >> Cases_on `b`
-    >> fs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_programTheory.bir_state_is_terminated_def,bir_programTheory.bir_exec_stmtB_def,bir_get_stmt_generic]
-    >> BasicProvers.every_case_tac
-    >> fs[Once EQ_SYM_EQ]
-    >> cheat
-  )
   >> cheat
 QED
 
@@ -827,10 +913,10 @@ QED
 (* TODO encode success *)
 Theorem is_fulfil_xcl_is_read_xcl:
   !i tr cid p st t. wf_trace tr /\ SUC i < LENGTH tr
-  /\ is_fulfil_xcl cid t (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> ?j. j < i
-    /\ is_read_xcl cid t (FST $ EL j tr) (FST $ EL (SUC j) tr)
+    /\ is_read_xcl cid t (EL j tr) (FST $ EL (SUC j) tr)
     /\ !k p' st'. j < k /\ k <= i
       /\ FLOOKUP (FST $ EL k tr) cid = SOME $ Core cid p st'
       ==> st.bst_xclb = st'.bst_xclb
@@ -850,7 +936,7 @@ Proof
     >> drule_then (drule_then $ qspec_then `LENGTH tr - n` assume_tac) wf_trace_cid
     >> gs[]
     >> cheat
-    >> `is_read_xcl cid t (FST (EL (LENGTH tr - n) tr)) (FST (EL (SUC $ LENGTH tr - n) tr))` by (
+    >> `is_read_xcl cid t (EL (LENGTH tr - n) tr) (FST (EL (SUC $ LENGTH tr - n) tr))` by (
       irule xclb_NONE_SOME_is_read_xclb
       >> fs[]
     )
@@ -859,6 +945,163 @@ Proof
     >> cheat
   )
   >> cheat
+QED
+
+(* exclusive bank semantics *)
+
+(*
+ * two distinct cores cid, cid' cannot exclusively fulfil to the same address
+ * if the lr/sc are interleaved.
+ * Here the sc (exclusive fulfil) of cid sees the lr (exclusive read) of cid'
+ *   lr_cid < lr_cid' < sc_cid
+ *)
+Theorem is_fulfil_xcl_is_read_xcl_is_fulfil_xcl:
+  !i j tr cid cid' p st p' st' t t'. wf_trace tr
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ (THE st.bst_xclb).xclb_time < t
+  /\ (THE st.bst_xclb).xclb_time < LENGTH $ SND $ EL (SUC i) tr
+  /\ PRE t < LENGTH $ SND $ EL (SUC i) tr
+  /\ PRE (THE st.bst_xclb).xclb_time < LENGTH $ SND $ EL (SUC i) tr
+  /\ (0 < (THE st.bst_xclb).xclb_time ==>
+    (EL (PRE (THE st.bst_xclb).xclb_time) (SND (EL (SUC i) tr))).loc
+      = (EL (PRE t) (SND (EL (SUC i) tr))).loc
+    /\ (EL (PRE $ (THE st.bst_xclb).xclb_time) (SND (EL (SUC i) tr))).cid = cid)
+  /\ (EL (PRE t) (SND (EL (SUC i) tr))).cid = cid
+  /\ is_fulfil_xcl cid' t' (EL j tr) (FST $ EL (SUC j) tr)
+  /\ SUC j < LENGTH tr
+  /\ FLOOKUP (FST $ EL j tr) cid' = SOME $ Core cid' p' st'
+  /\ 0 < (THE st'.bst_xclb).xclb_time
+  /\ (THE st'.bst_xclb).xclb_time < t'
+  /\ (THE st'.bst_xclb).xclb_time < LENGTH $ SND $ EL (SUC j) tr
+  /\ PRE t' < LENGTH $ SND $ EL (SUC j) tr
+  /\ (EL (PRE t') (SND (EL (SUC j) tr))).cid = cid'
+  /\ (EL (PRE $ (THE st'.bst_xclb).xclb_time) (SND (EL (SUC j) tr))).cid = cid'
+  /\ i < j
+  /\ (EL (PRE (THE st'.bst_xclb).xclb_time) (SND (EL (SUC j) tr))).loc
+    = (EL (PRE t') (SND (EL (SUC j) tr))).loc
+  /\ cid <> cid'
+  /\ (0 < (THE st.bst_xclb).xclb_time ==>
+    (EL (PRE (THE st.bst_xclb).xclb_time) $ SND $ EL (SUC i) tr).loc
+      = (EL (PRE (THE st'.bst_xclb).xclb_time) $ SND $ EL (SUC j) tr).loc)
+  /\ (EL (PRE t') $ SND $ EL (SUC j) tr).loc
+    = (EL (PRE t) $ SND $ EL (SUC j) tr).loc
+  /\ (THE st.bst_xclb).xclb_time < (THE st'.bst_xclb).xclb_time
+  /\ (THE st'.bst_xclb).xclb_time < t
+  ==> F
+Proof
+  rpt strip_tac
+  >> qmatch_assum_abbrev_tac `A ==> _`
+  >> Cases_on `A` >> fs[]
+  >> drule_then (qspecl_then [`SUC j`,`SUC i`] assume_tac) wf_trace_EL_SND_EQ_EL_SND
+  >> drule_at_then (Pos $ el 3) assume_tac is_fulfil_xcl_atomic
+  >> rev_drule_at_then (Pos $ el 3) assume_tac is_fulfil_xcl_atomic
+  >> `SUC i < SUC j` by fs[]
+  >> drule_all_then assume_tac wf_trace_IS_PREFIX_SND_EL
+  >> gs[optionTheory.IS_SOME_EXISTS,is_fulfil_xcl_def,IS_PREFIX_APPEND]
+  >> dxrule $ iffLR fulfil_atomic_ok_def
+  >> fs[]
+  >> qpat_x_assum `_ < _.xclb_time` $ irule_at Any
+  >> gvs[GSYM arithmeticTheory.PRE_SUB1]
+QED
+
+(*
+ * a successful fulfil t2 with its preceeding read t1
+ *)
+Definition lr_sc_def:
+  lr_sc cid tr t1 i1 t2 i2 <=>
+  SUC i2 < LENGTH tr
+  /\ PRE t2 < LENGTH $ SND $ EL i2 tr
+  /\ is_read_xcl cid t1 (EL i1 tr) (FST $ EL (SUC i1) tr)
+  /\ is_fulfil_xcl cid t2 (EL i2 tr) (FST $ EL (SUC i2) tr)
+  /\ i1 < i2
+  /\ t1 < t2 (* view timestamps strictly ordered *)
+  /\ (* exclusive bank unchanged *)
+    same_state_prop_range cid tr (SUC i1) i2 (λst. st.bst_xclb)
+  /\ (0 < t1 ==>
+    (EL (PRE t1) $ SND $ EL (SUC i1) tr).loc
+    = (EL (PRE t2) $ SND $ EL (SUC i2) tr).loc)
+End
+
+Theorem lr_sc_cid:
+  !tr cid t1 i1 t2 i2.
+  wf_trace tr
+  /\ lr_sc cid tr t1 i1 t2 i2
+  ==>
+    (EL (PRE t2) $ SND $ EL (SUC i2) tr).cid = cid
+    /\ (0 < t1
+      ==> (EL (PRE t1) $ SND $ EL i1 tr).cid = cid)
+Proof
+  rpt gen_tac >> strip_tac
+  >> fs[lr_sc_def]
+  >> imp_res_tac is_fulfil_xcl_is_fulfil
+  >> dxrule_at_then (Pat `is_fulfil _ _ _ _`) assume_tac is_fulfil_memory
+  >> gs[is_fulfil_xcl_def,is_read_xcl_def]
+QED
+
+Theorem lr_sc_bst_xclb_eq:
+  !tr cid t1 i1 t2 i2.
+  wf_trace tr
+  /\ lr_sc cid tr t1 i1 t2 i2
+  ==> same_state_prop cid (FST (EL (SUC i1) tr)) (FST (EL i2 tr)) (λst. st.bst_xclb)
+Proof
+  rw[lr_sc_def]
+  >> irule same_state_prop_indexes
+  >> fs[]
+QED
+
+Theorem lr_sc_memory:
+  !tr cid t1 i1 t2 i2.
+  wf_trace tr /\ lr_sc cid tr t1 i1 t2 i2
+  ==> SND $ EL i2 tr = SND $ EL (SUC i2) tr
+Proof
+  rw[lr_sc_def]
+  >> imp_res_tac is_fulfil_xcl_is_fulfil
+  >> drule_all_then irule is_fulfil_memory
+QED
+
+(*
+ * two distinct cores cid, cid' cannot exclusively fulfil to the same address
+ * if the lr/sc are interleaved (t1 < t1' < t2).
+ * The exclusive fulfil to t2 of cid sees the exclusive read of cid' to t1'
+ *)
+Theorem lr_sc_interleaved_pair:
+  !i j tr cid cid' t1 t2 i1 i2 t1' t2' j1 j2.
+  wf_trace tr
+  /\ lr_sc cid tr t1 i1 t2 i2
+  /\ lr_sc cid' tr t1' j1 t2' j2
+  /\ 0 < t1 /\ t1 < t1' /\ t1' < t2
+  /\ cid <> cid'
+  /\ i2 < j2
+  /\ (EL (PRE t2) $ SND $ EL (SUC i2) tr).loc
+    = (EL (PRE t2') $ SND $ EL (SUC j2) tr).loc
+  ==> F
+Proof
+  rpt strip_tac
+  >> drule_at (Pat `lr_sc _ _ _ _ _ _`) lr_sc_bst_xclb_eq
+  >> rev_drule_at (Pat `lr_sc _ _ _ _ _ _`) lr_sc_bst_xclb_eq
+  >> drule_at (Pat `lr_sc _ _ _ _ _ _`) lr_sc_cid
+  >> rev_drule_at (Pat `lr_sc _ _ _ _ _ _`) lr_sc_cid
+  >> drule_at (Pat `lr_sc _ _ _ _ _ _`) lr_sc_memory
+  >> rev_drule_at (Pat `lr_sc _ _ _ _ _ _`) lr_sc_memory
+  >> rpt strip_tac
+  >> gs[]
+  >> drule_then irule is_fulfil_xcl_is_read_xcl_is_fulfil_xcl
+  >> rev_drule_then (irule_at Any) $ cj 4 $ iffLR lr_sc_def
+  >> drule_then (irule_at Any) $ cj 4 $ iffLR lr_sc_def
+  >> qspecl_then [`tr`,`SUC j1`,`SUC j2`] assume_tac wf_trace_IS_PREFIX_SND_EL'
+  >> qspecl_then [`tr`,`j1`,`SUC j2`] assume_tac wf_trace_IS_PREFIX_SND_EL'
+  >> qspecl_then [`tr`,`SUC i1`,`SUC i2`] assume_tac wf_trace_IS_PREFIX_SND_EL'
+  >> qspecl_then [`tr`,`i1`,`SUC i2`] assume_tac wf_trace_IS_PREFIX_SND_EL'
+  >> qspecl_then [`tr`,`i2`,`j2`] assume_tac wf_trace_IS_PREFIX_SND_EL'
+  >> qspecl_then [`tr`,`j1`,`SUC j1`] assume_tac wf_trace_memory_LENGTH
+  >> qspecl_then [`tr`,`i1`,`SUC i1`] assume_tac wf_trace_memory_LENGTH
+  >> gs[lr_sc_def]
+  >> gvs[same_state_prop_def,is_fulfil_xcl_def,is_read_xcl_def,IS_PREFIX_EL]
+  >> conj_asm1_tac
+  >- fs[IS_PREFIX_LENGTH,arithmeticTheory.PRE_SUB1]
+  >> rpt $ dxrule_then assume_tac IS_PREFIX_EL
+  >> gs[]
 QED
 
 val _ = export_theory();
