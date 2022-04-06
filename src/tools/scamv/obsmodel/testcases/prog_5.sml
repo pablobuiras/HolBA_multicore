@@ -16,7 +16,7 @@ val prog_5 = ``
 BirProgram
        [<|bb_label :=
             BL_Address_HC (Imm64 (0w :word64)) "EB02003F (cmp x1, x2)";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [(BStmt_Assign (BVar "ProcState_C" BType_Bool)
                 (BExp_nzcv_SUB_C (BExp_Den (BVar "R1" (BType_Imm Bit64)))
@@ -41,7 +41,7 @@ BirProgram
         <|bb_label :=
             BL_Address_HC (Imm64 (4w :word64))
               "540000A2 (b.cs 18 <.text+0x18>  // b.hs, b.nlast)";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements := ([] :bir_val_t bir_stmt_basic_t list );
           bb_last_statement :=
             BStmt_CJmp (BExp_Den (BVar "ProcState_C" BType_Bool))
@@ -49,7 +49,7 @@ BirProgram
               (BLE_Label (BL_Address (Imm64 (8w :word64))))|>;
         <|bb_label :=
             BL_Address_HC (Imm64 (8w :word64)) "F8616864 (ldr x4, [x3, x1])";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [(BStmt_Assert
                 (BExp_Aligned Bit64 (3 :num)
@@ -67,7 +67,7 @@ BirProgram
             BStmt_Jmp (BLE_Label (BL_Address (Imm64 (12w :word64))))|>;
         <|bb_label :=
             BL_Address_HC (Imm64 (12w :word64)) "D37AE484 (lsl x4, x4, #6)";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [(BStmt_Assign (BVar "R4" (BType_Imm Bit64))
                 (BExp_BinExp BIExp_And
@@ -80,7 +80,7 @@ BirProgram
             BStmt_Jmp (BLE_Label (BL_Address (Imm64 (16w :word64))))|>;
         <|bb_label :=
             BL_Address_HC (Imm64 (16w :word64)) "F86468A6 (ldr x6, [x5, x4])";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements :=
             [(BStmt_Assert
                 (BExp_Aligned Bit64 (3 :num)
@@ -99,17 +99,17 @@ BirProgram
         <|bb_label :=
             BL_Address_HC (Imm64 (20w :word64))
               "14000002 (b 1c <.text+0x1c>)";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements := ([] :bir_val_t bir_stmt_basic_t list );
           bb_last_statement :=
             BStmt_Jmp (BLE_Label (BL_Address (Imm64 (28w :word64))))|>;
         <|bb_label := BL_Address_HC (Imm64 (24w :word64)) "D503201F (nop)";
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements := ([] :bir_val_t bir_stmt_basic_t list );
           bb_last_statement :=
             BStmt_Jmp (BLE_Label (BL_Address (Imm64 (28w :word64))))|>;
         <|bb_label := BL_Address (Imm64 (28w :word64));
-          bb_atomic := F;
+          bb_mc_tags := NONE;
           bb_statements := ([] :bir_val_t bir_stmt_basic_t list );
           bb_last_statement := BStmt_Halt (BExp_Const (Imm32 (0w :word32)))|>]
 :bir_val_t bir_program_t
@@ -171,7 +171,7 @@ obs0 0x1C
 val prog_5_cache_speculation_first = ``
  BirProgram
   [<|bb_label := BL_Address (Imm64 (0w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [BStmt_Observe (0 :num) (BExp_Const (Imm1 (1w :word1)))
           [BExp_Const (Imm64 (0w :word64))]
@@ -205,7 +205,7 @@ val prog_5_cache_speculation_first = ``
      bb_last_statement :=
        BStmt_Jmp (BLE_Label (BL_Address (Imm64 (4w :word64))))|>;
    <|bb_label := BL_Address (Imm64 (4w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [BStmt_Observe (0 :num) (BExp_Const (Imm1 (1w :word1)))
           [BExp_Const (Imm64 (4w :word64))]
@@ -215,7 +215,7 @@ val prog_5_cache_speculation_first = ``
          (BLE_Label (BL_Address (Imm64 (24w :word64))))
          (BLE_Label (BL_Address (Imm64 (8w :word64))))|>;
    <|bb_label := BL_Address (Imm64 (8w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [BStmt_Observe (0 :num) (BExp_Const (Imm1 (1w :word1)))
           [BExp_Const (Imm64 (8w :word64))]
@@ -254,7 +254,7 @@ val prog_5_cache_speculation_first = ``
      bb_last_statement :=
        BStmt_Jmp (BLE_Label (BL_Address (Imm64 (12w :word64))))|>;
    <|bb_label := BL_Address (Imm64 (12w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [BStmt_Observe (0 :num) (BExp_Const (Imm1 (1w :word1)))
           [BExp_Const (Imm64 (12w :word64))]
@@ -269,7 +269,7 @@ val prog_5_cache_speculation_first = ``
      bb_last_statement :=
        BStmt_Jmp (BLE_Label (BL_Address (Imm64 (16w :word64))))|>;
    <|bb_label := BL_Address (Imm64 (16w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [BStmt_Observe (0 :num) (BExp_Const (Imm1 (1w :word1)))
           [BExp_Const (Imm64 (16w :word64))]
@@ -308,7 +308,7 @@ val prog_5_cache_speculation_first = ``
      bb_last_statement :=
        BStmt_Jmp (BLE_Label (BL_Address (Imm64 (20w :word64))))|>;
    <|bb_label := BL_Address (Imm64 (20w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [BStmt_Observe (0 :num) (BExp_Const (Imm1 (1w :word1)))
           [BExp_Const (Imm64 (20w :word64))]
@@ -316,7 +316,7 @@ val prog_5_cache_speculation_first = ``
      bb_last_statement :=
        BStmt_Jmp (BLE_Label (BL_Address (Imm64 (28w :word64))))|>;
    <|bb_label := BL_Address (Imm64 (24w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [(BStmt_Assign (BVar "R4*" (BType_Imm Bit64))
            (BExp_Den (BVar "R4" (BType_Imm Bit64))) :
@@ -357,7 +357,7 @@ val prog_5_cache_speculation_first = ``
      bb_last_statement :=
        BStmt_Jmp (BLE_Label (BL_Address (Imm64 (28w :word64))))|>;
    <|bb_label := BL_Address (Imm64 (28w :word64));
-     bb_atomic := F;
+     bb_mc_tags := NONE;
      bb_statements :=
        [BStmt_Observe (0 :num) (BExp_Const (Imm1 (1w :word1)))
           [BExp_Const (Imm64 (28w :word64))]

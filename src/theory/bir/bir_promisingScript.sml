@@ -20,18 +20,12 @@ val _ = Datatype‘
     |>
 ’;
 
-val _ = Datatype‘
-  mem_t = <|
-    bmst_lock        : num option;
-    bmst_counter     : num;
-    bmst_storebuffer : mem_msg_t list;
-    |>
-’;
-
+(* Type of instruction and their arguments. *)
 val _ = Datatype‘
   bir_statement_type_t =
-  | BirStmt_Read bir_var_t bir_exp_t ((bir_cast_t # bir_immtype_t) option) bool
-  | BirStmt_Write bir_exp_t bir_exp_t bool
+  | BirStmt_Read bir_var_t bir_exp_t ((bir_cast_t # bir_immtype_t) option) bool bool bool
+  | BirStmt_Write bir_exp_t bir_exp_t bool bool bool
+  | BirStmt_Amo bir_var_t bir_exp_t bir_exp_t bool bool
   | BirStmt_Expr bir_var_t bir_exp_t
   | BirStmt_Fence bir_memop_t bir_memop_t
   | BirStmt_Branch bir_exp_t bir_label_exp_t bir_label_exp_t
@@ -39,10 +33,12 @@ val _ = Datatype‘
   | BirStmt_None
 ’;
 
+(* Default value of memory *)
 val mem_default_value_def = Define ‘
   mem_default_value = BVal_Imm (Imm64 0w)
 ’;
 
+(* Returns the SOME value of the message if the location matches, else NONE. *)
 val mem_read_aux_def = Define‘
    mem_read_aux l NONE = NONE
 /\ mem_read_aux l (SOME msg) = if msg.loc = l then SOME msg.val else NONE
@@ -57,36 +53,65 @@ val mem_read_def = Define‘
 ∧ mem_read M l (SUC t) = mem_read_aux l (oEL t M)
 ’;
 
+(* Returns if all pairs (timestamp * message) satisfies P. *)
 val mem_every_def = Define‘
-  mem_every P M = EVERY P (ZIP ([1 .. LENGTH M], M))
+  mem_every P M = EVERY P (ZIP (M, [1 .. LENGTH M]))
 ’;
 
+
+
+(* Returns pairs (timestamp * message) satisfying P *)
 val mem_filter_def = Define‘
-  mem_filter P M = FILTER P (ZIP ([1 .. LENGTH M], M))
+  mem_filter P M = FILTER P (ZIP (M, [1 .. LENGTH M]))
 ’;
 
+Theorem mem_every_rwr:
+  ∀P M.
+    mem_every P M = EVERY P (GENLIST (\t. EL t M, t + 1) (LENGTH M))
+Proof
+  fs [mem_every_def, listRangeINC_def, ZIP_GENLIST]
+QED
+
+Theorem mem_filter_rwr:
+  ∀P M.
+    mem_filter P M = FILTER P (GENLIST (\t. EL t M, t + 1) (LENGTH M))
+Proof
+  fs [mem_filter_def, listRangeINC_def, ZIP_GENLIST]
+QED
+
+(* Returns timestamps of messages with location l. *)
 val mem_timestamps_def = Define‘
-  mem_timestamps l M = MAP FST (mem_filter (λ(t,m). m.loc = l) M)
+  mem_timestamps l M = MAP SND (mem_filter (λ(m, t). m.loc = l) M)
 ’;
 
+(* The atomic predicate from promising-semantics. *)
 val mem_atomic_def = Define‘
   mem_atomic M l cid t_r t_w =
-  ((EL (t_r - 1) M).loc = l ⇒
-     mem_every (λ(t',m). t_r < t' ∧ t' < t_w ∧ m.loc = l ⇒ m.cid = cid) M)
+  (((EL (t_r - 1) M).loc = l ∨ t_r = 0)⇒
+     mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
 ’;
 
+(* Checks 
+ * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
+ * letting t_max = (MAX v_pre (s.bst_coh l))
+ *)
 val mem_readable_def = Define‘
   mem_readable M l t_max t =
-  mem_every (λ(t',m). t < t' ∧ t' ≤ t_max ⇒ m.loc = l) M
+  mem_every (λ(m,t'). (t < t' ∧ t' ≤ t_max) ⇒ m.loc ≠ l) M
 ’;
 
+(* Note that this currently does not take into account ARM *)
 val mem_read_view_def = Define‘
-  mem_read_view a rk (f:fwdb_t) t = if f.fwdb_time = t ∧ ~f.fwdb_xcl then f.fwdb_view else t
+  mem_read_view (f:fwdb_t) t = if f.fwdb_time = t ∧ ~f.fwdb_xcl then f.fwdb_view else t
 ’;
 
 val bir_eval_view_of_exp = Define‘
-  (bir_eval_view_of_exp (BExp_BinExp et e1 e2) viewenv =
+  (bir_eval_view_of_exp (BExp_BinExp op e1 e2) viewenv =
    MAX (bir_eval_view_of_exp e1 viewenv) (bir_eval_view_of_exp e2 viewenv))
+/\ (bir_eval_view_of_exp (BExp_BinPred pred e1 e2) viewenv =
+   MAX (bir_eval_view_of_exp e1 viewenv) (bir_eval_view_of_exp e2 viewenv))
+/\ (bir_eval_view_of_exp (BExp_UnaryExp op e) viewenv =
+    bir_eval_view_of_exp e viewenv)
 /\ (bir_eval_view_of_exp (BExp_Cast cty e ity) viewenv =
     bir_eval_view_of_exp e viewenv)
 /\ (bir_eval_view_of_exp (BExp_Den v) viewenv =
@@ -189,7 +214,7 @@ val fulfil_atomic_ok_def = Define`
   (fulfil_atomic_ok M l cid s tw =
    case s.bst_xclb of
    | SOME xclb =>
-     ((EL (xclb.xclb_time-1) M).loc = l) ==>
+     ((EL (xclb.xclb_time-1) M).loc = l ∨ (xclb.xclb_time = 0)) ==>
        (!t'. (xclb.xclb_time < t'
              /\ t' < tw
              /\ (EL (t'-1) M).loc = l) ==> (EL (t'-1) M).cid = cid)
@@ -222,6 +247,21 @@ val fulfil_update_viewenv_def = Define`
     else SOME s.bst_viewenv
 `;
 
+val xclfail_update_env_def = Define`
+  xclfail_update_env p s =
+      case bir_get_current_statement p (bir_pc_next s.bst_pc) of
+      | SOME (BStmtB (BStmt_Assign var_succ _)) =>
+        bir_env_update (bir_var_name var_succ) (BVal_Imm (Imm64 1w)) (bir_var_type var_succ) s.bst_environ
+      | _ => NONE
+`;
+
+val xclfail_update_viewenv_def = Define`
+  xclfail_update_viewenv p s =
+      case bir_get_current_statement p (bir_pc_next s.bst_pc) of
+      | SOME (BStmtB (BStmt_Assign var_succ _)) => SOME (s.bst_viewenv |+ (var_succ, 0))
+      | _ => NONE
+`;
+
 (* Upon the loading statement that is the first Assign in a lifted
  * Load-type instruction, checks if the block is trying to model
  * an exclusive-load *)
@@ -246,59 +286,127 @@ val is_xcl_write_def = Define‘
      | _ => F
 ’;
 
+val is_acq_def = Define‘
+  is_acq p pc =
+    case bir_get_program_block_info_by_label p pc.bpc_label of
+      SOME (i, bb) =>
+        (case bb.bb_mc_tags of
+         SOME mc_tags => mc_tags.mc_acq
+         | _ => F)
+     | _ => F
+’;
+
+val is_rel_def = Define‘
+  is_rel p pc =
+    case bir_get_program_block_info_by_label p pc.bpc_label of
+      SOME (i, bb) =>
+        (case bb.bb_mc_tags of
+         SOME mc_tags => mc_tags.mc_rel
+         | _ => F)
+     | _ => F
+’;
+
+val is_amo_def = Define‘
+  is_amo p pc =
+    case bir_get_program_block_info_by_label p pc.bpc_label of
+      SOME (i, bb) =>
+        (case bb.bb_mc_tags of
+         SOME mc_tags => mc_tags.mc_atomic
+         | _ => F)
+     | _ => F
+’;
 
 val bir_get_stmt_def = Define‘
   bir_get_stmt p pc = 
   case bir_get_current_statement p pc of
   | SOME (BStmtB (BStmt_Assign var e)) =>
+      if is_amo p pc then
       (case get_read_args e of
-       | SOME (a_e, cast_opt) => BirStmt_Read var a_e cast_opt (is_xcl_read p pc)
+       | SOME (a_e, cast_opt) =>
+           (case bir_get_current_statement p (bir_pc_next pc) of
+           | SOME (BStmtB (BStmt_Assign var' e)) =>
+               (case get_fulfil_args e of
+               | SOME (a_e', v_e) =>
+                   if a_e = a_e'
+                   then BirStmt_Amo var a_e v_e (is_acq p pc) (is_rel p pc)
+                   else BirStmt_None
+               | NONE => BirStmt_None)
+           | _ => BirStmt_None)
        | NONE =>
            (case get_fulfil_args e of
-            | SOME (a_e, v_e) => BirStmt_Write a_e v_e (is_xcl_write p pc)
+            | SOME (a_e, v_e) => BirStmt_None
             | NONE => BirStmt_Expr var e))
+      else
+       (case get_read_args e of
+       | SOME (a_e, cast_opt) => BirStmt_Read var a_e cast_opt (is_xcl_read p pc) (is_acq p pc) (is_rel p pc)
+       | NONE =>
+           (case get_fulfil_args e of
+           | SOME (a_e, v_e) => BirStmt_Write a_e v_e (is_xcl_write p pc) (is_acq p pc) (is_rel p pc)
+           | NONE => BirStmt_Expr var e))
   | SOME (BStmtB (BStmt_Fence K1 K2)) => BirStmt_Fence K1 K2
   | SOME (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) => BirStmt_Branch cond_e lbl1 lbl2
   | SOME stmt => BirStmt_Generic stmt
   | NONE => BirStmt_None
 ’;
 
-
 Theorem bir_get_stmt_read:
-∀p pc stmt var e a_e cast_opt xcl.
- (bir_get_stmt p pc = BirStmt_Read var a_e cast_opt xcl) ⇔
- (?e. bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
- ∧ get_read_args e = SOME (a_e, cast_opt)
- ∧ is_xcl_read p pc = xcl)
+∀p pc stmt var a_e cast_opt xcl acq rel.
+ (bir_get_stmt p pc = BirStmt_Read var a_e cast_opt xcl acq rel) ⇔
+ (∃e.
+ bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
+ /\ ~is_amo p pc
+ /\ get_read_args e = SOME (a_e, cast_opt)
+ /\ is_xcl_read p pc = xcl
+ /\ is_acq p pc = acq
+ /\ is_rel p pc = rel)
 Proof
-  gvs [bir_get_stmt_def,AllCaseEqs(),
+  gvs [bir_get_stmt_def, AllCaseEqs(),
        GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM]
 QED
 
 Theorem bir_get_stmt_write:
-∀p pc stmt a_e v_e xcl.
- (bir_get_stmt p pc = BirStmt_Write a_e v_e xcl) ⇔
+∀p pc stmt a_e v_e xcl acq rel.
+ (bir_get_stmt p pc = BirStmt_Write a_e v_e xcl acq rel) ⇔
  (∃var e. bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
- ∧ get_fulfil_args e = SOME (a_e, v_e)
- ∧ is_xcl_write p pc = xcl)
+ /\ ~is_amo p pc
+ /\ get_fulfil_args e = SOME (a_e, v_e)
+ /\ is_xcl_write p pc = xcl
+ /\ is_acq p pc = acq
+ /\ is_rel p pc = rel)
 Proof
   rw [bir_get_stmt_def,AllCaseEqs()] >>
   eq_tac >>
   rw [get_read_fulfil_args_exclusive]
 QED
 
+Theorem bir_get_stmt_amo:
+∀p pc var stmt a_e v_e xcl acq rel.
+ (bir_get_stmt p pc = BirStmt_Amo var a_e v_e acq rel) ⇔
+ (∃e cast_opt var' e'.
+    bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
+ /\ is_amo p pc
+ /\ get_read_args e = SOME (a_e, cast_opt)
+ /\ bir_get_current_statement p (bir_pc_next pc) = SOME (BStmtB (BStmt_Assign var' e'))
+ /\ get_fulfil_args e' = SOME (a_e, v_e)
+ /\ is_acq p pc = acq
+ /\ is_rel p pc = rel)
+Proof
+  gvs [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM] 
+QED
+
 Theorem bir_get_stmt_expr:
-∀p pc stmt var e a_e cast_opt xcl.
+∀p pc var e.
  (bir_get_stmt p pc = BirStmt_Expr var e) ⇔
  (bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
- ∧ get_read_args e = NONE
- ∧ get_fulfil_args e = NONE)
+ /\ get_read_args e = NONE
+ /\ get_fulfil_args e = NONE)
 Proof
-  fs [bir_get_stmt_def,AllCaseEqs()]
+  rw [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM] >>
+  Cases_on ‘is_amo p pc’ >> (rw [])
 QED
 
 Theorem bir_get_stmt_fence:
-∀p pc stmt K1 K2.
+∀p pc K1 K2.
  (bir_get_stmt p pc = BirStmt_Fence K1 K2) ⇔
  bir_get_current_statement p pc = SOME (BStmtB (BStmt_Fence K1 K2))
 Proof
@@ -306,7 +414,7 @@ Proof
 QED
 
 Theorem bir_get_stmt_branch:
-∀p pc stmt cond_e lbl1 lbl2.
+∀p pc cond_e lbl1 lbl2.
  (bir_get_stmt p pc = BirStmt_Branch cond_e lbl1 lbl2) ⇔
  bir_get_current_statement p pc = SOME (BStmtE (BStmt_CJmp cond_e lbl1 lbl2))
 Proof
@@ -327,25 +435,28 @@ Proof
   )
 QED
 
+(* FIX THIS???
 Theorem bir_get_stmt_none:
-∀p pc stmt.
+∀p pc.
  (bir_get_stmt p pc = BirStmt_None) ⇔
- bir_get_current_statement p pc = NONE
+ bir_get_current_statement p pc = NONE \/
 Proof
-  fs [bir_get_stmt_def,AllCaseEqs()]
+  fs [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM]
 QED
+*)
 
-(* TODO: "Generalising variable "ν_pre" in clause #0 (113:1-131:23)"? *)
+(* TODO: "Generalising variable "ν_pre" in clause #0"? *)
 (* core-local steps that don't affect memory *)
 val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 (* read *)
-(!p s s' v a_e xcl M l (t:num) v_pre v_post v_addr var (a:num) (rk:num) new_env cid opt_cast. (*TODO fix type of a and rk *)
-   bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast xcl
+(!p s s' v a_e xcl acq rel M l (t:num) v_pre v_post v_addr var new_env cid opt_cast.
+   bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast xcl acq rel
  /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  ∧ mem_read M l t = SOME v
- ∧ v_pre = MAX v_addr s.bst_v_rNew
- ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL t' M).loc ≠ l)
- ∧ v_post = MAX v_pre (mem_read_view a rk (s.bst_fwdb(l)) t)
+ ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
+               (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
+ ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX ν_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
+ ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
  (* TODO: Update viewenv by v_addr or v_post? *)
  ∧ s' = s with <| bst_viewenv updated_by (\env. FUPDATE env (var, v_post));
@@ -354,6 +465,9 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                                    then MAX (s.bst_coh l) v_post
                                    else s.bst_coh(lo));
                   bst_v_rOld := MAX s.bst_v_rOld v_post;
+                  bst_v_rNew := if acq then (MAX s.bst_v_rNew v_post) else s.bst_v_rNew;
+                  bst_v_wNew := if acq then (MAX s.bst_v_wNew v_post) else s.bst_v_wNew;
+                  bst_v_Rel := MAX s.bst_v_Rel (if (rel /\ acq) then v_post else 0);                 
                   bst_v_CAP := MAX s.bst_v_CAP v_addr;
                   bst_xclb := if xcl
                               then SOME <| xclb_time := t; xclb_view := v_post |>
@@ -362,17 +476,34 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                             then (bir_pc_next o bir_pc_next) s.bst_pc
                             else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M [] s')
+  clstep p cid s M [] s') 
+/\ (* exclusive-failure *)
+(!p s s' M a_e v_e acq rel cid new_env new_viewenv.
+   bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e T acq rel
+ /\  SOME new_env = xclfail_update_env p s
+ /\  SOME new_viewenv = xclfail_update_viewenv p s
+ /\  s' = s with <| bst_environ := new_env;
+                    bst_viewenv := new_viewenv;
+                    bst_xclb := NONE;
+                    bst_pc := (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc |>
+ ==>
+clstep p cid s M [] s')
 /\ (* fulfil *)
-(!p s s' M v a_e xcl l (t:num) v_pre v_post v_addr v_data v_e cid new_env new_viewenv.
-   bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl
+(!p s s' M v a_e xcl acq rel l (t:num) v_pre v_post v_addr v_data v_e cid new_env new_viewenv.
+   bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl acq rel
  /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
  /\ (xcl ==> fulfil_atomic_ok M l cid s t)
  /\ MEM t s.bst_prom
- /\ EL t M = <| loc := l; val := v; cid := cid  |>
+ /\ EL (t-1) M = <| loc := l; val := v; cid := cid  |>
  (* TODO: Use get_xclb_view or separate conjunct to extract option type? *)
- /\ v_pre = MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
+ /\ v_pre = MAX (MAX (MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
+                          (if rel
+                           then (MAX s.bst_v_rOld s.bst_v_wOld)
+                           else 0))
+                     (if (xcl /\ acq /\ rel)
+                      then s.bst_v_Rel
+                      else 0))
                 (if xcl
                  then get_xclb_view s.bst_xclb
                  else 0)
@@ -389,6 +520,9 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                                     else s.bst_coh(lo));
                    bst_v_wOld := MAX s.bst_v_wOld v_post;
                    bst_v_CAP := MAX s.bst_v_CAP v_addr;
+                   bst_v_Rel := MAX s.bst_v_Rel (if (rel /\ acq) then v_post else 0);
+                   bst_v_rNew := if (rel /\ acq /\ xcl) then (MAX s.bst_v_rNew v_post) else s.bst_v_rNew;
+                   bst_v_wNew := if (rel /\ acq /\ xcl) then (MAX s.bst_v_wNew v_post) else s.bst_v_wNew;
                    bst_fwdb := (\lo. if lo = l
                                      then <| fwdb_time := t;
                                              fwdb_view := MAX v_addr v_data;
@@ -398,10 +532,64 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                                then NONE
                                else s.bst_xclb;
                    bst_pc := if xcl
-                             then (bir_pc_next o bir_pc_next) s.bst_pc
+                             then (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc
                              else bir_pc_next s.bst_pc |>
  ==>
   clstep p cid s M [t] s')
+/\ (* AMO fulfil *)
+(!p cid s s' M acq rel var l a_e v_r v_w v_e v_rPre v_rPost v_wPre v_wPost (t_w:num) (t_r :num) new_environ new_viewenv.
+   bir_get_stmt p s.bst_pc = BirStmt_Amo var a_e v_e acq rel
+
+   (* Get location *)
+   /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+
+   (* Read part *)
+   /\ mem_read M l t_r = SOME v_r (* v_r value read *)
+   /\ v_rPre = MAX v_addr (
+        MAX s.bst_v_rNew
+        (if acq /\ rel then (MAX s.bst_v_Rel (MAX s.bst_v_rOld s.bst_v_wOld)) else 0))
+   /\ v_rPost = MAX v_rPre (mem_read_view (s.bst_fwdb l) t_r)
+                    
+   (* register and register view update *)
+   /\ SOME new_environ = env_update_cast64 (bir_var_name var) v_r (bir_var_type var) (s.bst_environ)
+   /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_post)
+
+   (* Write part *)
+   /\ MEM t_w s.bst_prom
+   (* v_w value to write, v_e value expression *)
+   /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv
+   /\ EL (t_w-1) M = <| loc := l; val := v_w; cid := cid |>
+   /\ v_wPre = MAX v_addr (
+        MAX v_data (
+        MAX s.bst_v_CAP (
+        MAX v_rPost (
+        MAX s.bst_v_wNew (
+        MAX (if rel then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
+             (if (acq /\ rel) then s.bst_v_Rel else 0))))))
+   /\ v_wPost = t_w
+   /\ MAX v_wPre (s.bst_coh l) < t_w
+
+   (* No writes to memory location between read and write *)
+   /\ (!t'. t_r < t' /\ t' < t_w ==> (EL (t'-1) M).loc = l)
+
+   (* State update *)
+   /\ s' = s with <| bst_viewenv := new_viewenv;
+                     bst_environ := new_environ;
+                     bst_prom    updated_by (FILTER (\t'. t' <> t_w));
+                     bst_coh     updated_by (l =+ MAX (s.bst_coh l) v_post);
+                     bst_v_Rel   updated_by (MAX (if acq /\ rel then v_wPost else 0));
+                     bst_v_rOld  updated_by (MAX v_rPost);
+                     bst_v_rNew  updated_by (MAX (if acq then (if rel then v_wPost else v_rPost)else 0));
+                     bst_v_wNew  updated_by (MAX (if acq then (if rel then v_wPost else v_rPost)else 0));
+                     bst_v_CAP   updated_by (MAX v_addr);
+                     bst_v_wOld  updated_by (MAX v_wPost);
+                     bst_fwdb    updated_by (l =+ <| fwdb_time := t_w;
+                                                     fwdb_view := MAX v_addr v_data;
+                                                     fwdb_xcl := T |>);
+                     bst_pc updated_by (bir_pc_next o bir_pc_next) |>
+ ==>
+ clstep p cid s M [t_w] s'
+)
 /\ (* fence *)
 (!p s s' K1 K2 M cid v.
    bir_get_stmt p s.bst_pc = BirStmt_Fence K1 K2
@@ -421,7 +609,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 ==>
   clstep p cid s M [] s')
 /\ (* register-to-register operation *)
-(!p s s' M cid v v_val e.
+(!p s s' var M cid v v_val e new_env.
   bir_get_stmt p s.bst_pc = BirStmt_Expr var e
  /\ (SOME v, v_val) = bir_eval_exp_view e s.bst_environ s.bst_viewenv
  /\ NONE = get_read_args e
@@ -513,11 +701,11 @@ Proof
   >> strip_tac >> conj_asm1_tac
   >- (
     pop_assum mp_tac
-    >> gvs[bir_cstep_cases,bir_clstep_cases,rich_listTheory.FILTER_APPEND,EVERY_FILTER]
+    >> gvs[bir_cstep_cases,bir_clstep_cases,rich_listTheory.FILTER_APPEND,EVERY_FILTER, rich_listTheory.FILTER_IDEM]
     >> match_mp_tac EVERY_MONOTONIC
     >> fs[]
   )
-  >> gvs[bir_clstep_cases,bir_cstep_cases,bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,bir_state_set_typeerror_def,stmt_generic_step_def,bir_exec_stmt_jmp_bst_prom,rich_listTheory.FILTER_APPEND]
+  >> gvs[bir_clstep_cases,bir_cstep_cases,bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,bir_state_set_typeerror_def,stmt_generic_step_def,bir_exec_stmt_jmp_bst_prom,rich_listTheory.FILTER_APPEND, rich_listTheory.FILTER_IDEM, MEM_FILTER]
   >> fs[Once EQ_SYM_EQ,FILTER_EQ_ID]
   >> qpat_x_assum `EVERY _ _.bst_prom` mp_tac
   >> match_mp_tac EVERY_MONOTONIC
@@ -547,13 +735,28 @@ val _ = Datatype `core_t =
   Core num (string bir_program_t) bir_state_t
 `;
 
+val get_core_cid = Define‘
+   get_core_cid (Core cid p s) = cid
+’;
+
+val get_core_prog = Define‘
+   get_core_prog (Core cid p s) = p
+’;
+
+val get_core_state = Define‘
+   get_core_state (Core cid p s) = s
+’;
+
+
+
 val cores_pc_not_atomic_def = Define`
   cores_pc_not_atomic cores =
-    ~?cid p s i bl.
+    ~?cid p s i bl mc_tags.
      FLOOKUP cores cid = SOME (Core cid p s)
      /\ s.bst_pc.bpc_index <> 0
      /\ bir_get_program_block_info_by_label p s.bst_pc.bpc_label = SOME (i, bl)
-     /\ bl.bb_atomic = T
+     /\ bl.bb_mc_tags = SOME mc_tags
+     /\ mc_tags.mc_atomic = T
 `;
 
 val atomicity_ok_def = Define`
@@ -571,329 +774,5 @@ val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
 ==>
    parstep cid cores M (FUPDATE cores (cid, Core cid p s')) M')
 `;
-
-(* Core-local execution *)
-val eval_clstep_read_def = Define‘
-  eval_clstep_read s M var a_e xcl =
-    let
-      (l_opt, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv;
-      v_pre = MAX v_addr s.bst_v_rNew;
-    in
-      case l_opt of
-	SOME l =>
-	let
-          t_max = MAX v_pre (s.bst_coh l);
-	  ts    = FILTER (mem_readable M l t_max) (0::mem_timestamps l M)
-	in
-	  LIST_BIND ts (\t.
-		 let
-                   v_opt  = mem_read M l t;
-		   v_post = MAX v_pre (mem_read_view 0 0 (s.bst_fwdb(l)) t);
-		 in
-		   case v_opt of
-		     SOME v =>
-		       (case env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ) of
-			 SOME new_env =>
-			   [s with <| bst_environ := new_env;
-                                      bst_viewenv updated_by (λenv. FUPDATE env (var, v_post));
-				      bst_coh     updated_by (l =+ MAX (s.bst_coh l) v_post);
-				      bst_v_rOld  updated_by (MAX v_post);
-				      bst_v_CAP   updated_by (MAX v_addr);
-                                      bst_pc      updated_by if xcl
-                                                             then (bir_pc_next o bir_pc_next)
-                                                             else bir_pc_next;
-				      bst_xclb    := if xcl
-						     then SOME <| xclb_time := t; xclb_view := v_post |>
-						     else s.bst_xclb |>] 
-		        | _ => [])
-		   | _ => [])
-      | _ => []
-’;
-
-val eval_clstep_fulfil_def = Define‘
-  eval_clstep_fulfil p cid s M a_e v_e xcl =
-    let
-      (l_opt, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv;
-      (v_opt, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
-    in
-      case (l_opt,v_opt) of
-      | (SOME l, SOME v) =>
-          (let
-             v_pre = MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
-                         (if xcl then get_xclb_view s.bst_xclb else 0);
-             ts = FILTER (\t. (EL (t-1) M = <| loc := l; val := v; cid := cid  |>)
-                              /\ (MAX v_pre (s.bst_coh l) < t)) (s.bst_prom);
-           in
-             LIST_BIND ts (\v_post.
-                             if xcl ==> (IS_SOME s.bst_xclb)
-                                        ∧ mem_atomic M l cid (THE s.bst_xclb).xclb_time v_post
-                             then
-                               case (fulfil_update_env p s xcl, fulfil_update_viewenv p s xcl v_post) of
-                               | (SOME new_env, SOME new_viewenv) => 
-                                   [s with <| bst_viewenv := new_viewenv;
-                                              bst_environ := new_env;
-                                              bst_prom   updated_by (FILTER (\t'. t' <> v_post));
-                                              bst_coh    updated_by (l =+ MAX (s.bst_coh l) v_post);
-                                              bst_v_wOld updated_by MAX v_post;
-                                              bst_v_CAP  updated_by MAX v_addr;
-                                              bst_fwdb   updated_by (l =+ <| fwdb_time := v_post;
-                                                                             fwdb_view := MAX v_addr v_data;
-                                                                             fwdb_xcl := F |>);
-                                              bst_pc     updated_by if xcl
-                                                                    then (bir_pc_next o bir_pc_next)
-                                                                    else bir_pc_next;
-                                              bst_xclb := if xcl then NONE else s.bst_xclb |>]
-                               | _ => []
-                             else []))
-      | (_, _) => []
-’;
-
-val eval_clstep_fence_def = Define‘
-  eval_clstep_fence s K1 K2 =
-  let v = MAX (if is_read K1 then s.bst_v_rOld else 0)
-              (if is_write K1 then s.bst_v_wOld else 0)
-  in
-    [s with <| bst_v_rNew updated_by MAX (if is_read K2 then v else 0);
-               bst_v_wNew updated_by MAX (if is_write K2 then v else 0);
-               bst_pc     updated_by bir_pc_next |>]
-’;
-
-val eval_clstep_branch_def = Define‘
-  eval_clstep_branch p s cond_e lbl1 lbl2 =
-  let
-    stmt = BStmtE (BStmt_CJmp cond_e lbl1 lbl2);
-    (sv, v_addr) = bir_eval_exp_view cond_e s.bst_environ s.bst_viewenv
-  in
-    case sv of
-      SOME v =>
-        let (oo,s2) = bir_exec_stmt p stmt s
-        in [s2 with <| bst_v_CAP updated_by MAX v_addr |>]
-’;
-
-val eval_clstep_exp_def = Define‘
-  eval_clstep_exp s var ex =
-  case bir_eval_exp_view ex s.bst_environ s.bst_viewenv
-  of (SOME val, v_val) =>
-       (case env_update_cast64 (bir_var_name var) val (bir_var_type var) (s.bst_environ) of
-          SOME new_env =>
-            [s with <| bst_environ := new_env;
-                       bst_viewenv updated_by (λe. FUPDATE e (var,v_val));
-                       bst_pc      updated_by bir_pc_next |>]
-        | _ => [])
-  | _ => []
-’;
-
-val eval_clstep_bir_step_def = Define‘
-  eval_clstep_bir_step p s stm =
-   let (oo,s') = bir_exec_stmt p stm s
-   in [s']
-’;
-
-val eval_clstep_def = Define‘
-  eval_clstep p cid s M =
-    case bir_get_stmt p s.bst_pc of
-    | BirStmt_Read var a_e cast_opt xcl => eval_clstep_read s M var a_e xcl 
-    | BirStmt_Write a_e v_e xcl => eval_clstep_fulfil p cid s M a_e v_e xcl
-    | BirStmt_Expr var e =>  eval_clstep_exp s var e
-    | BirStmt_Fence K1 K2 => eval_clstep_fence s K1 K2
-    | BirStmt_Branch cond_e lbl1 lbl2 => eval_clstep_branch p s cond_e lbl1 lbl2
-    | BirStmt_Generic stm => eval_clstep_bir_step p s stm
-    | BirStmt_None => []
-’;
-
-
-(*** Certify execution execution ***)
-val eval_certify_def = Define‘
-  (
-  eval_certify p cid s M 0 =
-  NULL s.bst_prom
-  ) /\ (
-  eval_certify p cid s M (SUC fuel) =
-  (NULL s.bst_prom \/
-   EXISTS (\s'. eval_certify p cid s' M fuel)
-          (eval_clstep p cid s M))
-  )
-’;
-
-(*** Non-promising-mode execution ***)
-val eval_clstep_core = Define‘
-  eval_clstep_core M (Core cid p s) =
-  MAP (Core cid p) (eval_clstep p cid s M)
-’;
-
-val eval_clsteps_aux_def = Define‘
-  (
-  eval_clsteps_aux 0 M core = [core]
-  ) /\ (
-  eval_clsteps_aux (SUC f) M core = 
-  LIST_BIND (eval_clstep_core M core)
-            (eval_clsteps_aux f M)
-  )
-’;
-
-(* Cartesian product for list *)
-(* TODO: Move this to some place else *)
-val CART_PROD_LIST_def = Define‘
-  (
-  CART_PROD_LIST [] = [[]]
-  ) /\ (
-  CART_PROD_LIST (l::ll) =
-    LIST_BIND l (\h. MAP (\l'. h::l') (CART_PROD_LIST ll))
-  )
-’;
-
-val eval_clsteps_def = Define‘
-eval_clsteps f (cores, M) =
-let
-  cores_list = CART_PROD_LIST $ MAP (eval_clsteps_aux f M) cores
-in
-  MAP (\cores. (cores, M)) cores_list
-’;
-
-(*** Promsing-mode execution ***)
-val eval_find_promises_def = Define‘
-(
-eval_find_promises p cid s M promises t 0 =
-  if NULL s.bst_prom then promises else []
-) ∧ (
-  eval_find_promises p cid s M promises t (SUC f) =
-  (case bir_get_stmt p s.bst_pc of
-  | BirStmt_Write a_e v_e xcl =>
-      (let
-         (l_opt, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv;
-         (v_opt, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv;
-       in
-         case (l_opt, v_opt) of
-         | (SOME l, SOME v) =>
-             (let
-                msg = <| loc := l; val := v; cid := cid |>;
-                v_pre = MAX v_addr $ MAX v_data $ MAX s.bst_v_CAP $ MAX s.bst_v_wNew
-                            (if xcl then get_xclb_view s.bst_xclb else 0);
-                coh = s.bst_coh l;
-                M' = SNOC msg M;
-                s' = s with <| bst_prom updated_by (CONS (LENGTH M')) |>;
-                promises' = if (MAX v_pre coh) < t then msg::promises else promises;
-              in
-                LIST_BIND (eval_clstep p cid s' M')
-                          (λs'. eval_find_promises p cid s' M' promises' t f))
-         | (_,_) => [])
-  | _ => [])
-  ++
-  LIST_BIND (eval_clstep p cid s M)
-            (λs'. eval_find_promises p cid s' M promises t f)
-)
-’;
-
-val eval_pstep_def = Define ‘
-  eval_pstep p cid s M ff =
-  let
-    t = LENGTH M + 1;
-    promises = nub $ eval_find_promises p cid s M [] t ff;
-    s' = s with <| bst_prom updated_by (CONS t) |> 
-  in
-    MAP (λp. (s', SNOC p M)) promises
-’;
-
-val eval_pstep_core_def = Define ‘
-  eval_pstep_core ff M (Core cid p s) =
-  MAP (λsM. (Core cid p (FST sM), SND sM))
-      (eval_pstep p cid s M ff)
-’;
-
-val update_core_def = Define ‘
-  (
-  update_core new_c [] = []
-  ) ∧ (
-  update_core (Core new_cid new_p new_st) (Core cid p st::cs) =
-  if new_cid = cid then
-    Core new_cid new_p new_st :: cs
-  else
-    Core cid p st :: update_core (Core new_cid new_p new_st) cs
-  )
-’;
-
-val eval_psteps_def = Define ‘
-  (
-  eval_psteps ff 0 (cores, M) = [(cores, M)]
-  ) ∧ (
-  eval_psteps ff (SUC f) (cores, M) =
-  case LIST_BIND cores (eval_pstep_core ff M) of
-    [] => [(cores,M)]
-  | cMs => LIST_BIND (MAP (\cM. (update_core (FST cM) cores, SND cM)) cMs)
-                     (eval_psteps ff f)
-  )
-’;
-
-(*** Combined Promising and Non-Promising executions. ***)
-val eval_promising_def = Define‘
-  eval_promising fuel (cores, M) =
-  LIST_BIND (eval_psteps fuel fuel (cores, M))
-            (eval_clsteps fuel)
-’;
-
-(* Example *)
-
-val core1_prog =
-“BirProgram
- [<|bb_label := BL_Label "start";
-    bb_statements :=
-    [BStmt_Assign (BVar "MEM" (BType_Mem Bit64 Bit8))
-     (BExp_Store (BExp_Den (BVar "MEM" (BType_Mem Bit64 Bit8)))
-      (BExp_Den (BVar "x0" (BType_Imm Bit64))) BEnd_LittleEndian
-      (BExp_Const (Imm64 1w)));
-     BStmt_Assign (BVar "MEM" (BType_Mem Bit64 Bit8))
-                  (BExp_Store (BExp_Den (BVar "MEM" (BType_Mem Bit64 Bit8)))
-                   (BExp_Den (BVar "x0" (BType_Imm Bit64))) BEnd_LittleEndian
-                   (BExp_Const (Imm64 2w))) ]
-    ;
-    bb_last_statement :=
-    BStmt_Halt (BExp_Den (BVar "x2" (BType_Imm Bit64)))|>]: string bir_program_t”
-
-val core2_prog =
-“BirProgram
- [<|bb_label := BL_Label "start";
-    bb_statements :=
-    [BStmt_Assign (BVar "x1" (BType_Imm Bit64))
-                  (BExp_Load (BExp_Den (BVar "MEM" (BType_Mem Bit64 Bit8)))
-                   (BExp_Den (BVar "x0" (BType_Imm Bit64))) BEnd_LittleEndian
-                   Bit8);
-     BStmt_Assign (BVar "MEM" (BType_Mem Bit64 Bit8))
-                  (BExp_Store (BExp_Den (BVar "MEM" (BType_Mem Bit64 Bit8)))
-                   (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
-                   (BExp_Den (BVar "x1" (BType_Imm Bit64))));
-                   ];
-    bb_last_statement :=
-    BStmt_Halt (BExp_Den (BVar "x2" (BType_Imm Bit64)))|>]: string bir_program_t”
-
-val set_env1_def = Define‘
-      set_env1 s =
-      let env = BEnv ((K NONE) (|
-                      "x0" |-> SOME $ BVal_Imm $ Imm64 0w;
-                      "x1" |-> SOME $ BVal_Imm $ Imm64 4w;
-                      "x2" |-> SOME $ BVal_Imm $ Imm64 8w
-                      |))
-         in s with <| bst_environ := env; bst_prom := []|>
-’;
-val set_env2_def = Define‘
-      set_env2 s =
-      let env = BEnv ((K NONE) (|
-                      "x0" |-> SOME $ BVal_Imm $ Imm64 0w;
-                      "x1" |-> SOME $ BVal_Imm $ Imm64 4w;
-                      "x2" |-> SOME $ BVal_Imm $ Imm64 8w
-                      |))
-         in s with <| bst_environ := env |>
-’;
-
-
-val core1_st = “set_env1 (bir_state_init ^core1_prog)”;
-val core2_st = “set_env2 (bir_state_init ^core2_prog)”;
-
-(* core definitions *)
-val cores = “[(Core 0 ^core1_prog ^core1_st);
-              (Core 1 ^core2_prog ^core2_st)]”;
-
-val term_EVAL = rand o concl o EVAL;
-
-val final_states = term_EVAL “eval_promising 4 (^cores, [])”;
 
 val _ = export_theory();

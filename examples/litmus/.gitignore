@@ -1,1 +1,8 @@
+lift_test
+run_test
 *.litmus
+*.o
+*.ui
+*.ou
+Holmakefile
+

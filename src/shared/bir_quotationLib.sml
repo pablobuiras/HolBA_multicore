@@ -172,7 +172,7 @@ val bir_block =
     bind (end_by (try bir_stmtb) (char #"\n")) (fn stmts =>
     seq (many (char #"\n")) (
     bind bir_stmte (fn stmte =>
-    return (lbl, is_atomic, stmts, stmte)))))) <?> "BIR block";
+    return (lbl, mc_tags, stmts, stmte)))))) <?> "BIR block";
 
 val bir_prog =
     bind (sep_by1 bir_block (seq (string ";") (many1 (char #"\n")))) (fn blocks =>

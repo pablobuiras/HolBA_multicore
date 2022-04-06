@@ -24,7 +24,6 @@ end;
 structure test_RISCV = test_bmr(structure MD = bmil_riscv; structure log_name_str = log_name);
 
 
-(* TODO: Double-check these numbers are OK, should work with arbitrary ones though *)
 val mu_b = Arbnum.fromInt 0; (* Memory starts at address 0x0 *)
 val mu_e = Arbnum.fromInt 0x1000000; (* Memory ends at address 0x1000000 *)
 val pc =   Arbnum.fromInt 0x10030; (* Program counter is at address 0x10030 *)
@@ -77,16 +76,7 @@ val riscv_test_asms = map riscv_test_asm
 val _ = print_msg "\n";
 val _ = print_header "MANUAL TESTS (HEX) - RISC-V\nRV64I Base Instruction Set (instructions inherited from RV32I)\n";
 val _ = print_msg "\n";
-(* Good presentation of RISC-V instructions at https://inst.eecs.berkeley.edu/~cs61c/sp19/lectures/lec05.pdf *)
-(* 75 instructions in initial scope (including M extension) *)
-(* 10 still TODO:
- *  2 fences
- *  environment call and breakpoint
- *  6 CSR instructions *)
 (* TODO: Instructions from privileged instruction set: MRET (exists in latest L3 version), SRET (S ext., exists in latest L3 version), URET (N ext., exists in latest L3 version) *)
-(* TODO: Most important extensions: A (atomics), C (compressed) *)
-(* TODO: Are NOPs in riscv_stepLib correct? *)
-(* TODO: Take second look at stepLib code for Sail model (test.sml) *)
 
 (* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! *)
 (* Upon BILED_lifting_failed exception, debug from
@@ -167,13 +157,20 @@ val _ = print_msg "\n";
   (* Store the word (32 least significant bits) in x14 to the
    * memory address in x2 with offset 8 *)
   (* For offset zero ("SW x14,x2"):
-     Hex : 00E12023 
      Bin : 0000000 01110 00010 010 00000 0100011
 
      riscv_test_hex "00E12023";
 
    *)
   val _ = riscv_test_hex_print_asm "SW x14, 8(x2)" "00E12423";
+
+  (* Usage of the zero register: ("SW x0, 0(t2)"):
+     Bin : 0000000 00000 00111 010 00000 0100011
+
+     riscv_test_hex "00E12023";
+
+   *)
+  val _ = riscv_test_hex_print_asm "SW x0, 0(t2)" "0003A023";
 
 (* I-format (opcode OP-IMM) *)
   val _ = riscv_test_asms [
@@ -428,7 +425,7 @@ val _ = print_msg "\n";
 val _ = print_header "RV32A Standard Extension\n";
 val _ = print_msg "\n";
 
-(* TODO: LR/SC *)
+(* TODO: LR/SC assembler integration *)
 (* TODO: Unsure about ASM representation *)
 (* Binary: 00010 0 0 00000 00010 010 00001 0101111
 val amo_res = riscv_test_hex_mc "100120AF";
@@ -572,8 +569,6 @@ val riscv_expected_failed_hexcodes:string list =
    (* Base *)
    "00000073" (* ECALL *),
    "00100073" (* EBREAK *),
-   (* Zifencei *)
-   "0000100F" (* FENCE.I *),
    (* Zicsr *)
    "340110F3" (* CSRRW x1, mscratch(0x340), x2 *),
    "340120F3" (* CSRRS x1, mscratch(0x340), x2 *),
