@@ -565,6 +565,53 @@ Proof
   >> fs[]
 QED
 
+(* the views are increasing monotonously *)
+
+Theorem wf_trace_view_monotone:
+  wf_trace tr /\ SUC i < LENGTH tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
+  ==>
+       st.bst_v_wOld <= st'.bst_v_wOld
+    /\ st.bst_v_CAP  <= st'.bst_v_CAP
+    /\ st.bst_v_Rel  <= st'.bst_v_Rel
+    /\ st.bst_v_rNew <= st'.bst_v_rNew
+    /\ st.bst_v_wNew <= st'.bst_v_wNew
+Proof
+  rpt gen_tac >> strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> Cases_on `cid = cid'`
+  >- (
+    gvs[clstep_cases,cstep_cases,bir_programTheory.bir_state_t_accfupds,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_component_equality,parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
+    >- (BasicProvers.every_case_tac >> fs[])
+    >- (IF_CASES_TAC >> fs[])
+    >- (
+      gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs()]
+    )
+    >- (
+      qmatch_assum_rename_tac `bir_get_stmt p _ = BirStmt_Generic stm`
+      >> Cases_on `stm`
+      >> gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs(),pairTheory.ELIM_UNCURRY]
+      >> TRY (
+        qmatch_assum_rename_tac `bir_get_stmt p _ = BirStmt_Generic $ BStmtB b`
+        >> Cases_on `b`
+        >> gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_programTheory.bir_state_is_terminated_def,bir_programTheory.bir_exec_stmtB_def,bir_get_stmt_generic]
+        >> gvs[bir_programTheory.bir_exec_stmt_assert_def,bir_programTheory.bir_exec_stmt_assume_def,CaseEq"option",bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_observe_def]
+        >> BasicProvers.every_case_tac
+        >> gvs[]
+      )
+      >> qmatch_assum_rename_tac `bir_get_stmt p _ = BirStmt_Generic $ BStmtE e`
+      >> Cases_on `e`
+      >> fs[bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_programTheory.bir_exec_stmt_cjmp_def,bir_programTheory.bir_exec_stmt_halt_def]
+      >> BasicProvers.every_case_tac
+      >> gvs[bir_programTheory.bir_exec_stmt_assert_def,bir_programTheory.bir_exec_stmt_assume_def,CaseEq"option",bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_observe_def]
+    )
+  )
+  >> drule_then drule wf_trace_cid_NOT_EQ
+  >> rpt $ disch_then drule
+  >> fs[]
+QED
+
 (* certified traces have empty promises in the last state *)
 
 Theorem wf_trace_LAST_NULL_bst_prom:
