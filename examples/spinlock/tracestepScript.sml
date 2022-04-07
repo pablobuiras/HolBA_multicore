@@ -1070,7 +1070,7 @@ Theorem lr_sc_interleaved_pair:
   wf_trace tr
   /\ lr_sc cid tr t1 i1 t2 i2
   /\ lr_sc cid' tr t1' j1 t2' j2
-  /\ 0 < t1 /\ t1 < t1' /\ t1' < t2
+  /\ t1 < t1' /\ t1' < t2
   /\ cid <> cid'
   /\ i2 < j2
   /\ (EL (PRE t2) $ SND $ EL (SUC i2) tr).loc
@@ -1097,9 +1097,10 @@ Proof
   >> qspecl_then [`tr`,`j1`,`SUC j1`] assume_tac wf_trace_memory_LENGTH
   >> qspecl_then [`tr`,`i1`,`SUC i1`] assume_tac wf_trace_memory_LENGTH
   >> gs[lr_sc_def]
+  >> Cases_on `0 < t1`
   >> gvs[same_state_prop_def,is_fulfil_xcl_def,is_read_xcl_def,IS_PREFIX_EL]
   >> conj_asm1_tac
-  >- fs[IS_PREFIX_LENGTH,arithmeticTheory.PRE_SUB1]
+  >- gs[IS_PREFIX_LENGTH,arithmeticTheory.PRE_SUB1]
   >> rpt $ dxrule_then assume_tac IS_PREFIX_EL
   >> gs[]
 QED
