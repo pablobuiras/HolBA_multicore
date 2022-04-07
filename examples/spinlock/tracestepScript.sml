@@ -947,6 +947,49 @@ Proof
   >> cheat
 QED
 
+(* fence transitions and their properties *)
+
+Definition is_fence_def:
+  is_fence cid K1 K2 sys1 sys2 <=>
+  ?st st' p.
+    FLOOKUP sys1 cid = SOME $ Core cid p st
+    /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
+    /\ bir_get_stmt p st.bst_pc = BirStmt_Fence K1 K2
+    /\ st'.bst_pc = bir_pc_next st.bst_pc
+    /\ st'.bst_prom = st.bst_prom
+End
+
+Theorem is_fence_parstep_nice:
+  !tr i cid K1 K2.
+    wf_trace tr /\ SUC i < LENGTH tr
+    /\ is_fence cid K1 K2 (FST $ EL i tr) (FST $ EL (SUC i) tr)
+    ==> parstep_nice cid (EL i tr) (EL (SUC i) tr)
+Proof
+  rpt strip_tac
+  >> spose_not_then assume_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> Cases_on `cid = cid'`
+  >> fs[]
+  >> drule wf_trace_NOT_parstep_nice_state_EQ'
+  >> rpt $ disch_then $ drule
+  >> gs[is_fence_def,bir_programTheory.bir_state_t_accfupds,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_component_equality,parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
+QED
+
+Theorem is_fence_RW_W_post:
+  !tr i j cid p st st'.
+  wf_trace tr /\ SUC i < LENGTH tr
+  /\ is_fence cid BM_ReadWrite BM_Write (FST $ EL i tr) (FST $ EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
+  ==>
+    st'.bst_v_rNew = st.bst_v_rNew
+    /\ st'.bst_v_wNew = MAX st.bst_v_wNew $ MAX st.bst_v_rOld st.bst_v_wOld
+Proof
+  rpt gen_tac >> strip_tac
+  >> drule_at_then (Pat `is_fence _ _ _ _ _`) assume_tac is_fence_parstep_nice
+  >> gvs[is_fence_def,parstep_nice_def,parstep_cases,cstep_cases,bir_programTheory.bir_state_t_accfupds,FLOOKUP_UPDATE,clstep_cases,is_read_def,is_write_def]
+QED
+
 (* exclusive bank semantics *)
 
 (*
