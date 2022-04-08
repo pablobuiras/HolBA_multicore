@@ -129,11 +129,32 @@ Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_None =
   |> CONV_RULE CONJ_EQ_NEQ_conv
   |> GEN_ALL
 
+Definition init1_def:
+  init1 st <=>
+    st.bst_pc = <| bpc_index := 0; bpc_label := BL_Address $ Imm64 0w |>
+End
+
 Definition init_def:
   init cores =
-    !cid p st. FLOOKUP cores cid = SOME $ Core cid p st
-      ==> st.bst_pc = <| bpc_index := 0; bpc_label := BL_Address $ Imm64 0w |>
+    !cid p st. FLOOKUP cores cid = SOME $ Core cid p st ==> init1 st
 End
+
+Theorem core_runs_spinlock_init1:
+  !cid cores p st. core_runs_spinlock cid cores
+  /\ FLOOKUP cores cid = SOME $ Core cid p st
+  ==> init1 st
+Proof
+  rw[init1_def,core_runs_spinlock_def,core_runs_prog_def]
+  >> gvs[bir_programTheory.bir_state_init_def,bir_programTheory.bir_pc_first_def,bir_spinlock_prog_def,bir_programTheory.bir_block_pc_def,bir_program_labelsTheory.BL_Address_HC_def]
+QED
+
+Theorem cores_run_spinlock_init:
+  !tr. cores_run_spinlock $ FST $ HD tr ==> init $ FST $ HD tr
+Proof
+  rw[cores_run_spinlock_def,init_def]
+  >> first_x_assum $ drule_then strip_assume_tac
+  >> drule_all_then irule core_runs_spinlock_init1
+QED
 
 (*
   all possible steps with the spinlock
