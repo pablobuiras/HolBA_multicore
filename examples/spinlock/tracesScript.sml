@@ -169,29 +169,35 @@ Proof
   >> fs[]
 QED
 
-Theorem parstep_nice_parstep_nice:
+(* 'progress' enforces state-change *)
+
+Definition progressing_def:
+  progressing sys1 sys2 =
+    !cid p st st'.
+    parstep_nice cid sys1 sys2
+    /\ FLOOKUP (FST sys1) cid = SOME $ Core cid p st
+    ==> FLOOKUP (FST sys2) cid = SOME $ Core cid p st'
+    ==> st <> st'
+End
+
+Theorem progressing_parstep_nice_parstep_nice:
   !s1 s2 cid cid'.
-  parstep_nice cid s1 s2 /\ parstep_nice cid' s1 s2
+  progressing s1 s2
+  /\ parstep_nice cid s1 s2
+  /\ parstep_nice cid' s1 s2
   ==> cid = cid'
 Proof
   rpt strip_tac
-  >> CCONTR_TAC
+  >> spose_not_then assume_tac
+  >> fs[progressing_def,DISJ_EQ_IMP]
+  >> PRED_ASSUM is_forall imp_res_tac
   >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
-  >> drule_then assume_tac FUPDATE_EQ
-  >> gvs[FLOOKUP_UPDATE]
-  >> `FST s2 = FST s1` by (
-    rw[FUN_EQ_THM,FLOOKUP_UPDATE,FLOOKUP_EXT,Once EQ_SYM_EQ]
-    >> BasicProvers.every_case_tac
-    >> fs[]
-  )
-  >> gvs[FUPD11_SAME_BASE]
-  >> ntac 2 $ qpat_x_assum `_ |+ _ = _` kall_tac
-  >> fs[cstep_cases]
-  >> imp_res_tac clstep_LENGTH_prom
-  >> gvs[]
-  >> imp_res_tac clstep_bst_prom_NOT_EQ >> fs[]
-  >> cheat
 QED
+
+Definition progressing_trace_def:
+  progressing_trace tr =
+    !i. SUC i < LENGTH tr ==> progressing (EL i tr) (EL (SUC i) tr)
+End
 
 Definition empty_prom_def:
   empty_prom s = !cid p st.
@@ -226,7 +232,6 @@ Proof
   >> res_tac
   >> fs[]
 QED
-
 
 (* well-formed traces are certified and thread id's are unique identifiers *)
 Definition wf_trace_def:
@@ -272,6 +277,20 @@ Proof
   >> pop_assum $ fs o single
   >> irule wf_trace_LENGTH_SND
   >> fs[]
+QED
+
+Theorem progressing_trace_cid_eq:
+  !tr i cid cid'.
+    wf_trace tr /\ SUC i < LENGTH tr
+    /\ progressing_trace tr
+    /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+    /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
+    ==> cid = cid'
+Proof
+  rpt strip_tac
+  >> dxrule_at Any progressing_parstep_nice_parstep_nice
+  >> disch_then $ dxrule_at Any
+  >> fs[progressing_trace_def]
 QED
 
 (* memory is less or equal to trace length *)

@@ -272,10 +272,9 @@ Theorem wf_trace_reachable_pc:
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   ==> reachable_pc st.bst_pc
 Proof
-  Induct
-  >> rpt strip_tac
+  Induct >> rpt strip_tac
   >- (
-    fs[init_def]
+    fs[init_def,init1_def]
     >> res_tac
     >> fs[bst_pc_tuple_def,reachable_pc_def]
   )
@@ -369,7 +368,7 @@ Theorem init_unique_in_crit_imp:
   /\ init (FST $ HD tr)
   ==> invariant (FST $ HD tr)
 Proof
-  rw[init_def,invariant_def,unique_def,Excl"EL",GSYM EL,Excl"EL_restricted"]
+  rw[init1_def,init_def,invariant_def,unique_def,Excl"EL",GSYM EL,Excl"EL_restricted"]
   >> drule_then drule wf_trace1_FLOOKUP
   >> drule_then rev_drule wf_trace1_FLOOKUP
   >> rw[wf_trace_NOT_NULL,LENGTH_NOT_NULL]
@@ -380,13 +379,14 @@ QED
 
 Theorem init_unique:
   !i tr. wf_trace tr /\ wf_trace1 tr
+  /\ progressing_trace tr
   /\ SUC i < LENGTH tr
   /\ cores_run_spinlock $ FST $ HD tr
-  /\ init (FST $ HD tr)
   /\ invariant (FST $ EL i tr)
   ==> invariant (FST $ EL (SUC i) tr)
 Proof
   rw[invariant_def]
+  >> imp_res_tac cores_run_spinlock_init
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
   >> imp_res_tac parstep_nice_EX_FLOOKUP
   >> drule_all_then strip_assume_tac parstep_nice_FLOOKUP
@@ -440,9 +440,9 @@ Proof
       >> gs[bir_programTheory.bir_state_t_component_equality,bir_programTheory.bir_programcounter_t_component_equality,in_crit_def]
     )
     >> Cases_on `parstep_nice id (EL i tr) (EL (SUC i) tr)`
-    >- imp_res_tac parstep_nice_parstep_nice
+    >- imp_res_tac progressing_trace_cid_eq
     >> Cases_on `parstep_nice id' (EL i tr) (EL (SUC i) tr)`
-    >- imp_res_tac parstep_nice_parstep_nice
+    >- imp_res_tac progressing_trace_cid_eq
     >> ntac 2 $ dxrule_at (Pat `~parstep_nice _ _ _`) wf_trace_NOT_parstep_nice_state_EQ'
     >> rpt strip_tac
     >> rfs[]

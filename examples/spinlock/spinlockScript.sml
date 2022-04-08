@@ -173,6 +173,7 @@ QED
 
 Theorem core_runs_spinlock_is_fulfil_xcl_memory_location:
   !tr i cid t p st. wf_trace tr /\ SUC i < LENGTH tr
+  /\ progressing_trace tr
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
@@ -249,6 +250,7 @@ QED
 
 Theorem core_runs_spinlock_is_fulfil_xcl_once:
   !tr i j cid t t'. wf_trace tr /\ SUC i < LENGTH tr /\ SUC j < LENGTH tr
+  /\ progressing_trace tr
   /\ core_runs_spinlock cid (FST $ HD tr)
   /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ is_fulfil_xcl cid t' (EL j tr) (FST $ EL (SUC j) tr)
@@ -292,6 +294,7 @@ QED
 
 Theorem cores_run_spinlock_is_fulfil_xcl_initial_xclb:
   !tr cid t i s p st. wf_trace tr /\ SUC i < LENGTH tr
+  /\ progressing_trace tr
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
@@ -383,6 +386,7 @@ QED
 (* any spinlock core only ever writes to the mutex variable memory location *)
 Theorem cores_run_spinlock_is_fulfil_xcl_memory_location':
   !tr cid t i s p st. wf_trace tr /\ SUC i < LENGTH tr
+  /\ progressing_trace tr
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   ==> (EL (PRE t) $ SND $ EL i tr).cid = cid
@@ -390,10 +394,10 @@ Proof
   rpt gen_tac >> strip_tac
   >> imp_res_tac is_fulfil_xcl_is_fulfil
   >> imp_res_tac is_fulfil_memory
-  >> dxrule_at_then (Pos $ el 3) assume_tac is_fulfil_parstep_nice_imp
+  >> dxrule_at_then (Pos $ el 4) assume_tac is_fulfil_parstep_nice_imp
   >> drule_at (Pat `core_runs_spinlock _ _`) wf_trace_core_runs_spinlock_FLOOKUP
   >> disch_then $ drule_at_then (Pat `_ < _:num`) assume_tac
-  >> drule_at_then (Pos $ el 3) assume_tac is_fulfil_xcl_atomic
+  >> drule_at_then (Pos $ el 4) assume_tac is_fulfil_xcl_atomic
   >> gvs[is_fulfil_xcl_def,parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases,clstep_cases]
 QED
 
@@ -427,6 +431,7 @@ QED
 (* TODO replace "_xcl" assumptions with t and t' have same address *)
 Theorem core_runs_spinlock_is_fulfil_xcl_timestamp_order:
   !tr cid cid' t t' i j i' j'. wf_trace tr
+  /\ progressing_trace tr
   /\ cores_run_spinlock (FST $ HD tr)
   /\ core_runs_spinlock cid (FST $ HD tr)
   /\ core_runs_spinlock cid' (FST $ HD tr)
@@ -445,8 +450,8 @@ Proof
     >> rpt $ disch_then $ dxrule_at Any
     >> fs[]
   )
-  >> drule_at_then (Pos $ el 4) assume_tac cores_run_spinlock_is_fulfil_xcl_initial_xclb
-  >> rev_drule_at_then (Pos $ el 4) assume_tac cores_run_spinlock_is_fulfil_xcl_initial_xclb
+  >> drule_at_then (Pos $ el 5) assume_tac cores_run_spinlock_is_fulfil_xcl_initial_xclb
+  >> rev_drule_at_then (Pos $ el 5) assume_tac cores_run_spinlock_is_fulfil_xcl_initial_xclb
   >> drule_at_then (Pat `is_fulfil_xcl _ _ _ _`) assume_tac is_fulfil_xcl_atomic
   >> rev_drule_at_then (Pat `is_fulfil_xcl _ _ _ _`) assume_tac is_fulfil_xcl_atomic
   >> imp_res_tac is_fulfil_xcl_is_fulfil
@@ -492,6 +497,7 @@ QED
 (* Theorem 5 only one core can leave the lock region *)
 Theorem core_runs_spinlock_correct:
   !tr cid cid' t i s p p' st st' l l'. wf_trace tr
+  /\ progressing_trace tr
   /\ cores_run_spinlock $ FST $ HD tr
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ core_runs_spinlock cid' $ FST $ HD tr
@@ -513,14 +519,14 @@ Proof
   >- (
     dxrule is_fulfil_same
     >> gvs[]
-    >> rpt $ disch_then dxrule
+    >> rpt $ disch_then $ dxrule_at Any
     >> fs[]
   )
   >> Cases_on `t = t'`
   >- (
     Cases_on `i < i'`
     >> dxrule is_fulfil_once
-    >> disch_then $ dxrule_at_then (Pos $ el 2) assume_tac >> gs[LESS_EQ]
+    >> disch_then $ dxrule_at_then (Pos $ el 3) assume_tac >> gs[LESS_EQ]
   )
   >> ntac 2 $ drule_then (dxrule_at Any) is_fulfil_is_promise
   >> rw[]
@@ -535,12 +541,11 @@ Proof
     >> rpt $ disch_then dxrule
     >> fs[]
   )
-  >> drule_then drule core_runs_spinlock_is_fulfil_xcl_timestamp_order
-  >> disch_then $ rev_drule
+  >> rev_drule_at (Pat `is_fulfil_xcl _ _ _ _`) core_runs_spinlock_is_fulfil_xcl_timestamp_order
+  >> disch_then $ drule_at (Pat `is_fulfil_xcl _ _ _ _`)
   >> rpt $ disch_then $ drule
-  >> drule_then drule core_runs_spinlock_is_fulfil_xcl_timestamp_order
-  >> disch_then $ drule
-  >> disch_then $ rev_drule
+  >> drule_at (Pat `is_fulfil_xcl _ _ _ _`) core_runs_spinlock_is_fulfil_xcl_timestamp_order
+  >> disch_then $ rev_drule_at (Pat `is_fulfil_xcl _ _ _ _`)
   >> rpt $ disch_then $ drule
   >> fs[]
 QED
