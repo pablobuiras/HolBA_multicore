@@ -552,7 +552,7 @@ clstep p cid s M [] s')
                     
    (* register and register view update *)
    /\ SOME new_environ = env_update_cast64 (bir_var_name var) v_r (bir_var_type var) (s.bst_environ)
-   /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_post)
+   /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_rPost)
 
    (* Write part *)
    /\ MEM t_w s.bst_prom
@@ -576,7 +576,7 @@ clstep p cid s M [] s')
    /\ s' = s with <| bst_viewenv := new_viewenv;
                      bst_environ := new_environ;
                      bst_prom    updated_by (FILTER (\t'. t' <> t_w));
-                     bst_coh     updated_by (l =+ MAX (s.bst_coh l) v_post);
+                     bst_coh     updated_by (l =+ MAX (s.bst_coh l) v_wPost);
                      bst_v_Rel   updated_by (MAX (if acq /\ rel then v_wPost else 0));
                      bst_v_rOld  updated_by (MAX v_rPost);
                      bst_v_rNew  updated_by (MAX (if acq then (if rel then v_wPost else v_rPost)else 0));
@@ -774,5 +774,127 @@ val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
 ==>
    parstep cid cores M (FUPDATE cores (cid, Core cid p s')) M')
 `;
+
+
+Theorem bir_exec_stmt_mc_invar:
+!stmt prog state oo state'.
+bir_exec_stmt prog stmt state = (oo,state') ==>
+(state.bst_viewenv = state'.bst_viewenv) /\
+(state.bst_coh = state'.bst_coh) /\
+(state.bst_v_rOld = state'.bst_v_rOld) /\
+(state.bst_v_wOld = state'.bst_v_wOld) /\
+(state.bst_v_rNew = state'.bst_v_rNew) /\
+(state.bst_v_wNew = state'.bst_v_wNew) /\
+(state.bst_v_CAP = state'.bst_v_CAP) /\
+(state.bst_v_Rel = state'.bst_v_Rel) /\
+(state.bst_prom = state'.bst_prom) /\
+(state.bst_fwdb = state'.bst_fwdb) /\
+(state.bst_xclb = state'.bst_xclb) /\
+(state.bst_inflight = state'.bst_inflight) /\
+(state.bst_counter = state'.bst_counter)
+Proof
+Induct_on ‘stmt’ >> Induct_on ‘b’ >> (
+ REPEAT GEN_TAC >>
+ STRIP_TAC
+) >| [
+ fs [bir_exec_stmt_def, bir_exec_stmtB_def] >>
+ Cases_on ‘bir_state_is_terminated (bir_exec_stmt_assign b b0 state)’ >> (
+  fs [bir_exec_stmt_assign_def] >>
+  Cases_on ‘bir_eval_exp b0 state.bst_environ’ >> (
+   fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
+  ) >>
+  Cases_on ‘bir_env_write b x state.bst_environ’ >- (
+   fs []
+  ) >>
+  Cases_on ‘x'’ >- (
+   fs [bir_state_t_component_equality]
+  )
+ ),
+
+ fs [bir_exec_stmt_def, bir_exec_stmtB_def] >>
+ Cases_on ‘bir_state_is_terminated (bir_exec_stmt_assert b state)’ >> (
+  fs [bir_exec_stmt_assert_def] >>
+  Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
+   fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
+  ) >>
+  Cases_on ‘x’ >> (
+   fs [bir_state_t_component_equality]
+  )
+ ),
+
+ fs [bir_exec_stmt_def, bir_exec_stmtB_def] >>
+ Cases_on ‘bir_state_is_terminated (bir_exec_stmt_assume b state)’ >> (
+  fs [bir_exec_stmt_assume_def] >>
+  Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
+   fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
+  ) >>
+  Cases_on ‘x’ >> (
+   fs [bir_state_t_component_equality]
+  )
+ ),
+
+ fs [bir_exec_stmt_def, bir_exec_stmtB_def, bir_exec_stmt_observe_def] >>
+ Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
+  fs [bir_state_set_typeerror_def, bir_state_is_terminated_def, bir_state_t_component_equality] >>
+  Cases_on ‘x’ >> (
+   fs [] >>
+   Cases_on ‘EXISTS IS_NONE (MAP (λe. bir_eval_exp e state.bst_environ) l)’ >> (
+    FULL_SIMP_TAC std_ss [] >>
+    fs [bir_state_set_typeerror_def, bir_state_is_terminated_def, bir_state_t_component_equality]
+   )
+  ) >>
+  Cases_on ‘state.bst_status ≠ BST_Running’ >> (
+   fs [bir_state_t_component_equality]
+  )
+ ),
+
+ fs [bir_exec_stmt_def, bir_exec_stmtB_def, bir_exec_stmt_fence_def] >>
+ Cases_on ‘bir_state_is_terminated state’ >> (
+  fs [bir_state_t_component_equality]
+ ),
+
+ fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_jmp_def] >>
+ Cases_on ‘bir_eval_label_exp b state.bst_environ’ >> (
+  fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_to_label_def]
+ ) >- (
+  fs [bir_state_t_component_equality]
+ ) >>
+ Cases_on ‘MEM x (bir_labels_of_program prog)’ >> (
+  fs [bir_block_pc_def, bir_state_t_component_equality]
+ ),
+
+ fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_cjmp_def] >>
+ Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
+  fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_def]
+ ) >- (
+  fs [bir_state_t_component_equality]
+ ) >>
+ Cases_on ‘x’ >| [
+  Cases_on ‘bir_eval_label_exp b0 state.bst_environ’ >> (
+   fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_to_label_def]
+  ) >- (
+   fs [bir_state_t_component_equality]
+  ) >>
+  Cases_on ‘MEM x (bir_labels_of_program prog)’ >> (
+   fs [bir_block_pc_def, bir_state_t_component_equality]
+  ),
+
+  Cases_on ‘bir_eval_label_exp b1 state.bst_environ’ >> (
+   fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_to_label_def]
+  ) >- (
+   fs [bir_state_t_component_equality]
+  ) >>
+  Cases_on ‘MEM x (bir_labels_of_program prog)’ >> (
+   fs [bir_block_pc_def, bir_state_t_component_equality]
+  )
+ ],
+
+ fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_halt_def] >>
+ Cases_on ‘bir_eval_exp b state.bst_environ’ >> (
+  fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
+ )
+]
+QED
+
 
 val _ = export_theory();

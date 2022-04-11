@@ -258,6 +258,7 @@ val eval_clstep_branch_def = Define‘
       SOME v =>
         let (oo,s2) = bir_exec_stmt p stmt s
         in [s2 with <| bst_v_CAP updated_by MAX v_addr |>]
+    | _ => []
 ’;
 
 val eval_clstep_exp_def = Define‘
@@ -287,6 +288,8 @@ val eval_clstep_def = Define‘
     | BirStmt_Write a_e v_e xcl acq rel =>
         eval_clstep_fulfil p cid s M a_e v_e xcl acq rel ++
         eval_clstep_xclfail p cid s M a_e v_e xcl
+    | BirStmt_Amo var a_e v_e acq rel =>
+        eval_clstep_amofulfil p cid s M var a_e v_e acq rel
     | BirStmt_Expr var e =>
         eval_clstep_exp s var e
     | BirStmt_Fence K1 K2 =>
