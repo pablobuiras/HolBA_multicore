@@ -42,6 +42,12 @@ Definition same_state_prop_range_def:
       ==> same_state_prop cid (FST $ EL k tr) (FST $ EL (SUC k) tr) f
 End
 
+Theorem same_state_prop_range_simp[simp]:
+  same_state_prop_range cid tr i i f
+Proof
+  fs[same_state_prop_range_def]
+QED
+
 Theorem same_state_prop_range_add:
   same_state_prop_range cid tr i j f
   /\ same_state_prop_range cid tr j k f
@@ -102,6 +108,61 @@ Proof
   >> strip_tac
   >> drule_at (Pat `same_state_prop _ _ _ _`) same_state_prop_range_prop
   >> fs[ADD1]
+QED
+
+Theorem wf_trace_NOT_parstep_nice_same_state_prop:
+  wf_trace tr
+  /\ SUC i < LENGTH tr
+  /\ progressing_trace tr
+  /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p st)
+  /\ ~parstep_nice cid (EL i tr) (EL (SUC i) tr)
+  ==> same_state_prop cid (FST $ EL i tr) (FST $ EL (SUC i) tr) I
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_cid_forward1
+  >> drule_at (Pat `~parstep_nice _ _ _`) wf_trace_NOT_parstep_nice_state_EQ'
+  >> fs[same_state_prop_def]
+QED
+
+(* for a core in a trace either there is previous progress,
+ * or the core has never progressed *)
+
+Theorem previous_state_change:
+  !i cid tr.
+  wf_trace tr /\ i < LENGTH tr
+  /\ progressing_trace tr
+  /\ FLOOKUP (FST (EL i tr)) cid = SOME $ Core cid p st
+  ==>
+    same_state_prop_range cid tr 0 i I
+    \/ ?j. j < i
+      /\ parstep_nice cid (EL j tr) (EL (SUC j) tr)
+      /\ same_state_prop_range cid tr (SUC j) i I
+Proof
+  rpt strip_tac
+  >> qabbrev_tac `P = λj. LENGTH tr - j < i /\ 1 < j /\ j <= LENGTH tr
+    /\ parstep_nice cid (EL (LENGTH tr - j) tr) (EL (SUC $ LENGTH tr - j) tr)`
+  >> reverse $ Cases_on `?i. P i`
+  >- (
+    disj1_tac
+    >> fs[Abbr`P`,DISJ_EQ_IMP,AND_IMP_INTRO]
+    >> rw[same_state_prop_range_def,same_state_prop_def]
+    >> first_x_assum $ qspec_then `LENGTH tr - k` assume_tac
+    >> gs[]
+    >> drule_at (Pat `~parstep_nice _ _ _`) wf_trace_NOT_parstep_nice_state_EQ'
+    >> fs[]
+    >> cheat
+    (* TODO: merge wf_trace1 into wf_trace *)
+  )
+  >> dxrule_then assume_tac arithmeticTheory.WOP
+  >> disj2_tac
+  >> fs[Abbr`P`,DISJ_EQ_IMP,AND_IMP_INTRO]
+  >> qhdtm_x_assum `parstep_nice` $ irule_at Any
+  >> rw[same_state_prop_range_def]
+  >> irule wf_trace_NOT_parstep_nice_same_state_prop
+  >> PRED_ASSUM is_forall $ qspec_then `LENGTH tr - k` assume_tac
+  >> drule_at (Pat `FLOOKUP _ _ = SOME _`) wf_trace_cid_backward
+  >> disch_then $ qspec_then `k` assume_tac
+  >> gs[]
 QED
 
 (*
