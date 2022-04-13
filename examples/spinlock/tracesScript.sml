@@ -584,6 +584,41 @@ Proof
   >> fs[]
 QED
 
+Theorem progressing_trace_state:
+  !tr i cid cid' p st.
+    wf_trace tr /\ SUC i < LENGTH tr
+    /\ progressing_trace tr
+    /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+    /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p st
+    /\ FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p st'
+    /\ cid <> cid'
+    ==> st = st'
+Proof
+  rpt strip_tac
+  >> Cases_on `parstep_nice cid' (EL i tr) (EL (SUC i) tr)`
+  >- (
+    dxrule_all progressing_trace_cid_eq
+    >> fs[]
+  )
+  >> drule_at (Pat `~parstep_nice _ _ _`) wf_trace_NOT_parstep_nice_state_EQ'
+  >> fs[]
+QED
+
+Theorem progressing_trace_state':
+  !tr i cid cid' p st.
+    wf_trace tr /\ SUC i < LENGTH tr
+    /\ progressing_trace tr
+    /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+    /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p st
+    /\ cid <> cid'
+    ==> FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p st
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_cid_forward1
+  >> drule_all progressing_trace_state
+  >> fs[]
+QED
+
 (* the views are increasing monotonously *)
 
 Theorem wf_trace_view_monotone:
