@@ -123,6 +123,10 @@ bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ
 bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ
 *)
 
+Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Amo =
+  EVAL ``bir_get_stmt bir_spinlock_prog x = BirStmt_Amo var a_e v_e acq rel``
+  |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs()]
+
 Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_None =
   EVAL ``bir_get_stmt bir_spinlock_prog x = BirStmt_None``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
@@ -137,6 +141,7 @@ Theorem bir_get_spinlock_stmts =
       bir_get_stmt_bir_spinlock_prog_BirStmt_Generic,
       bir_get_stmt_bir_spinlock_prog_BirStmt_Branch,
       bir_get_stmt_bir_spinlock_prog_BirStmt_None,
+      bir_get_stmt_bir_spinlock_prog_BirStmt_Amo,
       bir_get_stmt_bir_spinlock_prog_BirStmt_Expr]
   |> LIST_CONJ
 
@@ -426,6 +431,7 @@ Proof
   >- pc_inc_tac
   >- pc_inc_tac
   >- pc_inc_tac
+  >- pc_inc_tac
   >- (
     (* branch *)
     gvs[bir_get_stmt_bir_spinlock_prog_BirStmt_Branch,FLOOKUP_UPDATE]
@@ -523,8 +529,7 @@ Theorem in_crit_before3:
      /\ bst_pc_tuple st'.bst_pc = (BL_Address (Imm64 20w),2)
      /\ bir_get_stmt (bir_spinlock_prog :string bir_program_t) st'.bst_pc =
         BirStmt_Write (BExp_Den (BVar "x7" (BType_Imm Bit64)))
-          (BExp_Cast BIExp_LowCast (BExp_Den (BVar "x0" (BType_Imm Bit64)))
-             Bit32) T F F
+          (BExp_Cast BIExp_LowCast (BExp_Const (Imm64 0w)) Bit32) T F F
      /\ is_fulfil_xcl cid t (EL j tr) (FST $ EL (SUC j) tr)
      /\ t < LENGTH (SND $ EL j tr) + 1
      /\ (EL (PRE t) (SND $ EL j tr)).cid = cid
@@ -557,7 +562,7 @@ Proof
   >- gs[sl_step_cases,in_crit_def,bst_pc_tuple_def,bir_programTheory.bir_programcounter_t_component_equality]
   >> conj_asm1_tac
   >- (
-    fs[bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ,bst_pc_tuple_def,bir_programTheory.bir_programcounter_t_component_equality,spinlock_var_def]
+    fs[bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ,bst_pc_tuple_def,bir_programTheory.bir_programcounter_t_component_equality,spinlock_var_def,bir_promisingTheory.is_amo_def,bir_get_program_block_info_by_label']
 (*
    alternatively:
    EVAL_TAC >> fs[bst_pc_tuple_def,get_read_args_def,get_fulfil_args_def]
@@ -577,13 +582,13 @@ Proof
     >> fs[bir_valuesTheory.bir_dest_bool_val_def]
   )
   >> qpat_assum `MEM _ _` $ irule_at Any
-  >> fs[]
+  >> fs[PRE_SUB1]
   >> spose_not_then assume_tac
   >> fs[bir_get_stmt_write,fulfil_atomic_ok_def]
 QED
 
 Theorem in_crit_before2:
-  !tr i cid p st.
+  !tr i cid p st x.
   wf_trace tr /\ i < LENGTH tr
   /\ progressing_trace tr
   /\ core_runs_spinlock cid $ FST $ HD tr
@@ -774,16 +779,22 @@ Theorem parstep_nice_NOT_is_fulfil_bst_fwdb_eq:
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   /\ (!t. ~is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr))
+  /\ (!t. ~is_amo cid t (EL i tr) (FST $ EL (SUC i) tr))
   ==> st.bst_fwdb = st'.bst_fwdb
 Proof
   rpt strip_tac
   >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases,clstep_cases]
   >- (
-    qmatch_asmsub_rename_tac `EL (PRE v_post) (SND (EL i tr))`
-    >> first_x_assum $ qspec_then `v_post` assume_tac
-    >> gvs[is_fulfil_def,FLOOKUP_UPDATE,bir_get_stmt_write]
+    qmatch_asmsub_rename_tac `EL (v_post - 1) (SND (EL i tr))`
+    >> qpat_x_assum `!t. ~is_fulfil _ t _ _` $ qspec_then `v_post` assume_tac
+    >> gvs[is_fulfil_def,FLOOKUP_UPDATE,bir_get_stmt_write,PRE_SUB1]
   )
-  >- gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs()]
+  >- (
+    qmatch_asmsub_rename_tac `EL (v_post - 1) (SND (EL i tr))`
+    >> qpat_x_assum `!t. ~is_amo _ t _ _` $ qspec_then `v_post` assume_tac
+    >> gvs[is_amo_def,FLOOKUP_UPDATE,bir_get_stmt_write,PRE_SUB1]
+  )
+  >- gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs(),PRE_SUB1]
   >- (
     qmatch_assum_rename_tac `bir_get_stmt p _ = BirStmt_Generic stm`
     >> Cases_on `stm`

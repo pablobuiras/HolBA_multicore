@@ -1348,8 +1348,7 @@ SC.W x1, x3, (x2): 180120AF @ 0x10030 - OK - cheat
                       (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
                       BEnd_LittleEndian
-                      (BExp_Cast BIExp_LowCast
-                         (BExp_Den (BVar "x0" (BType_Imm Bit64))) Bit32))
+                      (BExp_Cast BIExp_LowCast (BExp_Const (Imm64 0w)) Bit32))
                    (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8))));
               BStmt_Assign (BVar "x1" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1380,7 +1379,7 @@ AMOSWAP.W x1, x3, (x2): 083120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1389,7 +1388,9 @@ AMOSWAP.W x1, x3, (x2): 083120AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32))];
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1407,7 +1408,7 @@ AMOADD.W x1, x3, (x2): 003120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1417,8 +1418,10 @@ AMOADD.W x1, x3, (x2): 003120AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
                       (BExp_BinExp BIExp_Plus
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1436,7 +1439,7 @@ AMOXOR.W x1, x3, (x2): 203120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1446,8 +1449,10 @@ AMOXOR.W x1, x3, (x2): 203120AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
                       (BExp_BinExp BIExp_Xor
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1465,7 +1470,7 @@ AMOAND.W x1, x3, (x2): 603120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1475,8 +1480,10 @@ AMOAND.W x1, x3, (x2): 603120AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
                       (BExp_BinExp BIExp_And
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1494,7 +1501,7 @@ AMOOR.W x1, x3, (x2): 403120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1504,8 +1511,10 @@ AMOOR.W x1, x3, (x2): 403120AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
                       (BExp_BinExp BIExp_Or
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1523,7 +1532,7 @@ AMOMIN.W x1, x3, (x2): 803120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1534,10 +1543,12 @@ AMOMIN.W x1, x3, (x2): 803120AF @ 0x10030 - OK - cheat
                    (BExp_Cast BIExp_LowCast
                       (BExp_IfThenElse
                          (BExp_BinPred BIExp_SignedLessThan
-                            (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                            (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                             (BExp_Den (BVar "x3" (BType_Imm Bit64))))
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1555,7 +1566,7 @@ AMOMAX.W x1, x3, (x2): A03120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1566,10 +1577,12 @@ AMOMAX.W x1, x3, (x2): A03120AF @ 0x10030 - OK - cheat
                    (BExp_Cast BIExp_LowCast
                       (BExp_IfThenElse
                          (BExp_BinPred BIExp_SignedLessThan
-                            (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                            (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                             (BExp_Den (BVar "x3" (BType_Imm Bit64))))
                          (BExp_Den (BVar "x3" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1587,7 +1600,7 @@ AMOMINU.W x1, x3, (x2): C03120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1598,10 +1611,12 @@ AMOMINU.W x1, x3, (x2): C03120AF @ 0x10030 - OK - cheat
                    (BExp_Cast BIExp_LowCast
                       (BExp_IfThenElse
                          (BExp_BinPred BIExp_LessThan
-                            (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                            (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                             (BExp_Den (BVar "x3" (BType_Imm Bit64))))
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1619,7 +1634,7 @@ AMOMAXU.W x1, x3, (x2): E03120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1630,10 +1645,12 @@ AMOMAXU.W x1, x3, (x2): E03120AF @ 0x10030 - OK - cheat
                    (BExp_Cast BIExp_LowCast
                       (BExp_IfThenElse
                          (BExp_BinPred BIExp_LessThan
-                            (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                            (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                             (BExp_Den (BVar "x3" (BType_Imm Bit64))))
                          (BExp_Den (BVar "x3" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1651,7 +1668,7 @@ AMOOR.W.aq x1, x3, (x2): 443120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1661,8 +1678,10 @@ AMOOR.W.aq x1, x3, (x2): 443120AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
                       (BExp_BinExp BIExp_Or
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32))];
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "x3" (BType_Imm Bit64)))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1680,7 +1699,7 @@ AMOSWAP.W.rl x1, x3, (x2): 0A3120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1689,7 +1708,9 @@ AMOSWAP.W.rl x1, x3, (x2): 0A3120AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32))];
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1707,7 +1728,7 @@ AMOSWAP.W.aq.rl x1, x3, (x2): 0E3120AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 4);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Cast BIExp_SignedCast
                    (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
@@ -1716,7 +1737,9 @@ AMOSWAP.W.aq.rl x1, x3, (x2): 0E3120AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_Cast BIExp_LowCast
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32))];
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64))) Bit32));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1770,8 +1793,7 @@ SC.D x1, x3, (x2): 180130AF @ 0x10030 - OK - cheat
                    (BExp_Store
                       (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                       (BExp_Den (BVar "x2" (BType_Imm Bit64)))
-                      BEnd_LittleEndian
-                      (BExp_Den (BVar "x0" (BType_Imm Bit64))))
+                      BEnd_LittleEndian (BExp_Const (Imm64 0w)))
                    (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8))));
               BStmt_Assign (BVar "x1" (BType_Imm Bit64))
                 (BExp_IfThenElse
@@ -1802,14 +1824,16 @@ AMOSWAP.D x1, x3, (x2): 083130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
               BStmt_Assign (BVar "MEM8" (BType_Mem Bit64 Bit8))
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
-                   (BExp_Den (BVar "x3" (BType_Imm Bit64))))];
+                   (BExp_Den (BVar "x3" (BType_Imm Bit64))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1827,7 +1851,7 @@ AMOADD.D x1, x3, (x2): 003130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -1835,8 +1859,10 @@ AMOADD.D x1, x3, (x2): 003130AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_BinExp BIExp_Plus
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1854,7 +1880,7 @@ AMOXOR.D x1, x3, (x2): 203130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -1862,8 +1888,10 @@ AMOXOR.D x1, x3, (x2): 203130AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_BinExp BIExp_Xor
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1881,7 +1909,7 @@ AMOAND.D x1, x3, (x2): 603130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -1889,8 +1917,10 @@ AMOAND.D x1, x3, (x2): 603130AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_BinExp BIExp_And
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1908,7 +1938,7 @@ AMOOR.D x1, x3, (x2): 403130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -1916,8 +1946,10 @@ AMOOR.D x1, x3, (x2): 403130AF @ 0x10030 - OK - cheat
                 (BExp_Store (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_BinExp BIExp_Or
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1935,7 +1967,7 @@ AMOMIN.D x1, x3, (x2): 803130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -1944,10 +1976,12 @@ AMOMIN.D x1, x3, (x2): 803130AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_IfThenElse
                       (BExp_BinPred BIExp_SignedLessThan
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                          (BExp_Den (BVar "x3" (BType_Imm Bit64))))
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1965,7 +1999,7 @@ AMOMAX.D x1, x3, (x2): A03130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -1974,10 +2008,12 @@ AMOMAX.D x1, x3, (x2): A03130AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_IfThenElse
                       (BExp_BinPred BIExp_SignedLessThan
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                          (BExp_Den (BVar "x3" (BType_Imm Bit64))))
                       (BExp_Den (BVar "x3" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -1995,7 +2031,7 @@ AMOMINU.D x1, x3, (x2): C03130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -2004,10 +2040,12 @@ AMOMINU.D x1, x3, (x2): C03130AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_IfThenElse
                       (BExp_BinPred BIExp_LessThan
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                          (BExp_Den (BVar "x3" (BType_Imm Bit64))))
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
+                      (BExp_Den (BVar "x3" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 
@@ -2025,7 +2063,7 @@ AMOMAXU.D x1, x3, (x2): E03130AF @ 0x10030 - OK - cheat
               BStmt_Assert
                 (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) 8);
-              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+              BStmt_Assign (BVar "tmp" (BType_Imm Bit64))
                 (BExp_Load (BExp_Den (BVar "MEM8" (BType_Mem Bit64 Bit8)))
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    Bit64);
@@ -2034,10 +2072,12 @@ AMOMAXU.D x1, x3, (x2): E03130AF @ 0x10030 - OK - cheat
                    (BExp_Den (BVar "x2" (BType_Imm Bit64))) BEnd_LittleEndian
                    (BExp_IfThenElse
                       (BExp_BinPred BIExp_LessThan
-                         (BExp_Den (BVar "x1" (BType_Imm Bit64)))
+                         (BExp_Den (BVar "tmp" (BType_Imm Bit64)))
                          (BExp_Den (BVar "x3" (BType_Imm Bit64))))
                       (BExp_Den (BVar "x3" (BType_Imm Bit64)))
-                      (BExp_Den (BVar "x1" (BType_Imm Bit64)))))];
+                      (BExp_Den (BVar "tmp" (BType_Imm Bit64)))));
+              BStmt_Assign (BVar "x1" (BType_Imm Bit64))
+                (BExp_Den (BVar "tmp" (BType_Imm Bit64)))];
            bb_last_statement :=
              BStmt_Jmp (BLE_Label (BL_Address (Imm64 0x10034w)))|>])
 

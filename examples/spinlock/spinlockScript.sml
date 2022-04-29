@@ -118,6 +118,7 @@ Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ:
     /\ xcl
     /\ acq = F
     /\ rel = F
+    /\ ~bir_promising$is_amo (bir_spinlock_prog:'a bir_program_t) pc
 Proof
   fs[Once EQ_IMP_THM]
   >> rpt gen_tac >> ntac 2 strip_tac
@@ -130,7 +131,7 @@ Proof
     >> gs[bir_programTheory.bir_programcounter_t_component_equality,LT5,LT3,get_read_args_def,bir_auxiliaryTheory.NUM_LSONE_EQZ]
     >> gs[is_xcl_read_thm,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_literal_11,bir_programTheory.bir_programcounter_t_accfupds,bir_programTheory.bir_get_current_statement_def,CaseEq"option",bir_get_program_block_info_by_label',is_acq_def,is_rel_def]
   )
-  >> fs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_read_args_def,is_xcl_read_thm,bir_programTheory.bir_pc_next_def,is_acq_def,is_rel_def]
+  >> gs[bir_get_stmt_read,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,spinlock_var_def,PULL_EXISTS,bir_get_program_block_info_by_label',get_read_args_def,is_xcl_read_thm,bir_programTheory.bir_pc_next_def,is_acq_def,is_rel_def]
 QED
 
 (* all writes in the spinlock program *)
@@ -144,15 +145,17 @@ Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Write_EQ:
     /\ a_e = BExp_Den spinlock_var
     /\ v_e = BExp_Const (Imm32 0x1010101w)
     /\ ~xcl
-    /\ acq = F
-    /\ rel = F
+    /\ ~acq
+    /\ ~rel
+    /\ ~bir_promising$is_amo (bir_spinlock_prog:'a bir_program_t) pc
   ) \/ (
     pc = <| bpc_index := 2; bpc_label := BL_Address $ Imm64 20w|>
     /\ a_e = BExp_Den spinlock_var
-    /\ v_e = BExp_Cast BIExp_LowCast (BExp_Den $ BVar "x0" $ BType_Imm Bit64) Bit32
+    /\ v_e = BExp_Cast BIExp_LowCast (BExp_Const $ Imm64 0w) Bit32
     /\ xcl
     /\ acq = F
     /\ rel = F
+    /\ ~bir_promising$is_amo (bir_spinlock_prog:'a bir_program_t) pc
   )
 Proof
   fs[Once EQ_IMP_THM]
