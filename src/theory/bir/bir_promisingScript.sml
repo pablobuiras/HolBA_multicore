@@ -94,6 +94,7 @@ Proof
   ]
 QED
 
+<<<<<<< HEAD
 val mem_is_cid_def = Define‘
    mem_is_cid M 0 cid = F
    /\
@@ -101,6 +102,34 @@ val mem_is_cid_def = Define‘
    case oEL t M of
    | SOME m => m.cid = cid
    | NONE => F
+=======
+Theorem mem_filter_rwr:
+  ∀P M.
+    mem_filter P M = FILTER P (GENLIST (\t. EL t M, t + 1) (LENGTH M))
+Proof
+  fs [mem_filter_def, listRangeINC_def, ZIP_GENLIST]
+QED
+
+(* Returns timestamps of messages with location l. *)
+val mem_timestamps_def = Define‘
+  mem_timestamps l M = MAP SND (mem_filter (λ(m, t). m.loc = l) M)
+’;
+
+(* The atomic predicate from promising-semantics. *)
+val mem_atomic_def = Define‘
+  mem_atomic M l cid t_r t_w =
+  (((EL (t_r - 1) M).loc = l ∨ t_r = 0)⇒
+     mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
+’;
+
+(* Checks 
+ * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
+ * letting t_max = (MAX v_pre (s.bst_coh l))
+ *)
+val mem_readable_def = Define‘
+  mem_readable M l t_max t =
+  mem_every (λ(m,t'). (t < t' ∧ t' ≤ t_max) ⇒ m.loc ≠ l) M
+>>>>>>> b9c0ebb5 (fixed semantics)
 ’;
 
 (* Note that this currently does not take into account ARM *)
@@ -443,7 +472,7 @@ Proof
 QED
 *)
 
-(* TODO: "Generalising variable "v_pre" in clause #0"? *)
+(* TODO: "Generalising variable "ν_pre" in clause #0"? *)
 (* core-local steps that don't affect memory *)
 val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 (* read *)
@@ -453,11 +482,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
-<<<<<<< HEAD
  ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ ~(mem_is_loc M t' l))
-=======
- ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ ?msg. (oEL (t'-1) M = SOME msg /\ msg.loc ≠ l))
->>>>>>> 63bad57f (rebase, reorder same core, reorder diff core without cert)
  ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
  (* TODO: Update viewenv by v_addr or v_post? *)
@@ -551,7 +576,7 @@ clstep p cid s M [] s')
         MAX s.bst_v_rNew
         (if acq /\ rel then (MAX s.bst_v_Rel (MAX s.bst_v_rOld s.bst_v_wOld)) else 0))
    /\ v_rPost = MAX v_rPre (mem_read_view (s.bst_fwdb l) t_r)
-
+                    
    (* register and register view update *)
    /\ SOME new_environ = env_update_cast64 (bir_var_name var) v_r (bir_var_type var) (s.bst_environ)
    /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_rPost)
@@ -666,6 +691,7 @@ val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
 val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
 
 (* cstep_seq invariant *)
+
 Theorem bir_exec_stmt_jmp_bst_prom:
   !st p lbl. st.bst_prom = (bir_exec_stmt_jmp p lbl st).bst_prom
 Proof
@@ -675,21 +701,6 @@ Proof
   >> CASE_TAC
   >> fs[]
 QED
-
-(* system step *)
-val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
-(!p cid s s' M M' cores prom.
-   (Core cid p s ∈ cores
-    /\ cstep p cid s M prom s' M'
-    /\ is_certified p cid s' M')
-==>
-   parstep cores M (cores DIFF {Core cid p s} UNION {Core cid p s'}) M')
-`;
-
-val env_update_cast64_def = Define‘
-  env_update_cast64 varname (BVal_Imm v) vartype env =
-    bir_env_update varname (BVal_Imm (n2bs (b2n v) Bit64)) vartype env
-’;
 
 Theorem clstep_bst_prom_EQ:
 !p cid st M st'. 
