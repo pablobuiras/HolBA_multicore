@@ -495,7 +495,7 @@ clstep p cid s M [] s')
  /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
  /\ (xcl ==> fulfil_atomic_ok M l cid s t)
  /\ MEM t s.bst_prom
- /\ EL (t-1) M = <| loc := l; val := v; cid := cid  |>
+ /\ oEL (t-1) M = SOME <| loc := l; val := v; cid := cid  |>
  (* TODO: Use get_xclb_view or separate conjunct to extract option type? *)
  /\ v_pre = MAX (MAX (MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
                           (if rel
