@@ -202,11 +202,12 @@ QED
 (* the spinlock_var is 0w initially *)
 
 Theorem core_runs_spinlock_spinlock_var_default_value:
-  !tr i cid t p st x. wf_trace tr
+  !tr cid p st. wf_trace tr
   /\ core_runs_spinlock cid $ FST $ HD tr
   /\ FLOOKUP (FST $ HD tr) cid = SOME $ Core cid p st
-  /\ st.bst_environ = BEnv x
-  ==> x $ bir_var_name spinlock_var = SOME $ BVal_Imm $ Imm64 0w
+  ==>
+    ?x. st.bst_environ = BEnv x
+    /\ x $ bir_var_name spinlock_var = SOME $ BVal_Imm $ Imm64 0w
 Proof
   rpt gen_tac >> strip_tac
   >> gvs[core_runs_spinlock_def,core_runs_prog_def,spinlock_var_def]
@@ -329,58 +330,6 @@ Proof
   >> imp_res_tac wf_trace_NOT_NULL
   >> fs[GSYM LENGTH_NOT_NULL,GSYM NULL_EQ,LAST_EL]
   >> cheat
-QED
-
-(* the address of the spinlock variable does not change *)
-
-Theorem core_runs_spinlock_memory_location_constant1:
-  !tr cid t i s p st st'. wf_trace tr /\ SUC i < LENGTH tr
-  /\ core_runs_spinlock cid $ FST $ HD tr
-  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
-  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
-  ==> bir_eval_exp (BExp_Den spinlock_var) st.bst_environ
-    = bir_eval_exp (BExp_Den spinlock_var) st'.bst_environ
-Proof
-  rpt strip_tac
-  >> drule_at Any wf_trace_core_runs_spinlock_FLOOKUP
-  >> drule_all wf_trace_parstep_EL
-  >> rw[]
-  >> qmatch_asmsub_rename_tac `parstep_nice cid'`
-  >> Cases_on `cid = cid'`
-  >> gvs[FLOOKUP_UPDATE,parstep_cases,parstep_nice_def]
-  >> gs[cstep_cases,FLOOKUP_UPDATE,clstep_cases]
-  >> qhdtm_x_assum `is_certified` kall_tac
-  >> qpat_x_assum `FST _ = _` kall_tac
-  >> gvs[]
-  >- (
-    (* BirStmt_Read *)
-    imp_res_tac $ iffLR bir_get_stmt_bir_spinlock_prog_BirStmt_Read_EQ
-    >> gvs[bir_eval_exp_view_def,bir_expTheory.bir_eval_exp_def,spinlock_var_def,bir_envTheory.bir_env_read_def,mem_read_def,mem_default_value_def,bir_envTheory.bir_env_update_def,bir_envTheory.bir_var_name_def]
-    >> Cases_on `t`
-    >> Cases_on `st.bst_environ`
-    >> gvs[env_update_cast64_def,bir_envTheory.bir_env_update_def,bir_envTheory.bir_env_lookup_def,FLOOKUP_UPDATE,bir_envTheory.bir_env_check_type_def,bir_envTheory.bir_env_lookup_type_def,bir_envTheory.bir_var_name_def,updateTheory.APPLY_UPDATE_THM,mem_read_def,mem_default_value_def,mem_read_aux_def]
-    >> qmatch_asmsub_rename_tac `mem_read_aux _ el`
-    >> Cases_on `el` >> fs[mem_read_aux_def,env_update_cast64_def]
-    >> cheat
-  )
-  >> Cases_on `s.bst_pc.bpc_index` >> fs[]
-  >> Cases_on `s.bst_pc.bpc_index < 5` >> gs[]
-  >> gs[LT5]
-  >> gvs[bir_eval_exp_view_def,bir_programTheory.bir_get_current_statement_def,CaseEq"option",pairTheory.ELIM_UNCURRY,bir_programTheory.bir_pc_next_def]
-  >> imp_res_tac $ REWRITE_RULE[optionTheory.IS_SOME_EXISTS] $ iffLR bir_spinlock_prog_labels
-  >> gs[bir_get_program_block_info_by_label',bir_programTheory.bir_pc_next_def]
-  >> gs[get_fulfil_args_def]
-  >> cheat
-(*
-bir_program_valid_stateTheory.bir_exec_stmtE_env_unchanged,
-bir_program_env_orderTheory.bir_exec_stmt_fence_SAME_ENV,
-bir_program_env_orderTheory.bir_exec_stmt_assume_SAME_ENV,
-bir_program_env_orderTheory.bir_exec_stmt_assert_SAME_ENV,
-bir_program_env_orderTheory.bir_exec_stmt_observe_SAME_ENV,
-bir_program_env_orderTheory.bir_state_set_failed_SAME_ENV,
-bir_program_valid_stateTheory.bir_exec_stmtE_env_unchanged,
-bir_programTheory.bir_state_t_accfupds
-*)
 QED
 
 (* any spinlock core only ever writes to the mutex variable memory location *)

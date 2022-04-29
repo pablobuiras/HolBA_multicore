@@ -128,7 +128,7 @@ QED
  * or the core has never progressed *)
 
 Theorem previous_state_change:
-  !i cid tr.
+  !i cid tr p st.
   wf_trace tr /\ i < LENGTH tr
   /\ progressing_trace tr
   /\ FLOOKUP (FST (EL i tr)) cid = SOME $ Core cid p st
@@ -199,6 +199,19 @@ Definition is_promise_def:
     /\ (SND sys2) = (SND sys1) ++ [<| loc := l; val := v; cid := cid  |>]
     /\ st'.bst_prom = st.bst_prom ++ [t]
 End
+
+Theorem is_promise_FLOOKUP:
+  !cid t sys1 sys2. is_promise cid t sys1 sys2
+  ==> ?p st. FLOOKUP (FST sys1) cid = SOME $ Core cid p st
+Proof
+  fs[is_promise_def,PULL_EXISTS]
+QED
+
+Theorem is_promise_positive:
+  is_promise cid t sys1 sys2 ==> 0 < t
+Proof
+  fs[is_promise_def,PULL_EXISTS]
+QED
 
 (* fulfil steps change the state *)
 
@@ -786,6 +799,36 @@ Proof
   >> cheat
 QED
 
+(* the fulfiling core location *)
+
+Theorem is_fulfil_promise_loc:
+  !tr i cid t p st st' a_e v_e xcl acq rel l v_addr .
+  wf_trace tr /\ SUC i < LENGTH tr
+  /\ progressing_trace tr
+  /\ is_fulfil cid t (EL i tr) (FST $ EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ bir_get_stmt p st.bst_pc = BirStmt_Write a_e v_e xcl acq rel
+  /\ bir_eval_exp_view a_e st.bst_environ st.bst_viewenv = (SOME l,v_addr)
+  ==> PRE t < LENGTH (SND (EL i tr))
+    /\ cid = (EL (PRE t) $ SND $ EL i tr).cid
+    /\ l = (EL (PRE t) $ SND $ EL i tr).loc
+Proof
+  rpt gen_tac >> strip_tac
+  >> drule_all_then strip_assume_tac is_fulfil_is_promise
+  >> qmatch_assum_rename_tac `j < i`
+  >> `IS_PREFIX (SND $ EL i tr) (SND $ EL (SUC j) tr)` by (
+    dxrule_then assume_tac $ iffLR LESS_EQ
+    >> gvs[LESS_OR_EQ]
+    >> irule wf_trace_IS_PREFIX_SND_EL
+    >> fs[]
+  )
+  >> imp_res_tac is_promise_positive
+  >> drule_all_then strip_assume_tac is_fulfil_memory
+  >> gvs[is_promise_def,FLOOKUP_UPDATE,IS_PREFIX_APPEND,EL_APPEND2,SUC_PRE,GSYM ADD1]
+  >> drule_all_then strip_assume_tac is_fulfil_parstep_nice_eq
+  >> gvs[FLOOKUP_UPDATE,EL_APPEND1]
+QED
+
 (*
  * exclusive reads and stores
  *)
@@ -812,7 +855,8 @@ Definition is_fulfil_xcl_def:
     /\ FLOOKUP sys2 cid = SOME $ Core cid p st'
     /\ FILTER (λt'. t' <> t) st.bst_prom = st'.bst_prom
     /\ MEM t st.bst_prom
-    /\ bir_get_stmt p st.bst_pc = BirStmt_Write a_e v_e T acq rel
+    /\ bir_get_stmt (p:string bir_program_t) st.bst_pc
+      = BirStmt_Write a_e v_e T acq rel
     /\ IS_SOME st.bst_xclb
     /\ PRE t < LENGTH $ SND $ sys1mem
     /\ 0 < t
@@ -825,6 +869,27 @@ Theorem is_fulfil_xcl_is_fulfil:
 Proof
   rw[is_fulfil_xcl_def,is_fulfil_def,bir_get_stmt_write]
   >> rpt $ goal_assum $ drule_at Any
+QED
+
+(* an exclusive fulfil does not affect fwdb of other locations *)
+
+Theorem is_fulfil_xcl_bst_fwdb_eq:
+  !tr i cid p st st' l t. wf_trace tr /\ SUC i < LENGTH tr
+  /\ progressing_trace tr
+  /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
+  /\ l <> (EL (PRE t) $ SND $ EL i tr).loc
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
+  ==> st.bst_fwdb l = st'.bst_fwdb l
+Proof
+  rpt strip_tac
+  >> imp_res_tac is_fulfil_xcl_is_fulfil
+  >> drule_at_then (Pat `is_fulfil _ _ _ _`) assume_tac is_fulfil_promise_loc
+  >> gvs[]
+  >> dxrule_at_then (Pat `is_fulfil _ _ _ _`) assume_tac is_fulfil_parstep_nice_eq
+  >> gvs[FLOOKUP_UPDATE]
+  >> ntac 2 $ qpat_x_assum `_ = bir_eval_exp_view _ _ _` $ assume_tac o GSYM
+  >> gvs[]
 QED
 
 Theorem is_fulfil_xcl_atomic:
@@ -986,7 +1051,7 @@ Theorem is_fulfil_xcl_is_read_xcl:
   !i tr cid p st t. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_fulfil_xcl cid t (EL i tr) (FST $ EL (SUC i) tr)
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
-  ==> ?j. j < i
+  ==> ?j t. j < i
     /\ is_read_xcl cid t (EL j tr) (FST $ EL (SUC j) tr)
     /\ !k p' st'. j < k /\ k <= i
       /\ FLOOKUP (FST $ EL k tr) cid = SOME $ Core cid p st'

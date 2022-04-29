@@ -401,6 +401,9 @@ Proof
   >> fs[]
 QED
 
+Theorem wf_trace_cid_backward' =
+  cj 1 $ Ho_Rewrite.REWRITE_RULE[LESS_OR_EQ,LEFT_AND_OVER_OR,RIGHT_AND_OVER_OR,DISJ_IMP_THM] wf_trace_cid_backward
+
 (* a core id occurs in all states *)
 
 Theorem wf_trace_cid:
