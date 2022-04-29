@@ -469,7 +469,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                   bst_v_rOld := MAX s.bst_v_rOld v_post;
                   bst_v_rNew := if acq then (MAX s.bst_v_rNew v_post) else s.bst_v_rNew;
                   bst_v_wNew := if acq then (MAX s.bst_v_wNew v_post) else s.bst_v_wNew;
-                  bst_v_Rel := MAX s.bst_v_Rel (if (rel /\ acq) then v_post else 0);                 
+                  bst_v_Rel := MAX s.bst_v_Rel (if (rel /\ acq) then v_post else 0);
                   bst_v_CAP := MAX s.bst_v_CAP v_addr;
                   bst_xclb := if xcl
                               then SOME <| xclb_time := t; xclb_view := v_post |>
@@ -478,7 +478,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                             then (bir_pc_next o bir_pc_next) s.bst_pc
                             else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M [] s') 
+  clstep p cid s M [] s')
 /\ (* exclusive-failure *)
 (!p s s' M a_e v_e acq rel cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e T acq rel
@@ -551,7 +551,7 @@ clstep p cid s M [] s')
         MAX s.bst_v_rNew
         (if acq /\ rel then (MAX s.bst_v_Rel (MAX s.bst_v_rOld s.bst_v_wOld)) else 0))
    /\ v_rPost = MAX v_rPre (mem_read_view (s.bst_fwdb l) t_r)
-                    
+
    (* register and register view update *)
    /\ SOME new_environ = env_update_cast64 (bir_var_name var) v_r (bir_var_type var) (s.bst_environ)
    /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_rPost)
