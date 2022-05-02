@@ -193,13 +193,7 @@ Proof
   >> qpat_x_assum `FST _ = _` kall_tac
   >> fs[bir_expTheory.bir_eval_exp_def,bir_eval_exp_view_def,bir_envTheory.bir_env_read_def]
   >> BasicProvers.every_case_tac
-  >> fs[bir_expTheory.bir_eval_cast_def,bir_envTheory.bir_env_lookup_type_def,bir_envTheory.bir_var_name_def]
-  >> qmatch_asmsub_rename_tac `bir_env_lookup "x0" st.bst_environ`
-  >> Cases_on `bir_env_lookup "x0" st.bst_environ`
-  >> gs[bir_expTheory.bir_eval_cast_def,bir_envTheory.bir_env_lookup_type_def,bir_envTheory.bir_var_name_def]
-  >> qmatch_asmsub_rename_tac `bir_eval_cast BIExp_LowCast (SOME x')`
-  >> Cases_on `x'`
-  >> fs[bir_expTheory.bir_eval_cast_def]
+  >> fs[bir_expTheory.bir_eval_cast_def,bir_envTheory.bir_env_lookup_type_def,bir_envTheory.bir_var_name_def,oEL_THM]
 QED
 
 (* the spinlock_var is 0w initially *)

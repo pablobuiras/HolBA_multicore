@@ -582,7 +582,7 @@ Proof
     >> fs[bir_valuesTheory.bir_dest_bool_val_def]
   )
   >> qpat_assum `MEM _ _` $ irule_at Any
-  >> fs[PRE_SUB1]
+  >> fs[PRE_SUB1,oEL_THM]
   >> spose_not_then assume_tac
   >> fs[bir_get_stmt_write,fulfil_atomic_ok_def]
 QED
@@ -785,14 +785,14 @@ Proof
   rpt strip_tac
   >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases,clstep_cases]
   >- (
-    qmatch_asmsub_rename_tac `EL (v_post - 1) (SND (EL i tr))`
+    qmatch_asmsub_rename_tac `oEL (v_post - 1) (SND (EL i tr))`
     >> qpat_x_assum `!t. ~is_fulfil _ t _ _` $ qspec_then `v_post` assume_tac
-    >> gvs[is_fulfil_def,FLOOKUP_UPDATE,bir_get_stmt_write,PRE_SUB1]
+    >> gvs[is_fulfil_def,FLOOKUP_UPDATE,bir_get_stmt_write,PRE_SUB1,oEL_THM]
   )
   >- (
-    qmatch_asmsub_rename_tac `EL (v_post - 1) (SND (EL i tr))`
+    qmatch_asmsub_rename_tac `oEL (v_post - 1) (SND (EL i tr))`
     >> qpat_x_assum `!t. ~is_amo _ t _ _` $ qspec_then `v_post` assume_tac
-    >> gvs[is_amo_def,FLOOKUP_UPDATE,bir_get_stmt_write,PRE_SUB1]
+    >> gvs[is_amo_def,FLOOKUP_UPDATE,bir_get_stmt_write,PRE_SUB1,oEL_THM]
   )
   >- gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs(),PRE_SUB1]
   >- (

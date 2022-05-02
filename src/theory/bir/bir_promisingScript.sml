@@ -285,7 +285,6 @@ val is_xcl_write_def = Define‘
      | _ => F
 ’;
 
-(* TODO remove is_xcl_read_thm is_xcl_write_thm *)
 (* properties about exclusive reads and writes *)
 
 Theorem is_xcl_read_thm:
@@ -483,7 +482,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
- ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
+ ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ (?msg. oEL (t'-1) M = SOME msg /\ msg.loc ≠ l))
  ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
  (* TODO: Update viewenv by v_addr or v_post? *)
@@ -523,8 +522,7 @@ clstep p cid s M [] s')
  /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
  /\ (xcl ==> fulfil_atomic_ok M l cid s t)
  /\ MEM t s.bst_prom
- /\ EL (t - 1) M = <| loc := l; val := v; cid := cid  |>
- /\ t < LENGTH M + 1
+ /\ oEL (t-1) M = SOME <| loc := l; val := v; cid := cid  |>
  (* TODO: Use get_xclb_view or separate conjunct to extract option type? *)
  /\ v_pre = MAX (MAX (MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
                           (if rel
@@ -587,8 +585,7 @@ clstep p cid s M [] s')
    /\ MEM t_w s.bst_prom
    (* v_w value to write, v_e value expression *)
    /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv
-   /\ EL (t_w-1) M = <| loc := l; val := v_w; cid := cid |>
-   /\ t_w < LENGTH M + 1
+   /\ oEL (t_w-1) M = SOME <| loc := l; val := v_w; cid := cid |>
    /\ v_wPre = MAX v_addr (
         MAX v_data (
         MAX s.bst_v_CAP (
@@ -600,7 +597,7 @@ clstep p cid s M [] s')
    /\ MAX v_wPre (s.bst_coh l) < t_w
 
    (* No writes to memory location between read and write *)
-   /\ (!t'. t_r < t' /\ t' < t_w ==> (EL (t'-1) M).loc = l)
+   /\ (!t'. t_r < t' /\ t' < t_w ==> ?msg. oEL (t'-1) M = SOME msg /\ msg.loc = l)
 
    (* State update *)
    /\ s' = s with <| bst_viewenv := new_viewenv;
@@ -678,14 +675,14 @@ val (bir_cstep_rules, bir_cstep_ind, bir_cstep_cases) = Hol_reln`
 (* core steps seq *)
 val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
 (* seq *)
-(!p cid s M s'.
-  clstep p cid s M ([]:num list) s'
+(!p cid s M s' prom.
+  clstep p cid s M (prom:num list) s'
 ==>
   cstep_seq p cid (s, M) (s', M))
 
 /\ (* write *)
 (!p cid s M s' s'' M' t.
-  (cstep p cid s M [t] s' M'
+  (cstep p cid s M [t] s' M' /\ ~(M = M')
   /\ clstep p cid s' M' [t] s'')
 ==>
   cstep_seq p cid (s, M) (s'', M'))
@@ -704,7 +701,7 @@ Theorem cstep_fulfil_to_memory:
   ==> 0 < t /\ PRE t < LENGTH M /\ (EL (PRE t) M).cid = cid
 Proof
   rpt gen_tac >> strip_tac
-  >> fs[bir_cstep_cases,bir_clstep_cases,PULL_EXISTS,arithmeticTheory.PRE_SUB1]
+  >> fs[bir_cstep_cases,bir_clstep_cases,PULL_EXISTS,arithmeticTheory.PRE_SUB1,oEL_THM]
 QED
 
 (* memory only ever increases *)
@@ -898,7 +895,7 @@ Proof
   fs[GSYM AND_IMP_INTRO]
   >> ho_match_mp_tac bir_cstep_seq_ind
   >> conj_tac >> rpt gen_tac >> strip_tac
-  >- (imp_res_tac clstep_bst_prom_EQ >> fs[])
+  >- cheat
   >> strip_tac >> conj_asm1_tac
   >- (
     pop_assum mp_tac
