@@ -1,4 +1,5 @@
 open HolKernel Parse boolLib bossLib;
+open BasicProvers;
 open relationTheory;
 open bir_programTheory;
 open monadsyntax;
@@ -38,10 +39,17 @@ val mem_default_value_def = Define ‘
   mem_default_value = BVal_Imm (Imm64 0w)
 ’;
 
-(* Returns the SOME value of the message if the location matches, else NONE. *)
-val mem_read_aux_def = Define‘
-   mem_read_aux l NONE = NONE
-/\ mem_read_aux l (SOME msg) = if msg.loc = l then SOME msg.val else NONE
+val mem_default_def = Define‘
+  mem_default l = <| loc := l; val := mem_default_value; cid := ARB |>
+’;
+
+val mem_get_def = Define‘
+   mem_get M l 0 = SOME (mem_default l)
+   /\
+   mem_get M l (SUC t) =
+   case oEL t M of
+   | SOME m => if m.loc = l then SOME m else NONE
+   | NONE => NONE
 ’;
 
 (*
@@ -49,55 +57,50 @@ val mem_read_aux_def = Define‘
   NB. at time 0 all addresses have a default value
  *)
 val mem_read_def = Define‘
-  mem_read M l 0 = SOME mem_default_value
-∧ mem_read M l (SUC t) = mem_read_aux l (oEL t M)
+   mem_read M l t =
+   case mem_get M l t of
+   | SOME m => SOME m.val
+   | NONE => NONE
 ’;
 
-(* Returns if all pairs (timestamp * message) satisfies P. *)
-val mem_every_def = Define‘
-  mem_every P M = EVERY P (ZIP (M, [1 .. LENGTH M]))
+val mem_is_loc_def = Define‘
+   mem_is_loc M 0 l = T
+   /\
+   mem_is_loc M (SUC t) l =
+   case oEL t M of
+   | SOME m => m.loc = l
+   | NONE => F
 ’;
 
-
-
-(* Returns pairs (timestamp * message) satisfying P *)
-val mem_filter_def = Define‘
-  mem_filter P M = FILTER P (ZIP (M, [1 .. LENGTH M]))
-’;
-
-Theorem mem_every_rwr:
-  ∀P M.
-    mem_every P M = EVERY P (GENLIST (\t. EL t M, t + 1) (LENGTH M))
+Theorem mem_get_is_loc:
+  !M t l.
+    IS_SOME (mem_get M l t) = mem_is_loc M t l
 Proof
-  fs [mem_every_def, listRangeINC_def, ZIP_GENLIST]
+  Cases_on ‘t’ >|
+  [
+    fs [mem_get_def, mem_is_loc_def]
+    ,
+    fs [mem_get_def, mem_is_loc_def] >>
+    rpt gen_tac >>
+    rename1 ‘oEL t M’ >>
+    Cases_on ‘oEL t M’ >|
+    [
+      fs []
+      ,
+      fs [] >>
+      CASE_TAC >>
+      (fs [])
+    ]
+  ]
 QED
 
-Theorem mem_filter_rwr:
-  ∀P M.
-    mem_filter P M = FILTER P (GENLIST (\t. EL t M, t + 1) (LENGTH M))
-Proof
-  fs [mem_filter_def, listRangeINC_def, ZIP_GENLIST]
-QED
-
-(* Returns timestamps of messages with location l. *)
-val mem_timestamps_def = Define‘
-  mem_timestamps l M = MAP SND (mem_filter (λ(m, t). m.loc = l) M)
-’;
-
-(* The atomic predicate from promising-semantics. *)
-val mem_atomic_def = Define‘
-  mem_atomic M l cid t_r t_w =
-  (((EL (t_r - 1) M).loc = l ∨ t_r = 0)⇒
-     mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
-’;
-
-(* Checks 
- * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
- * letting t_max = (MAX v_pre (s.bst_coh l))
- *)
-val mem_readable_def = Define‘
-  mem_readable M l t_max t =
-  mem_every (λ(m,t'). (t < t' ∧ t' ≤ t_max) ⇒ m.loc ≠ l) M
+val mem_is_cid_def = Define‘
+   mem_is_cid M 0 cid = F
+   /\
+   mem_is_cid M (SUC t) cid =
+   case oEL t M of
+   | SOME m => m.cid = cid
+   | NONE => F
 ’;
 
 (* Note that this currently does not take into account ARM *)
@@ -211,14 +214,9 @@ val get_xclb_view_def = Define`
 `;
 
 val fulfil_atomic_ok_def = Define`
-  (fulfil_atomic_ok M l cid s tw =
-   case s.bst_xclb of
-   | SOME xclb =>
-     ((EL (xclb.xclb_time-1) M).loc = l ∨ (xclb.xclb_time = 0)) ==>
-       (!t'. (xclb.xclb_time < t'
-             /\ t' < tw
-             /\ (EL (t'-1) M).loc = l) ==> (EL (t'-1) M).cid = cid)
-   | NONE => F)
+  fulfil_atomic_ok M l cid t_r t_w =
+     (mem_is_loc M t_r l ==>
+       !t'. (t_r < t' /\ t' < t_w /\ mem_is_loc M t' l) ==> mem_is_cid M t' cid)
 `;
 
 val env_update_cast64_def = Define‘
@@ -455,7 +453,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
- ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ (?msg. oEL (t'-1) M = SOME msg /\ msg.loc ≠ l))
+ ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ ~(mem_is_loc M t' l))
  ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
  (* TODO: Update viewenv by v_addr or v_post? *)
@@ -493,9 +491,9 @@ clstep p cid s M [] s')
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl acq rel
  /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
- /\ (xcl ==> fulfil_atomic_ok M l cid s t)
+ /\ (xcl ==> s.bst_xclb <> NONE /\ fulfil_atomic_ok M l cid (THE s.bst_xclb).xclb_time t)
  /\ MEM t s.bst_prom
- /\ oEL (t-1) M = SOME <| loc := l; val := v; cid := cid  |>
+ /\ mem_get M l t = SOME <| loc := l; val := v; cid := cid  |>
  (* TODO: Use get_xclb_view or separate conjunct to extract option type? *)
  /\ v_pre = MAX (MAX (MAX (MAX v_addr (MAX v_data (MAX s.bst_v_wNew s.bst_v_CAP)))
                           (if rel
@@ -558,7 +556,7 @@ clstep p cid s M [] s')
    /\ MEM t_w s.bst_prom
    (* v_w value to write, v_e value expression *)
    /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv
-   /\ oEL (t_w-1) M = SOME <| loc := l; val := v_w; cid := cid |>
+   /\ mem_get M l t_w = SOME <| loc := l; val := v_w; cid := cid |>
    /\ v_wPre = MAX v_addr (
         MAX v_data (
         MAX s.bst_v_CAP (
@@ -570,7 +568,7 @@ clstep p cid s M [] s')
    /\ MAX v_wPre (s.bst_coh l) < t_w
 
    (* No writes to memory location between read and write *)
-   /\ (!t'. t_r < t' /\ t' < t_w ==> ?msg. oEL (t'-1) M = SOME msg /\ msg.loc = l)
+   /\ (!t'. t_r < t' /\ t' < t_w ==> mem_is_loc M t' l)
 
    (* State update *)
    /\ s' = s with <| bst_viewenv := new_viewenv;
