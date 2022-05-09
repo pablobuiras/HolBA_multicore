@@ -12,6 +12,37 @@ val _ = Datatype‘
          exec_mem_msg_t = <| loc:bir_val_t ; val:bir_val_t ; cid:num ; succ:bool ; n:num |>
         ’;
 
+(* Returns if all pairs (timestamp * message) satisfies P. *)
+val mem_every_def = Define‘
+  mem_every P M = EVERY P (ZIP (M, [1 .. LENGTH M]))
+’;
+
+(* Returns pairs (timestamp * message) satisfying P *)
+val mem_filter_def = Define‘
+  mem_filter P M = FILTER P (ZIP (M, [1 .. LENGTH M]))
+’;
+
+(* Returns timestamps of messages with location l. *)
+val mem_timestamps_def = Define‘
+  mem_timestamps l M = MAP SND (mem_filter (λ(m, t). m.loc = l) M)
+’;
+
+(* The atomic predicate from promising-semantics. *)
+val mem_atomic_def = Define‘
+  mem_atomic M l cid t_r t_w =
+  (((EL (t_r - 1) M).loc = l ∨ t_r = 0)⇒
+     mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
+’;
+
+(* Checks 
+ * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
+ * letting t_max = (MAX v_pre (s.bst_coh l))
+ *)
+val mem_readable_def = Define‘
+  mem_readable M l t_max t =
+  mem_every (λ(m,t'). (t < t' ∧ t' ≤ t_max) ⇒ m.loc ≠ l) M
+’;
+
 val emem_default_def = Define‘
   emem_default l = <| loc := l ; val := BVal_Imm (Imm64 0w) ; succ := T ; n := 0 |>
 ’;

@@ -53,11 +53,12 @@ mem_read (emem_to_mem memory) l t = SOME msg.val
 Proof
 REPEAT STRIP_TAC >>
 fs [emem_readable_def] >>
-Cases_on ‘emem_every
-               (λ(m',t'). m'.succ ∧ 0 < t' ∧ t' ≤ v_max ⇒ m'.loc ≠ l) memory’ >| [
- fs [] >| [
-  fs [mem_read_def, emem_default_def, mem_default_value_def],
-
+Cases_on ‘emem_every (λ(m',t'). m'.succ ∧ 0 < t' ∧ t' ≤ v_max ⇒ m'.loc ≠ l) memory’ >|
+[
+ fs [] >|
+ [
+  fs [mem_read_def, emem_default_def, mem_default_value_def, mem_get_def, mem_default_def]
+  ,
   fs [MEM_FILTER, emem_filter_def] >>
   (* TODO: Problems with emem_to_mem *)
   cheat
@@ -70,16 +71,12 @@ Cases_on ‘emem_every
 QED
 
 Triviality emem_fulfil_atomic_ok:
-!state memory l core_id v_post.
-state.bst_xclb ≠ NONE ⇒
-emem_atomic memory l core_id (THE state.bst_xclb).xclb_time v_post ⇒
-fulfil_atomic_ok (emem_to_mem memory) l core_id state v_post
+!t_r memory l core_id v_w.
+emem_atomic memory l core_id t_r v_w ⇒
+fulfil_atomic_ok (emem_to_mem memory) l core_id t_r v_w
 Proof
 REPEAT STRIP_TAC >>
 fs [emem_atomic_def, fulfil_atomic_ok_def] >>
-Cases_on ‘state.bst_xclb’ >> (
- fs []
-) >>
 Cases_on ‘emem_get memory l x.xclb_time’ >> (
  fs []
 ) >| [
