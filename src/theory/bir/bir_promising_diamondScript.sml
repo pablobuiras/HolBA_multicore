@@ -586,55 +586,46 @@ Proof
   >> fs[listTheory.EL_TAKE]
 QED
 
-(*
+Definition is_read_def:
+  is_read p s =
+  ?var a_e opt_cast xcl acq rel.
+    bir_get_stmt p s.bst_pc =
+    BirStmt_Read var a_e opt_cast xcl acq rel
+End
+
 Theorem gen_promises_do_not_disable_clsteps_other_core:
   !p cid M prom s s' msg idx.
     ~(cid = msg.cid)
     /\ clstep p cid s M prom s'
-    /\ 1 <= idx /\ idx <= LENGTH M
+    /\ ~(is_read p s) /\ 0 < idx /\ idx < LENGTH M
     ==>
-    clstep p cid s (LINSERT msg idx M) prom s'
+    ?prom'.clstep p cid s (LINSERT msg idx M) prom' s'
 Proof
-  fs[LINSERT_def]
+  fs[LINSERT_def, is_read_def]
   >> Induct_on ‘clstep’
-  >> rpt strip_tac
-  >| [ (* read *)
-    HO_MATCH_MP_TAC (List.nth (CONJUNCTS clstep_rules,0))
-    >> Cases_on ‘t < idx - 1’
-    >| [
-      Q.LIST_EXISTS_TAC [‘v’, ‘a_e’, ‘xcl’, ‘acq’, ‘rel’, ‘l’, ‘t’, ‘v_pre’, ‘v_post’, ‘v_addr’,‘var’, ‘new_env’, ‘opt_cast’]
-      >> rpt strip_tac >- fs[] >- fs[]
-      >|
-      [drule mem_read_some >> strip_tac
-       >> fs[mem_read_append2]
-       >> fs[mem_read_take]
-     ,fs[]
-     , (* quantifier case *)
-     qpat_assum ‘!t''._’ (fn th => drule (Q.SPEC ‘t'’ th))
-     >> rpt strip_tac
-     >> ‘t' ≤ MAX v_pre (s.bst_coh l)’ by fs[bir_state_t_accfupds]
-     >> ‘∃msg. oEL t' M = SOME msg ∧ msg.loc ≠ l’ by fs[]
-     >> Q.EXISTS_TAC ‘msg'’
-     >> fs[listTheory.oEL_EQ_EL, listTheory.EL_APPEND_EQN]
-     ,fs[]
-     ,fs[]
-     ,fs[]
-    ]
-    , (* xclfail *)
-    HO_MATCH_MP_TAC (List.nth (CONJUNCTS clstep_rules,1))
+  >> rpt strip_tac >- fs[] >> WEAKEN_TAC is_forall
+  >| [ 
+    (* xclfail *)
+    qexists_tac ‘[]’
+    >> HO_MATCH_MP_TAC (List.nth (CONJUNCTS clstep_rules,1))
     >> Q.LIST_EXISTS_TAC [‘a_e’, ‘v_e’, ‘acq’, ‘rel’, ‘new_env’, ‘new_viewenv’]
     >> fs[xclfail_update_env_def, xclfail_update_viewenv_def]
     ,(* fulfil *)
-    HO_MATCH_MP_TAC (List.nth (CONJUNCTS clstep_rules,2))
-    >> fs[bir_programTheory.bir_state_t_accfupds]
-    >> Q.LIST_EXISTS_TAC [‘v’,‘l’,‘v_addr’,‘v_data’,‘new_env’, ‘new_viewenv’]
-    >> gvs[fulfil_atomic_ok_def, fulfil_update_env_def, fulfil_update_viewenv_def, listTheory.oEL_EQ_EL, listTheory.EL_APPEND_EQN]
-    >> rpt strip_tac
-    >> Cases_on ‘s.bst_xclb’ >- fs[]
-    >> fs[] >> DISCH_TAC >> GEN_TAC >> rpt strip_tac
-    >> ‘t' < LENGTH M + 1’ by DECIDE_TAC
-    >> fs[]
-  , (* amo *)
+    Cases_on ‘idx > t’
+    >| [
+        qexists_tac ‘[t]’
+        >> HO_MATCH_MP_TAC (List.nth (CONJUNCTS clstep_rules,2))
+        >> fs[bir_programTheory.bir_state_t_accfupds]
+        >> Q.LIST_EXISTS_TAC [‘v’,‘l’,‘v_addr’,‘v_data’,‘new_env’, ‘new_viewenv’]
+        >> gvs[listTheory.oEL_EQ_EL, listTheory.EL_APPEND_EQN]
+        >> fs[fulfil_atomic_ok_def]
+(*        >> gvs[fulfil_atomic_ok_def, fulfil_update_env_def, fulfil_update_viewenv_def, listTheory.oEL_EQ_EL, listTheory.EL_APPEND_EQN] *)
+        >> rpt strip_tac
+        >- (Cases_on ‘s.bst_xclb’ >- fs[]
+            >> fs[]
+            >> rpt strip_tac)
+      ]
+        , (* amo *)
   cheat
   ,
   HO_MATCH_MP_TAC (List.nth (CONJUNCTS clstep_rules,3))
@@ -654,8 +645,7 @@ Proof
   >> rpt HINT_EXISTS_TAC >> fs[]
   ]
 QED
-*)
-  
+
 Theorem promises_other_core_commute_alt:
   !p msg1 msg2 s M M'.
     cstep p msg1.cid s M [LENGTH M + 1]
@@ -700,23 +690,6 @@ Proof
   cheat]
 QED
 
-(*Theorem clstep_reorder:
-!p cid s M R msg prom s'.
-  clstep p cid s (M ++ R ++ [msg]) prom s'
-==>
-  ?prom2 s2. clstep p cid s (M ++ [msg] ++ R) prom2 s2
-Proof
-  Induct_on ‘R’
-  >- (rpt strip_tac >> fs[]
-      >> Q.LIST_EXISTS_TAC [‘prom’, ‘s'’] >> fs[])
-  >> rpt strip_tac
-  >> ‘M ++ h::R ++ [msg] = (M ++ [h]) ++ R ++ [msg]’ by fs[]
-  >> first_assum (fn th => fs[th])
-  >> last_assum drule >> rw[]
-  >>
-QED
-*)
-
 Definition LINSERT_def:
   LINSERT x t xs = TAKE (t-1) xs ++ x :: DROP (t-1) xs
 End
@@ -728,10 +701,14 @@ Theorem gen_promise_does_not_disable_cstep_seq:
  ==>
    cstep_seq p cid (s,LINSERT msg t M) (s',LINSERT msg t M')
 Proof
-  cheat
-  >> rpt strip_tac
+  rpt strip_tac
   >> gs[cstep_seq_cases]
-  >| [Induct_on ‘R1’ using listTheory.SNOC_INDUCT
+  >| [
+      >> qexists_tac ‘prom’
+      >> qexists_tac ‘new_env’
+      >> qexists_tac ‘new_viewenv’
+
+Induct_on ‘R1’ using listTheory.SNOC_INDUCT
       >- (strip_tac
           >> drule_all promises_do_not_disable_clsteps_other_core
           >> rw[]
@@ -829,7 +806,8 @@ Proof
   >> drule cstep_seq_memory_only_grows >> rw[]
   >> drule_all promises_do_not_disable_cstep_seq >> rw[]
 QED
-  
+*)
+
 Theorem certification_extension_other_core:
 !p p' cid s s' s'' M prom msg.
 ~(cid = msg.cid)
@@ -839,7 +817,6 @@ Theorem certification_extension_other_core:
 ==>
 is_certified p cid s' (M++[msg])
 Proof
-  cheat >>
   rpt strip_tac
   >> fs[is_certified_def]
   >> Q.EXISTS_TAC ‘s'³'’
@@ -853,7 +830,6 @@ Proof
   >> fs[cstep_seq_rtc_def]
   >> metis_tac[relationTheory.RTC_RULES]
 QED
-*)
 
 Theorem certification_extension_other_core:
   !p p' cid s s' s'' M prom msg.

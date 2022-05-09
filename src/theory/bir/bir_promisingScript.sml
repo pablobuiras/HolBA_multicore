@@ -94,7 +94,6 @@ Proof
   ]
 QED
 
-<<<<<<< HEAD
 val mem_is_cid_def = Define‘
    mem_is_cid M 0 cid = F
    /\
@@ -102,34 +101,6 @@ val mem_is_cid_def = Define‘
    case oEL t M of
    | SOME m => m.cid = cid
    | NONE => F
-=======
-Theorem mem_filter_rwr:
-  ∀P M.
-    mem_filter P M = FILTER P (GENLIST (\t. EL t M, t + 1) (LENGTH M))
-Proof
-  fs [mem_filter_def, listRangeINC_def, ZIP_GENLIST]
-QED
-
-(* Returns timestamps of messages with location l. *)
-val mem_timestamps_def = Define‘
-  mem_timestamps l M = MAP SND (mem_filter (λ(m, t). m.loc = l) M)
-’;
-
-(* The atomic predicate from promising-semantics. *)
-val mem_atomic_def = Define‘
-  mem_atomic M l cid t_r t_w =
-  (((EL (t_r - 1) M).loc = l ∨ t_r = 0)⇒
-     mem_every (λ(m,t'). (t_r < t' ∧ t' < t_w ∧ m.loc = l) ⇒ m.cid = cid) M)
-’;
-
-(* Checks 
- * (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ (EL (t'-1) M).loc ≠ l)
- * letting t_max = (MAX v_pre (s.bst_coh l))
- *)
-val mem_readable_def = Define‘
-  mem_readable M l t_max t =
-  mem_every (λ(m,t'). (t < t' ∧ t' ≤ t_max) ⇒ m.loc ≠ l) M
->>>>>>> b9c0ebb5 (fixed semantics)
 ’;
 
 (* Note that this currently does not take into account ARM *)
