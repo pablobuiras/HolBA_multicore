@@ -2,7 +2,42 @@ open HolKernel Parse boolLib bossLib;
 
 val _ = new_theory "traces";
 
-open bir_promisingTheory rich_listTheory listTheory arithmeticTheory;
+open bir_promisingTheory rich_listTheory listTheory arithmeticTheory finite_mapTheory;
+
+(*
+ * general lemmata
+ *)
+
+Theorem FILTER_NEQ_MEM_EQ:
+  !t t' s. FILTER ($<> t) s = FILTER ($<> t') s
+  /\ MEM t s /\ MEM t' s ==> t = t'
+Proof
+  rpt strip_tac
+  >> qmatch_assum_abbrev_tac `rhs = lhs`
+  >> `EVERY ($<> t) lhs` by (
+    fs[Once EQ_SYM_EQ,Abbr`rhs`,EVERY_FILTER]
+  )
+  >> fs[EVERY_FILTER,EVERY_MEM,Abbr`lhs`]
+QED
+
+Theorem FILTER_NEQ_NOT_MEM:
+  !t s. FILTER ($<> t) s = s /\ MEM t s ==> F
+Proof
+  fs[] >> rpt gen_tac >> strip_tac
+  >> pop_assum $ ONCE_REWRITE_TAC o single o GSYM
+  >> fs[MEM_FILTER]
+QED
+
+Theorem FUPDATE_EQ:
+   !s k1 v1 k2 v2. s |+ (k1,v1) = s |+ (k2,v2) /\ k1 <> k2
+   ==> FLOOKUP (s |+ (k1,v1)) k2 = SOME v2
+   /\ FLOOKUP (s |+ (k2,v2)) k1 = SOME v1
+Proof
+  rpt strip_tac
+  >- (fs[] >> fs[finite_mapTheory.FLOOKUP_UPDATE])
+  >> fs[Once EQ_SYM_EQ]
+  >> fs[finite_mapTheory.FLOOKUP_UPDATE]
+QED
 
 (*
  * Defintion of traces
@@ -27,12 +62,30 @@ End
 
 Theorem parstep_nice_memory_imp:
   !cid s1 s2. parstep_nice cid s1 s2
-  ==> SND s1 = SND s2 \/ ?m. SND s2 = SND s1 ++ [m]
+  ==> SND s1 = SND s2 \/ ?m. SND s2 = SND s1 ++ [m] /\ m.cid = cid
 Proof
   fs[gen_traces_def,parstep_nice_def,pairTheory.FORALL_PROD]
   >> rw[cstep_cases,parstep_cases]
   >> disj2_tac
-  >> irule_at Any EQ_REFL
+  >> rpt $ irule_at Any EQ_REFL
+QED
+
+(* future promises are larger than current memory size *)
+
+Theorem parstep_nice_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom:
+  !cid cid' sys1 sys2 p p' st st'. parstep_nice cid sys1 sys2
+  /\ FLOOKUP (FST sys1) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST sys2) cid = SOME $ Core cid p st'
+  ==> EVERY (λx. ~MEM x st.bst_prom ==> LENGTH (SND sys1) < x) st'.bst_prom
+Proof
+  rpt strip_tac
+  >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases]
+  >> imp_res_tac clstep_LENGTH_prom >> gvs[]
+  >- (
+    imp_res_tac clstep_bst_prom_EQ
+    >> fs[EVERY_MEM]
+  )
+  >> fs[clstep_cases,EVERY_MEM,MEM_FILTER]
 QED
 
 (* set of all traces *)
@@ -87,72 +140,104 @@ QED
  * well-formed traces and implications of well-formedness
  *)
 
-(* well-formedness of Cores: the cid is unique *)
-Definition wf_sys_def:
-  wf_sys (sys : core_t -> bool) =
-    !cid p st p' st'.
-    Core cid p st IN sys /\ Core cid p' st' IN sys
-    ==> p = p' /\ st = st'
-End
-
-Theorem parstep_nice_wf_sys:
-  !s1 s2 cid. wf_sys $ FST s1
-  /\ parstep_nice cid s1 s2
-  ==> wf_sys $ FST s2
+Theorem parstep_nice_EX_FLOOKUP:
+  !cid s1 s2. parstep_nice cid s1 s2
+  ==> ?p st. FLOOKUP (FST s1) cid = SOME (Core cid p st)
 Proof
-  fs[parstep_cases,parstep_nice_def,wf_sys_def]
-  >> ntac 2 (rpt gen_tac >> strip_tac)
-  >> gvs[]
-  >> first_x_assum dxrule_all
-  >> rw[]
+  rw[parstep_nice_def,parstep_cases] >> fs[]
 QED
 
-(* TODO *)
-Theorem parstep_nice_parstep_nice:
-  !s1 s2 cid cid'. wf_sys $ FST s1
-  /\ parstep_nice cid s1 s2 /\ parstep_nice cid' s1 s2
+Theorem parstep_nice_FLOOKUP:
+  !cid s1 s2 cid' p st. parstep_nice cid s1 s2
+  /\ FLOOKUP (FST s1) cid' = SOME (Core cid' p st)
+  ==> ?st'. FLOOKUP (FST s2) cid' = SOME (Core cid' p st')
+Proof
+  rpt strip_tac
+  >> fs[parstep_nice_def,parstep_cases,finite_mapTheory.FLOOKUP_UPDATE]
+  >> BasicProvers.every_case_tac
+  >> fs[]
+QED
+
+Theorem parstep_nice_FLOOKUP':
+  !cid s1 s2 cid' p st. parstep_nice cid s1 s2
+  /\ FLOOKUP (FST s1) cid' = SOME (Core cid' p st)
+  /\ cid <> cid'
+  ==> FLOOKUP (FST s2) cid' = SOME (Core cid' p st)
+Proof
+  rpt strip_tac
+  >> fs[parstep_nice_def,parstep_cases,finite_mapTheory.FLOOKUP_UPDATE]
+  >> fs[]
+QED
+
+(* 'progress' enforces state-change *)
+
+Definition progressing_def:
+  progressing sys1 sys2 =
+    !cid p st st'.
+    parstep_nice cid sys1 sys2
+    /\ FLOOKUP (FST sys1) cid = SOME $ Core cid p st
+    ==> FLOOKUP (FST sys2) cid = SOME $ Core cid p st'
+    ==> st <> st'
+End
+
+Theorem progressing_parstep_nice_parstep_nice:
+  !s1 s2 cid cid'.
+  progressing s1 s2
+  /\ parstep_nice cid s1 s2
+  /\ parstep_nice cid' s1 s2
   ==> cid = cid'
 Proof
   rpt strip_tac
-  >> drule_all_then assume_tac parstep_nice_wf_sys
-  >> fs[parstep_nice_def,parstep_cases,wf_sys_def]
-  >> last_x_assum drule
-  >> PRED_ASSUM is_forall mp_tac
-  >> cheat
+  >> spose_not_then assume_tac
+  >> fs[progressing_def,DISJ_EQ_IMP]
+  >> PRED_ASSUM is_forall imp_res_tac
+  >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
 QED
 
-Theorem parstep_nice_cid:
-  !cid s1 s2. parstep_nice cid s1 s2
-  ==> ?p st st'. Core cid p st IN FST s1 /\ Core cid p st' IN FST s2
-Proof
-  fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL,parstep_nice_def,pairTheory.FORALL_PROD]
-  >> rw[cstep_cases,clstep_cases,parstep_cases]
-  >> dsimp[] >> disj2_tac >> goal_assum $ drule_at Any
-QED
-
-(* TODO *)
-Theorem parstep_nice_cid':
-  !cid s1 s2. parstep_nice cid s1 s2
-  ==> ?p st st'. Core cid p st IN FST s1
-  /\ Core cid p st' IN FST s2
-  /\ st <> st'
-Proof
-  fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL,parstep_nice_def,pairTheory.FORALL_PROD]
-  >> rw[cstep_cases,clstep_cases,parstep_cases]
-  >> dsimp[]
-  >> disj2_tac >> goal_assum $ drule_at Any
-  (* bst_prom changes or bst_pc changes? *)
-  >> cheat
-QED
+Definition progressing_trace_def:
+  progressing_trace tr =
+    !i. SUC i < LENGTH tr ==> progressing (EL i tr) (EL (SUC i) tr)
+End
 
 Definition empty_prom_def:
-  empty_prom s = !cid p st. Core cid p st IN s ==> NULL st.bst_prom
+  empty_prom s = !cid p st.
+  FLOOKUP s cid = SOME $ Core cid p st
+  ==> NULL st.bst_prom
 End
+
+Definition empty_xclb_def:
+  empty_xclb s = !cid p st.
+  FLOOKUP s cid = SOME $ Core cid p st
+  ==> st.bst_xclb = NONE
+End
+
+(* enforce restriction on core id *)
+
+Definition wf_trace1_def:
+  wf_trace1 tr =
+    !i cid cid' p st. i < LENGTH tr
+      /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid' p st
+      ==> cid = cid'
+End
+
+Theorem wf_trace1_FLOOKUP:
+  !tr i id x. wf_trace1 tr
+  /\ FLOOKUP (FST $ EL i tr) id = SOME x
+  /\ i < LENGTH tr
+  ==> ?p st. x = Core id p st
+Proof
+  rw[wf_trace1_def]
+  >> qmatch_assum_rename_tac `FLOOKUP _ _ = SOME x`
+  >> Cases_on `x`
+  >> res_tac
+  >> fs[]
+QED
 
 (* well-formed traces are certified and thread id's are unique identifiers *)
 Definition wf_trace_def:
-  wf_trace tr <=> tr IN par_traces /\ wf_sys $ FST $ HD tr
+  wf_trace tr <=> tr IN par_traces
     /\ NULL $ SND $ HD tr /\ empty_prom $ FST $ HD tr
+    /\ empty_xclb $ FST $ HD tr
 End
 
 Theorem wf_trace_NOT_NULL:
@@ -171,84 +256,109 @@ Proof
   >> fs[]
 QED
 
-Theorem wf_trace_wf_sys_monotone:
-  !tr i. wf_trace tr /\ i < LENGTH tr ==> wf_sys $ FST $ EL i tr
+Theorem wf_trace_LENGTH_SND:
+  !tr i. wf_trace tr /\ SUC i < LENGTH tr
+  ==> LENGTH (SND $ EL i tr) <= LENGTH (SND $ EL (SUC i) tr)
 Proof
-  `!ps tr. is_gen_trace ps tr ==>
-    ps = (λs1 s2. ?cid. parstep_nice cid s1 s2) /\ wf_sys (FST (HD tr)) ==>
-     !i. i < LENGTH tr ==> wf_sys (FST (EL i tr))` by (
-    ho_match_mp_tac is_gen_trace_ind
-    >> rw[]
-    >- (qmatch_assum_rename_tac `i < 1` >> Cases_on `i` >> fs[])
-    >> qmatch_assum_rename_tac `i < LENGTH t + 2`
-    >> Cases_on `NULL t`
-    >- (
-      fs[NULL_EQ,EL_APPEND1,EL_APPEND2]
-      >> fs o single $
-        (REWRITE_CONV [GSYM COUNT_LIST_COUNT,GSYM pred_setTheory.IN_COUNT]
-        THENC EVAL) ``n < (2 : num)``
-      >> drule_all parstep_nice_wf_sys
-      >> fs[]
-    )
-    >> gs[Excl"EL",Excl"EL_restricted",GSYM EL,EL_APPEND1,GSYM LENGTH_NOT_NULL]
-    >> Cases_on `i < LENGTH t`
-    >- (
-      `i < LENGTH t + 1` by fs[]
-      >> first_x_assum drule
-      >> fs[EL_APPEND1]
-    )
-    >> gvs[EL_APPEND2,NOT_LESS,LESS_OR_EQ,EL_APPEND1]
-    >> first_x_assum $ qspec_then `LENGTH t` mp_tac
-    >> fs[EL_APPEND2]
-    >> `i = SUC $ LENGTH t` by fs[NOT_LESS,LESS_OR_EQ]
-    >> rw[EL_APPEND1]
-    >> dxrule_all parstep_nice_wf_sys
-    >> fs[]
-  )
-  >> fs[wf_trace_def,par_traces_def,gen_traces_def]
+  rw[]
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> imp_res_tac parstep_nice_memory_imp
+  >> fs[]
 QED
 
-Theorem wf_trace_wf_sys:
-  !tr cid p st p' st' i. wf_trace tr
-  /\ Core cid p st IN FST (EL i tr)
-  /\ Core cid p' st' IN FST (EL i tr)
-  /\ i < LENGTH tr
-  ==> p = p' /\ st = st'
+Theorem wf_trace_LENGTH_SND':
+  !tr i j. wf_trace tr /\ i + j < LENGTH tr
+  ==> LENGTH (SND $ EL i tr) <= LENGTH (SND $ EL (i + j) tr)
 Proof
-  rpt gen_tac >> strip_tac
-  >> dxrule_all $ REWRITE_RULE[wf_sys_def] wf_trace_wf_sys_monotone
+  ntac 2 gen_tac >> Induct >> rw[]
   >> fs[]
+  >> dxrule_then irule LESS_EQ_TRANS
+  >> `i + SUC j = SUC $ i + j` by fs[]
+  >> pop_assum $ fs o single
+  >> irule wf_trace_LENGTH_SND
+  >> fs[]
+QED
+
+Theorem progressing_trace_cid_eq:
+  !tr i cid cid'.
+    wf_trace tr /\ SUC i < LENGTH tr
+    /\ progressing_trace tr
+    /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+    /\ parstep_nice cid' (EL i tr) (EL (SUC i) tr)
+    ==> cid = cid'
+Proof
+  rpt strip_tac
+  >> dxrule_at Any progressing_parstep_nice_parstep_nice
+  >> disch_then $ dxrule_at Any
+  >> fs[progressing_trace_def]
+QED
+
+(* memory is less or equal to trace length *)
+
+Theorem wf_trace_LENGTH_SND'':
+  !tr i cid. wf_trace tr /\ i < LENGTH tr
+  ==> LENGTH $ SND $ EL i tr <= i
+Proof
+  gen_tac >> Induct
+  >- fs[wf_trace_def,NULL_EQ]
+  >> rw[]
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> dxrule_then strip_assume_tac parstep_nice_memory_imp
+  >> fs[]
+QED
+
+(* if a core writes to memory there is the corresponding parstep transition *)
+
+Theorem wf_trace_adds_to_memory:
+  !i tr k cid. wf_trace tr /\ i < LENGTH tr
+  /\ k < LENGTH $ SND $ EL i tr
+  /\ (EL k $ SND $ EL i tr).cid = cid
+  ==> ?j. j < i /\ parstep_nice cid (EL j tr) (EL (SUC j) tr)
+    /\ k = LENGTH $ SND $ EL j tr
+    /\ SUC k = LENGTH $ SND $ EL (SUC j) tr
+Proof
+  Induct >> rw[DISJ_EQ_IMP]
+  >- fs[wf_trace_def,NULL_EQ,NOT_LESS]
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> imp_res_tac parstep_nice_memory_imp
+  >- (
+    first_x_assum drule
+    >> fs[]
+    >> disch_then $ drule_then strip_assume_tac
+    >> rpt $ goal_assum $ drule_at Any
+    >> fs[]
+  )
+  >> gvs[prim_recTheory.LESS_THM,GSYM ADD1,EL_APPEND2]
+  >> dsimp[]
+  >> first_x_assum drule
+  >> fs[]
+  >> disch_then $ drule_then strip_assume_tac
+  >> rpt $ goal_assum $ drule_at Any
+  >> fs[EL_APPEND1]
 QED
 
 (* same core id occurs in next step in the trace *)
 
 Theorem wf_trace_cid_forward1:
-  !tr i cid p st. wf_trace tr /\ Core cid p st IN FST (EL i tr)
+  !tr i cid p st. wf_trace tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ SUC i < LENGTH tr
-  ==> ?st. Core cid p st IN FST (EL (SUC i) tr)
+  ==> ?st. FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st
 Proof
   rpt strip_tac
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
-  >> Cases_on `cid = cid'`
-  >- (
-    drule_then strip_assume_tac parstep_nice_cid
-    >> gvs[]
-    >> drule_then (dxrule_then drule) wf_trace_wf_sys
-    >> rw[]
-    >> goal_assum drule
-  )
-  >> fs[parstep_nice_def,parstep_cases]
-  >> goal_assum drule
+  >> drule_all_then irule parstep_nice_FLOOKUP
 QED
 
 (* same core id occurs later in the trace *)
 
 Theorem wf_trace_cid_forward:
-  !j tr i cid p st. wf_trace tr /\ Core cid p st IN FST (EL i tr)
+  !j tr i cid p st. wf_trace tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ i <= j /\ j < LENGTH tr
-  ==> ?st. Core cid p st IN FST (EL j tr)
+  ==> ?st. FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st
 Proof
-  Induct >> rw[] >> fs[] >- goal_assum drule
+  Induct >> rw[] >> fs[]
   >> dxrule_then strip_assume_tac $ iffLR LESS_OR_EQ
   >- (
     first_x_assum $ drule_then dxrule
@@ -262,25 +372,27 @@ QED
 (* same core id occurs earlier in the trace *)
 
 Theorem wf_trace_cid_backward1:
-  !i tr cid p st. wf_trace tr /\ Core cid p st IN FST (EL (SUC i) tr)
+  !i tr cid p st. wf_trace tr
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st
   /\ SUC i < LENGTH tr
-  ==> ?st. Core cid p st IN FST (EL i tr)
+  ==> ?st. FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
 Proof
   rpt strip_tac
   >> drule_all wf_trace_parstep_EL
-  >> rw[parstep_nice_def,parstep_cases]
-  >> gvs[]
-  >> goal_assum drule
+  >> disch_then $ qx_choose_then `cid'` assume_tac
+  >> Cases_on `cid = cid'`
+  >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
 QED
 
 Theorem wf_trace_cid_backward:
-  !i j tr cid p st. wf_trace tr /\ Core cid p st IN FST (EL j tr)
+  !i j tr cid p st. wf_trace tr
+  /\ FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st
   /\ i <= j /\ j < LENGTH tr
-  ==> ?st. Core cid p st IN FST (EL i tr)
+  ==> ?st. FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
 Proof
   ntac 2 gen_tac >> Induct_on `j - i`
   >> rw[] >> fs[PULL_FORALL,AND_IMP_INTRO]
-  >- (gvs[LESS_OR_EQ] >- goal_assum drule)
+  >- gvs[LESS_OR_EQ]
   >> drule_then irule wf_trace_cid_backward1
   >> qpat_x_assum `_ = _ - _:num` $ assume_tac o REWRITE_RULE[SUB_LEFT_EQ]
   >> gvs[]
@@ -289,12 +401,16 @@ Proof
   >> fs[]
 QED
 
+Theorem wf_trace_cid_backward' =
+  cj 1 $ Ho_Rewrite.REWRITE_RULE[LESS_OR_EQ,LEFT_AND_OVER_OR,RIGHT_AND_OVER_OR,DISJ_IMP_THM] wf_trace_cid_backward
+
 (* a core id occurs in all states *)
 
 Theorem wf_trace_cid:
-  !tr cid p st i j. wf_trace tr /\ Core cid p st IN FST (EL i tr)
+  !tr cid p st i j. wf_trace tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ i < LENGTH tr /\ j < LENGTH tr
-  ==> ?st. Core cid p st IN FST (EL j tr)
+  ==> ?st. FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st
 Proof
   rw[]
   >> Cases_on `i <= j`
@@ -307,63 +423,13 @@ Proof
   >> fs[]
 QED
 
-(* only one core changes in a transition *)
-
-Theorem wf_trace_unchanged:
-  !tr p1 p1' p2 p2' cid cid' st1 st1' st2 st2' i.
-  wf_trace tr /\ SUC i < LENGTH tr
-  /\ Core cid p1 st1 IN FST (EL i tr)
-  /\ Core cid p1' st1' IN FST (EL (SUC i) tr)
-  /\ Core cid' p2 st2 IN FST (EL i tr)
-  /\ Core cid' p2' st2' IN FST (EL (SUC i) tr)
-  /\ cid <> cid' /\ st1 <> st1'
-  ==> p2 = p2' /\ st2 = st2'
-Proof
-  rpt gen_tac >> strip_tac
-  >> drule_all_then assume_tac wf_trace_parstep_EL
-  >> gvs[parstep_cases,parstep_nice_def]
-  >> Cases_on `cid' = cid''`
-  >> gvs[]
-  >> drule_then (dxrule_then drule) wf_trace_wf_sys
-  >> rw[]
-  >> rev_drule_then (dxrule_then drule) wf_trace_wf_sys
-  >> rw[]
-QED
-
-(* identify the progressing core *)
-
-Theorem wf_trace_cid_NOT_EQ:
-  !tr cid i cid cid' p p' st st'.
-  wf_trace tr /\ SUC i < LENGTH tr
-  /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
-  /\ Core cid' p st IN FST (EL i tr)
-  /\ Core cid' p' st' IN FST (EL (SUC i) tr)
-  /\ cid <> cid'
-  ==> st = st'
-Proof
-  cheat
-QED
-
-Theorem wf_trace_cid_NOT_EQ_bst_prom:
-  !tr cid i cid cid' p p' st st'.
-  wf_trace tr /\ SUC i < LENGTH tr
-  /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
-  /\ Core cid' p st IN FST (EL i tr)
-  /\ Core cid' p' st' IN FST (EL (SUC i) tr)
-  /\ cid <> cid'
-  ==> st.bst_prom = st'.bst_prom
-Proof
-  (* using wf_trace_cid_NOT_EQ or clstep_bst_prom_EQ *)
-  cheat
-QED
-
-(* set of promises contains only elements smaller then the memory *)
+(* bst_prom are no larger than memory length *)
 
 Theorem wf_trace_EVERY_LENGTH_bst_prom_inv:
   !i tr cid p st.
   wf_trace tr /\ i < LENGTH tr
-  /\ Core cid p st IN FST $ EL i tr
-  ==> EVERY (λx. x <= LENGTH $ SND $ EL i tr) st.bst_prom
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH $ SND $ EL i tr) st.bst_prom
 Proof
   Induct
   >- (
@@ -371,15 +437,98 @@ Proof
     >> res_tac >> fs[NULL_EQ]
   )
   >> rpt strip_tac
-  >> drule_all_then assume_tac wf_trace_parstep_EL
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
   >> drule_all_then strip_assume_tac wf_trace_cid_backward1
   >> first_x_assum $ drule_then $ drule_at Any
-  >> gvs[parstep_nice_def,parstep_cases,cstep_cases]
-  >> drule_then (dxrule_then $ drule_then assume_tac) wf_trace_wf_sys
+  >> Cases_on `cid = cid'`
+  >> gvs[parstep_nice_def,parstep_cases,cstep_cases,FLOOKUP_UPDATE]
+  >> imp_res_tac clstep_EVERY_LENGTH_bst_prom_inv
   >> gvs[]
-  >- (imp_res_tac clstep_bst_prom_EQ >> fs[])
   >> match_mp_tac EVERY_MONOTONIC
   >> fs[]
+QED
+
+(* memory only ever increases *)
+
+Theorem wf_trace_IS_PREFIX_SND_EL':
+  !tr i j. wf_trace tr /\ i <= j /\ j < LENGTH tr
+  ==> IS_PREFIX (SND $ EL j tr) (SND $ EL i tr)
+Proof
+  rpt gen_tac
+  >> Induct_on `j - i`
+  >> rw[SUB_LEFT_EQ] >> fs[PULL_FORALL,AND_IMP_INTRO]
+  >- (
+    dxrule_all_then assume_tac $ iffLR $ GSYM EQ_LESS_EQ
+    >> fs[]
+  )
+  >> `i + SUC v = SUC $ i + v` by fs[]
+  >> pop_assum $ fs o single
+  >> first_x_assum $ qspecl_then [`v+i`,`i`] assume_tac
+  >> `i + v < LENGTH tr` by fs[]
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> imp_res_tac parstep_nice_memory_imp
+  >> Cases_on `v=0`
+  >> gvs[]
+  >> fs[IS_PREFIX_APPEND]
+QED
+
+Theorem wf_trace_IS_PREFIX_SND_EL =
+  SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [LESS_OR_EQ] wf_trace_IS_PREFIX_SND_EL'
+
+Theorem wf_trace_memory_LENGTH:
+  !tr i j. wf_trace tr /\ i <= j /\ j < LENGTH tr
+  ==> LENGTH (SND $ EL i tr) <= LENGTH (SND $ EL j tr)
+Proof
+  rpt strip_tac
+  >> drule_all wf_trace_IS_PREFIX_SND_EL'
+  >> fs[IS_PREFIX_LENGTH]
+QED
+
+Theorem wf_trace_EL_SND_EQ_EL_SND:
+  !tr i j k. wf_trace tr /\ i < LENGTH tr /\ j < LENGTH tr
+  /\ k < LENGTH $ SND $ EL i tr /\ k < LENGTH $ SND $ EL j tr
+  ==> EL k (SND $ EL j tr) = EL k (SND $ EL i tr)
+Proof
+  rpt strip_tac
+  >> Cases_on `i < j`
+  >> gs[NOT_LESS,LESS_OR_EQ]
+  >> drule_at_then Any drule wf_trace_IS_PREFIX_SND_EL
+  >> strip_tac
+  >> gs[IS_PREFIX_APPEND,EL_APPEND1]
+QED
+
+(* only one core changes in a transition *)
+
+Theorem wf_trace_unchanged:
+  !tr p1 p1' p2 p2' cid cid' st1 st1' st2 st2' i.
+  wf_trace tr /\ SUC i < LENGTH tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p1 st1
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p1 st1'
+  /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p2 st2
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p2' st2'
+  /\ cid <> cid' /\ st1 <> st1'
+  ==> p2 = p2' /\ st2 = st2'
+Proof
+  rpt gen_tac >> strip_tac
+  >> drule_all_then assume_tac wf_trace_parstep_EL
+  >> gvs[parstep_cases,parstep_nice_def,FLOOKUP_UPDATE]
+  >> Cases_on `cid' = cid''`
+  >> gvs[]
+QED
+
+(* identify the progressing core *)
+
+Theorem wf_trace_cid_NOT_EQ:
+  !tr cid i cid' p st st'.
+  wf_trace tr /\ SUC i < LENGTH tr
+  /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+  /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p st'
+  /\ cid <> cid'
+  ==> st = st'
+Proof
+  rpt strip_tac
+  >> gvs[parstep_cases,parstep_nice_def,FLOOKUP_UPDATE]
 QED
 
 Triviality wf_trace_parstep_nice_NOT_parstep_nice:
@@ -394,18 +543,16 @@ QED
 Theorem wf_trace_NOT_parstep_nice_state_EQ':
   !tr i cid p st st'. wf_trace tr /\ SUC i < LENGTH tr
   /\ ~parstep_nice cid (EL i tr) (EL (SUC i) tr)
-  /\ Core cid p st IN FST $ EL i tr
-  /\ Core cid p st' IN FST $ EL (SUC i) tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   ==> st = st'
 Proof
   rpt strip_tac
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
   >> drule wf_trace_parstep_nice_NOT_parstep_nice
   >> rpt $ disch_then drule
-  >> pop_assum mp_tac
-  >> rw[parstep_nice_def,parstep_cases,cstep_cases]
-  >> gvs[]
-  >> dxrule_then (rev_dxrule_then drule) wf_trace_wf_sys
+  >> drule wf_trace_cid_NOT_EQ
+  >> rpt $ disch_then drule
   >> fs[]
 QED
 
@@ -414,8 +561,8 @@ Theorem wf_trace_NOT_parstep_nice_state_EQ:
   /\ j <= k /\ k < LENGTH tr
   /\ (!i. j <= i /\ i < k /\ SUC i < LENGTH tr
     ==> ~parstep_nice cid (EL i tr) (EL (SUC i) tr))
-  /\ Core cid p st IN FST $ EL j tr
-  /\ Core cid p st' IN FST $ EL k tr
+  /\ FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL k tr) cid = SOME $ Core cid p st'
   ==> st = st'
 Proof
   ntac 2 gen_tac
@@ -423,16 +570,14 @@ Proof
   >- (
     dsimp[LESS_OR_EQ]
     >> rw[]
-    >> drule_then (dxrule_then dxrule) wf_trace_wf_sys
     >> fs[]
   )
   >> rw[SUB_LEFT_EQ]
   >> `j + SUC v = SUC $ j + v` by fs[]
   >> pop_assum $ fs o single
-  >> `?st''. Core cid p st'' IN FST $ EL (j + v) tr` by (
+  >> `?st''. FLOOKUP (FST $ EL (j + v) tr) cid = SOME $ Core cid p st'' ` by (
     drule_at_then Any assume_tac wf_trace_cid_backward1
     >> gs[]
-    >> goal_assum drule
   )
   >> drule_at Any wf_trace_NOT_parstep_nice_state_EQ'
   >> disch_then $ dxrule_at Any
@@ -442,11 +587,93 @@ Proof
   >> fs[]
 QED
 
+Theorem progressing_trace_state:
+  !tr i cid cid' p st.
+    wf_trace tr /\ SUC i < LENGTH tr
+    /\ progressing_trace tr
+    /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+    /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p st
+    /\ FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p st'
+    /\ cid <> cid'
+    ==> st = st'
+Proof
+  rpt strip_tac
+  >> Cases_on `parstep_nice cid' (EL i tr) (EL (SUC i) tr)`
+  >- (
+    dxrule_all progressing_trace_cid_eq
+    >> fs[]
+  )
+  >> drule_at (Pat `~parstep_nice _ _ _`) wf_trace_NOT_parstep_nice_state_EQ'
+  >> fs[]
+QED
+
+Theorem progressing_trace_state':
+  !tr i cid cid' p st.
+    wf_trace tr /\ SUC i < LENGTH tr
+    /\ progressing_trace tr
+    /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+    /\ FLOOKUP (FST $ EL i tr) cid' = SOME $ Core cid' p st
+    /\ cid <> cid'
+    ==> FLOOKUP (FST $ EL (SUC i) tr) cid' = SOME $ Core cid' p st
+Proof
+  rpt strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_cid_forward1
+  >> drule_all progressing_trace_state
+  >> fs[]
+QED
+
+(* the views are increasing monotonously *)
+
+Theorem wf_trace_view_monotone:
+  wf_trace tr /\ SUC i < LENGTH tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
+  ==>
+       st.bst_v_wOld <= st'.bst_v_wOld
+    /\ st.bst_v_CAP  <= st'.bst_v_CAP
+    /\ st.bst_v_Rel  <= st'.bst_v_Rel
+    /\ st.bst_v_rNew <= st'.bst_v_rNew
+    /\ st.bst_v_wNew <= st'.bst_v_wNew
+Proof
+  rpt gen_tac >> strip_tac
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> Cases_on `cid = cid'`
+  >- (
+    gvs[clstep_cases,cstep_cases,bir_programTheory.bir_state_t_accfupds,bir_programTheory.bir_pc_next_def,bir_programTheory.bir_programcounter_t_component_equality,parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
+    >- (BasicProvers.every_case_tac >> fs[])
+    >- (IF_CASES_TAC >> fs[])
+    >- (
+      gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs()]
+    )
+    >- (
+      qmatch_assum_rename_tac `bir_get_stmt p _ = BirStmt_Generic stm`
+      >> Cases_on `stm`
+      >> gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_get_stmt_branch,AllCaseEqs(),pairTheory.ELIM_UNCURRY]
+      >> TRY (
+        qmatch_assum_rename_tac `bir_get_stmt p _ = BirStmt_Generic $ BStmtB b`
+        >> Cases_on `b`
+        >> gvs[bir_programTheory.bir_exec_stmt_def,bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_cjmp_def,CaseEq"option",bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_programTheory.bir_state_is_terminated_def,bir_programTheory.bir_exec_stmtB_def,bir_get_stmt_generic]
+        >> gvs[bir_programTheory.bir_exec_stmt_assert_def,bir_programTheory.bir_exec_stmt_assume_def,CaseEq"option",bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_observe_def]
+        >> BasicProvers.every_case_tac
+        >> gvs[]
+      )
+      >> qmatch_assum_rename_tac `bir_get_stmt p _ = BirStmt_Generic $ BStmtE e`
+      >> Cases_on `e`
+      >> fs[bir_programTheory.bir_exec_stmtE_def,bir_programTheory.bir_exec_stmt_jmp_def,bir_programTheory.bir_exec_stmt_jmp_to_label_def,bir_programTheory.bir_exec_stmt_cjmp_def,bir_programTheory.bir_exec_stmt_halt_def]
+      >> BasicProvers.every_case_tac
+      >> gvs[bir_programTheory.bir_exec_stmt_assert_def,bir_programTheory.bir_exec_stmt_assume_def,CaseEq"option",bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_observe_def]
+    )
+  )
+  >> drule_then drule wf_trace_cid_NOT_EQ
+  >> rpt $ disch_then drule
+  >> fs[]
+QED
+
 (* certified traces have empty promises in the last state *)
 
 Theorem wf_trace_LAST_NULL_bst_prom:
   !tr cid p st. wf_trace tr
-  /\ Core cid p st IN FST $ LAST tr
+  /\ FLOOKUP (FST $ LAST tr) cid = SOME $ Core cid p st
   ==> NULL st.bst_prom
 Proof
   rpt strip_tac
@@ -465,7 +692,7 @@ Proof
     >> fs[Abbr`P`,DISJ_EQ_IMP,AND_IMP_INTRO]
     >> qmatch_assum_abbrev_tac `parstep_nice _ _ (EL j _)`
     >> `j < LENGTH tr` by fs[Abbr`j`]
-    >> `Core cid p st IN FST $ EL j tr` by (
+    >> `FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st` by (
       drule_then (drule_then $ qspec_then `j` assume_tac) wf_trace_cid_backward
       >> gs[]
       >> dxrule_then assume_tac $ iffLR LESS_EQ
@@ -486,9 +713,7 @@ Proof
     )
     >> PRED_ASSUM is_forall kall_tac
     >> `is_certified p cid st (SND (EL j tr))` by (
-      gvs[parstep_nice_def,parstep_cases]
-      >> drule_then (dxrule_then drule) wf_trace_wf_sys
-      >> rw[]
+      gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE]
     )
     >> fs[is_certified_def]
     >> drule_then assume_tac cstep_seq_rtc_bst_prom_EQ
@@ -514,6 +739,55 @@ Proof
   >> disch_then $ fs o single
   >> fs[wf_trace_def,empty_prom_def,LENGTH_NOT_NULL]
   >> res_tac
+QED
+
+(* new later promises are strictly larger than memory length *)
+
+Theorem wf_trace_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom:
+  !i j tr cid p st st'. wf_trace tr
+  /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
+  /\ i < j /\ j < LENGTH tr
+  /\ FLOOKUP (FST $ EL j tr) cid = SOME $ Core cid p st'
+  ==> EVERY (λx. ~MEM x st.bst_prom ==> LENGTH (SND $ EL i tr) < x) st'.bst_prom
+Proof
+  ntac 2 gen_tac
+  >> Induct_on `j - i`
+  >> rw[SUB_LEFT_EQ]
+  >> qmatch_asmsub_rename_tac `SUC v`
+  >> Cases_on `v = 0`
+  >- (
+    fs[GSYM ADD1]
+    >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+    >> Cases_on `cid = cid'`
+    >- (
+      dxrule_then assume_tac parstep_nice_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
+      >> fs[]
+    )
+    >> drule_then (rev_drule_then assume_tac) parstep_nice_FLOOKUP'
+    >> gvs[EVERY_MEM]
+  )
+  >> `i + SUC v = SUC $ i + v` by fs[]
+  >> pop_assum $ fs o single
+  >> drule_all_then strip_assume_tac wf_trace_cid_backward1
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> fs[AND_IMP_INTRO,PULL_FORALL,SUB_LEFT_EQ]
+  >> first_x_assum $ drule_at_then (Pos $ el 4) assume_tac
+  >> gs[]
+  >> Cases_on `cid = cid'`
+  >- (
+    drule_then assume_tac parstep_nice_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom
+    >> gvs[EVERY_MEM,AND_IMP_INTRO]
+    >> rw[]
+    >> ntac 2 $ first_x_assum $ drule_at_then Any assume_tac
+    >> qmatch_assum_abbrev_tac `A ==> LENGTH _ < _`
+    >> Cases_on `A`
+    >> fs[]
+    >> dxrule_at_then Any irule LESS_EQ_LESS_TRANS
+    >> irule wf_trace_LENGTH_SND'
+    >> fs[]
+  )
+  >> drule_then (rev_drule_then assume_tac) parstep_nice_FLOOKUP'
+  >> gvs[]
 QED
 
 val _ = export_theory();
