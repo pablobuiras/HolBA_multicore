@@ -88,17 +88,43 @@ Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_None =
   |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) [AC CONJ_ASSOC CONJ_COMM]
   |> GEN_ALL
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Read =
-  EVAL ``bir_get_stmt bir_spinlockfull_prog pc = BirStmt_Read var a_e opt_cast xcl acq rel``
-  |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
-  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) []
-  |> GEN_ALL
+(* TODO calculate is_rel_def,is_amo_def,is_xcl_read_def,is_acq_def *)
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Read =
+  REFL ``bir_get_stmt bir_spinlockfull_prog pc = BirStmt_Read var a_e opt_cast xcl acq rel``
+  |> CONV_RULE $ DEPTH_CONV $ RHS_CONV $ REWRITE_CONV [bir_get_stmt_write,bir_get_stmt_read]
+  |> CONV_RULE $ DEPTH_CONV $ RHS_CONV $ ONCE_DEPTH_CONV $ REWRITE_CONV [Once bir_spinlockfull_prog_def]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [bir_programTheory.bir_get_program_block_info_by_label_THM,pairTheory.LAMBDA_PROD,wordsTheory.NUMERAL_LESS_THM,bir_programTheory.bir_get_current_statement_def,CaseEq"option"]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) [GSYM pairTheory.PEXISTS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss ++ boolSimps.CONJ_ss) [bir_program_labelsTheory.BL_Address_HC_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.COND_elim_ss ++ boolSimps.DNF_ss ++ boolSimps.CONJ_ss) []
+  |> SIMP_RULE (srw_ss()) []
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_read_args_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_read_args_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_read_args_def]
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Write =
-  EVAL ``bir_get_stmt bir_spinlockfull_prog pc = BirStmt_Write a_e v_e xcl acq rel``
-  |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
-  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) []
-  |> GEN_ALL
+(* TODO calculate is_rel_def,is_amo_def,is_xcl_write_def,is_acq_def *)
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Write =
+  REFL ``bir_get_stmt bir_spinlockfull_prog pc = BirStmt_Write a_e v_e xcl acq rel``
+  |> CONV_RULE $ DEPTH_CONV $ RHS_CONV $ REWRITE_CONV [bir_get_stmt_write,bir_get_stmt_read]
+  |> CONV_RULE $ DEPTH_CONV $ RHS_CONV $ ONCE_DEPTH_CONV $ REWRITE_CONV [Once bir_spinlockfull_prog_def]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [bir_programTheory.bir_get_program_block_info_by_label_THM,pairTheory.LAMBDA_PROD,wordsTheory.NUMERAL_LESS_THM,bir_programTheory.bir_get_current_statement_def,CaseEq"option"]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) [GSYM pairTheory.PEXISTS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss ++ boolSimps.CONJ_ss) [bir_program_labelsTheory.BL_Address_HC_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.COND_elim_ss ++ boolSimps.DNF_ss ++ boolSimps.CONJ_ss) []
+  |> SIMP_RULE (srw_ss()) []
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_fulfil_args_def,get_read_args_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_fulfil_args_def,get_read_args_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_fulfil_args_def,get_read_args_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_fulfil_args_def,get_read_args_def]
+  |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_fulfil_args_def,get_read_args_def]
 
 (* all possible steps of the full spinlock
  * sl_step (block,pc) (block',pc') *)
