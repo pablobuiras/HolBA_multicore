@@ -711,10 +711,11 @@ clstep p cid s M g_env [] s' g_env)
 /\ (* assign to ghost location *)
 (!p s g_env g_env' var M cid v e.
   bir_get_stmt p s.bst_pc = BirStmt_Expr var e
- /\ is_ghost_exp e /\ is_ghost var
+ /\ is_ghost var
  /\ (SOME v, _) = bir_eval_exp_view e s.bst_environ s.bst_viewenv g_env
  /\ SOME g_env' = env_update_cast64 (bir_var_name var) v (bir_var_type var) g_env
-==> clstep p cid s M g_env [] s g_env')
+ /\ s' = s with <| bst_pc updated_by (bir_pc_next o bir_pc_next) |>
+==> clstep p cid s M g_env [] s' g_env')
 `;
 
 
