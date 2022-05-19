@@ -9,6 +9,7 @@ open listRangeTheory;
 open finite_mapTheory;
 open bir_auxiliaryTheory bir_immTheory bir_valuesTheory;
 open bir_exp_immTheory bir_exp_memTheory bir_envTheory;
+open stringTheory;
 
 val _ = new_theory "bir_promising";
 
@@ -22,7 +23,7 @@ val _ = Datatype‘
 ’;
 
 (* Type of instruction and their arguments. *)
-val _ = Datatype‘
+Datatype:
   bir_statement_type_t =
   | BirStmt_Read bir_var_t bir_exp_t ((bir_cast_t # bir_immtype_t) option) bool bool bool
   | BirStmt_Write bir_exp_t bir_exp_t bool bool bool
@@ -32,7 +33,7 @@ val _ = Datatype‘
   | BirStmt_Branch bir_exp_t bir_label_exp_t bir_label_exp_t
   | BirStmt_Generic ('a bir_stmt_t)
   | BirStmt_None
-’;
+End
 
 (* Default value of memory *)
 val mem_default_value_def = Define ‘
@@ -108,7 +109,7 @@ val mem_read_view_def = Define‘
   mem_read_view (f:fwdb_t) t = if f.fwdb_time = t ∧ ~f.fwdb_xcl then f.fwdb_view else t
 ’;
 
-val bir_eval_view_of_exp = Define‘
+Definition bir_eval_view_of_exp:
   (bir_eval_view_of_exp (BExp_BinExp op e1 e2) viewenv =
    MAX (bir_eval_view_of_exp e1 viewenv) (bir_eval_view_of_exp e2 viewenv))
 /\ (bir_eval_view_of_exp (BExp_BinPred pred e1 e2) viewenv =
@@ -120,7 +121,50 @@ val bir_eval_view_of_exp = Define‘
 /\ (bir_eval_view_of_exp (BExp_Den v) viewenv =
     case FLOOKUP viewenv v of NONE => 0 | SOME view => view)
 /\ (bir_eval_view_of_exp exp viewenv = 0)
-’;
+End
+
+(* ghost variables begin with an underscore *)
+
+Definition is_ghost_def:
+  is_ghost (BVar str ty) = isPREFIX "_" str
+End
+
+(* a ghost expression contains a ghost variable somewhere *)
+
+Definition is_ghost_exp_def:
+  is_ghost_exp (BExp_BinExp op e1 e2) = (is_ghost_exp e1 \/ is_ghost_exp e2)
+  /\ is_ghost_exp (BExp_BinPred pred e1 e2) = (is_ghost_exp e1 \/ is_ghost_exp e2)
+  /\ is_ghost_exp (BExp_UnaryExp op e) = is_ghost_exp e
+  /\ is_ghost_exp (BExp_Cast cty e ity) = is_ghost_exp e
+  /\ is_ghost_exp (BExp_Den v) = is_ghost v
+  /\ is_ghost_exp (BExp_IfThenElse c et ef) = (is_ghost_exp et \/ is_ghost_exp ef)
+  /\ is_ghost_exp (BExp_Load mem_e a_e en ty) = is_ghost_exp a_e
+  /\ is_ghost_exp (BExp_Store mem_e a_e en v_e) = (is_ghost_exp a_e \/ is_ghost_exp v_e)
+  /\ is_ghost_exp _ = F
+End
+
+(* read from ghost memory if a variable is prefixed with an underscore, else use
+ * the usual environment *)
+
+Definition bir_eval_exp_ghost_def:
+  (bir_eval_exp_ghost (BExp_Const n) env g_env = SOME (BVal_Imm n)) /\
+  (bir_eval_exp_ghost (BExp_MemConst aty vty mmap) env g_env = SOME (BVal_Mem aty vty mmap)) /\
+  (bir_eval_exp_ghost (BExp_Den v) env g_env =
+    if is_ghost v
+    then bir_env_read v g_env
+    else bir_env_read v env) /\
+  (bir_eval_exp_ghost (BExp_Cast ct e ty) env g_env = bir_eval_cast ct (bir_eval_exp_ghost e env g_env) ty) /\
+  (bir_eval_exp_ghost (BExp_UnaryExp et e) env g_env = bir_eval_unary_exp et (bir_eval_exp_ghost e env g_env)) /\
+  (bir_eval_exp_ghost (BExp_BinExp et e1 e2) env g_env = bir_eval_bin_exp et (bir_eval_exp_ghost e1 env g_env) (bir_eval_exp_ghost e2 env g_env)) /\
+  (bir_eval_exp_ghost (BExp_BinPred pt e1 e2) env g_env = bir_eval_bin_pred pt (bir_eval_exp_ghost e1 env g_env) (bir_eval_exp_ghost e2 env g_env)) /\
+  (bir_eval_exp_ghost (BExp_MemEq e1 e2) env g_env = bir_eval_memeq (bir_eval_exp_ghost e1 env g_env) (bir_eval_exp_ghost e2 env g_env)) /\
+  (bir_eval_exp_ghost (BExp_IfThenElse c et ef) env g_env =
+    bir_eval_ifthenelse (bir_eval_exp_ghost c env g_env) (bir_eval_exp_ghost et env g_env) (bir_eval_exp_ghost ef env g_env)) /\
+  (bir_eval_exp_ghost (BExp_Load mem_e a_e en ty) env g_env =
+    bir_eval_load (bir_eval_exp_ghost mem_e env g_env) (bir_eval_exp_ghost a_e env g_env) en ty) /\
+  (bir_eval_exp_ghost (BExp_Store mem_e a_e en v_e) env g_env =
+    bir_eval_store (bir_eval_exp_ghost mem_e env g_env) (bir_eval_exp_ghost a_e env g_env) en (bir_eval_exp_ghost v_e env g_env))
+End
 
 (* bir_eval_exp_view behaves like bir_eval_exp except it also computes
    the view of the expression
@@ -176,37 +220,34 @@ val contains_dummy_mem_def = Define`
   (contains_dummy_mem _ = F)
 `;
 *)
-        
+
 (* Obtains an option type that contains the load arguments
  * needed to apply the read rule (can look inside one cast) *)
-val get_read_args_def = Define`
-  (get_read_args (BExp_Load mem_e a_e en ty) =
-     SOME (a_e, NONE)) /\
+Definition get_read_args_def:
+  (get_read_args (BExp_Load mem_e a_e en ty) = SOME (a_e, NONE)) /\
   (get_read_args (BExp_Cast cast_ty load_e imm_ty) =
    case get_read_args load_e of
    | SOME (a_e, NONE) => SOME (a_e, SOME (cast_ty, imm_ty))
    | _ => NONE) /\
   (get_read_args _ = NONE)
-`;
-
+End
 
 (* Obtains an option type that contains the store arguments
  * needed to apply the fulfil rule *)
-val get_fulfil_args_def = Define`
+Definition get_fulfil_args_def:
   (get_fulfil_args (BExp_IfThenElse cond_e e1 e2) = get_fulfil_args e1) /\
-  (get_fulfil_args (BExp_Store mem_e a_e en v_e) =
-   SOME (a_e, v_e)) /\
+  (get_fulfil_args (BExp_Store mem_e a_e en v_e) = SOME (a_e, v_e)) /\
   (get_fulfil_args _ = NONE)
-`;
+End
 
 Theorem get_read_fulfil_args_exclusive:
 ∀e.
-  (IS_SOME (get_read_args e) ⇒ get_fulfil_args e = NONE)
-∧ (IS_SOME (get_fulfil_args e) ⇒ get_read_args e = NONE)
+  (IS_SOME $ get_read_args e ⇒ get_fulfil_args e = NONE)
+∧ (IS_SOME $ get_fulfil_args e ⇒ get_read_args e = NONE)
 Proof
   Cases >>
   fs [get_read_args_def, get_fulfil_args_def]
-QED                                                         
+QED
 
 val get_xclb_view_def = Define`
   get_xclb_view (SOME xclb) = xclb.xclb_view
@@ -263,15 +304,15 @@ val xclfail_update_viewenv_def = Define`
 (* Upon the loading statement that is the first Assign in a lifted
  * Load-type instruction, checks if the block is trying to model
  * an exclusive-load *)
-val is_xcl_read_def = Define‘
-  is_xcl_read p pc =
+Definition is_xcl_read_def:
+  is_xcl_read p pc a_e =
     case bir_get_current_statement p (bir_pc_next pc) of
       SOME (BStmtB (BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
 		     (BExp_Store (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8)))
-                       (BExp_Den (BVar varname (BType_Imm Bit64))) BEnd_LittleEndian
-		       (BExp_Const (Imm32 0x1010101w))))) => T
+                       var BEnd_LittleEndian
+		       (BExp_Const (Imm32 0x1010101w))))) => var = a_e
      | _ => F
-’;
+End
 
 (* Upon the storing statement that is the first Assign in a lifted
  * Strore-type instruction, checks if the block is trying to model
@@ -283,6 +324,34 @@ val is_xcl_write_def = Define‘
                      (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8))))) => T
      | _ => F
 ’;
+
+(* properties about exclusive reads and writes *)
+
+Theorem is_xcl_read_thm:
+  !p pc a_e. is_xcl_read p pc a_e <=>
+    bir_get_current_statement p (bir_pc_next pc) =
+      SOME $ BStmtB $ BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
+        $ BExp_Store (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8)))
+          a_e BEnd_LittleEndian
+          (BExp_Const (Imm32 0x1010101w))
+Proof
+  rw[is_xcl_read_def,EQ_IMP_THM,optionTheory.IS_SOME_EXISTS]
+  >> pop_assum mp_tac
+  >> rpt (BasicProvers.PURE_TOP_CASE_TAC >> fs[])
+QED
+
+Theorem is_xcl_write_thm:
+  !p pc. is_xcl_write p pc <=>
+    IS_SOME $ bir_get_current_statement p (bir_pc_next $ bir_pc_next pc) /\
+    bir_get_current_statement p (bir_pc_next $ bir_pc_next pc) =
+      SOME $ BStmtB $ BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
+        $ BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8))
+Proof
+  rw[is_xcl_write_def,EQ_IMP_THM,optionTheory.IS_SOME_EXISTS]
+  >- (BasicProvers.full_case_tac >> fs[])
+  >> pop_assum mp_tac
+  >> rpt (BasicProvers.PURE_TOP_CASE_TAC >> fs[])
+QED
 
 val is_acq_def = Define‘
   is_acq p pc =
@@ -314,7 +383,7 @@ val is_amo_def = Define‘
      | _ => F
 ’;
 
-val bir_get_stmt_def = Define‘
+Definition bir_get_stmt_def:
   bir_get_stmt p pc =
   case bir_get_current_statement p pc of
   | SOME (BStmtB (BStmt_Assign var e)) =>
@@ -336,7 +405,7 @@ val bir_get_stmt_def = Define‘
             | NONE => BirStmt_Expr var e))
       else
        (case get_read_args e of
-       | SOME (a_e, cast_opt) => BirStmt_Read var a_e cast_opt (is_xcl_read p pc) (is_acq p pc) (is_rel p pc)
+       | SOME (a_e, cast_opt) => BirStmt_Read var a_e cast_opt (is_xcl_read p pc a_e) (is_acq p pc) (is_rel p pc)
        | NONE =>
            (case get_fulfil_args e of
            | SOME (a_e, v_e) => BirStmt_Write a_e v_e (is_xcl_write p pc) (is_acq p pc) (is_rel p pc)
@@ -345,7 +414,7 @@ val bir_get_stmt_def = Define‘
   | SOME (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) => BirStmt_Branch cond_e lbl1 lbl2
   | SOME stmt => BirStmt_Generic stmt
   | NONE => BirStmt_None
-’;
+End
 
 Theorem bir_get_stmt_read:
 ∀p pc stmt var a_e cast_opt xcl acq rel.
@@ -354,7 +423,7 @@ Theorem bir_get_stmt_read:
  bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
  /\ ~is_amo p pc
  /\ get_read_args e = SOME (a_e, cast_opt)
- /\ is_xcl_read p pc = xcl
+ /\ is_xcl_read p pc a_e = xcl
  /\ is_acq p pc = acq
  /\ is_rel p pc = rel)
 Proof
@@ -389,18 +458,18 @@ Theorem bir_get_stmt_amo:
  /\ is_acq p pc = acq
  /\ is_rel p pc = rel)
 Proof
-  gvs [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM] 
+  gvs [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM]
 QED
 
 Theorem bir_get_stmt_expr:
 ∀p pc var e.
- (bir_get_stmt p pc = BirStmt_Expr var e) ⇔
+ (bir_get_stmt p pc = BirStmt_Expr var e) =
  (bir_get_current_statement p pc = SOME (BStmtB (BStmt_Assign var e))
  /\ get_read_args e = NONE
  /\ get_fulfil_args e = NONE)
 Proof
   rw [bir_get_stmt_def,AllCaseEqs(), GSYM LEFT_EXISTS_AND_THM, GSYM RIGHT_EXISTS_AND_THM] >>
-  Cases_on ‘is_amo p pc’ >> (rw [])
+  Cases_on ‘is_amo p pc’ >> rw []
 QED
 
 Theorem bir_get_stmt_fence:
@@ -443,7 +512,7 @@ Proof
 QED
 *)
 
-(* TODO: "Generalising variable "ν_pre" in clause #0"? *)
+(* TODO: "Generalising variable "v_pre" in clause #0"? *)
 (* core-local steps that don't affect memory *)
 val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 (* read *)
@@ -465,7 +534,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                   bst_v_rOld := MAX s.bst_v_rOld v_post;
                   bst_v_rNew := if acq then (MAX s.bst_v_rNew v_post) else s.bst_v_rNew;
                   bst_v_wNew := if acq then (MAX s.bst_v_wNew v_post) else s.bst_v_wNew;
-                  bst_v_Rel := MAX s.bst_v_Rel (if (rel /\ acq) then v_post else 0);                 
+                  bst_v_Rel := MAX s.bst_v_Rel (if (rel /\ acq) then v_post else 0);
                   bst_v_CAP := MAX s.bst_v_CAP v_addr;
                   bst_xclb := if xcl
                               then SOME <| xclb_time := t; xclb_view := v_post |>
@@ -474,7 +543,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                             then (bir_pc_next o bir_pc_next) s.bst_pc
                             else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M [] s') 
+  clstep p cid s M [] s')
 /\ (* exclusive-failure *)
 (!p s s' M a_e v_e acq rel cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e T acq rel
@@ -547,7 +616,7 @@ clstep p cid s M [] s')
         MAX s.bst_v_rNew
         (if acq /\ rel then (MAX s.bst_v_Rel (MAX s.bst_v_rOld s.bst_v_wOld)) else 0))
    /\ v_rPost = MAX v_rPre (mem_read_view (s.bst_fwdb l) t_r)
-                    
+
    (* register and register view update *)
    /\ SOME new_environ = env_update_cast64 (bir_var_name var) v_r (bir_var_type var) (s.bst_environ)
    /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_rPost)
@@ -661,6 +730,173 @@ val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
 
 val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
 
+(*
+(*
+ * properties about cstep, clstep, cstep_seq
+ *)
+
+(* the timestamp of a fulfil is coupled to the fulfiled core *)
+
+Theorem cstep_fulfil_to_memory:
+  !t p cid s M s'.
+  cstep p cid s M [t] s' M
+  ==> 0 < t /\ PRE t < LENGTH M /\ (EL (PRE t) M).cid = cid
+Proof
+  Cases >> rpt gen_tac >> strip_tac
+  >> gvs[bir_cstep_cases,bir_clstep_cases,PULL_EXISTS,arithmeticTheory.PRE_SUB1,oEL_THM,oEL_THM,mem_get_def,AllCaseEqs()]
+QED
+
+(* memory only ever increases *)
+
+Theorem cstep_seq_IS_PREFIX:
+  !p cid sM sM'. cstep_seq p cid sM sM'
+  ==> IS_PREFIX (SND sM') (SND sM)
+Proof
+  ho_match_mp_tac bir_cstep_seq_ind >> rw[]
+  >> fs[bir_cstep_cases]
+QED
+
+Theorem cstep_seq_rtc_IS_PREFIX:
+  !p cid sM sM'. cstep_seq_rtc p cid sM sM'
+  ==> IS_PREFIX (SND sM') (SND sM)
+Proof
+  ntac 2 gen_tac
+  >> fs[cstep_seq_rtc_def]
+  >> ho_match_mp_tac relationTheory.RTC_INDUCT
+  >> rw[]
+  >> dxrule_then assume_tac cstep_seq_IS_PREFIX
+  >> imp_res_tac rich_listTheory.IS_PREFIX_TRANS
+QED
+
+(* a fulfil is only fulfilled once *)
+
+Theorem clstep_fulfil_once:
+  !p cid cid' s M t s' s''.
+  clstep p cid s M [t] s'
+  /\ clstep p cid' s' M [t] s'' ==> F
+Proof
+  rpt strip_tac
+  >> Cases_on `cid = cid'`
+  >> gvs[bir_clstep_cases,MEM_FILTER]
+QED
+
+Theorem cstep_seq_rtc_fulfil_once:
+  !p cid sM2 sM3 s M t s1 cid' t' s4 M4 s5.
+  cstep p cid s M [t] s1 (SND sM2)
+  /\ clstep p cid s1 (SND sM2) [t] (FST sM2)
+  /\ cstep_seq_rtc p cid sM2 sM3
+  /\ cstep p cid' (FST sM3) (SND sM3) [t'] s4 M4
+  /\ clstep p cid' s4 M4 [t'] s5
+  ==> t <> t'
+Proof
+  rpt strip_tac
+  >> imp_res_tac cstep_seq_rtc_IS_PREFIX
+  >> gvs[bir_cstep_cases]
+  >> imp_res_tac clstep_fulfil_once
+  >> rpt $ PRED_ASSUM is_forall kall_tac
+  >> gvs[rich_listTheory.IS_PREFIX_APPEND]
+QED
+*)
+
+(* bir_exec_stmt invariants *)
+
+Theorem bir_exec_stmt_BStmtE_BStmt_CJmp_bst_xclb_EQ:
+  !p cond_e lbl1 lbl2 s oo s'.
+  bir_exec_stmt p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s = (oo,s')
+  ==> s.bst_xclb = s'.bst_xclb
+Proof
+  EVAL_TAC
+  >> rw[AllCaseEqs()]
+  >> fs[]
+QED
+
+Theorem bir_exec_stmt_stmt_generic_step_bst_xclb_EQ:
+  !stm p s oo s'. bir_exec_stmt p stm s = (oo,s')
+  /\ stmt_generic_step stm
+  ==> s.bst_xclb = s'.bst_xclb
+Proof
+  Cases >> rpt strip_tac
+  >> (qmatch_asmsub_rename_tac `BStmtE stm`
+    ORELSE qmatch_asmsub_rename_tac `BStmtB stm`)
+  >> Cases_on `stm`
+  >> gs[bir_get_stmt_generic,stmt_generic_step_def,bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_exec_stmt_def]
+  >> BasicProvers.every_case_tac
+  >> gvs[bir_exec_stmtB_def,bir_state_is_terminated_def,bir_exec_stmt_assign_def,
+    bir_exec_stmtB_def,bir_exec_stmt_assert_def,AllCaseEqs(),
+    bir_state_set_typeerror_def,bir_exec_stmt_assume_def,bir_exec_stmt_assume_def,
+    bir_exec_stmt_observe_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,
+    bir_exec_stmt_jmp_to_label_def,bir_exec_stmtE_def,bir_exec_stmt_halt_def]
+  >> BasicProvers.every_case_tac >> fs[]
+QED
+
+Theorem stmt_generic_step_bst_prom_EQ:
+  !stm p s oo s'. stmt_generic_step stm
+  /\ bir_exec_stmt p stm s = (oo,s')
+  ==> s.bst_prom = s'.bst_prom
+Proof
+  Cases >> rpt strip_tac
+  >- (
+    qmatch_asmsub_rename_tac `BStmtB b`
+    >> Cases_on `b`
+    >> gvs[stmt_generic_step_def,bir_programTheory.bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,AllCaseEqs(),bir_programTheory.bir_exec_stmtB_def,bir_programTheory.bir_exec_stmt_assert_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_assume_def,bir_programTheory.bir_exec_stmt_observe_def]
+    >> BasicProvers.every_case_tac
+    >> fs[]
+  )
+  >> qmatch_asmsub_rename_tac `BStmtE b`
+  >> Cases_on `b`
+  >> gvs[AllCaseEqs(),bir_exec_stmtB_def,bir_exec_stmtE_def,
+    bir_exec_stmt_assert_def,bir_exec_stmt_assign_def,bir_exec_stmt_assume_def,
+    bir_exec_stmt_cjmp_def,bir_exec_stmt_def,bir_exec_stmt_fence_def,
+    bir_exec_stmt_halt_def,bir_exec_stmt_jmp_def,bir_exec_stmt_jmp_to_label_def,
+    bir_exec_stmt_observe_def,bir_state_is_terminated_def,
+    bir_state_set_typeerror_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def]
+  >> BasicProvers.every_case_tac
+  >> fs[]
+QED
+
+Theorem bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ:
+  !p cond_e lbl1 lbl2 s oo s'.
+  bir_exec_stmt p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s = (oo,s')
+  ==> s.bst_prom = s'.bst_prom
+Proof
+  EVAL_TAC
+  >> rw[AllCaseEqs()]
+  >> fs[]
+QED
+
+(* set of promises contains only elements smaller then the memory *)
+
+Theorem clstep_EVERY_LENGTH_bst_prom_inv:
+  !p cid s M prom s' . clstep p cid s M prom s'
+  /\ EVERY (λx. 0 < x /\ x <= LENGTH M) s.bst_prom
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH M) s'.bst_prom
+Proof
+  rw[bir_clstep_cases,bir_get_stmt_generic]
+  >> imp_res_tac bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ
+  >> imp_res_tac stmt_generic_step_bst_prom_EQ
+  >> fs[]
+  >> qhdtm_x_assum `EVERY` mp_tac
+  >> fs[EVERY_FILTER]
+  >> match_mp_tac EVERY_MONOTONIC
+  >> fs[]
+QED
+
+Theorem clstep_bst_prom_NOT_EQ:
+  !p cid s M t s' .
+  clstep p cid s M [t] s' ==> s.bst_prom <> s'.bst_prom
+Proof
+  rw[bir_clstep_cases,bir_get_stmt_write]
+  >> fs[Once EQ_SYM_EQ,FILTER_NEQ_ID]
+QED
+
+Theorem clstep_LENGTH_prom:
+  !p cid s M prom s' . clstep p cid s M prom s'
+  ==> prom = [] \/ ?t. prom = [t]
+Proof
+  rw[bir_clstep_cases]
+QED
+
+
 (* cstep_seq invariant *)
 
 Theorem bir_exec_stmt_jmp_bst_prom:
@@ -674,7 +910,7 @@ Proof
 QED
 
 Theorem clstep_bst_prom_EQ:
-!p cid st M st'. 
+!p cid st M st'.
   clstep p cid st M [] st' ==> st.bst_prom = st'.bst_prom
 Proof
   rw[bir_clstep_cases]
@@ -686,11 +922,21 @@ Proof
     >> BasicProvers.every_case_tac
     >> gvs[bir_state_set_typeerror_def,CaseEq"option"]
   )
+  >> qmatch_assum_rename_tac `stmt_generic_step $ BStmtE b`
+  >> Cases_on `b`
+  >> fs[stmt_generic_step_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,bir_exec_stmt_def,bir_exec_stmt_halt_def]
+  >> BasicProvers.every_case_tac
+  >> gvs[bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def]
+  >> BasicProvers.every_case_tac
+  >> gvs[bir_state_set_typeerror_def,CaseEq"option"]
 QED
 
+(*
 Theorem cstep_seq_bst_prom_EQ:
-  !p cid sM sM'. cstep_seq p cid sM sM' /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
-  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom /\ (FST sM).bst_prom = (FST sM').bst_prom
+  !p cid sM sM'. cstep_seq p cid sM sM'
+  /\ EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM) (FST sM).bst_prom
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM') (FST sM').bst_prom
+    /\ (FST sM).bst_prom = (FST sM').bst_prom
 Proof
   fs[GSYM AND_IMP_INTRO]
   >> ho_match_mp_tac bir_cstep_seq_ind
@@ -711,8 +957,10 @@ Proof
 QED
 
 Theorem cstep_seq_rtc_bst_prom_EQ:
-  !p cid sM sM'. cstep_seq_rtc p cid sM sM' /\ EVERY (λx. x <= LENGTH $ SND sM) (FST sM).bst_prom
-  ==> EVERY (λx. x <= LENGTH $ SND sM') (FST sM').bst_prom /\ (FST sM).bst_prom = (FST sM').bst_prom
+  !p cid sM sM'. cstep_seq_rtc p cid sM sM'
+  /\ EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM) (FST sM).bst_prom
+  ==> EVERY (λx. 0 < x /\ x <= LENGTH $ SND sM') (FST sM').bst_prom
+    /\ (FST sM).bst_prom = (FST sM').bst_prom
 Proof
   fs[GSYM AND_IMP_INTRO,cstep_seq_rtc_def]
   >> ntac 2 gen_tac
@@ -722,6 +970,7 @@ Proof
   >> drule_all cstep_seq_bst_prom_EQ
   >> fs[]
 QED
+*)
 
 val is_certified_def = Define`
 is_certified p cid s M = ?s' M'.
@@ -773,6 +1022,31 @@ val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
    parstep cid cores M (FUPDATE cores (cid, Core cid p s')) M')
 `;
 
+(* a program at an index is a ghost expression if the variable is *)
+
+Definition non_ghost_def:
+  non_ghost p pc =
+    !var e. bir_get_stmt p pc = BirStmt_Expr var e ==> is_ghost var
+End
+
+(* gstep transitions wrap a parstep or execute operations on a global ghost
+ * memory g_env *)
+
+Inductive gstep:
+(!cid cores M g_env cores' M' p s.
+  parstep cid cores M cores' M'
+  /\ FLOOKUP cores cid = SOME $ Core cid p s
+  /\ non_ghost p s.bst_pc
+  ==> gstep cid cores M g_env cores' M' g_env) /\
+(!cid cores M g_env cores' g_env' var e.
+  FLOOKUP cores cid = SOME $ Core cid p s
+  /\ FLOOKUP cores' cid = SOME $ Core cid p s'
+  /\ bir_get_stmt p s.bst_pc = BirStmt_Expr var e
+  /\ SOME v = bir_eval_exp_ghost e s.bst_environ g_env
+  /\ SOME g_env' = env_update_cast64 (bir_var_name var) v (bir_var_type var) g_env
+  /\ s' = s with <| bst_pc updated_by bir_pc_next |>
+  ==> gstep cid cores M g_env cores' M g_env')
+End
 
 Theorem bir_exec_stmt_mc_invar:
 !stmt prog state oo state'.
