@@ -2,8 +2,7 @@
 open HolKernel Parse boolLib bossLib;
 open rich_listTheory listTheory arithmeticTheory finite_mapTheory ;
 open bir_lifter_interfaceLib ;
-(* bir_promisingTheory ; *)
-open bir_promisingGhostTheory;
+open bir_promisingTheory ;
 (* open tracesTheory tracestepTheory spinlockTheory ; *)
 
 val _ = new_theory "spinlockRefinement";
@@ -28,7 +27,7 @@ val (bir_spinlockfull_progbin_def, bir_spinlockfull_prog_def, bir_is_lifted_prog
 
 Definition parstep_nice_def:
   parstep_nice cid s1 s2
-  = parstep cid (FST s1) (FST $ SND s1) (SND $ SND s1) (FST s2) (FST $ SND s2) (SND $ SND s2)
+  = parstep cid (FST s1) (SND s1) (FST s2) (SND s2)
 End
 
 (* projection of the state of a core *)
@@ -54,38 +53,39 @@ End
 (*****************************************************************************)
 (* TODO some theorems need further adjustement *)
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Generic =
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Generic =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_Generic stm``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
   |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) [BETA_THM]
   |> GEN_ALL
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Fence =
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Fence =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_Fence mo1 mo2``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
   |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) []
   |> GEN_ALL
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Branch =
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Branch =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_Branch a1 a2 a3``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
   |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) []
   |> GEN_ALL
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Expr =
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Expr =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_Expr var e``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
-  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) [get_read_args_def,get_fulfil_args_def]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) []
+  |> CONV_RULE $ ONCE_DEPTH_CONV $ RHS_CONV $ computeLib.EVAL_CONV
   |> GEN_ALL
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Amo =
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Amo =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_Amo var a_e v_e acq rel``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs()]
 
-Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_None =
+Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_None =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_None``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
-  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) []
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) [AC CONJ_ASSOC CONJ_COMM]
   |> GEN_ALL
 
 Theorem bir_get_stmt_bir_spinlock_prog_BirStmt_Read =
@@ -283,15 +283,10 @@ Theorem spinlock_refinement:
   /\ slrefinerel cid aS S
   ==>
     slrefinerel cid aS S'
-    \/ ?aS'. parstep_nice cid aS aS'
+    \/ ?aS'. gstep cid aS aS'
           /\ slrefinerel cid aS' S'
 Proof
   cheat
 QED
-
-
-
-
-
 
 val _ = export_theory();
