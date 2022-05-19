@@ -143,15 +143,7 @@ Definition is_ghost_exp_def:
   /\ is_ghost_exp _ = F
 End
 
-(* a ghost statement contains a ghost expression *)
-
-Definition is_ghost_stmt_def:
-  is_ghost_stmt (BStmtB $ BStmt_Assign var e) = (is_ghost var \/ is_ghost_exp e)
-  /\ is_ghost_stmt (BStmtE $ BStmt_CJmp e _ _) = is_ghost_exp e
-  /\ is_ghost_stmt _ = F
-End
-
-(* read from ghost memory if variable is prefixed with an underscore, else use
+(* read from ghost memory if a variable is prefixed with an underscore, else use
  * the usual environment *)
 
 Definition bir_eval_exp_ghost_def:
@@ -181,10 +173,10 @@ End
    env : Reg -> Val and viewenv : Reg -> View
    This is so as not to change the definition of bir_eval_exp
 *)
-Definition bir_eval_exp_view_def:
-  bir_eval_exp_view exp env viewenv g_env =
-  (bir_eval_exp_ghost exp env g_env, bir_eval_view_of_exp exp viewenv)
-End
+val bir_eval_exp_view_def = Define‘
+  bir_eval_exp_view exp env viewenv =
+  (bir_eval_exp exp env, bir_eval_view_of_exp exp viewenv)
+’;
 
 val exp_is_load_def = Define `
   (exp_is_load (BExp_Load _ _ _ _) = T) /\
@@ -240,9 +232,8 @@ Definition get_read_args_def:
   (get_read_args _ = NONE)
 End
 
-(* Obtains an GhostOption type that contains the store arguments
+(* Obtains an option type that contains the store arguments
  * needed to apply the fulfil rule *)
-(* is ghost ==> any store is to a ghost var/mem *)
 Definition get_fulfil_args_def:
   (get_fulfil_args (BExp_IfThenElse cond_e e1 e2) = get_fulfil_args e1) /\
   (get_fulfil_args (BExp_Store mem_e a_e en v_e) = SOME (a_e, v_e)) /\
@@ -527,8 +518,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 (* read *)
 (!p s s' v a_e xcl acq rel M l (t:num) v_pre v_post v_addr var new_env cid opt_cast.
    bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast xcl acq rel
- /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv g_env
- /\ ~is_ghost_exp a_e
+ /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
@@ -553,11 +543,10 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                             then (bir_pc_next o bir_pc_next) s.bst_pc
                             else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M g_env [] s' g_env')
+  clstep p cid s M [] s')
 /\ (* exclusive-failure *)
 (!p s s' M a_e v_e acq rel cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e T acq rel
- /\ ~is_ghost_exp a_e
  /\  SOME new_env = xclfail_update_env p s
  /\  SOME new_viewenv = xclfail_update_viewenv p s
  /\  s' = s with <| bst_environ := new_env;
@@ -565,13 +554,12 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                     bst_xclb := NONE;
                     bst_pc := (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc |>
  ==>
-clstep p cid s M g_env [] s' g_env)
+clstep p cid s M [] s')
 /\ (* fulfil *)
 (!p s s' M v a_e xcl acq rel l (t:num) v_pre v_post v_addr v_data v_e cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl acq rel
- /\ ~is_ghost_exp a_e
- /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv g_env
- /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv g_env
+ /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+ /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
  /\ (xcl ==> s.bst_xclb <> NONE /\ fulfil_atomic_ok M l cid (THE s.bst_xclb).xclb_time t)
  /\ MEM t s.bst_prom
  /\ mem_get M l t = SOME <| loc := l; val := v; cid := cid  |>
@@ -614,15 +602,13 @@ clstep p cid s M g_env [] s' g_env)
                              then (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc
                              else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M g_env [t] s' g_env')
+  clstep p cid s M [t] s')
 /\ (* AMO fulfil *)
 (!p cid s s' M acq rel var l a_e v_r v_w v_e v_rPre v_rPost v_wPre v_wPost (t_w:num) (t_r :num) new_environ new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Amo var a_e v_e acq rel
-   /\ ~is_ghost_exp a_e
-   /\ ~is_ghost_exp v_e
-   /\ ~is_ghost var
+
    (* Get location *)
-   /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv g_env
+   /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
 
    (* Read part *)
    /\ mem_read M l t_r = SOME v_r (* v_r value read *)
@@ -638,7 +624,7 @@ clstep p cid s M g_env [] s' g_env)
    (* Write part *)
    /\ MEM t_w s.bst_prom
    (* v_w value to write, v_e value expression *)
-   /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv g_env
+   /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv
    /\ mem_get M l t_w = SOME <| loc := l; val := v_w; cid := cid |>
    /\ v_wPre = MAX v_addr (
         MAX v_data (
@@ -669,7 +655,8 @@ clstep p cid s M g_env [] s' g_env)
                                                      fwdb_xcl := T |>);
                      bst_pc updated_by (bir_pc_next o bir_pc_next) |>
  ==>
-  clstep p cid s M g_env [t_w] s' g_env')
+ clstep p cid s M [t_w] s'
+)
 /\ (* fence *)
 (!p s s' K1 K2 M cid v.
    bir_get_stmt p s.bst_pc = BirStmt_Fence K1 K2
@@ -678,44 +665,33 @@ clstep p cid s M g_env [] s' g_env)
                      bst_v_wNew := MAX s.bst_v_wNew (if is_write K2 then v else 0);
                      bst_pc updated_by bir_pc_next |>
 ==>
-  clstep p cid s M g_env [] s' g_env)
+  clstep p cid s M [] s')
 /\ (* branch (conditional jump) *)
 (!p s s' M cid v oo s2 v_addr cond_e lbl1 lbl2 stm.
    bir_get_stmt p s.bst_pc = BirStmt_Branch cond_e lbl1 lbl2
-    /\ ~is_ghost_exp cond_e
     /\ stm = BStmtE (BStmt_CJmp cond_e lbl1 lbl2)
-    /\ (SOME v, v_addr) = bir_eval_exp_view cond_e s.bst_environ s.bst_viewenv g_env
+    /\ (SOME v, v_addr) = bir_eval_exp_view cond_e s.bst_environ s.bst_viewenv
     /\ bir_exec_stmt p stm s = (oo,s2)
     /\ s' = s2 with <| bst_v_CAP := MAX s.bst_v_CAP v_addr |>
 ==>
-  clstep p cid s M g_env [] s' g_env)
+  clstep p cid s M [] s')
 /\ (* register-to-register operation *)
 (!p s s' var M cid v v_val e new_env.
   bir_get_stmt p s.bst_pc = BirStmt_Expr var e
- /\ ~is_ghost var /\ ~is_ghost_exp e
- /\ (SOME v, v_val) = bir_eval_exp_view e s.bst_environ s.bst_viewenv g_env
+ /\ (SOME v, v_val) = bir_eval_exp_view e s.bst_environ s.bst_viewenv
  /\ NONE = get_read_args e
  /\ NONE = get_fulfil_args e
  /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
  /\ s' = s with <| bst_environ := new_env;
                    bst_viewenv updated_by (λe. FUPDATE e (var,v_val));
                    bst_pc      updated_by bir_pc_next |>
-==> clstep p cid s M g_env [] s' g_env')
+==> clstep p cid s M [] s')
 /\ (* Other BIR single steps *)
 (!p s s' M cid stm oo.
    bir_get_stmt p s.bst_pc = BirStmt_Generic stm
-    /\ ~is_ghost_stmt stm
     /\ bir_exec_stmt p stm s = (oo,s')
 ==>
-  clstep p cid s M g_env [] s' g_env)
-/\ (* assign to ghost location *)
-(!p s g_env g_env' var M cid v e.
-  bir_get_stmt p s.bst_pc = BirStmt_Expr var e
- /\ is_ghost var
- /\ (SOME v, _) = bir_eval_exp_view e s.bst_environ s.bst_viewenv g_env
- /\ SOME g_env' = env_update_cast64 (bir_var_name var) v (bir_var_type var) g_env
- /\ s' = s with <| bst_pc updated_by (bir_pc_next o bir_pc_next) |>
-==> clstep p cid s M g_env [] s' g_env')
+  clstep p cid s M [] s')
 `;
 
 
@@ -723,9 +699,9 @@ clstep p cid s M g_env [] s' g_env)
 val (bir_cstep_rules, bir_cstep_ind, bir_cstep_cases) = Hol_reln`
 (* execute *)
 (!p cid s M s' prom.
-  clstep p cid s M g_env prom s' g_env'
+  clstep p cid s M prom s'
 ==>
-  cstep p cid s M g_env prom s' M' g_env')
+  cstep p cid s M prom s' M)
 
 /\ (* promise *)
 (!p cid s M s' t msg.
@@ -733,21 +709,21 @@ val (bir_cstep_rules, bir_cstep_ind, bir_cstep_cases) = Hol_reln`
    /\ t = LENGTH M + 1
    /\ s' = s with bst_prom updated_by (\pr. pr ++ [t]))
 ==>
-  cstep p cid s M g_env [t] s' (M ++ [msg]) g_env)
+  cstep p cid s M [t] s' (M ++ [msg]))
 `;
 
 (* core steps seq *)
 val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
 (* seq *)
-(!p cid s M g_env s' prom g_env'.
-  clstep p cid s M g_env (prom:num list) s' g_env'
+(!p cid s M s' prom.
+  clstep p cid s M (prom:num list) s'
 ==>
   cstep_seq p cid (s, M) (s', M))
 
 /\ (* write *)
-(!p cid s M g_env s' s'' M' g_env' t.
-  (cstep p cid s M g_env [t] s' M' g_env' /\ ~(M = M')
-  /\ clstep p cid s' M' g_env [t] s'' g_env')
+(!p cid s M s' s'' M' t.
+  (cstep p cid s M [t] s' M' /\ ~(M = M')
+  /\ clstep p cid s' M' [t] s'')
 ==>
   cstep_seq p cid (s, M) (s'', M'))
 `;
@@ -762,8 +738,8 @@ val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
 (* the timestamp of a fulfil is coupled to the fulfiled core *)
 
 Theorem cstep_fulfil_to_memory:
-  !t p cid s M s' g_env g_env'.
-  cstep p cid s M g_env [t] s' M g_env'
+  !t p cid s M s'.
+  cstep p cid s M [t] s' M
   ==> 0 < t /\ PRE t < LENGTH M /\ (EL (PRE t) M).cid = cid
 Proof
   Cases >> rpt gen_tac >> strip_tac
@@ -891,7 +867,7 @@ QED
 (* set of promises contains only elements smaller then the memory *)
 
 Theorem clstep_EVERY_LENGTH_bst_prom_inv:
-  !p cid s M g_env prom s' g_env'. clstep p cid s M g_env prom s' g_env'
+  !p cid s M prom s' . clstep p cid s M prom s'
   /\ EVERY (λx. 0 < x /\ x <= LENGTH M) s.bst_prom
   ==> EVERY (λx. 0 < x /\ x <= LENGTH M) s'.bst_prom
 Proof
@@ -906,15 +882,15 @@ Proof
 QED
 
 Theorem clstep_bst_prom_NOT_EQ:
-  !p cid s M g_env t s' g_env'.
-  clstep p cid s M g_env [t] s' g_env' ==> s.bst_prom <> s'.bst_prom
+  !p cid s M t s' .
+  clstep p cid s M [t] s' ==> s.bst_prom <> s'.bst_prom
 Proof
   rw[bir_clstep_cases,bir_get_stmt_write]
   >> fs[Once EQ_SYM_EQ,FILTER_NEQ_ID]
 QED
 
 Theorem clstep_LENGTH_prom:
-  !p cid s M g_env prom s' g_env'. clstep p cid s M g_env prom s' g_env'
+  !p cid s M prom s' . clstep p cid s M prom s'
   ==> prom = [] \/ ?t. prom = [t]
 Proof
   rw[bir_clstep_cases]
@@ -934,8 +910,8 @@ Proof
 QED
 
 Theorem clstep_bst_prom_EQ:
-!p cid st M g_env st' g_env'.
-  clstep p cid st M g_env [] st' g_env' ==> st.bst_prom = st'.bst_prom
+!p cid st M st'.
+  clstep p cid st M [] st' ==> st.bst_prom = st'.bst_prom
 Proof
   rw[bir_clstep_cases]
   >> gvs[bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_exec_stmt_jmp_bst_prom,bir_get_stmt_def]
@@ -1040,12 +1016,37 @@ val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
 (!p cid s s' M M' cores prom.
    (FLOOKUP cores cid = SOME (Core cid p s)
     /\ atomicity_ok cid cores
-    /\ cstep p cid s M g_env prom s' M' g_env'
+    /\ cstep p cid s M prom s' M'
     /\ is_certified p cid s' M')
 ==>
-   parstep cid cores M g_env (FUPDATE cores (cid, Core cid p s')) M' g_env')
+   parstep cid cores M (FUPDATE cores (cid, Core cid p s')) M')
 `;
 
+(* a program at an index is a ghost expression if the variable is *)
+
+Definition non_ghost_def:
+  non_ghost p pc =
+    !var e. bir_get_stmt p pc = BirStmt_Expr var e ==> is_ghost var
+End
+
+(* gstep transitions wrap a parstep or execute operations on a global ghost
+ * memory g_env *)
+
+Inductive gstep:
+(!cid cores M g_env cores' M' p s.
+  parstep cid cores M cores' M'
+  /\ FLOOKUP cores cid = SOME $ Core cid p s
+  /\ non_ghost p s.bst_pc
+  ==> gstep cid cores M g_env cores' M' g_env) /\
+(!cid cores M g_env cores' g_env' var e.
+  FLOOKUP cores cid = SOME $ Core cid p s
+  /\ FLOOKUP cores' cid = SOME $ Core cid p s'
+  /\ bir_get_stmt p s.bst_pc = BirStmt_Expr var e
+  /\ SOME v = bir_eval_exp_ghost e s.bst_environ g_env
+  /\ SOME g_env' = env_update_cast64 (bir_var_name var) v (bir_var_type var) g_env
+  /\ s' = s with <| bst_pc updated_by bir_pc_next |>
+  ==> gstep cid cores M g_env cores' M g_env')
+End
 
 Theorem bir_exec_stmt_mc_invar:
 !stmt prog state oo state'.
