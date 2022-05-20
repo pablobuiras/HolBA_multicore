@@ -109,7 +109,15 @@ val mem_read_view_def = Define‘
   mem_read_view (f:fwdb_t) t = if f.fwdb_time = t ∧ ~f.fwdb_xcl then f.fwdb_view else t
 ’;
 
-Definition bir_eval_view_of_exp:
+(* global variables begin with an underscore *)
+
+Definition is_global_def:
+  is_global (BVar str ty) = isPREFIX "_" str
+End
+
+(* calculates the views of an expression, with views of global variables are always 0 *)
+
+Definition bir_eval_view_of_exp_def:
   (bir_eval_view_of_exp (BExp_BinExp op e1 e2) viewenv =
    MAX (bir_eval_view_of_exp e1 viewenv) (bir_eval_view_of_exp e2 viewenv))
 /\ (bir_eval_view_of_exp (BExp_BinPred pred e1 e2) viewenv =
@@ -119,51 +127,32 @@ Definition bir_eval_view_of_exp:
 /\ (bir_eval_view_of_exp (BExp_Cast cty e ity) viewenv =
     bir_eval_view_of_exp e viewenv)
 /\ (bir_eval_view_of_exp (BExp_Den v) viewenv =
-    case FLOOKUP viewenv v of NONE => 0 | SOME view => view)
+    if is_global v then 0
+    else case FLOOKUP viewenv v of NONE => 0 | SOME view => view)
 /\ (bir_eval_view_of_exp exp viewenv = 0)
 End
 
-(* ghost variables begin with an underscore *)
+(* read from global memory if a variable is prefixed with an underscore, else
+ * use the usual environment *)
 
-Definition is_ghost_def:
-  is_ghost (BVar str ty) = isPREFIX "_" str
-End
-
-(* a ghost expression contains a ghost variable somewhere *)
-
-Definition is_ghost_exp_def:
-  is_ghost_exp (BExp_BinExp op e1 e2) = (is_ghost_exp e1 \/ is_ghost_exp e2)
-  /\ is_ghost_exp (BExp_BinPred pred e1 e2) = (is_ghost_exp e1 \/ is_ghost_exp e2)
-  /\ is_ghost_exp (BExp_UnaryExp op e) = is_ghost_exp e
-  /\ is_ghost_exp (BExp_Cast cty e ity) = is_ghost_exp e
-  /\ is_ghost_exp (BExp_Den v) = is_ghost v
-  /\ is_ghost_exp (BExp_IfThenElse c et ef) = (is_ghost_exp et \/ is_ghost_exp ef)
-  /\ is_ghost_exp (BExp_Load mem_e a_e en ty) = is_ghost_exp a_e
-  /\ is_ghost_exp (BExp_Store mem_e a_e en v_e) = (is_ghost_exp a_e \/ is_ghost_exp v_e)
-  /\ is_ghost_exp _ = F
-End
-
-(* read from ghost memory if a variable is prefixed with an underscore, else use
- * the usual environment *)
-
-Definition bir_eval_exp_ghost_def:
-  (bir_eval_exp_ghost (BExp_Const n) env g_env = SOME (BVal_Imm n)) /\
-  (bir_eval_exp_ghost (BExp_MemConst aty vty mmap) env g_env = SOME (BVal_Mem aty vty mmap)) /\
-  (bir_eval_exp_ghost (BExp_Den v) env g_env =
-    if is_ghost v
+Definition bir_eval_exp_mix_def:
+  (bir_eval_exp_mix (BExp_Const n) env g_env = SOME (BVal_Imm n)) /\
+  (bir_eval_exp_mix (BExp_MemConst aty vty mmap) env g_env = SOME (BVal_Mem aty vty mmap)) /\
+  (bir_eval_exp_mix (BExp_Den v) env g_env =
+    if is_global v
     then bir_env_read v g_env
     else bir_env_read v env) /\
-  (bir_eval_exp_ghost (BExp_Cast ct e ty) env g_env = bir_eval_cast ct (bir_eval_exp_ghost e env g_env) ty) /\
-  (bir_eval_exp_ghost (BExp_UnaryExp et e) env g_env = bir_eval_unary_exp et (bir_eval_exp_ghost e env g_env)) /\
-  (bir_eval_exp_ghost (BExp_BinExp et e1 e2) env g_env = bir_eval_bin_exp et (bir_eval_exp_ghost e1 env g_env) (bir_eval_exp_ghost e2 env g_env)) /\
-  (bir_eval_exp_ghost (BExp_BinPred pt e1 e2) env g_env = bir_eval_bin_pred pt (bir_eval_exp_ghost e1 env g_env) (bir_eval_exp_ghost e2 env g_env)) /\
-  (bir_eval_exp_ghost (BExp_MemEq e1 e2) env g_env = bir_eval_memeq (bir_eval_exp_ghost e1 env g_env) (bir_eval_exp_ghost e2 env g_env)) /\
-  (bir_eval_exp_ghost (BExp_IfThenElse c et ef) env g_env =
-    bir_eval_ifthenelse (bir_eval_exp_ghost c env g_env) (bir_eval_exp_ghost et env g_env) (bir_eval_exp_ghost ef env g_env)) /\
-  (bir_eval_exp_ghost (BExp_Load mem_e a_e en ty) env g_env =
-    bir_eval_load (bir_eval_exp_ghost mem_e env g_env) (bir_eval_exp_ghost a_e env g_env) en ty) /\
-  (bir_eval_exp_ghost (BExp_Store mem_e a_e en v_e) env g_env =
-    bir_eval_store (bir_eval_exp_ghost mem_e env g_env) (bir_eval_exp_ghost a_e env g_env) en (bir_eval_exp_ghost v_e env g_env))
+  (bir_eval_exp_mix (BExp_Cast ct e ty) env g_env = bir_eval_cast ct (bir_eval_exp_mix e env g_env) ty) /\
+  (bir_eval_exp_mix (BExp_UnaryExp et e) env g_env = bir_eval_unary_exp et (bir_eval_exp_mix e env g_env)) /\
+  (bir_eval_exp_mix (BExp_BinExp et e1 e2) env g_env = bir_eval_bin_exp et (bir_eval_exp_mix e1 env g_env) (bir_eval_exp_mix e2 env g_env)) /\
+  (bir_eval_exp_mix (BExp_BinPred pt e1 e2) env g_env = bir_eval_bin_pred pt (bir_eval_exp_mix e1 env g_env) (bir_eval_exp_mix e2 env g_env)) /\
+  (bir_eval_exp_mix (BExp_MemEq e1 e2) env g_env = bir_eval_memeq (bir_eval_exp_mix e1 env g_env) (bir_eval_exp_mix e2 env g_env)) /\
+  (bir_eval_exp_mix (BExp_IfThenElse c et ef) env g_env =
+    bir_eval_ifthenelse (bir_eval_exp_mix c env g_env) (bir_eval_exp_mix et env g_env) (bir_eval_exp_mix ef env g_env)) /\
+  (bir_eval_exp_mix (BExp_Load mem_e a_e en ty) env g_env =
+    bir_eval_load (bir_eval_exp_mix mem_e env g_env) (bir_eval_exp_mix a_e env g_env) en ty) /\
+  (bir_eval_exp_mix (BExp_Store mem_e a_e en v_e) env g_env =
+    bir_eval_store (bir_eval_exp_mix mem_e env g_env) (bir_eval_exp_mix a_e env g_env) en (bir_eval_exp_mix v_e env g_env))
 End
 
 (* bir_eval_exp_view behaves like bir_eval_exp except it also computes
@@ -174,9 +163,92 @@ End
    This is so as not to change the definition of bir_eval_exp
 *)
 val bir_eval_exp_view_def = Define‘
-  bir_eval_exp_view exp env viewenv =
-  (bir_eval_exp exp env, bir_eval_view_of_exp exp viewenv)
+  bir_eval_exp_view exp env viewenv genv =
+  (bir_eval_exp_mix exp env genv, bir_eval_view_of_exp exp viewenv)
 ’;
+
+
+(* statements that operate on mixed global and local expressions
+ * adaptations of bir_programTheory and bir_envTheory *)
+
+Definition bir_env_write_mix_def:
+  bir_env_write_mix var va env genv =
+    if is_global var then
+      OPTION_MAP (λgenv. (env,genv)) (bir_env_write var va genv)
+    else
+      OPTION_MAP (λenv. (env,genv)) (bir_env_write var va env)
+End
+
+Definition bir_exec_stmt_assign_mix_def:
+  bir_exec_stmt_assign_mix v ex (st : bir_state_t) genv =
+    case bir_eval_exp_mix ex st.bst_environ genv of
+      | SOME va => (case bir_env_write_mix v va st.bst_environ genv of
+                      | SOME (env, genv) => (st with bst_environ := env, genv)
+                      | NONE => (bir_state_set_typeerror st, genv)
+                    )
+      | NONE => (bir_state_set_typeerror st, genv)
+End
+
+Definition bir_exec_stmt_assert_mix_def:
+  bir_exec_stmt_assert_mix ex (st : bir_state_t) genv =
+    case (option_CASE (bir_eval_exp_mix ex st.bst_environ genv) NONE bir_dest_bool_val) of
+      | SOME T => (st, genv)
+      | SOME F => (st with bst_status := BST_AssertionViolated, genv)
+      | NONE => (bir_state_set_typeerror st, genv)
+End
+
+Definition bir_exec_stmt_assume_mix_def:
+  bir_exec_stmt_assume_mix ex (st : bir_state_t) genv =
+    case (option_CASE (bir_eval_exp_mix ex st.bst_environ genv) NONE bir_dest_bool_val) of
+      | SOME T => (st, genv)
+      | SOME F => (st with bst_status := BST_AssumptionViolated, genv)
+      | NONE => (bir_state_set_typeerror st, genv)
+End
+
+Definition bir_exec_stmt_observe_mix_def:
+  bir_exec_stmt_observe_mix oid ec el obf (st : bir_state_t) genv =
+  let
+    vol = MAP (\e. bir_eval_exp_mix e st.bst_environ genv) el;
+    vobc = option_CASE (bir_eval_exp_mix ec st.bst_environ genv) NONE bir_dest_bool_val
+  in
+  case vobc of
+    | SOME T =>   if EXISTS IS_NONE vol then
+                    (NONE, (bir_state_set_typeerror st, genv))
+                  else
+                    (SOME (oid, obf (MAP THE vol)), (st, genv))
+    | SOME F =>   if EXISTS IS_NONE vol then
+                    (NONE, (bir_state_set_typeerror st, genv))
+                  else
+                    (NONE, (st, genv))
+    | NONE => (NONE, (bir_state_set_typeerror st, genv))
+End
+
+Definition bir_exec_stmtB_mix_def:
+  (bir_exec_stmtB_mix (BStmt_Assert ex) st genv = (NONE, bir_exec_stmt_assert_mix ex st genv)) /\
+  (bir_exec_stmtB_mix (BStmt_Assume ex) st genv = (NONE, bir_exec_stmt_assume_mix ex st genv)) /\
+  (bir_exec_stmtB_mix (BStmt_Assign v ex) st genv = (NONE, bir_exec_stmt_assign_mix v ex st genv)) /\
+  (bir_exec_stmtB_mix (BStmt_Observe oid ec el obf) st genv = bir_exec_stmt_observe_mix oid ec el obf st genv) /\
+  (bir_exec_stmtB_mix (BStmt_Fence mop mos) st genv = (λp. (FST p, (SND p,genv))) (bir_exec_stmt_fence mop mos st))
+End
+
+Definition bir_exec_stmtB_mix_def:
+  (bir_exec_stmtB_mix (BStmt_Assert ex) st genv = (NONE, bir_exec_stmt_assert_mix ex st genv)) /\
+  (bir_exec_stmtB_mix (BStmt_Assume ex) st genv = (NONE, bir_exec_stmt_assume_mix ex st genv)) /\
+  (bir_exec_stmtB_mix (BStmt_Assign v ex) st genv = (NONE, bir_exec_stmt_assign_mix v ex st genv)) /\
+  (bir_exec_stmtB_mix (BStmt_Observe oid ec el obf) st genv = bir_exec_stmt_observe_mix oid ec el obf st genv) /\
+  (bir_exec_stmtB_mix (BStmt_Fence mop mos) st genv = (λp. (FST p, (SND p,genv))) (bir_exec_stmt_fence mop mos st))
+End
+
+Definition bir_exec_stmt_mix_def:
+  (bir_exec_stmt_mix (p:'a bir_program_t) (BStmtB (bst:'a bir_stmt_basic_t)) st genv =
+     let (oo, (st', genv)) = bir_exec_stmtB_mix bst st genv in
+     if bir_state_is_terminated st' then (oo, (st',genv)) else (oo, (st' with bst_pc updated_by bir_pc_next, genv))) /\
+  (bir_exec_stmt_mix p (BStmtE bst) st genv = (NONE, (bir_exec_stmtE p bst st, genv)))
+End
+
+(* theorems that if no global variable containt, we can simply *)
+
+
 
 val exp_is_load_def = Define `
   (exp_is_load (BExp_Load _ _ _ _) = T) /\
@@ -260,10 +332,15 @@ val fulfil_atomic_ok_def = Define`
        !t'. (t_r < t' /\ t' < t_w /\ mem_is_loc M t' l) ==> mem_is_cid M t' cid)
 `;
 
-val env_update_cast64_def = Define‘
-  env_update_cast64 varname (BVal_Imm v) vartype env =
-    bir_env_update varname (BVal_Imm (n2bs (b2n v) Bit64)) vartype env
-’;
+Definition env_update_cast64_def:
+  env_update_cast64 var (BVal_Imm v) env genv =
+    if is_global var then
+      OPTION_MAP (λgenv. (env,genv))
+        (bir_env_update (bir_var_name var) (BVal_Imm (n2bs (b2n v) Bit64)) (bir_var_type var) genv)
+    else
+      OPTION_MAP (λenv. (env,genv))
+        (bir_env_update (bir_var_name var) (BVal_Imm (n2bs (b2n v) Bit64)) (bir_var_type var) env)
+End
 
 val fulfil_update_env_def = Define`
   fulfil_update_env p s xcl =
@@ -518,13 +595,13 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
 (* read *)
 (!p s s' v a_e xcl acq rel M l (t:num) v_pre v_post v_addr var new_env cid opt_cast.
    bir_get_stmt p s.bst_pc = BirStmt_Read var a_e opt_cast xcl acq rel
- /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+ /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv genv
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
  ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ ~(mem_is_loc M t' l))
  ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
- /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
+ /\ SOME (new_env,genv') = env_update_cast64 var v (s.bst_environ) genv
  (* TODO: Update viewenv by v_addr or v_post? *)
  ∧ s' = s with <| bst_viewenv updated_by (\env. FUPDATE env (var, v_post));
                   bst_environ := new_env;
@@ -543,7 +620,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                             then (bir_pc_next o bir_pc_next) s.bst_pc
                             else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M [] s')
+  clstep p cid s M genv [] s' genv')
 /\ (* exclusive-failure *)
 (!p s s' M a_e v_e acq rel cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e T acq rel
@@ -554,12 +631,12 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                     bst_xclb := NONE;
                     bst_pc := (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc |>
  ==>
-clstep p cid s M [] s')
+clstep p cid s M genv [] s' genv)
 /\ (* fulfil *)
 (!p s s' M v a_e xcl acq rel l (t:num) v_pre v_post v_addr v_data v_e cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl acq rel
- /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
- /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv
+ /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv genv
+ /\ (SOME v, v_data) = bir_eval_exp_view v_e s.bst_environ s.bst_viewenv genv
  /\ (xcl ==> s.bst_xclb <> NONE /\ fulfil_atomic_ok M l cid (THE s.bst_xclb).xclb_time t)
  /\ MEM t s.bst_prom
  /\ mem_get M l t = SOME <| loc := l; val := v; cid := cid  |>
@@ -602,13 +679,13 @@ clstep p cid s M [] s')
                              then (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc
                              else bir_pc_next s.bst_pc |>
  ==>
-  clstep p cid s M [t] s')
+  clstep p cid s M genv [t] s' genv)
 /\ (* AMO fulfil *)
 (!p cid s s' M acq rel var l a_e v_r v_w v_e v_rPre v_rPost v_wPre v_wPost (t_w:num) (t_r :num) new_environ new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Amo var a_e v_e acq rel
 
    (* Get location *)
-   /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv
+   /\ (SOME l, v_addr) = bir_eval_exp_view a_e s.bst_environ s.bst_viewenv genv
 
    (* Read part *)
    /\ mem_read M l t_r = SOME v_r (* v_r value read *)
@@ -618,13 +695,13 @@ clstep p cid s M [] s')
    /\ v_rPost = MAX v_rPre (mem_read_view (s.bst_fwdb l) t_r)
 
    (* register and register view update *)
-   /\ SOME new_environ = env_update_cast64 (bir_var_name var) v_r (bir_var_type var) (s.bst_environ)
+   /\ SOME (new_environ,genv') = env_update_cast64 var v_r (s.bst_environ) genv
    /\ new_viewenv = FUPDATE s.bst_viewenv (var, v_rPost)
 
    (* Write part *)
    /\ MEM t_w s.bst_prom
    (* v_w value to write, v_e value expression *)
-   /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv
+   /\ (SOME v_w, v_data) = bir_eval_exp_view v_e new_environ new_viewenv genv
    /\ mem_get M l t_w = SOME <| loc := l; val := v_w; cid := cid |>
    /\ v_wPre = MAX v_addr (
         MAX v_data (
@@ -655,7 +732,7 @@ clstep p cid s M [] s')
                                                      fwdb_xcl := T |>);
                      bst_pc updated_by (bir_pc_next o bir_pc_next) |>
  ==>
- clstep p cid s M [t_w] s'
+ clstep p cid s M genv [t_w] s' genv'
 )
 /\ (* fence *)
 (!p s s' K1 K2 M cid v.
@@ -665,33 +742,33 @@ clstep p cid s M [] s')
                      bst_v_wNew := MAX s.bst_v_wNew (if is_write K2 then v else 0);
                      bst_pc updated_by bir_pc_next |>
 ==>
-  clstep p cid s M [] s')
+  clstep p cid s M genv [] s' genv)
 /\ (* branch (conditional jump) *)
 (!p s s' M cid v oo s2 v_addr cond_e lbl1 lbl2 stm.
    bir_get_stmt p s.bst_pc = BirStmt_Branch cond_e lbl1 lbl2
     /\ stm = BStmtE (BStmt_CJmp cond_e lbl1 lbl2)
-    /\ (SOME v, v_addr) = bir_eval_exp_view cond_e s.bst_environ s.bst_viewenv
-    /\ bir_exec_stmt p stm s = (oo,s2)
+    /\ (SOME v, v_addr) = bir_eval_exp_view cond_e s.bst_environ s.bst_viewenv genv
+    /\ bir_exec_stmt_mix p stm s genv = (oo,(s2,genv'))
     /\ s' = s2 with <| bst_v_CAP := MAX s.bst_v_CAP v_addr |>
 ==>
-  clstep p cid s M [] s')
+  clstep p cid s M genv [] s' genv')
 /\ (* register-to-register operation *)
 (!p s s' var M cid v v_val e new_env.
   bir_get_stmt p s.bst_pc = BirStmt_Expr var e
- /\ (SOME v, v_val) = bir_eval_exp_view e s.bst_environ s.bst_viewenv
+ /\ (SOME v, v_val) = bir_eval_exp_view e s.bst_environ s.bst_viewenv genv
  /\ NONE = get_read_args e
  /\ NONE = get_fulfil_args e
- /\ SOME new_env = env_update_cast64 (bir_var_name var) v (bir_var_type var) (s.bst_environ)
+ /\ SOME (new_env,genv') = env_update_cast64 var v (s.bst_environ) genv
  /\ s' = s with <| bst_environ := new_env;
                    bst_viewenv updated_by (λe. FUPDATE e (var,v_val));
                    bst_pc      updated_by bir_pc_next |>
-==> clstep p cid s M [] s')
+==> clstep p cid s M genv [] s' genv')
 /\ (* Other BIR single steps *)
 (!p s s' M cid stm oo.
    bir_get_stmt p s.bst_pc = BirStmt_Generic stm
-    /\ bir_exec_stmt p stm s = (oo,s')
+    /\ bir_exec_stmt_mix p stm s genv = (oo,(s',genv'))
 ==>
-  clstep p cid s M [] s')
+  clstep p cid s M genv [] s' genv')
 `;
 
 
@@ -699,9 +776,9 @@ clstep p cid s M [] s')
 val (bir_cstep_rules, bir_cstep_ind, bir_cstep_cases) = Hol_reln`
 (* execute *)
 (!p cid s M s' prom.
-  clstep p cid s M prom s'
+  clstep p cid s M genv prom s' genv'
 ==>
-  cstep p cid s M prom s' M)
+  cstep p cid s M genv prom s' M genv')
 
 /\ (* promise *)
 (!p cid s M s' t msg.
@@ -709,23 +786,23 @@ val (bir_cstep_rules, bir_cstep_ind, bir_cstep_cases) = Hol_reln`
    /\ t = LENGTH M + 1
    /\ s' = s with bst_prom updated_by (\pr. pr ++ [t]))
 ==>
-  cstep p cid s M [t] s' (M ++ [msg]))
+  cstep p cid s M genv [t] s' (M ++ [msg]) genv)
 `;
 
 (* core steps seq *)
 val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
 (* seq *)
 (!p cid s M s' prom.
-  clstep p cid s M (prom:num list) s'
+  clstep p cid s M genv (prom:num list) s' genv'
 ==>
-  cstep_seq p cid (s, M) (s', M))
+  cstep_seq p cid (s, M, genv) (s', M, genv'))
 
 /\ (* write *)
 (!p cid s M s' s'' M' t.
-  (cstep p cid s M [t] s' M' /\ ~(M = M')
-  /\ clstep p cid s' M' [t] s'')
+  (cstep p cid s M genv [t] s' M' genv' /\ ~(M = M')
+  /\ clstep p cid s' M' genv' [t] s'' genv'')
 ==>
-  cstep_seq p cid (s, M) (s'', M'))
+  cstep_seq p cid (s, M, genv) (s'', M', genv''))
 `;
 
 val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
@@ -782,8 +859,8 @@ QED
 
 Theorem cstep_seq_rtc_fulfil_once:
   !p cid sM2 sM3 s M t s1 cid' t' s4 M4 s5.
-  cstep p cid s M [t] s1 (SND sM2)
-  /\ clstep p cid s1 (SND sM2) [t] (FST sM2)
+  cstep p cid s M genv [t] s1 (SND sM2) genv'
+  /\ clstep p cid s1 (SND sM2) [t] (FST sM2) genv'
   /\ cstep_seq_rtc p cid sM2 sM3
   /\ cstep p cid' (FST sM3) (SND sM3) [t'] s4 M4
   /\ clstep p cid' s4 M4 [t'] s5
@@ -801,9 +878,9 @@ QED
 (* bir_exec_stmt invariants *)
 
 Theorem bir_exec_stmt_BStmtE_BStmt_CJmp_bst_xclb_EQ:
-  !p cond_e lbl1 lbl2 s oo s'.
-  bir_exec_stmt p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s = (oo,s')
-  ==> s.bst_xclb = s'.bst_xclb
+  !p cond_e lbl1 lbl2 s oo s' genv genv'.
+  bir_exec_stmt_mix p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s genv = (oo,s', genv')
+  ==> s.bst_xclb = s'.bst_xclb /\ genv = genv'
 Proof
   EVAL_TAC
   >> rw[AllCaseEqs()]
@@ -811,53 +888,29 @@ Proof
 QED
 
 Theorem bir_exec_stmt_stmt_generic_step_bst_xclb_EQ:
-  !stm p s oo s'. bir_exec_stmt p stm s = (oo,s')
+  !stm p s oo s' genv genv'.
+  bir_exec_stmt_mix p stm s genv = (oo,(s',genv'))
   /\ stmt_generic_step stm
-  ==> s.bst_xclb = s'.bst_xclb
+  ==> s.bst_xclb = s'.bst_xclb /\ s.bst_prom = s'.bst_prom /\ genv = genv'
 Proof
-  Cases >> rpt strip_tac
+  Cases >> rpt gen_tac >> strip_tac
   >> (qmatch_asmsub_rename_tac `BStmtE stm`
     ORELSE qmatch_asmsub_rename_tac `BStmtB stm`)
   >> Cases_on `stm`
-  >> gs[bir_get_stmt_generic,stmt_generic_step_def,bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_exec_stmt_def]
+  >> gs[bir_get_stmt_generic,stmt_generic_step_def,bir_exec_stmt_mix_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def,bir_exec_stmt_def]
   >> BasicProvers.every_case_tac
-  >> gvs[bir_exec_stmtB_def,bir_state_is_terminated_def,bir_exec_stmt_assign_def,
-    bir_exec_stmtB_def,bir_exec_stmt_assert_def,AllCaseEqs(),
-    bir_state_set_typeerror_def,bir_exec_stmt_assume_def,bir_exec_stmt_assume_def,
-    bir_exec_stmt_observe_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,
+  >> gvs[bir_exec_stmtB_mix_def,bir_state_is_terminated_def,bir_exec_stmt_assign_mix_def,
+    bir_exec_stmtB_mix_def,bir_exec_stmt_assert_mix_def,AllCaseEqs(),
+    bir_state_set_typeerror_def,bir_exec_stmt_assume_mix_def,bir_exec_stmt_assume_mix_def,
+    bir_exec_stmt_observe_mix_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,
     bir_exec_stmt_jmp_to_label_def,bir_exec_stmtE_def,bir_exec_stmt_halt_def]
   >> BasicProvers.every_case_tac >> fs[]
 QED
 
-Theorem stmt_generic_step_bst_prom_EQ:
-  !stm p s oo s'. stmt_generic_step stm
-  /\ bir_exec_stmt p stm s = (oo,s')
-  ==> s.bst_prom = s'.bst_prom
-Proof
-  Cases >> rpt strip_tac
-  >- (
-    qmatch_asmsub_rename_tac `BStmtB b`
-    >> Cases_on `b`
-    >> gvs[stmt_generic_step_def,bir_programTheory.bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,AllCaseEqs(),bir_programTheory.bir_exec_stmtB_def,bir_programTheory.bir_exec_stmt_assert_def,bir_programTheory.bir_state_set_typeerror_def,bir_programTheory.bir_exec_stmt_assume_def,bir_programTheory.bir_exec_stmt_observe_def]
-    >> BasicProvers.every_case_tac
-    >> fs[]
-  )
-  >> qmatch_asmsub_rename_tac `BStmtE b`
-  >> Cases_on `b`
-  >> gvs[AllCaseEqs(),bir_exec_stmtB_def,bir_exec_stmtE_def,
-    bir_exec_stmt_assert_def,bir_exec_stmt_assign_def,bir_exec_stmt_assume_def,
-    bir_exec_stmt_cjmp_def,bir_exec_stmt_def,bir_exec_stmt_fence_def,
-    bir_exec_stmt_halt_def,bir_exec_stmt_jmp_def,bir_exec_stmt_jmp_to_label_def,
-    bir_exec_stmt_observe_def,bir_state_is_terminated_def,
-    bir_state_set_typeerror_def,pairTheory.ELIM_UNCURRY,stmt_generic_step_def]
-  >> BasicProvers.every_case_tac
-  >> fs[]
-QED
-
 Theorem bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ:
-  !p cond_e lbl1 lbl2 s oo s'.
-  bir_exec_stmt p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s = (oo,s')
-  ==> s.bst_prom = s'.bst_prom
+  !p cond_e lbl1 lbl2 s oo s' genv genv'.
+  bir_exec_stmt_mix p (BStmtE (BStmt_CJmp cond_e lbl1 lbl2)) s genv = (oo,(s',genv'))
+  ==> s.bst_prom = s'.bst_prom /\ genv = genv'
 Proof
   EVAL_TAC
   >> rw[AllCaseEqs()]
@@ -867,13 +920,14 @@ QED
 (* set of promises contains only elements smaller then the memory *)
 
 Theorem clstep_EVERY_LENGTH_bst_prom_inv:
-  !p cid s M prom s' . clstep p cid s M prom s'
+  !p cid s M prom s' genv genv'.
+  clstep p cid s M genv prom s' genv'
   /\ EVERY (λx. 0 < x /\ x <= LENGTH M) s.bst_prom
   ==> EVERY (λx. 0 < x /\ x <= LENGTH M) s'.bst_prom
 Proof
   rw[bir_clstep_cases,bir_get_stmt_generic]
   >> imp_res_tac bir_exec_stmt_BStmtE_BStmt_CJmp_bst_prom_EQ
-  >> imp_res_tac stmt_generic_step_bst_prom_EQ
+  >> imp_res_tac bir_exec_stmt_stmt_generic_step_bst_xclb_EQ
   >> fs[]
   >> qhdtm_x_assum `EVERY` mp_tac
   >> fs[EVERY_FILTER]
@@ -882,15 +936,15 @@ Proof
 QED
 
 Theorem clstep_bst_prom_NOT_EQ:
-  !p cid s M t s' .
-  clstep p cid s M [t] s' ==> s.bst_prom <> s'.bst_prom
+  !p cid s M t s' genv genv'.
+  clstep p cid s M genv [t] s' genv' ==> s.bst_prom <> s'.bst_prom
 Proof
   rw[bir_clstep_cases,bir_get_stmt_write]
   >> fs[Once EQ_SYM_EQ,FILTER_NEQ_ID]
 QED
 
 Theorem clstep_LENGTH_prom:
-  !p cid s M prom s' . clstep p cid s M prom s'
+  !p cid s M prom s' genv genv'. clstep p cid s M genv prom s' genv'
   ==> prom = [] \/ ?t. prom = [t]
 Proof
   rw[bir_clstep_cases]
@@ -910,21 +964,21 @@ Proof
 QED
 
 Theorem clstep_bst_prom_EQ:
-!p cid st M st'.
-  clstep p cid st M [] st' ==> st.bst_prom = st'.bst_prom
+!p cid st M st' genv genv'.
+  clstep p cid st M genv [] st' genv' ==> st.bst_prom = st'.bst_prom
 Proof
   rw[bir_clstep_cases]
-  >> gvs[bir_state_t_accfupds,bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_exec_stmt_jmp_bst_prom,bir_get_stmt_def]
+  >> gvs[bir_state_t_accfupds,bir_exec_stmt_mix_def,bir_exec_stmtE_def,bir_exec_stmt_cjmp_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_exec_stmt_jmp_bst_prom,bir_get_stmt_def]
   >> (
-    fs[AllCaseEqs(),bir_exec_stmt_def,pairTheory.ELIM_UNCURRY,bir_exec_stmt_halt_def]
+    fs[AllCaseEqs(),bir_exec_stmt_mix_def,pairTheory.ELIM_UNCURRY,bir_exec_stmt_halt_def]
     >> BasicProvers.every_case_tac
-    >> fs[bir_exec_stmtB_def,bir_exec_stmt_assert_def,bir_exec_stmt_assume_def,bir_exec_stmt_observe_def]
+    >> fs[bir_exec_stmtB_mix_def,bir_exec_stmt_assert_mix_def,bir_exec_stmt_assume_mix_def,bir_exec_stmt_observe_mix_def]
     >> BasicProvers.every_case_tac
     >> gvs[bir_state_set_typeerror_def,CaseEq"option"]
   )
   >> qmatch_assum_rename_tac `stmt_generic_step $ BStmtE b`
   >> Cases_on `b`
-  >> fs[stmt_generic_step_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,bir_exec_stmt_def,bir_exec_stmt_halt_def]
+  >> fs[stmt_generic_step_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,bir_exec_stmt_mix_def,bir_exec_stmt_halt_def]
   >> BasicProvers.every_case_tac
   >> gvs[bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def]
   >> BasicProvers.every_case_tac
@@ -973,8 +1027,8 @@ QED
 *)
 
 val is_certified_def = Define`
-is_certified p cid s M = ?s' M'.
-  cstep_seq_rtc p cid (s, M) (s', M')
+is_certified p cid s M genv = ?s' M' genv'.
+  cstep_seq_rtc p cid (s, M, genv) (s', M', genv')
   /\ s'.bst_prom = []
 `;
 
@@ -1013,44 +1067,18 @@ val atomicity_ok_def = Define`
 
 (* system step *)
 val (bir_parstep_rules, bir_parstep_ind, bir_parstep_cases) = Hol_reln`
-(!p cid s s' M M' cores prom.
+(!p cid s s' M M' cores prom genv genv'.
    (FLOOKUP cores cid = SOME (Core cid p s)
     /\ atomicity_ok cid cores
-    /\ cstep p cid s M prom s' M'
-    /\ is_certified p cid s' M')
+    /\ cstep p cid s M genv prom s' M' genv'
+    /\ is_certified p cid s' M' genv')
 ==>
-   parstep cid cores M (FUPDATE cores (cid, Core cid p s')) M')
+   parstep cid cores M genv (FUPDATE cores (cid, Core cid p s')) M' genv')
 `;
 
-(* a program at an index is a ghost expression if the variable is *)
-
-Definition non_ghost_def:
-  non_ghost p pc =
-    !var e. bir_get_stmt p pc = BirStmt_Expr var e ==> is_ghost var
-End
-
-(* gstep transitions wrap a parstep or execute operations on a global ghost
- * memory g_env *)
-
-Inductive gstep:
-(!cid cores M g_env cores' M' p s.
-  parstep cid cores M cores' M'
-  /\ FLOOKUP cores cid = SOME $ Core cid p s
-  /\ non_ghost p s.bst_pc
-  ==> gstep cid cores M g_env cores' M' g_env) /\
-(!cid cores M g_env cores' g_env' var e.
-  FLOOKUP cores cid = SOME $ Core cid p s
-  /\ FLOOKUP cores' cid = SOME $ Core cid p s'
-  /\ bir_get_stmt p s.bst_pc = BirStmt_Expr var e
-  /\ SOME v = bir_eval_exp_ghost e s.bst_environ g_env
-  /\ SOME g_env' = env_update_cast64 (bir_var_name var) v (bir_var_type var) g_env
-  /\ s' = s with <| bst_pc updated_by bir_pc_next |>
-  ==> gstep cid cores M g_env cores' M g_env')
-End
-
 Theorem bir_exec_stmt_mc_invar:
-!stmt prog state oo state'.
-bir_exec_stmt prog stmt state = (oo,state') ==>
+!stmt prog state oo state' genv genv'.
+bir_exec_stmt_mix prog stmt state genv = (oo,state',genv') ==>
 (state.bst_viewenv = state'.bst_viewenv) /\
 (state.bst_coh = state'.bst_coh) /\
 (state.bst_v_rOld = state'.bst_v_rOld) /\
@@ -1065,108 +1093,62 @@ bir_exec_stmt prog stmt state = (oo,state') ==>
 (state.bst_inflight = state'.bst_inflight) /\
 (state.bst_counter = state'.bst_counter)
 Proof
-Induct_on ‘stmt’ >> Induct_on ‘b’ >> (
+Cases_on ‘stmt’ >> Cases_on ‘b’ >>
  REPEAT GEN_TAC >>
- STRIP_TAC
-) >| [
- fs [bir_exec_stmt_def, bir_exec_stmtB_def] >>
- Cases_on ‘bir_state_is_terminated (bir_exec_stmt_assign b b0 state)’ >> (
-  fs [bir_exec_stmt_assign_def] >>
-  Cases_on ‘bir_eval_exp b0 state.bst_environ’ >> (
-   fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
-  ) >>
-  Cases_on ‘bir_env_write b x state.bst_environ’ >- (
-   fs []
-  ) >>
-  Cases_on ‘x'’ >- (
-   fs [bir_state_t_component_equality]
+ STRIP_TAC >>
+  fs[bir_exec_stmt_mix_def,bir_exec_stmtB_mix_def,pairTheory.ELIM_UNCURRY]
+  >~ [`bir_exec_stmt_assign_mix`]
+  >- (
+    BasicProvers.every_case_tac
+    >- fs[AllCaseEqs(),bir_exec_stmt_assign_mix_def,bir_state_t_component_equality,bir_state_set_typeerror_def,bir_eval_exp_mix_def] >>
+    qmatch_asmsub_abbrev_tac `FST xx` >> Cases_on `xx` >>
+    fs [bir_exec_stmt_assign_mix_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_state_t_component_equality]
   )
- ),
-
- fs [bir_exec_stmt_def, bir_exec_stmtB_def] >>
- Cases_on ‘bir_state_is_terminated (bir_exec_stmt_assert b state)’ >> (
-  fs [bir_exec_stmt_assert_def] >>
-  Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
-   fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
-  ) >>
-  Cases_on ‘x’ >> (
-   fs [bir_state_t_component_equality]
-  )
- ),
-
- fs [bir_exec_stmt_def, bir_exec_stmtB_def] >>
- Cases_on ‘bir_state_is_terminated (bir_exec_stmt_assume b state)’ >> (
-  fs [bir_exec_stmt_assume_def] >>
-  Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
-   fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
-  ) >>
-  Cases_on ‘x’ >> (
-   fs [bir_state_t_component_equality]
-  )
- ),
-
- fs [bir_exec_stmt_def, bir_exec_stmtB_def, bir_exec_stmt_observe_def] >>
- Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
-  fs [bir_state_set_typeerror_def, bir_state_is_terminated_def, bir_state_t_component_equality] >>
-  Cases_on ‘x’ >> (
-   fs [] >>
-   Cases_on ‘EXISTS IS_NONE (MAP (λe. bir_eval_exp e state.bst_environ) l)’ >> (
-    FULL_SIMP_TAC std_ss [] >>
-    fs [bir_state_set_typeerror_def, bir_state_is_terminated_def, bir_state_t_component_equality]
-   )
-  ) >>
-  Cases_on ‘state.bst_status ≠ BST_Running’ >> (
-   fs [bir_state_t_component_equality]
-  )
- ),
-
- fs [bir_exec_stmt_def, bir_exec_stmtB_def, bir_exec_stmt_fence_def] >>
- Cases_on ‘bir_state_is_terminated state’ >> (
-  fs [bir_state_t_component_equality]
- ),
-
- fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_jmp_def] >>
- Cases_on ‘bir_eval_label_exp b state.bst_environ’ >> (
-  fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_to_label_def]
- ) >- (
-  fs [bir_state_t_component_equality]
- ) >>
- Cases_on ‘MEM x (bir_labels_of_program prog)’ >> (
-  fs [bir_block_pc_def, bir_state_t_component_equality]
- ),
-
- fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_cjmp_def] >>
- Cases_on ‘option_CASE (bir_eval_exp b state.bst_environ) NONE bir_dest_bool_val’ >> (
-  fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_def]
- ) >- (
-  fs [bir_state_t_component_equality]
- ) >>
- Cases_on ‘x’ >| [
-  Cases_on ‘bir_eval_label_exp b0 state.bst_environ’ >> (
-   fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_to_label_def]
-  ) >- (
-   fs [bir_state_t_component_equality]
-  ) >>
-  Cases_on ‘MEM x (bir_labels_of_program prog)’ >> (
-   fs [bir_block_pc_def, bir_state_t_component_equality]
-  ),
-
-  Cases_on ‘bir_eval_label_exp b1 state.bst_environ’ >> (
-   fs [bir_state_set_typeerror_def, bir_exec_stmt_jmp_to_label_def]
-  ) >- (
-   fs [bir_state_t_component_equality]
-  ) >>
-  Cases_on ‘MEM x (bir_labels_of_program prog)’ >> (
-   fs [bir_block_pc_def, bir_state_t_component_equality]
-  )
- ],
-
- fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_halt_def] >>
- Cases_on ‘bir_eval_exp b state.bst_environ’ >> (
-  fs [bir_state_set_typeerror_def, bir_state_t_component_equality]
+  >~ [`bir_exec_stmt_assert_mix`]
+  >- (
+    BasicProvers.every_case_tac
+    >- fs[AllCaseEqs(),bir_exec_stmt_assert_mix_def,bir_state_t_component_equality,bir_state_set_typeerror_def,bir_eval_exp_mix_def] >>
+    qmatch_asmsub_abbrev_tac `FST xx` >> Cases_on `xx` >>
+    fs [bir_exec_stmt_assert_mix_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_state_t_component_equality]
  )
-]
+ >~ [`bir_exec_stmt_assume_mix`]
+ >- (
+    BasicProvers.every_case_tac
+    >- fs[AllCaseEqs(),bir_exec_stmt_assume_mix_def,bir_state_t_component_equality,bir_state_set_typeerror_def,bir_eval_exp_mix_def] >>
+    qmatch_asmsub_abbrev_tac `FST xx` >> Cases_on `xx` >>
+    fs [bir_exec_stmt_assume_mix_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_state_t_component_equality]
+  )
+  >~ [`bir_exec_stmt_observe_mix`]
+  >- (
+    BasicProvers.every_case_tac
+    >- fs[AllCaseEqs(),bir_exec_stmt_observe_mix_def,bir_state_t_component_equality,bir_state_set_typeerror_def,bir_eval_exp_mix_def] >>
+    qmatch_asmsub_abbrev_tac `FST xx` >> Cases_on `xx` >> fs[] >>
+    qmatch_asmsub_abbrev_tac `FST xx` >> Cases_on `xx` >> fs[] >>
+    gvs [bir_exec_stmt_observe_mix_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_state_t_component_equality]
+  )
+  >~ [`bir_exec_stmt_fence`]
+  >- (
+    BasicProvers.every_case_tac >>
+    gvs [bir_exec_stmtB_mix_def, bir_exec_stmt_fence_def]
+  )
+  >~ [`bir_exec_stmtE prog (BStmt_Jmp _)`]
+  >- (
+    fs [bir_exec_stmt_def,bir_exec_stmtE_def,bir_exec_stmt_jmp_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def]
+    >> BasicProvers.every_case_tac
+    >> fs[bir_state_t_component_equality]
+  )
+  >~ [`bir_exec_stmtE prog (BStmt_CJmp _ _ _)`]
+  >- (
+    fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_cjmp_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def,bir_exec_stmt_jmp_def] >>
+    BasicProvers.every_case_tac >>
+    fs[bir_state_t_component_equality]
+  )
+  >~ [`bir_exec_stmtE _ (BStmt_Halt _)`]
+  >- (
+    fs [bir_exec_stmt_def, bir_exec_stmtE_def, bir_exec_stmt_cjmp_def,AllCaseEqs(),bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def,bir_exec_stmt_jmp_def,bir_exec_stmt_halt_def] >>
+    BasicProvers.every_case_tac >>
+    fs[bir_state_t_component_equality]
+  )
 QED
-
 
 val _ = export_theory();
