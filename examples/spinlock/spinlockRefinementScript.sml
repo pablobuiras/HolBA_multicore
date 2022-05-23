@@ -27,7 +27,7 @@ val (bir_spinlockfull_progbin_def, bir_spinlockfull_prog_def, bir_is_lifted_prog
 
 Definition parstep_nice_def:
   parstep_nice cid s1 s2
-  = parstep cid (FST s1) (SND s1) (FST s2) (SND s2)
+  = parstep cid (FST s1) (FST $ SND s1) (SND $ SND s1) (FST s2) (FST $ SND s2) (SND $ SND s2)
 End
 
 (* projection of the state of a core *)
@@ -48,6 +48,57 @@ Definition bst_pc_tuple_def:
   bst_pc_tuple x = (x.bpc_label,x.bpc_index)
 End
 
+Definition core_pc_def:
+  core_pc cid S = (core_state cid S).bst_pc
+End
+
+(* read a variable from a given memory *)
+
+Definition bir_read_mem_var_def:
+  bir_read_mem_var mem var env =
+    bir_eval_exp
+      (BExp_Load (BExp_Den $ BVar mem $ BType_Mem Bit64 Bit8)
+        (BExp_Den $ BVar var $ BType_Imm Bit64)
+        BEnd_LittleEndian Bit32) env
+End
+
+(* read a variable from an environment  *)
+
+Definition bir_read_var_def:
+  bir_read_var var env =
+    bir_eval_exp (BExp_Den (BVar var (BType_Imm Bit64))) env
+End
+
+(* read a variable from a core state *)
+
+Definition bir_read_core_reg_def:
+  bir_read_core_reg var cid S =
+    bir_read_var var (core_state cid S).bst_environ
+End
+
+(* read a zero variable from a core state *)
+
+Definition bir_read_core_reg_zero_def:
+  bir_read_core_reg_zero var cid S <=>
+    bir_read_core_reg var cid S = SOME $ BVal_Imm $ Imm64 0w
+End
+
+(* compare address range *)
+
+Definition bir_laImm64_lt_def:
+  bir_laImm64_lt a w =
+    case a of
+    | BL_Address (Imm64 v) => v < w
+    | _ => F
+End
+
+Definition bir_laImm64_lt2_def:
+  bir_laImm64_lt2 w a =
+    case a of
+    | BL_Address (Imm64 v) => w < v
+    | _ => F
+End
+
 (*****************************************************************************)
 (* Extracting reachable states of a program **********************************)
 (*****************************************************************************)
@@ -56,7 +107,7 @@ End
 Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Generic =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_Generic stm``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs(),wordsTheory.NUMERAL_LESS_THM]
-  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) [BETA_THM]
+  |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss) []
   |> GEN_ALL
 
 Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Fence =
@@ -78,9 +129,12 @@ Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Expr =
   |> CONV_RULE $ ONCE_DEPTH_CONV $ RHS_CONV $ computeLib.EVAL_CONV
   |> GEN_ALL
 
+(*
 Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_Amo =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_Amo var a_e v_e acq rel``
   |> SIMP_RULE (srw_ss() ++ boolSimps.DNF_ss) [AllCaseEqs()]
+  |> GEN_ALL
+*)
 
 Theorem bir_get_stmt_bir_spinlockfull_prog_BirStmt_None =
   EVAL ``bir_get_stmt bir_spinlockfull_prog x = BirStmt_None``
@@ -159,38 +213,42 @@ Definition reachable_slf_def:
       \/ bpt = (BL_Address $ Imm64 40w,0)
 End
 
+(* pc within crit region *)
+
+Definition in_crit_slf_def:
+  in_crit_slf pc <=>
+    reachable_asl pc /\ bst_pc_tuple pc = (BL_Address $ Imm64 32w,0)
+End
+
+Definition is_free_slf_def:
+  is_free_slf cid S <=>
+    bir_read_mem_var "MEM8" "x7" ((core_state cid S).bst_environ)
+    = SOME $ BVal_Imm $ Imm64 0w
+End
+
 (*****************************************************************************)
 (* Spinlock specification ****************************************************)
 (*****************************************************************************)
 
 (* returns the word with the cid's bit set to 1
-0...010...0
+0...010...0 : word64
      ^
     cid
-*)
-(* TODO define *)
+
+requires cid < 64 *)
 
 Definition cid2w_def:
-  cid2w (cid : num) = BExp_Const $ Imm64 (ARB : word64)
-End
-
-(* For the initial state we assume a_spinlock_init g_eng
- * which says: _GHOST.crit contains initially only zeros (= lock is free) *)
-
-Definition a_spinlock_init_def:
-  a_spinlock_init g_env <=>
-    bir_eval_exp (BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-                    (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
-                    BEnd_LittleEndian Bit32) g_env
-    = SOME $ BVal_Imm $ Imm64 0w
+  cid2w (cid : num) =
+    (* left shift of 1 by cid *)
+    BExp_BinExp BIExp_LeftShift (BExp_Const $ Imm64 1w) (BExp_Const $ Imm64 $ (n2w cid) :word64)
 End
 
 (* Abstract spinlock specification that is parametrised by its core id.
- * The core id is used to mark the lock as taken. *)
-(* TODO Requires a limited number of threads. *)
+ * The core id is used to mark the lock as taken.
+ * Requires a limited number of threads (inherited by cid2w) *)
 
-Definition a_spinlock_def:
-  a_spinlock cid =
+Definition spinlock_aprog_def:
+  spinlock_aprog cid =
   BirProgram [
   (* lock block *)
   <|bb_label := BL_Address_HC (Imm64 0w) "";
@@ -255,6 +313,14 @@ _GHOST.crit := (1...101...1   AND   _GHOST.crit)
   ] : string bir_program_t
 End
 
+(* lookup _GHOST.crit to contain only zeros (= lock is free) *)
+(* TODO assume for initial state *)
+
+Definition is_free_asl_def:
+  is_free_asl g_env <=>
+    bir_read_mem_var "_GHOST" "crit" g_env = SOME $ BVal_Imm $ Imm64 0w
+End
+
 (* all possible steps of the abstract spinlock
  * sl_step (block,pc) (block',pc') *)
 (* TODO automate *)
@@ -278,25 +344,63 @@ Definition reachable_asl_def:
     bpt = (BL_Address $ Imm64 8w,0)
 End
 
+(* pc within crit region *)
+
+Definition in_crit_asl_def:
+  in_crit_asl pc <=>
+    reachable_asl pc /\ bst_pc_tuple pc = (BL_Address $ Imm64 4w,0)
+End
+
 (* the spinlock refinement relation between abstract state aS
  * and concrete state S for a core id cid *)
-Definition slrefinerel_def:
-  slrefinerel cid aS S =
-  (!cores M g_env acores aM ag_env.
+Definition asl_slf_rel_def:
+  asl_slf_rel cid aS S =
+  (!cores M acores aM agenv genv.
        cores = FST S
     /\ M = FST $ SND S
-    /\ g_env = SND $ SND S
+    /\ genv = SND $ SND S
     /\ acores = FST aS
     /\ aM = FST $ SND aS
-    /\ ag_env = SND $ SND aS
+    /\ agenv = SND $ SND aS
     ==>
     (* we only reason about reachable states *)
-       reachable_sl ((core_state cid aS).bst_pc)
-    /\ reachable_slf ((core_state cid S).bst_pc)
-    /\ core_prog cid aS = bir_spinlock cid
+       reachable_asl (core_pc cid aS)
+    /\ reachable_slf (core_pc cid S)
+    /\ core_prog cid aS = spinlock_aprog cid
     /\ core_prog cid S = bir_spinlockfull_prog
-    /\ aM = M
-    (* TODO extend *)
+    (* lock is free *)
+    /\ is_free_slf cid S = is_free_asl agenv
+    (* pc outside lock and unlock *)
+    /\ in_crit_asl (core_pc cid aS) = in_crit_slf (core_pc cid S)
+    (* not taking the lock *)
+    /\ (
+      (bir_laImm64_lt (FST $ bst_pc_tuple $ core_pc cid S) 20w
+      /\ (FST $ bst_pc_tuple $ core_pc cid S = BL_Address $ Imm64 20w ==>
+          bir_read_core_reg_zero "x6" cid S) (* unsuccessful store *)
+      ) ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 0w,0)
+    )
+    (* future successful store *)
+    /\ (
+        FST $ bst_pc_tuple $ core_pc cid S = BL_Address $ Imm64 20w
+        /\ ~bir_read_core_reg_zero "x6" cid S
+        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
+    )
+    (* successful store *)
+    /\ (
+        FST $ bst_pc_tuple $ core_pc cid S = BL_Address $ Imm64 24w
+        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
+    )
+    (* after lock, before unlock *)
+    /\ (
+        bir_laImm64_lt2 24w (FST $ bst_pc_tuple $ core_pc cid S)
+        /\ bir_laImm64_lt (FST $ bst_pc_tuple $ core_pc cid S) 40w
+        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
+    )
+    (* after unlock *)
+    /\ (
+        FST $ bst_pc_tuple $ core_pc cid S = BL_Address $ Imm64 40w
+        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 8w,0)
+    )
   )
 End
 
@@ -305,14 +409,16 @@ End
 
 Theorem spinlock_refinement:
   !cid S S' aS aS'.
-  parstep_nice cid S S'
-  /\ slrefinerel cid aS S
+  wf_trace tr /\ i < LENGTH tr
+  /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
+  /\ asl_slf_rel cid aS (EL i tr)
   ==>
-    slrefinerel cid aS S'
-    \/ ?aS'. gstep cid aS aS'
-          /\ slrefinerel cid aS' S'
+    asl_slf_rel cid aS (EL (SUC i) tr)
+    \/ ?aS'. parstep_nice cid aS aS'
+          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
   cheat
 QED
 
 val _ = export_theory();
+
