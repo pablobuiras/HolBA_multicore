@@ -3,7 +3,8 @@ open HolKernel Parse boolLib bossLib;
 open rich_listTheory listTheory arithmeticTheory finite_mapTheory ;
 open bir_lifter_interfaceLib ;
 open bir_promisingTheory ;
-(* open tracesTheory tracestepTheory spinlockTheory ; *)
+open tracesTheory
+(* tracestepTheory spinlockTheory ; *)
 
 val _ = new_theory "spinlockRefinement";
 
@@ -21,14 +22,7 @@ val (bir_spinlockfull_progbin_def, bir_spinlockfull_prog_def, bir_is_lifted_prog
 (*****************************************************************************)
 (* Helper definitions ********************************************************)
 (*****************************************************************************)
-(* TODO place elsewhere *)
-
-(* adjusted parstep_nice definition *)
-
-Definition parstep_nice_def:
-  parstep_nice cid s1 s2
-  = parstep cid (FST s1) (FST $ SND s1) (SND $ SND s1) (FST s2) (FST $ SND s2) (SND $ SND s2)
-End
+(* TODO place these elsewhere *)
 
 (* projection of the state of a core *)
 
@@ -220,6 +214,17 @@ Definition in_crit_slf_def:
     reachable_asl pc /\ bst_pc_tuple pc = (BL_Address $ Imm64 32w,0)
 End
 
+(* pc not in lock or unlock region *)
+Definition outside_un_lock_slf_def:
+  outside_un_lock_slf pc <=>
+    !x n. bst_pc_tuple pc = (BL_Address $ Imm64 x,n)
+    ==>  (x,n) = (0w,0)
+      \/ (24w <= x /\ x <= 36w)
+      \/ x = 40w
+End
+
+(* thread  cid  sees a free lock *)
+
 Definition is_free_slf_def:
   is_free_slf cid S <=>
     bir_read_mem_var "MEM8" "x7" ((core_state cid S).bst_environ)
@@ -323,6 +328,7 @@ End
 
 (* all possible steps of the abstract spinlock
  * sl_step (block,pc) (block',pc') *)
+(* TODO rename control flow *)
 (* TODO automate *)
 
 Inductive asl_step:
@@ -345,14 +351,29 @@ Definition reachable_asl_def:
 End
 
 (* pc within crit region *)
-
+(* the abstract program contains only one statement, thus behaves atomically *)
 Definition in_crit_asl_def:
-  in_crit_asl pc <=>
-    reachable_asl pc /\ bst_pc_tuple pc = (BL_Address $ Imm64 4w,0)
+  in_crit_asl pc <=> reachable_asl pc
+End
+
+(* pc not in lock or unlock region *)
+Definition outside_un_lock_asl_def:
+  outside_un_lock_asl pc <=>
+    !x n. bst_pc_tuple pc = (BL_Address $ Imm64 x,n)
+    ==>  (x,n) = (0w,0)
+      \/ (x,n) = (4w,0)
+      \/ (x,n) = (8w,0)
+End
+
+(* TODO define statement *)
+Definition same_pc_als_slf_def:
+  same_pc_als_slf pc pc' <=>
+    (ARB :bool)
 End
 
 (* the spinlock refinement relation between abstract state aS
  * and concrete state S for a core id cid *)
+(* TODO parametrise over projection of aS and S at cid *)
 Definition asl_slf_rel_def:
   asl_slf_rel cid aS S =
   (!cores M acores aM agenv genv.
@@ -371,7 +392,11 @@ Definition asl_slf_rel_def:
     (* lock is free *)
     /\ is_free_slf cid S = is_free_asl agenv
     (* pc outside lock and unlock *)
-    /\ in_crit_asl (core_pc cid aS) = in_crit_slf (core_pc cid S)
+    /\ (
+      outside_un_lock_asl (core_pc cid aS)
+      /\ outside_un_lock_slf (core_pc cid S)
+      ==> same_pc_als_slf (core_pc cid aS) (core_pc cid S)
+    )
     (* not taking the lock *)
     /\ (
       (bir_laImm64_lt (FST $ bst_pc_tuple $ core_pc cid S) 20w
@@ -408,8 +433,8 @@ End
 (* the abstract state is prefixed with "a" *)
 
 Theorem spinlock_refinement:
-  !cid S S' aS aS'.
-  wf_trace tr /\ i < LENGTH tr
+  !cid tr i aS.
+  wf_trace tr /\ SUC i < LENGTH tr
   /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
   /\ asl_slf_rel cid aS (EL i tr)
   ==>
