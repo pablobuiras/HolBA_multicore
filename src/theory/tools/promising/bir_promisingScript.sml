@@ -49,8 +49,8 @@ val mem_get_def = Define‘
    /\
    mem_get M l (SUC t) =
    case oEL t M of
-   | SOME m => if m.loc = l then SOME m else NONE
-   | NONE => NONE
+   | SOME $ SOME m => if m.loc = l then SOME m else NONE
+   | _ => NONE
 ’;
 
 (*
@@ -61,7 +61,7 @@ val mem_read_def = Define‘
    mem_read M l t =
    case mem_get M l t of
    | SOME m => SOME m.val
-   | NONE => NONE
+   | _ => NONE
 ’;
 
 val mem_is_loc_def = Define‘
@@ -69,30 +69,19 @@ val mem_is_loc_def = Define‘
    /\
    mem_is_loc M (SUC t) l =
    case oEL t M of
-   | SOME m => m.loc = l
-   | NONE => F
+   | SOME $ SOME m => m.loc = l
+   | _ => F
 ’;
 
 Theorem mem_get_is_loc:
-  !M t l.
+  !t M l.
     IS_SOME (mem_get M l t) = mem_is_loc M t l
 Proof
-  Cases_on ‘t’ >|
-  [
-    fs [mem_get_def, mem_is_loc_def]
-    ,
-    fs [mem_get_def, mem_is_loc_def] >>
-    rpt gen_tac >>
-    rename1 ‘oEL t M’ >>
-    Cases_on ‘oEL t M’ >|
-    [
-      fs []
-      ,
-      fs [] >>
-      CASE_TAC >>
-      (fs [])
-    ]
-  ]
+  Cases
+  >> fs [mem_get_def, mem_is_loc_def,EQ_IMP_THM]
+  >> rpt gen_tac
+  >> BasicProvers.every_case_tac
+  >> fs[]
 QED
 
 val mem_is_cid_def = Define‘
@@ -100,9 +89,14 @@ val mem_is_cid_def = Define‘
    /\
    mem_is_cid M (SUC t) cid =
    case oEL t M of
-   | SOME m => m.cid = cid
-   | NONE => F
+   | SOME $ SOME m => m.cid = cid
+   | _ => F
 ’;
+
+(* is_some_some *)
+Definition is_some_some_def:
+  is_some_some x <=> IS_SOME x /\ IS_SOME (THE x)
+End
 
 (* Note that this currently does not take into account ARM *)
 val mem_read_view_def = Define‘
@@ -599,7 +593,8 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
- ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l))) ⇒ ~(mem_is_loc M t' l))
+ ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l)) /\ is_some_some $ oEL t' M)
+    ⇒ ~(mem_is_loc M t' l))
  ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME (new_env,genv') = env_update_cast64 var v (s.bst_environ) genv
  (* TODO: Update viewenv by v_addr or v_post? *)
@@ -632,6 +627,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
                     bst_pc := (bir_pc_next o bir_pc_next o bir_pc_next) s.bst_pc |>
  ==>
 clstep p cid s M genv [] s' genv)
+
 /\ (* fulfil *)
 (!p s s' M v a_e xcl acq rel l (t:num) v_pre v_post v_addr v_data v_e cid new_env new_viewenv.
    bir_get_stmt p s.bst_pc = BirStmt_Write a_e v_e xcl acq rel
@@ -714,7 +710,7 @@ clstep p cid s M genv [] s' genv)
    /\ MAX v_wPre (s.bst_coh l) < t_w
 
    (* No writes to memory location between read and write *)
-   /\ (!t'. t_r < t' /\ t' < t_w ==> mem_is_loc M t' l)
+   /\ (!t'. t_r < t' /\ t' < t_w /\ is_some_some $ oEL t' M ==> mem_is_loc M t' l)
 
    (* State update *)
    /\ s' = s with <| bst_viewenv := new_viewenv;
@@ -783,10 +779,10 @@ val (bir_cstep_rules, bir_cstep_ind, bir_cstep_cases) = Hol_reln`
 /\ (* promise *)
 (!p cid s M s' t msg.
    (msg.cid = cid
-   /\ t = LENGTH M + 1
+   /\ LENGTH M < t
    /\ s' = s with bst_prom updated_by (\pr. pr ++ [t]))
 ==>
-  cstep p cid s M genv [t] s' (M ++ [msg]) genv)
+  cstep p cid s M genv [t] s' (M ++ REPLICATE (t - LENGHT M - 1) NONE ++ [SOME msg]) genv)
 `;
 
 (* core steps seq *)
