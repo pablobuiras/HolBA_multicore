@@ -924,19 +924,6 @@ val (bir_cstep_rules, bir_cstep_ind, bir_cstep_cases) = Hol_reln`
   cstep p cid s M genv [t] s' (M ++ REPLICATE (t - LENGTH M - 1) NONE ++ [SOME msg]) genv)
 `;
 
-Theorem cstep_bisim:
-  !p cid s M genv prom s' M' genv'.
-  cstep p cid s M genv prom s' M' genv'
-  ==> (cstep p cid s M genv prom s' M genv' /\ M = M')
-    \/ (cstep p cid s M genv [LENGTH M + 1]
-        (s with bst_prom updated_by (\pr. pr ++ [LENGTH M + 1]))
-        (M++[LAST M']) genv
-        /\ ?t msg. prom = [t]
-        /\ M' = M ++ REPLICATE (t - LENGTH M - 1) NONE ++ [SOME msg]
-        )
-Proof
-  rpt strip_tac >> fs[bir_cstep_cases]
-QED
 
 (* core steps seq *)
 val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
@@ -2269,28 +2256,388 @@ Proof
   )
 QED
 
+(* bisimulation proof and properties of init_constraints *)
+
+Definition init_constraints_def:
+   init_constraints s b <=>
+      FEVERY (flip $< b o SND) s.bst_viewenv
+      /\ (!l. s.bst_coh(l) < b)
+      /\ s.bst_v_rOld < b
+      /\ s.bst_v_wOld < b
+      /\ s.bst_v_rNew < b
+      /\ s.bst_v_wNew < b
+      /\ s.bst_v_Rel  < b
+      /\ s.bst_v_CAP  < b
+      /\ EVERY (λx. x < b) s.bst_prom
+      /\ (IS_SOME s.bst_xclb ==>
+        (λx. x.xclb_time < b /\ x.xclb_view < b) $ THE s.bst_xclb)
+      /\ (!l. (s.bst_fwdb l).fwdb_view < b
+          /\ (s.bst_fwdb l).fwdb_time < b)
+End
+
+Theorem init_constraints_LESS:
+  !s a b. init_constraints s a /\ a < b
+  ==> init_constraints s b
+Proof
+  rpt gen_tac >> strip_tac
+  >> gs[init_constraints_def,FUN_EQ_THM,arithmeticTheory.LESS_TRANS,FEVERY_ALL_FLOOKUP]
+  >> drule_at_then Any (irule_at Any) $ Ho_Rewrite.REWRITE_RULE[PULL_FORALL] EVERY_MONOTONIC
+  >> rw[]
+  >> irule arithmeticTheory.LESS_TRANS
+  >> goal_assum $ drule_at Any
+  >> res_tac
+  >> fs[]
+QED
+
+Theorem init_constraints_timeshift_I:
+  !s b k. init_constraints s b
+  ==> timeshift (lower b k) (s with bst_prom updated_by (λx. x++[k+1]))
+  = s with bst_prom updated_by λx. x++[lower b k (k+1)]
+Proof
+  rpt gen_tac >> strip_tac
+  >> gs[init_constraints_def,timeshift_def,bir_state_t_component_equality,lower_def,FUN_EQ_THM,EVERY_MEM]
+  >> irule_at Any LIST_EQ
+  >> fs[lower_def,EL_MAP,rich_listTheory.EL_MEM]
+  >> fs[fwdb_t_component_equality,lower_def]
+  >> conj_tac
+  >- (
+    CONV_TAC $ RHS_CONV $ ONCE_REWRITE_CONV $ single $ GSYM o_f_id
+    >> irule o_f_cong
+    >> rw[IN_FRANGE_FLOOKUP]
+    >> drule_all FEVERY_FLOOKUP
+    >> fs[lower_def]
+  )
+  (* OPTION_MAP *)
+  >> qmatch_goalsub_rename_tac `OPTION_MAP _ s.bst_xclb`
+  >> Cases_on `s.bst_xclb`
+  >> fs[optionTheory.OPTION_MAP_DEF,xclb_t_component_equality]
+  >> irule_at Any EQ_REFL
+  >> fs[lower_def]
+QED
+
+Theorem COND_LESS:
+  !cond a b (c:num). a < c /\ b < c
+  ==> (if cond then a else b) < c
+Proof
+  Cases >> fs[]
+QED
+
+Theorem MAX_LESS:
+  !a b (c:num). a < c /\ b < c
+  ==> MAX a b < c
+Proof
+  fs[arithmeticTheory.MAX_DEF]
+QED
+
+Theorem FEVERY_bir_eval_view_of_exp_LESS:
+  !a_e env b.
+  FEVERY (flip $< b o SND) env
+  /\ 0 < b
+  ==> bir_eval_view_of_exp a_e env < b
+Proof
+  Induct
+  >> rw[bir_eval_view_of_exp_def,FLOOKUP_o_f]
+  >> CASE_TAC
+  >> imp_res_tac FEVERY_FLOOKUP
+  >> fs[]
+QED
+
+Theorem mem_get_LESS:
+  !t M l v. mem_get M l t = SOME v
+  ==> t < LENGTH M + 1
+Proof
+  Cases >> fs[AllCaseEqs(),PULL_EXISTS,mem_get_def,oEL_THM]
+QED
+
+Theorem mem_read_LESS:
+  !t M l v. mem_read M l t = SOME v
+  ==> t < LENGTH M + 1
+Proof
+  Cases >> fs[mem_read_def,AllCaseEqs(),PULL_EXISTS,mem_get_def,oEL_THM]
+QED
+
+Theorem FEVERY_FEVERY_FUPDATE:
+  !env P var val.
+  FEVERY (P o SND) env /\ P val
+  ==> FEVERY (P o SND) (env |+ (var, val))
+Proof
+  fs[FEVERY_STRENGTHEN_THM,FEVERY_FEMPTY]
+QED
+
+Theorem FEVERY_xclfail_update_viewenv_FEVERY:
+  FEVERY (flip $< b ∘ SND) s.bst_viewenv
+  /\ 0 < b
+  /\ xclfail_update_viewenv p s = SOME viewenv
+  ==> FEVERY (flip $< b ∘ SND) viewenv
+Proof
+  rw[xclfail_update_viewenv_def]
+  >> gvs[AllCaseEqs(),FEVERY_FEVERY_FUPDATE]
+QED
+
+Theorem FEVERY_fulfil_update_viewenv:
+  FEVERY (flip $< b ∘ SND) s.bst_viewenv
+  /\ t < b
+  /\ fulfil_update_viewenv p s xcl t = SOME viewenv
+  ==> FEVERY (flip $< b ∘ SND) viewenv
+Proof
+  rw[fulfil_update_viewenv_def]
+  >> gvs[AllCaseEqs(),FEVERY_FEVERY_FUPDATE]
+QED
+
+Theorem init_constraints_bir_exec_stmtE:
+  !stmt p s b s'. bir_exec_stmtE p stmt s = s'
+  /\ init_constraints s b
+  ==> init_constraints s' b
+Proof
+  Induct
+  >> rw[bir_exec_stmtE_def,bir_exec_stmt_halt_def,bir_exec_stmt_jmp_def,bir_exec_stmt_cjmp_def]
+  >> simp[init_constraints_def]
+  >> fs[iffLR init_constraints_def,bir_exec_stmt_jmp_to_label_def,bir_state_set_typeerror_def]
+  >> BasicProvers.every_case_tac
+  >> fs[init_constraints_def]
+  >> rw[optionTheory.IS_SOME_EXISTS]
+  >> gs[]
+QED
+
+Theorem init_constraints_bir_exec_stmtB_mix:
+  !stmt s genv b s' oo genv'. bir_exec_stmtB_mix stmt s genv = (oo,s',genv')
+  /\ init_constraints s b
+  ==> init_constraints s' b
+Proof
+  Induct
+  >> fs[bir_exec_stmtB_mix_def,bir_exec_stmt_assign_mix_def,bir_exec_stmt_observe_mix_def,bir_exec_stmt_assume_mix_def,bir_exec_stmt_fence_def,bir_exec_stmt_assert_mix_def]
+  >> rpt gen_tac >> strip_tac
+  >> simp[init_constraints_def]
+  >> BasicProvers.every_case_tac
+  >> gvs[init_constraints_def,bir_state_set_typeerror_def]
+QED
+
+Theorem clstep_init_constraints:
+  !p cid s M genv prom s' genv'.
+  clstep p cid s M genv prom s' genv'
+  /\ init_constraints s (LENGTH M + 1)
+  ==> init_constraints s' (LENGTH M + 1)
+Proof
+  fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
+  >> ho_match_mp_tac bir_clstep_ind
+  >> conj_tac
+  (* BirStmt_Read *)
+  >- (
+    rpt strip_tac
+    >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+    >> qpat_x_assum `v_pre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> qpat_x_assum `v_post = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> simp[init_constraints_def]
+    >> `0 < b` by fs[Abbr`b`]
+    >> `v_addr < b` by fs[iffLR init_constraints_def,FEVERY_bir_eval_view_of_exp_LESS,bir_eval_exp_view_def]
+    >> imp_res_tac mem_read_LESS
+    >> `mem_read_view (s.bst_fwdb l) t < b` by
+      gs[iffLR init_constraints_def,mem_read_view_def,COND_LESS]
+    >> `v_post < b` by (
+      unabbrev_all_tac
+      >> fs[iffLR init_constraints_def,COND_LESS,MAX_LESS,bir_eval_exp_view_def]
+    )
+    >> gs[iffLR init_constraints_def,COND_LESS,MAX_LESS,FEVERY_FEVERY_FUPDATE]
+    >> rw[optionTheory.IS_SOME_EXISTS]
+    >> gs[init_constraints_def]
+  )
+  (* BirStmt_Write (fail) *)
+  >> conj_tac
+  >- (
+    rpt strip_tac
+    >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+    >> simp[init_constraints_def]
+    >> `0 < b` by fs[Abbr`b`]
+    >> imp_res_tac $ GSYM FEVERY_xclfail_update_viewenv_FEVERY
+    >> gs[iffLR init_constraints_def,COND_LESS,MAX_LESS]
+  )
+  (* BirStmt_Write *)
+  >> conj_tac
+  >- (
+    rpt strip_tac
+    >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+    >> simp[init_constraints_def]
+    >> qpat_x_assum `v_pre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> `0 < b` by fs[Abbr`b`]
+    >> `v_addr < b` by fs[iffLR init_constraints_def,FEVERY_bir_eval_view_of_exp_LESS,bir_eval_exp_view_def]
+    >> `v_data < b` by fs[iffLR init_constraints_def,FEVERY_bir_eval_view_of_exp_LESS,bir_eval_exp_view_def]
+    >> imp_res_tac mem_get_LESS
+    >> gs[iffLR init_constraints_def,COND_LESS,MAX_LESS,EVERY_FILTER_IMP]
+    >> conj_tac
+    >- (
+      fs[init_constraints_def]
+      >> imp_res_tac $ GSYM FEVERY_fulfil_update_viewenv
+    )
+    >> conj_tac
+    >- (
+      rw[optionTheory.IS_SOME_EXISTS]
+      >> gs[init_constraints_def]
+    )
+    >> rw[]
+    >> gs[init_constraints_def]
+  )
+  (* BirStmt_Amo *)
+  >> conj_tac
+  >- (
+    rpt strip_tac
+    >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+    >> qpat_x_assum `v_rPre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> qpat_x_assum `v_rPost = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> qpat_x_assum `v_wPre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> simp[init_constraints_def]
+    >> `0 < b` by fs[Abbr`b`]
+    >> imp_res_tac mem_get_LESS
+    >> imp_res_tac mem_read_LESS
+    >> gs[]
+    >> `v_addr < b` by fs[iffLR init_constraints_def,FEVERY_bir_eval_view_of_exp_LESS,bir_eval_exp_view_def]
+    >> `v_rPost < b` by (
+      unabbrev_all_tac
+      >> gs[iffLR init_constraints_def,COND_LESS,MAX_LESS]
+    )
+    >> `v_data < b` by (
+      gs[iffLR init_constraints_def,FEVERY_FEVERY_FUPDATE,FEVERY_bir_eval_view_of_exp_LESS,bir_eval_exp_view_def]
+    )
+    >> gs[init_constraints_def,COND_LESS,MAX_LESS,EVERY_FILTER_IMP,combinTheory.APPLY_UPDATE_THM,FEVERY_FEVERY_FUPDATE]
+    >> rw[]
+  )
+  (* BirStmt_Fence *)
+  >> conj_tac
+  >- (
+    rpt strip_tac
+    >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+    >> simp[init_constraints_def]
+    >> `0 < b` by fs[Abbr`b`]
+    >> gs[init_constraints_def,COND_LESS,MAX_LESS,EVERY_FILTER_IMP,combinTheory.APPLY_UPDATE_THM,FEVERY_FEVERY_FUPDATE]
+  )
+  (* BirStmt_Branch *)
+  >> conj_tac
+  >- (
+    rpt strip_tac
+    >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+    >> simp[init_constraints_def]
+    >> `0 < b` by fs[Abbr`b`]
+    >> `v_addr < b` by fs[iffLR init_constraints_def,FEVERY_bir_eval_view_of_exp_LESS,bir_eval_exp_view_def]
+    >> gvs[bir_exec_stmt_mix_def]
+    >> imp_res_tac init_constraints_bir_exec_stmtE
+    >> gs[init_constraints_def,COND_LESS,MAX_LESS]
+  )
+  (* BirStmt_Expr *)
+  >> conj_tac
+  >- (
+    rpt strip_tac
+    >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+    >> simp[init_constraints_def]
+    >> `0 < b` by fs[Abbr`b`]
+    >> irule_at Any FEVERY_FEVERY_FUPDATE
+    >> gs[init_constraints_def,COND_LESS,MAX_LESS,bir_eval_exp_view_def,FEVERY_bir_eval_view_of_exp_LESS]
+  )
+  (* BirStmt_Generic *)
+  >> rpt strip_tac
+  >> qmatch_goalsub_abbrev_tac `init_constraints _ b`
+  >> `0 < b` by fs[Abbr`b`]
+  >> qmatch_asmsub_rename_tac `bir_exec_stmt_mix p stmt`
+  >> reverse $ Cases_on `stmt`
+  >- (
+    fs[bir_exec_stmt_mix_def,pairTheory.ELIM_UNCURRY,bir_state_is_terminated_def,init_constraints_bir_exec_stmtE]
+    >> drule_then irule init_constraints_bir_exec_stmtE
+    >> asm_rewrite_tac[]
+  )
+  >> qmatch_assum_rename_tac `bir_exec_stmt_mix p (BStmtB bb) s genv = _`
+  >> qspecl_then [`bb`,`s`,`genv`] mp_tac init_constraints_bir_exec_stmtB_mix
+  >> disch_then $ drule_at Any
+  >> fs[bir_exec_stmt_mix_def,pairTheory.ELIM_UNCURRY,bir_state_is_terminated_def]
+  >> BasicProvers.every_case_tac
+  >> fs[]
+  >> Cases_on `bir_exec_stmtB_mix bb s genv`
+  >> qmatch_goalsub_rename_tac `(q,r)` >> Cases_on `r`
+  >> gvs[]
+  >> simp[init_constraints_def]
+QED
+
+Theorem cstep_bisim:
+  !p cid s M genv prom s' M' genv'.
+  cstep p cid s M genv prom s' M' genv'
+  /\ init_constraints s (LENGTH M + 1)
+  ==> (cstep p cid s M genv prom s' M genv' /\ M = M'
+      /\ init_constraints s' (LENGTH M + 1))
+    \/ (cstep p cid s M genv [LENGTH M + 1]
+        (s with bst_prom updated_by (\pr. pr ++ [LENGTH M + 1]))
+        (M++[LAST M']) genv)
+Proof
+  fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
+  >> ho_match_mp_tac bir_cstep_ind
+  >> fs[bir_cstep_cases]
+  >> rpt strip_tac
+  >> drule_all clstep_init_constraints
+  >> fs[]
+QED
+
+Theorem parstep_bisim:
+  !cid cores M genv cores' M' genv'.
+  parstep cid cores M genv cores' M' genv'
+  /\ FEVERY ((λcore. init_constraints (get_core_state core) (LENGTH M + 1)) o SND) cores
+  ==>
+    (M = M' /\ parstep cid cores M genv cores' M genv'
+      /\ FEVERY ((λcore. init_constraints (get_core_state core) (LENGTH M + 1)) o SND) cores')
+    \/ (parstep cid cores M genv (FUPDATE cores (cid,
+        Core cid (get_core_prog $ THE $ FLOOKUP cores cid)
+        ((get_core_state $ THE $ FLOOKUP cores cid) with bst_prom updated_by (\pr. pr ++ [LENGTH M + 1])))) (M ++ [LAST M']) genv
+      /\ init_constraints (get_core_state (THE $ FLOOKUP cores cid) with bst_prom updated_by (\pr. pr ++ [LENGTH M + 1])) (LENGTH M + 2))
+Proof
+  fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
+  >> ho_match_mp_tac bir_parstep_ind
+  >> rpt strip_tac
+  >> drule_all_then assume_tac FEVERY_FLOOKUP
+  >> fs[get_core_state]
+  >> drule_all_then strip_assume_tac cstep_bisim
+  >- (
+    disj1_tac
+    >> irule_at Any FEVERY_FEVERY_FUPDATE
+    >> gs[bir_parstep_cases,get_core_state]
+    >> irule_at Any EQ_REFL
+    >> rpt $ goal_assum $ drule_at Any
+  )
+  >> disj2_tac
+  >> fs[bir_parstep_cases,get_core_state,get_core_prog]
+  >> irule_at Any EQ_REFL
+  >> goal_assum $ drule_at Any
+  >> qhdtm_x_assum `atomicity_ok` kall_tac
+  >> reverse $ conj_tac
+  >- (
+    `LENGTH M + 1 < LENGTH M + 2` by fs[]
+    >> drule_all init_constraints_LESS
+    >> simp[init_constraints_def]
+  )
+  >> qhdtm_x_assum `is_certified` (fn thm => rpt $ pop_assum mp_tac >> mp_tac thm)
+  >> fs[is_certified_def,cstep_seq_rtc_def]
+  >> cheat
+QED
+
+(* end bisimulation proof and properties of init_constraints *)
+
 Theorem cstep_seq_DROP_NONE:
   !p cid sys1 sys2.
   cstep_seq p cid sys1 sys2
-  ==> !s M k M' genv s' M'' genv'.
-    sys1 = (s, M ++ (REPLICATE k NONE) ++ M', genv)
+  ==> !s k M' genv s' M'' genv'.
+    sys1 = (s, M' ++ (REPLICATE k NONE) ++ M'', genv)
     /\ sys2 = (s', M'', genv')
   ==>
-  ?s''. cstep_seq p cid (s, M ++ M', genv) (s'', M ++ DROP (LENGTH M + k) M'', genv')
-  /\ s''.bst_prom
-    = MAP (λx. if x < LENGTH M then x else x - LENGTH M - k) s'.bst_prom
+  cstep_seq p cid
+    (timeshift (lower (LENGTH M' + 1) k) s, M' ++ M'', genv)
+    (timeshift (lower (LENGTH M' + 1) k) s', M' ++ DROP (LENGTH M' + k) M'', genv')
+  /\ s'.bst_prom = MAP (lower (LENGTH M' + 1) k) s'.bst_prom
 Proof
   ho_match_mp_tac bir_cstep_seq_ind
   >> conj_tac >> ntac 2 (rpt gen_tac >> strip_tac)
-  >> gvs[rich_listTheory.DROP_APPEND1]
-  >> qmatch_goalsub_abbrev_tac `MAP f`
+  >> gvs[rich_listTheory.DROP_APPEND1,lower_zero,timeshift_simps]
   >- (
     dsimp[bir_cstep_seq_cases]
-    >> qmatch_asmsub_rename_tac `clstep _ _ _ _ _ prom _ _`
-    >> CONV_TAC $ RESORT_EXISTS_CONV rev
-    >> qexists_tac `MAP f prom`
-    >> fs[]
+    >> goal_assum drule
   )
+  >> qmatch_goalsub_abbrev_tac `lower b k`
+  >>
+  >>
+
 QED
 
 Theorem is_certified_NONE_is_certified:
