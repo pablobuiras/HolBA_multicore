@@ -2256,6 +2256,64 @@ Proof
   )
 QED
 
+(* cstep_seq_bisim *)
+
+(* difference between indexing into M with and without None values *)
+Definition offset_none_def:
+  offset_none M t = t + (LENGTH $ FILTER IS_SOME $ TAKE (PRE t) M) - (LENGTH $ TAKE (PRE t) M)
+End
+
+Theorem offset_none_zero:
+  !M. offset_none M 0 = 0
+Proof
+  fs[offset_none_def]
+QED
+
+Theorem offset_none_LESS_EQ:
+  !M t. offset_none M t <= t
+Proof
+  fs[offset_none_def,rich_listTheory.LENGTH_FILTER_LEQ]
+QED
+
+(*
+  s   M  (with none values)
+    |
+  s'  M' (without none values)
+*)
+Definition drop_none_rel_def:
+  drop_none_rel s M s' M' <=>
+    M' = FILTER IS_SOME M /\ s' = timeshift (offset_none M) s
+End
+
+Theorem cstep_seq_bisim:
+  !p cid s M genv s' M' genv' r L r' L'.
+  cstep_seq p cid (s, M, genv) (s', M', genv')
+  /\ drop_none_rel s M r L /\ drop_none_rel s' M' r' L'
+  ==> cstep_seq p cid (r, L, genv) (r', L', genv')
+Proof
+  qsuff_tac `!p cid sMg sMg' r L r' L'.
+    cstep_seq p cid sMg sMg'
+    /\ drop_none_rel (FST sMg) (FST $ SND sMg) r L
+    /\ drop_none_rel (FST sMg') (FST $ SND sMg') r' L'
+    ==> cstep_seq p cid (r, L, SND $ SND sMg) (r', L', SND $ SND sMg')`
+  >- (rpt strip_tac >> first_x_assum drule >> fs[])
+  >> fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
+  >> ho_match_mp_tac bir_cstep_seq_ind
+  >> rpt strip_tac
+  >> simp[bir_cstep_seq_cases]
+  >> gvs[drop_none_rel_def]
+  (* clstep *)
+  >- (
+    qmatch_asmsub_rename_tac `clstep _ _ _ M _ prom`
+    >> qexists_tac `MAP (offset_none M) prom`
+    >> cheat
+  )
+  (* cstep; clstep *)
+  >> disj2_tac
+  >> cheat
+QED
+
+
 (* bisimulation proof and properties of init_constraints *)
 
 Definition init_constraints_def:
