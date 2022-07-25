@@ -11,6 +11,7 @@ open bir_auxiliaryTheory bir_immTheory bir_valuesTheory;
 open bir_exp_immTheory bir_exp_memTheory bir_envTheory;
 open stringTheory;
 open dep_rewrite;
+open arithmeticTheory;
 
 val _ = new_theory "bir_promising";
 
@@ -19,6 +20,72 @@ Theorem I_EQ_IDABS:
 Proof
   fs[FUN_EQ_THM]
 QED
+
+(* move from  ls  to  FILTER P ls  *)
+
+Theorem EL_FILTER:
+  !ls n P. n < LENGTH ls /\ P $ EL n ls
+  ==> EL (n + (LENGTH $ FILTER P $ TAKE n ls) - (LENGTH $ TAKE n ls)) $ FILTER P ls = EL n ls
+  /\ (n + (LENGTH $ FILTER P $ TAKE n ls) - (LENGTH $ TAKE n ls)) < LENGTH $ FILTER P ls
+Proof
+  Induct >> rw[] >> Cases_on `n` >> fs[]
+  >> drule_then assume_tac rich_listTheory.EL_MEM
+  >> dxrule_then strip_assume_tac $ iffLR MEM_SPLIT
+  >> pop_assum $ ONCE_REWRITE_TAC o single
+  >> fs[FILTER_APPEND_DISTRIB]
+QED
+
+(* move from  FILTER P ls  to  ls  *)
+
+Theorem EL_EL_FILTER:
+  !ls n P. n < LENGTH $ FILTER P ls
+  ==> ?m. m < LENGTH ls /\ EL m ls = EL n $ FILTER P ls
+    /\ n = m + (LENGTH $ FILTER P $ TAKE m ls) - (LENGTH $ TAKE m ls)
+Proof
+  Induct using SNOC_INDUCT
+  >> rw[SNOC_APPEND]
+  >> qmatch_goalsub_abbrev_tac `EL n $ FILTER P $ ls ++ [x]`
+  >> Cases_on `n < LENGTH $ FILTER P ls`
+  >- (
+    first_x_assum $ drule_then strip_assume_tac
+    >> qmatch_asmsub_rename_tac `m < LENGTH ls`
+    >> qexists_tac `m`
+    >> fs[rich_listTheory.EL_APPEND1,FILTER_APPEND_DISTRIB,TAKE_APPEND1]
+  )
+  >> gs[NOT_LESS,FILTER_APPEND_DISTRIB,rich_listTheory.EL_APPEND2]
+  >> IF_CASES_TAC
+  >> gs[]
+  >> qexists_tac `LENGTH ls`
+  >> gs[rich_listTheory.EL_APPEND2,FILTER_APPEND_DISTRIB,TAKE_APPEND1,LESS_OR_EQ]
+QED
+
+Theorem EL_FILTER_LENGTH_LT:
+  !ls n P. n < LENGTH ls /\ P $ EL n ls
+  ==> LENGTH $ FILTER P $ TAKE n ls < LENGTH $ FILTER P ls
+Proof
+  Induct >> rw[] >> Cases_on `n` >> fs[]
+QED
+
+Theorem LENGTH_FILTER_TAKE_LESS_SUC:
+  !ls n P.
+    LENGTH $ FILTER P $ TAKE n ls <= LENGTH $ FILTER P $ TAKE (SUC n) ls
+    /\
+      (n < LENGTH ls /\ P $ EL n ls ==>
+      LENGTH $ FILTER P $ TAKE n ls < LENGTH $ FILTER P $ TAKE (SUC n) ls)
+Proof
+  fs[GSYM rich_listTheory.SNOC_EL_TAKE,SNOC_APPEND,FILTER_APPEND_DISTRIB]
+  >> Induct >- fs[]
+  >> gen_tac >> Cases >> rw[TAKE_def]
+QED
+
+Theorem FEVERY_FEVERY_FUPDATE:
+  !env P var val.
+  FEVERY (P o SND) env /\ P val
+  ==> FEVERY (P o SND) (env |+ (var, val))
+Proof
+  fs[FEVERY_STRENGTHEN_THM,FEVERY_FEMPTY]
+QED
+
 
 (* message type, represents a store of the form ⟨loc ≔ val⟩_tid *)
 val _ = Datatype‘
@@ -231,11 +298,32 @@ Proof
   >> fs[]
 QED
 
-
 (* is_some_some *)
 Definition is_some_some_def:
-  is_some_some t M <=> 0 < t /\ t < LENGTH M /\ IS_SOME $ EL (PRE t) M
+  is_some_some M t <=> 0 < t /\ PRE t < LENGTH M /\ IS_SOME $ EL (PRE t) M
 End
+
+Theorem is_some_some_APPEND:
+  !M M' t. is_some_some M t ==> is_some_some (M ++ M') t
+Proof
+  fs[is_some_some_def,rich_listTheory.EL_APPEND1]
+QED
+
+Definition some_zero_def:
+  some_zero M a <=> a = 0 \/ is_some_some M a
+End
+
+Theorem some_zero_zero[simp]:
+  !M. some_zero M 0
+Proof
+  fs[some_zero_def]
+QED
+
+Theorem some_zero_APPEND:
+  !M M' t. some_zero M t ==> some_zero (M ++ M') t
+Proof
+  dsimp[some_zero_def,is_some_some_APPEND]
+QED
 
 (* Note that this currently does not take into account ARM *)
 val mem_read_view_def = Define‘
@@ -732,7 +820,7 @@ val (bir_clstep_rules, bir_clstep_ind, bir_clstep_cases) = Hol_reln`
  ∧ mem_read M l t = SOME v
  ∧ v_pre = MAX (MAX (MAX v_addr s.bst_v_rNew) (if (acq /\ rel) then s.bst_v_Rel else 0))
                (if (acq /\ rel) then (MAX s.bst_v_rOld s.bst_v_wOld) else 0)
- ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l)) /\ is_some_some t' M)
+ ∧ (∀t'. ((t:num) < t' ∧ t' ≤ (MAX v_pre (s.bst_coh l)) /\ some_zero M t')
     ⇒ ~(mem_is_loc M t' l))
  ∧ v_post = MAX v_pre (mem_read_view (s.bst_fwdb(l)) t)
  /\ SOME (new_env,genv') = env_update_cast64 var v (s.bst_environ) genv
@@ -849,7 +937,7 @@ clstep p cid s M genv [] s' genv)
    /\ MAX v_wPre (s.bst_coh l) < t_w
 
    (* No writes to memory location between read and write *)
-   /\ (!t'. t_r < t' /\ t' < t_w /\ is_some_some t' M ==> mem_is_loc M t' l)
+   /\ (!t'. t_r < t' /\ t' < t_w /\ some_zero M t' ==> mem_is_loc M t' l)
 
    (* State update *)
    /\ s' = s with <| bst_viewenv := new_viewenv;
@@ -1596,28 +1684,53 @@ Proof
   )
 QED
 
-Theorem bir_eval_view_of_exp_lower_o_f_FUPDATE:
-  !viewenv b k upd var.
-  FEVERY (lower_constraints b k o SND) viewenv
-  /\ 0 < b
-  /\ lower_constraints b k upd
-  ==> !a_e v_addr.
-    bir_eval_view_of_exp a_e (viewenv |+ (var,upd)) = v_addr
-    ==>
-      bir_eval_view_of_exp a_e (lower b k o_f viewenv |+ (var, lower b k upd)) = lower b k v_addr
+Theorem bir_eval_view_of_exp_offset_none_FUPDATE:
+  !viewenv upd var M a_e v_addr.
+  FEVERY (some_zero M o SND) viewenv /\ some_zero M upd
+  /\ bir_eval_view_of_exp a_e (viewenv |+ (var,upd)) = v_addr
+  ==> bir_eval_view_of_exp a_e (offset_none M o_f viewenv |+ (var, offset_none M upd)) = offset_none M v_addr
 Proof
+  rpt strip_tac
+  >> ONCE_REWRITE_TAC[GSYM o_f_FUPDATE]
+  >> fs[FEVERY_FEVERY_FUPDATE,bir_eval_view_of_exp_offset_none]
+QED
+
+Theorem bir_eval_view_of_exp_offset_none_o_f:
+  !viewenv M a_e v_addr.
+  FEVERY (some_zero M o SND) viewenv
+  /\ bir_eval_view_of_exp a_e viewenv = v_addr
+  ==> bir_eval_view_of_exp a_e (offset_none M o_f viewenv) = offset_none M v_addr
+Proof
+  rpt strip_tac
+
+FLOOKUP_o_f
+bir_eval_view_of_exp_offset_none
+
+
+  fs[GSYM PULL_FORALL,AND_IMP_INTRO]
+  >> rpt gen_tac >> strip_tac
+  >> Induct
+
   rpt gen_tac >> strip_tac
   >> Induct
-  >> fs[bir_eval_view_of_exp_def,FLOOKUP_o_f,lower_constraints_zero,lower_zero,FLOOKUP_UPDATE]
+  >> fs[bir_eval_view_of_exp_def,FLOOKUP_o_f,lower_constraints_zero,lower_zero]
   >- (
     rw[arithmeticTheory.MAX_DEF,lower_def]
     >> BasicProvers.every_case_tac >> fs[]
   )
-  >> irule lower_MAX
-  >> fs[bir_eval_view_of_exp_lower_constraints_FUPDATE]
+  >- (
+    irule lower_MAX
+    >> fs[bir_eval_view_of_exp_lower_constraints]
+  )
+  >- (
+    irule lower_MAX
+    >> fs[bir_eval_view_of_exp_lower_constraints]
+  )
 QED
 
-(* under these constraints can we move  lower b k
+
+
+(* under these constraints can we move  f
    out of  xclfail_update_viewenv  *)
 
 Theorem xclfail_update_env_timeshift:
@@ -1626,37 +1739,62 @@ Proof
   fs[timeshift_def,bir_state_t_component_equality,xclfail_update_env_def]
 QED
 
-Theorem xclfail_update_viewenv_lower_o_f:
-  xclfail_update_viewenv p s = SOME viewenv
-  ==> xclfail_update_viewenv p (timeshift (lower b k) s)
-    = SOME (lower b k o_f viewenv)
+Theorem xclfail_update_viewenv_f_o_f:
+  !f p s viewenv. xclfail_update_viewenv p s = SOME viewenv
+  /\ f 0 = 0
+  ==> xclfail_update_viewenv p (timeshift f s)
+    = SOME (f o_f viewenv)
 Proof
-  fs[Once xclfail_update_viewenv_def,timeshift_simps]
+  rpt strip_tac
+  >> fs[Once xclfail_update_viewenv_def,timeshift_simps]
   >> BasicProvers.every_case_tac
   >> rw[timeshift_def,xclfail_update_viewenv_def]
-  >> fs[lower_def]
+  >> fs[o_f_FUPDATE]
+QED
+
+Theorem xclfail_update_viewenv_FEVERY:
+  !f p s viewenv. xclfail_update_viewenv p s = SOME viewenv
+  /\ FEVERY (f o SND) s.bst_viewenv
+  /\ f 0
+  ==> FEVERY (f o SND) viewenv
+Proof
+  rpt strip_tac
+  >> fs[Once xclfail_update_viewenv_def,timeshift_simps]
+  >> BasicProvers.every_case_tac
+  >> rw[xclfail_update_viewenv_def]
+  >> drule_all_then irule FEVERY_FEVERY_FUPDATE
 QED
 
 Theorem fulfil_update_env_timeshift:
-  !benv p s xcl f . fulfil_update_env p s xcl = SOME benv
+  !f benv p s xcl. fulfil_update_env p s xcl = SOME benv
   ==> fulfil_update_env p (timeshift f s) xcl = SOME benv
 Proof
-  Cases >> rpt gen_tac
+  gen_tac >> Cases >> rpt gen_tac
   >> fs[Once fulfil_update_env_def,timeshift_simps]
   >> BasicProvers.every_case_tac
   >> rw[timeshift_def,fulfil_update_env_def]
 QED
 
 Theorem fulfil_update_viewenv_timeshift:
-  !p s xcl t new_viewenv.
+  !f p s xcl t new_viewenv.
   fulfil_update_viewenv p s xcl t = SOME new_viewenv
-  ==> fulfil_update_viewenv p (timeshift (lower b k) s) xcl (lower b k t)
-    = SOME $ (lower b k) o_f new_viewenv
+  ==> fulfil_update_viewenv p (timeshift f s) xcl (f t)
+    = SOME $ f o_f new_viewenv
 Proof
   reverse $ rw[Once fulfil_update_viewenv_def]
   >- fs[fulfil_update_viewenv_def,timeshift_def]
   >> BasicProvers.every_case_tac
   >> gvs[fulfil_update_viewenv_def,timeshift_def]
+QED
+
+Theorem FEVERY_fulfil_update_viewenv:
+  FEVERY (f o SND) s.bst_viewenv
+  /\ fulfil_update_viewenv p s xcl t = SOME viewenv
+  /\ f t
+  ==> FEVERY (f o SND) viewenv
+Proof
+  rw[fulfil_update_viewenv_def]
+  >> gvs[AllCaseEqs(),FEVERY_FEVERY_FUPDATE]
 QED
 
 Theorem mem_get_lower:
@@ -1839,429 +1977,21 @@ Proof
   >> gs[AllCaseEqs(),oEL_THM,DISJ_EQ_IMP,arithmeticTheory.NOT_LESS,arithmeticTheory.ADD1,arithmeticTheory.NOT_LESS_EQUAL,rich_listTheory.EL_APPEND1,rich_listTheory.EL_APPEND2,rich_listTheory.EL_REPLICATE]
 QED
 
-Theorem clstep_DROP_NONE:
-  !p cid s M genv prom s' genv'.
-  clstep p cid s M genv prom s' genv'
-  ==> !M' k M''. M = (M' ++ REPLICATE k NONE ++ M'')
-    /\ time_constraints s (LENGTH M' + 1) k
-  ==>
-    clstep p cid (timeshift (lower (LENGTH M' + 1) k) s) (M' ++ M'') genv (MAP (lower (LENGTH M' + 1) k) prom) (timeshift (lower (LENGTH M' + 1) k) s') genv'
-Proof
-  ho_match_mp_tac bir_clstep_ind
-  >> conj_tac
-  (* read *)
-  >- (
-    rpt strip_tac
-    >> qpat_x_assum `v_pre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
-    >> qpat_x_assum `v_post = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
-    >> fs[]
-    >> irule_at Any $ cj 1 bir_clstep_rules
-    >> fs[]
-    >> drule_then (irule_at Any) mem_read_lower
-    >> qpat_x_assum `_ = env_update_cast64 _ _ _ _` $ assume_tac o GSYM
-    >> qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
-    >> fs[timeshift_simps,bir_eval_exp_view_def]
-    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
-    >> drule_at Any $
-      Ho_Rewrite.REWRITE_RULE[AND_IMP_INTRO,PULL_FORALL]
-      bir_eval_view_of_exp_lower_o_f
-    >> disch_then $ drule_at_then Any assume_tac
-    >> fs[]
-    >> qmatch_asmsub_abbrev_tac `lower b k`
-    >> imp_res_tac mem_read_APPEND_NONE_lower_constraints
-    >> `lower_constraints b k v_addr` by (
-      unabbrev_all_tac
-      >> qpat_x_assum `_ = v_addr` $ fs o single o GSYM
-      >> drule_then irule bir_eval_view_of_exp_lower_constraints
-      >> fs[]
-    )
-    >> conj_tac
-    (* ~mem_is_loc *)
-    >- (
-      gen_tac
-      >> fs[timeshift_def,mem_is_loc_lower,AC DISJ_ASSOC DISJ_COMM]
-      >> qmatch_goalsub_rename_tac `lower b k t < t'`
-      >> qmatch_goalsub_abbrev_tac `lower b k t < t' /\ disj /\ _`
-      >> strip_tac
-      >> first_x_assum $ qspec_then `upper b k t'` mp_tac
-      >> qunabbrev_tac `b`
-      >> fs[lower_upper,lower_upper_LESS,lower_upper_LESS_EQ,is_some_some_oEL_upper,lower_constraints_upper]
-      >> disch_then irule
-      >> unabbrev_all_tac
-      >> gs[iffLR time_constraints_def,lower_MAX,lower_COND_zero,upper_lower_LESS_EQ,lower_constraints_COND,lower_constraints_zero,upper_lower_LESS_EQ,lower_zero,lower_constraints_MAX]
-    )
-    >> fs[bir_state_t_component_equality,timeshift_def]
-    >> `lower_constraints (LENGTH M' + 1) k (mem_read_view (s.bst_fwdb l) t)` by (
-      fs[time_constraints_def,mem_read_view_def]
-      >> irule lower_constraints_COND
-      >> gs[]
-    )
-    >> `lower_constraints b k v_post` by (
-      unabbrev_all_tac
-      >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-      >> gs[iffLR time_constraints_def]
-    )
-    >> `lower_constraints b k v_pre` by (
-      unabbrev_all_tac
-      >> gs[GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero,iffLR time_constraints_def]
-    )
-    >> conj_tac
-    (* FLOOKUP_UPDATE *)
-    >- (
-      unabbrev_all_tac
-      >> rpt $ AP_TERM_TAC ORELSE AP_THM_TAC
-      >> simp[mem_read_view_def]
-      >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-      >> gs[iffLR time_constraints_def,lower_zero]
-      >> rpt $ AP_TERM_TAC ORELSE AP_THM_TAC
-      >> irule COND_CONG
-      >> fs[iffLR time_constraints_def,lower_inj]
-    )
-    >> qmatch_goalsub_abbrev_tac `mem_read_view lower_bst_fwdb (lower b k t)`
-    >> qmatch_goalsub_abbrev_tac `MAX (lower b k _) lower_v_post`
-    >> `mem_read_view lower_bst_fwdb (lower b k t)
-      = lower b k $ mem_read_view (s.bst_fwdb l) t` by (
-      qunabbrev_tac `lower_bst_fwdb`
-      >> simp[mem_read_view_def]
-      >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_COND]
-      >> irule_at Any COND_CONG
-      >> gs[EQ_IMP_THM,iffLR time_constraints_def]
-      >> strip_tac
-      >> irule $ iffLR lower_inj
-      >> goal_assum $ drule_at Any
-      >> fs[iffLR time_constraints_def]
-    )
-    >> `lower_v_post = lower b k v_post` by (
-      unabbrev_all_tac
-      >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-      >> gs[iffLR time_constraints_def,lower_zero]
-    )
-    >> gs[combinTheory.o_DEF,FUN_EQ_THM,iffLR time_constraints_def,lower_zero,GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-    >> conj_tac (* nested if-MAX-if *)
-    >- (
-      unabbrev_all_tac
-      >> irule COND_CONG
-      >> fs[combinTheory.o_DEF,FUN_EQ_THM,iffLR time_constraints_def,lower_zero,GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-    )
-    >> conj_tac (* nested if-MAX-if *)
-    >- (
-      unabbrev_all_tac
-      >> irule COND_CONG
-      >> fs[combinTheory.o_DEF,FUN_EQ_THM,iffLR time_constraints_def,lower_zero,GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-    )
-    >> conj_tac (* nested if-MAX *)
-    >- (
-      dep_rewrite.DEP_REWRITE_TAC[GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-      >> `!a b c. b = c ==> MAX a b = MAX a c` by fs[arithmeticTheory.MAX_DEF]
-      >> pop_assum $ irule_at Any
-      >> irule_at Any COND_CONG
-      >> unabbrev_all_tac
-      >> fs[iffLR time_constraints_def,lower_zero,GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-    )
-    (* nested OPTION_MAP-if *)
-    >> BasicProvers.every_case_tac
-    >> fs[]
-  )
-  >> conj_tac
-  (* xcl fail *)
-  >- (
-    rpt strip_tac
-    >> gvs[]
-    >> irule_at Any $ cj 2 bir_clstep_rules
-    >> imp_res_tac $ GSYM xclfail_update_viewenv_lower_o_f
-    >> fs[timeshift_simps,xclfail_update_env_timeshift]
-    >> simp[timeshift_def,bir_state_t_component_equality,timeshift_def]
-  )
-  >> conj_tac
-  (* write *)
-  >- (
-    rpt strip_tac
-    >> qpat_x_assum `v_pre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
-    >> gvs[]
-    >> irule_at Any $ cj 3 bir_clstep_rules
-    >> rpt $ qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
-    >> fs[timeshift_simps]
-    >> irule_at Any $ GSYM fulfil_update_env_timeshift
-    >> qpat_x_assum `SOME _ = fulfil_update_env _ _ _` $ irule_at Any
-    >> drule_then assume_tac mem_get_lower_constraints
-    >> irule_at Any $ GSYM fulfil_update_viewenv_timeshift
-    >> qpat_x_assum `SOME _ = fulfil_update_viewenv _ _ _ _` $ irule_at Any
-    >> drule_then (irule_at Any) mem_get_lower
-    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
-    >> fs[timeshift_def,bir_eval_exp_view_def]
-    >> drule_at Any $
-      Ho_Rewrite.REWRITE_RULE[AND_IMP_INTRO,PULL_FORALL]
-      bir_eval_view_of_exp_lower_o_f
-    >> disch_then (fn thm =>
-      drule_at_then Any assume_tac thm
-      >> rev_drule_at_then Any assume_tac thm)
-    >> fs[bir_state_t_component_equality,rich_listTheory.FILTER_MAP,MEM_MAP_f,combinTheory.o_DEF]
-    >> qmatch_goalsub_abbrev_tac `lower b k`
-    >> qmatch_goalsub_abbrev_tac `MAP _ l1 = MAP _ l2`
-    >> `l1 = l2` by (
-      unabbrev_all_tac
-      >> fs[time_constraints_def,EVERY_MEM]
-      >> rw[rich_listTheory.FILTER_EQ]
-      >> fs[lower_inj]
-    )
-    >> pop_assum $ fs o single
-    >> qmatch_goalsub_abbrev_tac `xcl ==> Atomic`
-    >> `xcl ==> Atomic` by (
-      rw[Abbr`Atomic`,fulfil_atomic_ok_def]
-      >> fs[fulfil_atomic_ok_def]
-      >> qmatch_assum_abbrev_tac `A ==> _`
-      >> `A` by (
-        Cases_on`s.bst_xclb` >- fs[]
-        >> unabbrev_all_tac
-        >> irule $ iffRL mem_is_loc_lower
-        >> gvs[time_constraints_def]
-      )
-      >> qpat_x_assum `A ==> _` mp_tac
-      >> fs[mem_is_loc_lower,mem_is_cid_lower]
-      >> Cases_on `s.bst_xclb` >> fs[]
-      >> disch_then $ qspec_then `upper b k t'` mp_tac
-      >> unabbrev_all_tac
-      >> fs[lower_upper,lower_upper_LESS,upper_lower_LESS,lower_constraints_upper]
-    )
-    >> pop_assum $ fs o single
-    >> `lower_constraints b k v_addr /\ lower_constraints b k v_data` by (
-      rw[]
-      >> drule_then irule $ SIMP_RULE (srw_ss()) [combinTheory.o_DEF] bir_eval_view_of_exp_lower_constraints
-      >> fs[Abbr`b`]
-    )
-    >> rpt $ qpat_x_assum `_ = bir_eval_view_of_exp _ _` $ assume_tac o GSYM
-    >> fs[lower_LESS,lower_COND,iffLR time_constraints_def,lower_MAX,lower_constraints_MAX,lower_constraints_COND]
-    >> conj_tac
-    >- (irule lower_LESS >> fs[Abbr`v_pre`])
-    >> conj_tac
-    >- (irule lower_LESS >> fs[Abbr`v_pre`])
-    >> conj_tac
-    >- (irule lower_LESS >> fs[Abbr`v_pre`,iffLR time_constraints_def])
-    >> conj_tac
-    >- (irule lower_LESS >> fs[Abbr`v_pre`,iffLR time_constraints_def])
-    >> conj_tac
-    >- (
-      (* containing 0 *)
-      qspecl_then [`k`,`b`] (ONCE_REWRITE_TAC o single o GSYM) $ GEN_ALL $ cj 1 lower_zero
-      >> qunabbrev_tac `b`
-      >> fs[lower_MAX,lower_COND,lower_constraints_MAX,lower_constraints_zero,iffLR time_constraints_def]
-      >> irule lower_LESS
-      >> fs[Abbr`v_pre`,lower_constraints_COND,lower_constraints_MAX,lower_MAX,lower_zero,iffLR time_constraints_def,lower_constraints_MAX,lower_constraints_COND,lower_constraints_zero]
-    )
-    >> conj_tac
-    >- (
-      (* containing 0 *)
-      qspecl_then [`k`,`b`] (ONCE_REWRITE_TAC o single o GSYM) $ GEN_ALL $ cj 1 lower_zero
-      >> qunabbrev_tac `b`
-      >> fs[lower_MAX,lower_COND,lower_constraints_MAX,lower_constraints_zero,iffLR time_constraints_def]
-      >> irule lower_LESS
-      >> fs[Abbr`v_pre`,lower_constraints_COND,lower_constraints_MAX,lower_MAX,lower_zero,iffLR time_constraints_def,lower_constraints_MAX,lower_constraints_COND,lower_constraints_zero]
-    )
-    >> conj_tac
-    (* get_xclb_view *)
-    >- (
-      qspecl_then [`k`,`b`] (ONCE_REWRITE_TAC o single o GSYM) $ GEN_ALL $ cj 1 lower_zero
-      >> Cases_on `s.bst_xclb`
-      >> gs[get_xclb_view_def]
-      >- (
-        qunabbrev_tac `b`
-        >> fs[lower_LESS,lower_constraints_zero,lower_constraints_zero]
-      )
-      >> dep_rewrite.DEP_REWRITE_TAC[lower_COND,lower_LESS,lower_constraints_COND,lower_constraints_zero]
-      >> unabbrev_all_tac
-      >> fs[time_constraints_def,lower_COND,lower_LESS,lower_constraints_COND,lower_constraints_zero]
-    )
-    >> conj_tac
-    >- (
-      (* containing 0 *)
-      qspecl_then [`k`,`b`] (ONCE_REWRITE_TAC o single o GSYM) $ GEN_ALL $ cj 1 lower_zero
-      >> qunabbrev_tac `b`
-      >> fs[lower_LESS,lower_COND,iffLR time_constraints_def,lower_MAX,lower_constraints_MAX,lower_constraints_COND,lower_constraints_zero,lower_zero]
-    )
-    >> conj_tac
-    >- (
-      gs[combinTheory.o_DEF,FUN_EQ_THM,iffLR time_constraints_def,lower_zero,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-      >> rw[GSYM lower_MAX]
-    )
-    (* OPTION_MAP equality *)
-    >> simp[Once COND_RAND]
-  )
-  >> conj_tac
-  (* amo *)
-  >- (
-    rpt strip_tac
-    >> qpat_x_assum `v_rPre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
-    >> qpat_x_assum `v_rPost = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
-    >> qpat_x_assum `v_wPre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
-    >> gvs[]
-    >> irule_at Any $ cj 4 bir_clstep_rules
-    >> rpt $ qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
-    >> qpat_x_assum `_ = env_update_cast64 _ _ _ _` $ assume_tac o GSYM
-    >> drule_then (irule_at Any) mem_read_lower
-    >> fs[timeshift_simps,bir_eval_exp_view_def]
-    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
-    >> drule_at Any $
-      Ho_Rewrite.REWRITE_RULE[AND_IMP_INTRO,PULL_FORALL]
-      bir_eval_view_of_exp_lower_o_f
-    >> disch_then (fn thm =>
-      drule_at_then Any assume_tac thm
-      >> rev_drule_at_then Any assume_tac thm)
-    >> drule_then (irule_at Any) mem_get_lower
-    >> qmatch_goalsub_abbrev_tac `lower b k`
-    >> imp_res_tac mem_read_APPEND_NONE_lower_constraints
-    >> `lower_constraints b k $ mem_read_view (s.bst_fwdb l) t_r` by (
-      fs[time_constraints_def,mem_read_view_def]
-      >> irule lower_constraints_COND
-      >> gs[]
-    )
-    >> `lower_constraints b k v_addr` by (
-      rw[]
-      >> irule $ SIMP_RULE (srw_ss()) [PULL_FORALL] bir_eval_view_of_exp_lower_constraints
-      >> fs[Abbr`b`]
-    )
-    >> `lower_constraints b k v_rPost` by (
-      unabbrev_all_tac
-      >> fs[lower_constraints_MAX,time_constraints_def,lower_constraints_COND,lower_constraints_zero]
-      >> dep_rewrite.DEP_REWRITE_TAC[lower_constraints_MAX,time_constraints_def,lower_constraints_COND]
-      >> fs[lower_constraints_zero]
-    )
-    >> `lower_constraints b k v_data` by (
-      drule_then irule bir_eval_view_of_exp_lower_constraints_FUPDATE'
-      >> fs[Abbr`b`]
-      >> rpt $ goal_assum $ drule_at Any
-    )
-    >> `lower_constraints b k v_wPre /\ lower_constraints b k v_rPre` by (
-      unabbrev_all_tac
-      >> dep_rewrite.DEP_REWRITE_TAC[lower_constraints_MAX,lower_constraints_COND]
-      >> fs[lower_constraints_zero,time_constraints_def]
-    )
-    >> gs[timeshift_def,bir_state_t_component_equality,rich_listTheory.FILTER_MAP,MEM_MAP_f,combinTheory.o_DEF]
-    >> qmatch_goalsub_abbrev_tac `MAP _ l1 = MAP _ l2`
-    >> `l1 = l2` by (
-      unabbrev_all_tac
-      >> fs[time_constraints_def,EVERY_MEM]
-      >> rw[rich_listTheory.FILTER_EQ]
-      >> fs[lower_inj]
-    )
-    >> pop_assum $ fs o single
-    >> `lower_constraints b k t_w` by fs[time_constraints_def,EVERY_MEM]
-    >> conj_tac
-    >- (
-      rpt strip_tac
-      >> qmatch_asmsub_rename_tac `t' < lower b k t_w`
-      >> first_x_assum $ qspec_then `upper b k t'` mp_tac
-      >> unabbrev_all_tac
-      >> gs[lower_upper_LESS,upper_lower_LESS,is_some_some_oEL_upper,mem_is_loc_lower,lower_upper]
-    )
-    >> qmatch_goalsub_abbrev_tac `mem_read_view lower_bst_fwdb $ lower b k t_r`
-    >> `mem_read_view lower_bst_fwdb $ lower b k t_r
-      = lower (LENGTH M' + 1) k (mem_read_view (s.bst_fwdb l) t_r)` by (
-      unabbrev_all_tac
-      >> simp[mem_read_view_def]
-      >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_COND]
-      >> irule_at Any COND_CONG
-      >> gs[EQ_IMP_THM,iffLR time_constraints_def]
-      >> strip_tac
-      >> irule $ iffLR lower_inj
-      >> goal_assum $ drule_at Any
-      >> fs[iffLR time_constraints_def]
-    )
-    >> `0 < b` by fs[Abbr`b`]
-    >> qmatch_goalsub_abbrev_tac `_ |+ (var,lower_v_rPost)`
-    >> `lower_v_rPost = lower b k v_rPost` by (
-      unabbrev_all_tac
-      >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_MAX,GSYM lower_COND,lower_constraints_MAX,lower_constraints_COND,lower_constraints_zero]
-      >> gs[iffLR time_constraints_def,lower_zero,lower_constraints_MAX,lower_constraints_COND,lower_constraints_zero]
-    )
-    >> `bir_eval_view_of_exp v_e (lower b k o_f s.bst_viewenv |+ (var,lower_v_rPost))
-      = lower b k $ bir_eval_view_of_exp v_e (s.bst_viewenv |+ (var,v_rPost))` by (
-      fs[]
-      >> dep_rewrite.DEP_REWRITE_TAC $ single $ SIMP_RULE (srw_ss()) [PULL_FORALL] bir_eval_view_of_exp_lower_o_f_FUPDATE
-      >> unabbrev_all_tac
-      >> gs[iffLR time_constraints_def,lower_LESS]
-    )
-    >> ntac 2 $ pop_assum $ fs o single
-    >> unabbrev_all_tac
-    >> gs[iffLR time_constraints_def,lower_MAX,lower_COND_zero,lower_COND,lower_LESS,pairTheory.ELIM_UNCURRY,combinTheory.APPLY_UPDATE_THM,FUN_EQ_THM,lower_constraints_MAX,lower_constraints_COND,lower_constraints_zero]
-    >> rpt $ irule_at Any lower_LESS
-    >> gs[iffLR time_constraints_def,lower_MAX,lower_COND_zero,lower_COND,lower_LESS,pairTheory.ELIM_UNCURRY,combinTheory.APPLY_UPDATE_THM,FUN_EQ_THM,lower_constraints_MAX,lower_constraints_COND,lower_constraints_zero,lower_zero]
-    >> conj_tac
-    >- (
-      dep_rewrite.DEP_REWRITE_TAC[lower_COND_zero,lower_COND,lower_MAX,lower_constraints_COND,lower_constraints_MAX]
-      >> fs[iffLR time_constraints_def,lower_constraints_zero]
-    )
-    >> conj_tac
-    >- (
-      dep_rewrite.DEP_REWRITE_TAC[lower_COND_zero,lower_COND,lower_MAX,lower_constraints_COND,lower_constraints_MAX]
-      >> fs[iffLR time_constraints_def,lower_constraints_zero]
-    )
-    >> rw[FUN_EQ_THM]
-    (*
-      (* FLOOKUP_UPDATE *)
-      unabbrev_all_tac
-      >> rpt $ AP_TERM_TAC ORELSE AP_THM_TAC
-      >> simp[mem_read_view_def]
-      >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_MAX,GSYM lower_COND,lower_constraints_COND,lower_constraints_MAX,lower_constraints_zero]
-      >> gs[iffLR time_constraints_def,lower_zero]
-    *)
-  )
-  >> conj_tac
-  (* fence *)
-  >- (
-    rpt strip_tac >> gvs[]
-    >> irule_at Any $ cj 5 bir_clstep_rules
-    >> fs[timeshift_def,bir_state_t_component_equality]
-    >> dep_rewrite.DEP_REWRITE_TAC[GSYM lower_MAX,GSYM lower_COND,lower_zero,lower_constraints_zero,lower_constraints_MAX,lower_constraints_COND]
-    >> fs[time_constraints_def]
-  )
-  >> conj_tac
-  (* branch *)
-  >- (
-    rpt strip_tac >> gvs[]
-    >> irule_at Any $ cj 6 bir_clstep_rules
-    >> qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
-    >> fs[timeshift_simps,bir_eval_exp_view_def]
-    >> drule_at Any $
-      Ho_Rewrite.REWRITE_RULE[AND_IMP_INTRO,PULL_FORALL]
-      bir_eval_view_of_exp_lower_o_f
-    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
-    >> disch_then $ drule_then assume_tac
-    >> fs[Ntimes timeshift_def 3,bir_exec_stmt_mix_timeshift]
-    >> fs[bir_state_t_component_equality,timeshift_def]
-    >> irule $ GSYM lower_MAX
-    >> qpat_x_assum `_ = v_addr` $ fs o single o GSYM
-    >> drule_then (irule_at Any) bir_eval_view_of_exp_lower_constraints
-    >> fs[time_constraints_def]
-  )
-  >> conj_tac
-  (* expr *)
-  >- (
-    rpt strip_tac >> gvs[]
-    >> irule_at Any $ cj 7 bir_clstep_rules >> fs[]
-    >> qpat_x_assum `_ = env_update_cast64 _ _ _ _` $ assume_tac o GSYM
-    >> qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
-    >> fs[timeshift_simps,bir_eval_exp_view_def]
-    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
-    >> drule_at Any $
-      Ho_Rewrite.REWRITE_RULE[AND_IMP_INTRO,PULL_FORALL]
-      bir_eval_view_of_exp_lower_o_f
-    >> disch_then $ drule_at_then Any assume_tac
-    >> fs[bir_state_t_component_equality,timeshift_def]
-  )
-  (* generic *)
-  >- (
-    rpt strip_tac >> gvs[]
-    >> irule_at Any $ cj 8 bir_clstep_rules >> fs[]
-    >> fs[timeshift_simps,bir_exec_stmt_mix_timeshift]
-  )
-QED
+(* formulation with offset_none and drop_none_rel *)
 
-(* cstep_seq_bisim *)
-
-(* difference between indexing into M with and without None values *)
+(* difference between indexing into M with and without None values
+   corresponds to 1 plus the index from EL_FILTER
+   "+1" as all indices into the memory list will be substracted by one *)
 Definition offset_none_def:
   offset_none M t = t + (LENGTH $ FILTER IS_SOME $ TAKE (PRE t) M) - (LENGTH $ TAKE (PRE t) M)
 End
+
+Theorem offset_none_eq:
+  offset_none M t
+  = t - ((LENGTH $ TAKE (PRE t) M) - (LENGTH $ FILTER IS_SOME $ TAKE (PRE t) M))
+Proof
+  fs[offset_none_def,rich_listTheory.LENGTH_FILTER_LEQ,arithmeticTheory.SUB_SUB]
+QED
 
 Theorem offset_none_zero:
   !M. offset_none M 0 = 0
@@ -2269,11 +1999,357 @@ Proof
   fs[offset_none_def]
 QED
 
-Theorem offset_none_LESS_EQ:
+Theorem offset_none_LESS_OR_EQ:
   !M t. offset_none M t <= t
 Proof
   fs[offset_none_def,rich_listTheory.LENGTH_FILTER_LEQ]
 QED
+
+Theorem offset_none_GT_zero:
+  !M t. is_some_some M t ==> 0 < offset_none M t
+Proof
+  fs[offset_none_def,is_some_some_def]
+QED
+
+Theorem offset_none_LESS_EQ_offset_none_SUC:
+  !M a. offset_none M a <= offset_none M (SUC a)
+Proof
+  rpt gen_tac
+  >> Cases_on `a < LENGTH M`
+  >> fs[offset_none_def,LENGTH_TAKE,LENGTH_FILTER_TAKE_LESS_SUC]
+  >> qmatch_goalsub_abbrev_tac `FILTER f $ TAKE (PRE a) M`
+  >> qspecl_then [`M`,`PRE a`,`f`] assume_tac $ cj 1 LENGTH_FILTER_TAKE_LESS_SUC
+  >> Cases_on `0 < a`
+  >> gs[NOT_LESS,iffLR SUC_PRE]
+  >> rev_dxrule_then strip_assume_tac $ iffLR LESS_OR_EQ
+  >> gs[LENGTH_TAKE_EQ]
+QED
+
+Theorem offset_none_LESS_offset_none_SUC:
+  !M a.
+    is_some_some M a
+    ==> offset_none M a < offset_none M (SUC a)
+Proof
+  REWRITE_TAC[offset_none_def,is_some_some_def]
+  >> rpt gen_tac >> strip_tac
+  >> imp_res_tac $ cj 2 LENGTH_FILTER_TAKE_LESS_SUC
+  >> gs[iffLR SUC_PRE]
+QED
+
+Theorem offset_none_LESS_offset_none:
+  !M a b.
+    is_some_some M a /\ a < b
+    ==> offset_none M a < offset_none M b
+Proof
+  rpt gen_tac
+  >> Induct_on `b-a`
+  >> rw[SUB_LEFT_EQ]
+  >> Cases_on `v = 0`
+  >- (
+    REWRITE_TAC[GSYM ADD_SUC]
+    >> fs[offset_none_LESS_offset_none_SUC]
+  )
+  >> irule LESS_LESS_EQ_TRANS
+  >> first_x_assum $ drule_at_then Any $ irule_at Any
+  >> REWRITE_TAC[GSYM ADD_SUC]
+  >> irule_at Any offset_none_LESS_EQ_offset_none_SUC
+  >> fs[NOT_ZERO_LT_ZERO]
+QED
+
+Theorem offset_none_LESS_eq':
+  !M a b.
+    is_some_some M a /\ is_some_some M b
+    ==> (offset_none M a < offset_none M b <=> a < b)
+Proof
+  rw[EQ_IMP_THM,offset_none_LESS_offset_none]
+  >> spose_not_then assume_tac
+  >> gs[NOT_LESS,LESS_OR_EQ]
+  >> imp_res_tac offset_none_LESS_offset_none
+  >> fs[]
+QED
+
+Theorem offset_none_LESS_eq:
+  !M a b.
+    some_zero M a /\ some_zero M b
+    ==> (offset_none M a < offset_none M b <=> a < b)
+Proof
+  rw[some_zero_def]
+  >> imp_res_tac $ cj 1 $ iffLR is_some_some_def
+  >> fs[offset_none_zero,offset_none_LESS_eq',offset_none_GT_zero]
+QED
+
+Theorem offset_none_EQ_LESS_OR_EQ:
+  !M a b.
+    some_zero M a /\ some_zero M b
+    ==> (offset_none M a <= offset_none M b <=> a <= b)
+Proof
+  dsimp[LESS_OR_EQ,offset_none_LESS_eq,EQ_IMP_THM,DISJ_EQ_IMP]
+  >> rw[NOT_LESS]
+  >> gs[LESS_OR_EQ]
+  >> drule_all $ iffRL offset_none_LESS_eq
+  >> fs[]
+QED
+
+Theorem offset_none_inj:
+  !M a b.
+    some_zero M a /\ some_zero M b
+    ==> (offset_none M a = offset_none M b <=> a = b)
+Proof
+  rw[EQ_IMP_THM] >> spose_not_then assume_tac
+  >> dxrule_at_then Concl assume_tac $ iffRL EQ_LESS_EQ
+  >> gs[NOT_LESS,LESS_OR_EQ]
+  >> drule_all_then assume_tac $ iffRL offset_none_LESS_eq
+  >> fs[]
+QED
+
+Triviality offset_none_COND:
+  !cond M a b.
+    (if cond then (offset_none M a) else (offset_none M b))
+    = offset_none M (if cond then a else b)
+Proof
+  rw[]
+QED
+
+Theorem offset_none_COND0:
+  !cond M a.
+    (if cond then (offset_none M a) else 0)
+    = offset_none M (if cond then a else 0)
+Proof
+  fs[GSYM offset_none_COND,offset_none_zero]
+QED
+
+Theorem offset_none_MAX_is_some_some:
+  !M a b.
+    is_some_some M a /\ is_some_some M b
+    ==> (MAX (offset_none M a) (offset_none M b) = offset_none M (MAX a b))
+Proof
+  fs[arithmeticTheory.MAX_DEF,offset_none_COND,offset_none_LESS_eq']
+QED
+
+Theorem some_zero_COND:
+  !cond M a b. some_zero M a /\ some_zero M b
+    ==> some_zero M $ if cond then a else b
+Proof
+  rw[]
+QED
+
+Theorem some_zero_COND0:
+  !cond M a b. some_zero M a
+    ==> some_zero M $ if cond then a else 0
+Proof
+  rw[]
+QED
+
+Theorem some_zero_MAX:
+  !M a b. some_zero M a /\ some_zero M b ==> some_zero M $ MAX a b
+Proof
+  rw[MAX_DEF]
+QED
+
+Theorem offset_none_MAX:
+  !M a b.
+    some_zero M a /\ some_zero M b
+    ==> (MAX (offset_none M a) (offset_none M b) = offset_none M (MAX a b))
+Proof
+  dsimp[some_zero_def,offset_none_zero,offset_none_MAX_is_some_some]
+QED
+
+(* mem_get and mem_read with offset_none *)
+
+Theorem offset_none_GT_ZERO:
+  !M n x. oEL n M = SOME $ SOME x ==> 0 < offset_none M (SUC n)
+Proof
+  rw[oEL_THM,offset_none_def,rich_listTheory.LENGTH_FILTER_LEQ]
+QED
+
+Theorem mem_get_offset_none:
+  !t M k l x.
+  mem_get M l t = SOME x
+  ==> mem_get (FILTER IS_SOME M) l (offset_none M t) = SOME x
+Proof
+  Cases >> rpt gen_tac
+  >> fs[mem_get_def,mem_get_PRE,offset_none_zero,AllCaseEqs(),PULL_EXISTS,offset_none_GT_ZERO,oEL_THM]
+  >> strip_tac
+  >> drule_then (qspec_then `IS_SOME` assume_tac) EL_FILTER
+  >> gs[offset_none_def]
+  >> qmatch_asmsub_abbrev_tac `EL m $ FILTER _ _`
+  >> qmatch_goalsub_abbrev_tac `EL mm $ FILTER _ _`
+  >> `mm = m` by (unabbrev_all_tac >> decide_tac)
+  >> pop_assum $ fs o single
+  >> unabbrev_all_tac
+  >> fs[EL_FILTER_LENGTH_LT]
+QED
+
+Theorem mem_get_some_zero:
+  !t M l x.
+    mem_get M l t = SOME x ==> some_zero M t
+Proof
+  Cases >> rpt gen_tac
+  >> fs[mem_get_def,AllCaseEqs(),oEL_THM,some_zero_def,is_some_some_def]
+QED
+
+Theorem mem_read_offset_none:
+  !t M k l x.
+  mem_read M l t = SOME x
+  ==> mem_read (FILTER IS_SOME M) l (offset_none M t) = SOME x
+Proof
+  rw[mem_read_def]
+  >> BasicProvers.every_case_tac
+  >> imp_res_tac mem_get_offset_none
+  >> gs[]
+QED
+
+Theorem mem_read_some_zero:
+  !t M l x.
+    mem_read M l t = SOME x ==> some_zero M t
+Proof
+  Cases >> rw[mem_read_def,AllCaseEqs()]
+  >> imp_res_tac mem_get_some_zero
+QED
+
+Theorem mem_is_loc_some_zero:
+  !t M cid.
+    mem_is_loc M t cid ==> some_zero M t
+Proof
+  Cases >> rw[mem_is_loc_def]
+  >> BasicProvers.every_case_tac
+  >> gs[oEL_THM,some_zero_def,is_some_some_def]
+QED
+
+Theorem is_some_some_EXISTS_offset_none:
+  !M t. is_some_some (FILTER IS_SOME M) t
+  ==> ?t'. t = offset_none M t'
+    /\ is_some_some M t'
+Proof
+  rw[is_some_some_def,offset_none_def]
+  >> drule_then strip_assume_tac EL_EL_FILTER
+  >> qmatch_asmsub_rename_tac `m < LENGTH M`
+  >> qexists_tac `SUC m`
+  >> gs[TAKE_LENGTH_ID_rwt2]
+QED
+
+Theorem mem_is_loc_offset_none:
+  !t M l.
+  mem_is_loc M t l
+  <=> (mem_is_loc (FILTER IS_SOME M) (offset_none M t) l /\ some_zero M t)
+Proof
+  rw[GSYM mem_get_is_loc,EQ_IMP_THM,optionTheory.IS_SOME_EXISTS,PULL_EXISTS]
+  >- (
+    drule_then (irule_at Any) mem_get_offset_none
+    >> imp_res_tac mem_get_some_zero
+  )
+  >> gs[some_zero_def,offset_none_zero,mem_get_def,mem_get_PRE,offset_none_GT_zero]
+  >> imp_res_tac $ cj 1 $ iffLR is_some_some_def
+  >> BasicProvers.every_case_tac
+  >> gvs[mem_get_PRE,oEL_THM,is_some_some_def]
+  >> rev_drule_then drule EL_FILTER
+  >> disch_then $ REWRITE_TAC o single o GSYM
+  >> REWRITE_TAC[offset_none_def]
+  >> qmatch_goalsub_abbrev_tac `EL m _`
+  >> qmatch_asmsub_abbrev_tac `EL mm _`
+  >> `m = mm` by (
+    unabbrev_all_tac
+    >> REWRITE_TAC[offset_none_def]
+    >> decide_tac
+  )
+  >> fs[]
+QED
+
+Theorem mem_is_cid_offset_none:
+  !t M l.
+  some_zero M t
+  ==> mem_is_cid M t l = mem_is_cid (FILTER IS_SOME M) (offset_none M t) l
+Proof
+  Cases >- fs[offset_none_zero,mem_is_cid_def]
+  >> rw[some_zero_def,mem_is_cid_PRE,offset_none_GT_zero,offset_none_def,is_some_some_def]
+  >> Cases_on `n`
+  >- (Cases_on `M` >> fs[oEL_THM])
+  >> drule_all_then assume_tac $ GSYM EL_FILTER
+  >> qmatch_goalsub_abbrev_tac `oEL m $ FILTER IS_SOME M`
+  >> qmatch_asmsub_abbrev_tac `EL mm $ FILTER IS_SOME M`
+  >> `m = mm` by (unabbrev_all_tac >> fs[])
+  >> pop_assum $ fs o single
+  >> fs[oEL_THM]
+QED
+
+(* bir_eval_view properties *)
+
+Theorem bir_eval_view_of_exp_some_zero:
+  !M viewenv a_e.
+  FEVERY (some_zero M o SND) viewenv
+  ==> some_zero M $ bir_eval_view_of_exp a_e viewenv
+Proof
+  fs[GSYM PULL_FORALL]
+  >> rpt gen_tac >> strip_tac
+  >> Induct
+  >> rw[bir_eval_view_of_exp_def,some_zero_MAX]
+  >> BasicProvers.every_case_tac
+  >> fs[]
+  >> imp_res_tac FEVERY_FLOOKUP >> fs[]
+QED
+
+Theorem bir_eval_view_of_exp_offset_none:
+  !a_e v_addr viewenv M.
+    bir_eval_view_of_exp a_e viewenv = v_addr
+    /\ FEVERY (some_zero M o SND) viewenv
+    ==> bir_eval_view_of_exp a_e ((offset_none M) o_f viewenv) = offset_none M v_addr
+Proof
+  Induct
+  >> fs[bir_eval_view_of_exp_def,FLOOKUP_o_f,offset_none_zero,bir_eval_view_of_exp_some_zero,offset_none_MAX]
+  >> rw[arithmeticTheory.MAX_DEF,offset_none_def]
+  >> BasicProvers.every_case_tac >> fs[]
+QED
+
+Theorem bir_eval_view_of_exp_some_zero_FUPDATE:
+  !viewenv var upd M a_e.
+  FEVERY (some_zero M o SND) viewenv
+  /\ some_zero M upd
+  ==> some_zero M $ bir_eval_view_of_exp a_e (viewenv |+ (var, upd))
+Proof
+  fs[GSYM PULL_FORALL]
+  >> rpt gen_tac >> strip_tac
+  >> Induct
+  >> rw[bir_eval_view_of_exp_def,some_zero_COND,some_zero_MAX,FLOOKUP_UPDATE]
+  >> BasicProvers.every_case_tac >> fs[some_zero_zero]
+  >> imp_res_tac FEVERY_FLOOKUP
+  >> fs[]
+QED
+
+Theorem bir_eval_view_of_exp_lower_constraints':
+  !s b k v_e v_data.
+  time_constraints s b k
+  /\ 0 < b
+  /\ bir_eval_view_of_exp v_e s.bst_viewenv = v_data
+  ==> lower_constraints b k v_data
+Proof
+  fs[iffLR time_constraints_def,bir_eval_view_of_exp_lower_constraints]
+QED
+
+Theorem bir_eval_view_of_exp_lower_constraints_FUPDATE:
+  !b k viewenv v_upd var.
+  FEVERY (lower_constraints b k o SND) viewenv
+  /\ 0 < b
+  /\ lower_constraints b k v_upd
+  ==> !a_e. lower_constraints b k $ bir_eval_view_of_exp a_e $ viewenv |+ (var,v_upd)
+Proof
+  rpt gen_tac >> strip_tac
+  >> Induct
+  >> rw[bir_eval_view_of_exp_def,lower_constraints_zero,lower_constraints_MAX,FLOOKUP_UPDATE]
+  >> BasicProvers.every_case_tac >> fs[lower_constraints_zero]
+  >> imp_res_tac FEVERY_FLOOKUP >> fs[]
+QED
+
+Theorem bir_eval_view_of_exp_lower_constraints_FUPDATE':
+  !s b k v_e v_data var v_upd.
+  time_constraints s b k
+  /\ 0 < b
+  /\ bir_eval_view_of_exp v_e (s.bst_viewenv |+ (var,v_upd)) = v_data
+  /\ lower_constraints b k v_upd
+  ==> lower_constraints b k v_data
+Proof
+  fs[iffLR time_constraints_def,bir_eval_view_of_exp_lower_constraints_FUPDATE]
+QED
+
 
 (*
   s   M  (with none values)
@@ -2284,6 +2360,437 @@ Definition drop_none_rel_def:
   drop_none_rel s M s' M' <=>
     M' = FILTER IS_SOME M /\ s' = timeshift (offset_none M) s
 End
+
+Definition time_constraints_def:
+   time_constraints f s <=>
+      FEVERY (f o SND) s.bst_viewenv
+      /\ (!l. f $ s.bst_coh l)
+      /\ f s.bst_v_rOld
+      /\ f s.bst_v_wOld
+      /\ f s.bst_v_rNew
+      /\ f s.bst_v_wNew
+      /\ f s.bst_v_Rel
+      /\ f s.bst_v_CAP
+      /\ EVERY f s.bst_prom
+      /\ (IS_SOME s.bst_xclb ==> (λx.
+        f x.xclb_time /\ f x.xclb_view) $ THE s.bst_xclb)
+      /\ (!l. f (s.bst_fwdb l).fwdb_view /\ f (s.bst_fwdb l).fwdb_time)
+End
+
+Theorem bir_exec_stmt_mix_time_constraints:
+  !stm f p s genv oo s2 genv'.
+    bir_exec_stmt_mix p stm s genv = (oo,s2,genv')
+    /\ time_constraints f s
+    ==> time_constraints f s2
+Proof
+  ntac 2 Induct
+  >> rw[bir_exec_stmt_mix_def,bir_exec_stmtB_mix_def,bir_exec_stmt_assign_mix_def,bir_exec_stmt_observe_mix_def,bir_exec_stmt_assume_mix_def,bir_exec_stmt_fence_def,timeshift_simps,bir_exec_stmt_assert_mix_def,bir_exec_stmtE_def,bir_exec_stmt_halt_def,bir_exec_stmt_jmp_def,bir_exec_stmt_cjmp_def]
+  >> BasicProvers.every_case_tac
+  >> fs[time_constraints_def,bir_exec_stmt_jmp_to_label_def,timeshift_def,bir_state_set_typeerror_def,bir_exec_stmt_jmp_to_label_def,bir_state_set_typeerror_def,bir_state_t_component_equality]
+  >> BasicProvers.every_case_tac
+  >> gvs[]
+QED
+
+Theorem clstep_timeshift:
+  !p cid s M genv prom s' genv'.
+  clstep p cid s M genv prom s' genv'
+  /\ time_constraints (some_zero M) s
+  ==>
+    clstep p cid (timeshift (offset_none M) s) (FILTER IS_SOME M) genv (MAP (offset_none M) prom) (timeshift (offset_none M) s') genv'
+    /\ time_constraints (some_zero M) s'
+Proof
+  fs[GSYM AND_IMP_INTRO]
+  >> ho_match_mp_tac bir_clstep_ind
+  >> conj_tac
+  (* read *)
+  >- (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> qpat_x_assum `v_pre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> qpat_x_assum `v_post = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> imp_res_tac mem_read_some_zero
+    >> imp_res_tac mem_read_offset_none
+    >> qpat_x_assum `_ = env_update_cast64 _ _ _ _` $ assume_tac o GSYM
+    >> qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
+    >> fs[timeshift_simps,bir_eval_exp_view_def]
+    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
+    >> drule_at Any bir_eval_view_of_exp_offset_none
+    >> disch_then $ drule_then assume_tac
+    >> `some_zero M v_addr` by (
+      unabbrev_all_tac
+      >> qpat_x_assum `_ = v_addr` $ fs o single o GSYM
+      >> fs[bir_eval_view_of_exp_some_zero]
+    )
+    >> `some_zero M $ mem_read_view (s.bst_fwdb l) t` by
+      fs[time_constraints_def,mem_read_view_def,some_zero_COND]
+    >> `some_zero M v_post` by (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[some_zero_COND,some_zero_MAX,some_zero_zero]
+      >> fs[iffLR time_constraints_def]
+    )
+    >> `some_zero M v_pre` by (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[some_zero_COND,some_zero_MAX,some_zero_zero]
+      >> fs[iffLR time_constraints_def]
+    )
+    >> reverse conj_asm2_tac
+    (* time_constraints *)
+    >- (
+      fs[time_constraints_def,FEVERY_FEVERY_FUPDATE]
+      >> dep_rewrite.DEP_REWRITE_TAC[some_zero_MAX,some_zero_COND]
+      >> gs[time_constraints_def]
+      >> rw[]
+      >> dep_rewrite.DEP_REWRITE_TAC[some_zero_MAX,some_zero_COND]
+      >> fs[]
+    )
+    >> gvs[]
+    >> irule $ cj 1 bir_clstep_rules
+    >> qhdtm_assum `mem_read` $ irule_at Any
+    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM]
+    >> conj_tac
+    (* ~mem_is_loc *)
+    >- (
+      gen_tac
+      >> simp[AC DISJ_ASSOC DISJ_COMM]
+      >> qmatch_goalsub_rename_tac `offset_none M t < t'`
+      >> qmatch_goalsub_abbrev_tac `offset_none M t < t' /\ disj /\ _`
+      >> strip_tac
+      >> `is_some_some (FILTER IS_SOME M) t'` by (
+        dxrule_then strip_assume_tac $ iffLR some_zero_def
+        >> gs[]
+      )
+      >> dxrule_then strip_assume_tac is_some_some_EXISTS_offset_none
+      >> qmatch_assum_rename_tac `is_some_some M t''`
+      >> last_x_assum $ qspec_then `t''` (mp_tac o ONCE_REWRITE_RULE[mem_is_loc_offset_none])
+      >> imp_res_tac $ cj 2 $ REWRITE_RULE[DISJ_IMP_THM] $ iffRL some_zero_def
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero]
+      >> unabbrev_all_tac
+      >> fs[]
+    )
+    >> conj_tac
+    (* FLOOKUP_UPDATE *)
+    >- (
+      unabbrev_all_tac
+      >> rpt $ AP_TERM_TAC ORELSE AP_THM_TAC
+      >> simp[mem_read_view_def]
+      >> gs[offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero]
+      >> fs[offset_none_inj,COND_CONG]
+    )
+    >> qmatch_goalsub_abbrev_tac `mem_read_view offset_bst_fwdb (offset_none M t)`
+    >> `mem_read_view offset_bst_fwdb (offset_none M t)
+      = offset_none M $ mem_read_view (s.bst_fwdb l) t` by (
+      qunabbrev_tac `offset_bst_fwdb`
+      >> fs[mem_read_view_def,offset_none_COND,offset_none_inj]
+    )
+    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND0,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,COND_CONG,offset_none_inj]
+    >> conj_tac (* nested if-MAX-if *)
+    >- (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_MAX,some_zero_COND,some_zero_COND0]
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND0,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,COND_CONG,offset_none_inj]
+    )
+    >> conj_tac (* nested if-MAX-if *)
+    >- (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_MAX,some_zero_COND,some_zero_COND0]
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND0,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,COND_CONG,offset_none_inj]
+    )
+    >> conj_tac (* nested if-MAX *)
+    >- (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_MAX,some_zero_COND,some_zero_COND0]
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND0,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,COND_CONG,offset_none_inj]
+    )
+    >> unabbrev_all_tac
+    (* nested OPTION_MAP-if *)
+    >> BasicProvers.every_case_tac
+    >> fs[]
+  )
+  >> conj_tac
+  (* xcl fail *)
+  >- (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> gvs[]
+    >> irule_at Any $ cj 2 bir_clstep_rules
+    >> drule_then (qspec_then `offset_none M` assume_tac) $ GSYM xclfail_update_viewenv_f_o_f
+    >> fs[timeshift_simps,xclfail_update_env_timeshift,offset_none_zero,time_constraints_def]
+    >> simp[timeshift_def,bir_state_t_component_equality]
+    >> irule $ GSYM xclfail_update_viewenv_FEVERY
+    >> fs[some_zero_zero]
+    >> irule_at Any EQ_REFL
+    >> fs[]
+  )
+  >> conj_tac
+  (* write *)
+  >- (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> qpat_x_assum `v_pre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> imp_res_tac mem_get_some_zero
+    >> imp_res_tac mem_get_offset_none
+    >> rpt $ qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
+    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
+    >> fs[timeshift_simps,bir_eval_exp_view_def]
+    >> drule_at Any bir_eval_view_of_exp_offset_none
+    >> disch_then (fn thm =>
+      drule_at_then Any assume_tac thm
+      >> rev_drule_at_then Any assume_tac thm)
+    >> `some_zero M v_data` by (
+      unabbrev_all_tac
+      >> qpat_x_assum `_ = v_data` $ fs o single o GSYM
+      >> fs[bir_eval_view_of_exp_some_zero]
+    )
+    >> `some_zero M v_addr` by (
+      unabbrev_all_tac
+      >> qpat_x_assum `_ = v_addr` $ fs o single o GSYM
+      >> fs[bir_eval_view_of_exp_some_zero]
+    )
+    >> `some_zero M $ get_xclb_view s.bst_xclb` by (
+      Cases_on `s.bst_xclb`
+      >> fs[get_xclb_view_def,time_constraints_def,some_zero_zero]
+    )
+    >> `some_zero M v_pre` by (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[some_zero_COND,some_zero_MAX,some_zero_zero]
+      >> fs[iffLR time_constraints_def]
+    )
+    >> reverse conj_asm2_tac
+    (* time_constraints *)
+    >- (
+      qpat_x_assum `_ = fulfil_update_viewenv _ _ _ _` $ assume_tac o GSYM
+      >> simp[time_constraints_def]
+      >> drule_at_then Any (irule_at Any) FEVERY_fulfil_update_viewenv
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
+      >> rw[some_zero_MAX]
+    )
+    >> irule $ cj 3 bir_clstep_rules
+    >> drule_then (irule_at Any) $ GSYM fulfil_update_viewenv_timeshift
+    >> drule_then (irule_at Any) $ GSYM fulfil_update_env_timeshift
+    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
+    >> qmatch_goalsub_abbrev_tac `MAP _ l1 = MAP _ l2`
+    >> `l1 = l2` by (
+      unabbrev_all_tac
+      >> fs[EVERY_MEM]
+      >> rw[rich_listTheory.FILTER_EQ,offset_none_inj]
+    )
+    >> pop_assum $ fs o single
+    >> qmatch_goalsub_abbrev_tac `xcl ==> Atomic`
+    >> `xcl ==> Atomic` by (
+      rw[Abbr`Atomic`,fulfil_atomic_ok_def]
+      >> fs[fulfil_atomic_ok_def]
+      >> qmatch_assum_abbrev_tac `mem_is_loc M (THE b).xclb_time l ==> _`
+      >> `mem_is_loc M (THE b).xclb_time l` by (
+        Cases_on`s.bst_xclb` >- fs[]
+        >> unabbrev_all_tac
+        >> irule $ iffRL mem_is_loc_offset_none
+        >> gvs[]
+      )
+      >> qunabbrev_tac `b`
+      >> qmatch_goalsub_rename_tac `mem_is_cid _ t' _`
+      >> qpat_x_assum `mem_is_loc (FILTER IS_SOME M) t' l` assume_tac
+      >> drule_then assume_tac mem_is_loc_some_zero
+      >> drule_then strip_assume_tac $ iffLR some_zero_def >> fs[]
+      >> drule_then strip_assume_tac is_some_some_EXISTS_offset_none
+      >> asm_rewrite_tac[]
+      >> irule $ REWRITE_RULE[AND_IMP_INTRO] $ iffLR mem_is_cid_offset_none
+      >> conj_asm1_tac >- simp[some_zero_def]
+      >> first_x_assum irule
+      >> Cases_on `s.bst_xclb` >> fs[]
+      >> irule_at Any $ iffRL mem_is_loc_offset_none
+      >> gs[offset_none_LESS_eq]
+    )
+    >> pop_assum $ fs o single
+    >> qmatch_goalsub_abbrev_tac `get_xclb_view offset_b`
+    >> `get_xclb_view offset_b = offset_none M $ get_xclb_view s.bst_xclb` by (
+      qunabbrev_tac `offset_b`
+      >> Cases_on `s.bst_xclb`
+      >> rw[get_xclb_view_def,offset_none_zero]
+    )
+    >> pop_assum $ REWRITE_TAC o single
+    >> unabbrev_all_tac
+    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
+    (* fwdb and OPTION_MAP *)
+    >> rw[]
+  )
+  >> conj_tac
+  (* amo *)
+  >- (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> qpat_x_assum `v_rPre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> qpat_x_assum `v_rPost = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> qpat_x_assum `v_wPre = _` $ assume_tac o ONCE_REWRITE_RULE[GSYM markerTheory.Abbrev_def]
+    >> imp_res_tac mem_get_some_zero
+    >> imp_res_tac mem_get_offset_none
+    >> imp_res_tac mem_read_some_zero
+    >> imp_res_tac mem_read_offset_none
+    >> rpt $ qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
+    >> qpat_x_assum `_ = env_update_cast64 _ _ _ _` $ assume_tac o GSYM
+    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
+    >> fs[timeshift_simps,bir_eval_exp_view_def]
+    >> drule_at Any bir_eval_view_of_exp_offset_none
+    >> disch_then (fn thm =>
+      drule_at_then Any assume_tac thm
+      >> rev_drule_at_then Any assume_tac thm)
+    >> `some_zero M v_addr` by (
+      unabbrev_all_tac
+      >> qpat_x_assum `_ = v_addr` $ fs o single o GSYM
+      >> fs[bir_eval_view_of_exp_some_zero]
+    )
+    >> `some_zero M (mem_read_view (s.bst_fwdb l) t_r)` by
+      fs[time_constraints_def,mem_read_view_def,some_zero_COND]
+    >> `some_zero M v_rPost` by (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[some_zero_COND,some_zero_COND0,some_zero_MAX]
+      >> fs[time_constraints_def,some_zero_zero]
+    )
+    >> `some_zero M v_data` by (
+      qpat_x_assum `_ = v_data` $ fs o single o GSYM
+      >> fs[time_constraints_def,some_zero_zero,bir_eval_view_of_exp_some_zero_FUPDATE]
+    )
+    >> `some_zero M v_wPre /\ some_zero M v_rPre` by (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[some_zero_COND,some_zero_COND0,some_zero_MAX]
+      >> gs[time_constraints_def,some_zero_zero]
+    )
+    >> reverse conj_asm2_tac
+    (* time_constraints *)
+    >- (
+      simp[time_constraints_def]
+      >> drule_at_then Any (irule_at Any) FEVERY_FEVERY_FUPDATE
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP,combinTheory.APPLY_UPDATE_THM]
+      >> rw[some_zero_MAX]
+    )
+    >> irule $ cj 4 bir_clstep_rules
+    >> qhdtm_assum `mem_read` $ irule_at Any
+    >> qhdtm_assum `mem_get` $ irule_at Any
+    >> simp[bir_state_t_component_equality]
+    >> qmatch_goalsub_abbrev_tac `mem_read_view offset_bst_fwdb (offset_none M t_r)`
+    >> `mem_read_view offset_bst_fwdb (offset_none M t_r)
+      = offset_none M $ mem_read_view (s.bst_fwdb l) t_r` by (
+      qunabbrev_tac `offset_bst_fwdb`
+      >> gs[time_constraints_def,mem_read_view_def,offset_none_COND,offset_none_inj,timeshift_def]
+    )
+    >> pop_assum $ REWRITE_TAC o single
+    >> qunabbrev_tac `offset_bst_fwdb`
+    >> gs[iffLR time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,combinTheory.APPLY_UPDATE_THM,MEM_MAP_f]
+    >> conj_tac
+    (* ~mem_is_loc *)
+    >- (
+      gen_tac
+      >> qmatch_goalsub_rename_tac `offset_none M t_r < t'`
+      >> strip_tac
+      >> `is_some_some (FILTER IS_SOME M) t'` by (
+        dxrule_then strip_assume_tac $ iffLR some_zero_def
+        >> gs[]
+      )
+      >> dxrule_then strip_assume_tac is_some_some_EXISTS_offset_none
+      >> qmatch_assum_rename_tac `is_some_some M t''`
+      >> last_x_assum $ qspec_then `t''` (mp_tac o ONCE_REWRITE_RULE[mem_is_loc_offset_none])
+      >> imp_res_tac $ cj 2 $ REWRITE_RULE[DISJ_IMP_THM] $ iffRL some_zero_def
+      >> gs[iffLR time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,MEM_MAP_f]
+    )
+    >> qmatch_goalsub_abbrev_tac `_ |+ (var, offset_v_rPost)`
+    >> `offset_v_rPost = offset_none M v_rPost` by (
+      unabbrev_all_tac
+      >> dep_rewrite.DEP_REWRITE_TAC[offset_none_COND0,offset_none_COND,offset_none_MAX,some_zero_COND,some_zero_MAX]
+      >> fs[some_zero_zero,time_constraints_def]
+    )
+    >> pop_assum $ REWRITE_TAC o single
+    >> qunabbrev_tac `offset_v_rPost`
+    >> qmatch_goalsub_abbrev_tac `MAP _ l1 = MAP _ l2`
+    >> `l1 = l2` by (
+      unabbrev_all_tac
+      >> fs[time_constraints_def,EVERY_MEM]
+      >> rw[rich_listTheory.FILTER_EQ,offset_none_inj]
+    )
+    >> pop_assum $ fs o single
+    >> map_every qunabbrev_tac [`l1`,`l2`]
+    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
+    >> fs[bir_state_t_accfupds]
+    >> ONCE_REWRITE_TAC[GSYM o_f_FUPDATE]
+    >> rev_drule_at_then (Pos $ el 2) assume_tac bir_eval_view_of_exp_offset_none
+    >> fs[]
+    >> pop_assum kall_tac
+    >> rpt $ irule_at Any $ GSYM offset_none_MAX
+    >> qmatch_goalsub_abbrev_tac `offset_none M $ MAX A _ = MAX A' _`
+    >> `A' = offset_none M A /\ some_zero M A` by (
+      map_every qunabbrev_tac [`A`,`A'`,`v_rPost`,`v_rPre`]
+      >> fs[iffLR time_constraints_def,offset_none_zero,GSYM offset_none_MAX,GSYM offset_none_COND,GSYM some_zero_COND,GSYM some_zero_MAX]
+    )
+    >> fs[iffLR time_constraints_def,offset_none_MAX,offset_none_LESS_eq]
+    >> irule_at Any $ REWRITE_RULE[AND_IMP_INTRO] $ iffRL offset_none_LESS_eq
+    >> unabbrev_all_tac
+    >> fs[iffLR time_constraints_def,some_zero_COND,some_zero_COND0,some_zero_zero,some_zero_MAX]
+    (* fwdb *)
+    >> rw[]
+    >> dep_rewrite.DEP_REWRITE_TAC[offset_none_MAX,offset_none_COND,some_zero_COND,some_zero_COND0,some_zero_zero,some_zero_MAX]
+    >> ONCE_REWRITE_TAC[GSYM o_f_FUPDATE]
+    >> dep_rewrite.DEP_REWRITE_TAC $ single $ SIMP_RULE (srw_ss()) [] bir_eval_view_of_exp_offset_none
+    >> dep_rewrite.DEP_REWRITE_TAC[offset_none_MAX]
+    >> gs[iffLR time_constraints_def]
+  )
+  >> conj_tac
+  (* fence *)
+  >- (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> reverse conj_asm2_tac
+    >- fs[time_constraints_def,some_zero_MAX,some_zero_zero,some_zero_COND,some_zero_COND0]
+    >> fs[]
+    >> irule $ cj 5 bir_clstep_rules
+    >> simp[timeshift_def,bir_state_t_component_equality]
+    >> dep_rewrite.DEP_REWRITE_TAC[offset_none_zero,offset_none_MAX,offset_none_COND,offset_none_COND0,some_zero_COND,some_zero_COND0,some_zero_MAX]
+    >> gs[time_constraints_def,some_zero_zero]
+  )
+  >> conj_tac
+  (* branch *)
+  >- (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` $ assume_tac o GSYM
+    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
+    >> fs[bir_eval_exp_view_def]
+    >> drule_all_then assume_tac bir_eval_view_of_exp_offset_none
+    >> reverse conj_asm2_tac
+    >- (
+      simp[time_constraints_def]
+      >> irule_at Any some_zero_MAX
+      >> drule_all_then assume_tac bir_exec_stmt_mix_time_constraints
+      >> qpat_x_assum `bir_eval_view_of_exp _ _ = v_addr` $ assume_tac o GSYM
+      >> fs[time_constraints_def,bir_eval_view_of_exp_some_zero]
+    )
+    >> irule_at Any $ cj 6 bir_clstep_rules
+    >> drule_then assume_tac bir_eval_view_of_exp_some_zero
+    >> gvs[timeshift_simps,bir_exec_stmt_mix_timeshift,bir_eval_exp_view_def]
+    >> simp[timeshift_def,bir_state_t_component_equality]
+    >> fs[time_constraints_def,offset_none_MAX]
+  )
+  >> conj_tac
+  (* expr *)
+  >- (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> imp_res_tac $ cj 1 $ iffLR time_constraints_def
+    >> fs[bir_eval_exp_view_def]
+    >> drule_then assume_tac bir_eval_view_of_exp_some_zero
+    >> drule_all_then (assume_tac o GSYM) $ GSYM bir_eval_view_of_exp_offset_none
+    >> reverse conj_asm2_tac
+    >- (
+      simp[time_constraints_def]
+      >> drule_then (irule_at Any) FEVERY_FEVERY_FUPDATE
+      >> gs[time_constraints_def]
+    )
+    >> irule $ cj 7 bir_clstep_rules
+    >> simp[bir_eval_exp_view_def,timeshift_def,bir_state_t_component_equality]
+    >> irule_at Any EQ_REFL
+    >> fs[]
+  )
+  (* generic *)
+  >> (
+    rpt gen_tac >> ntac 2 strip_tac
+    >> fs[]
+    >> irule_at Any $ cj 8 bir_clstep_rules
+    >> simp[timeshift_simps,bir_exec_stmt_mix_timeshift]
+    >> drule_all_then irule bir_exec_stmt_mix_time_constraints
+  )
+QED
+
+(* cstep_seq_bisim *)
 
 Theorem cstep_seq_bisim:
   !p cid s M genv s' M' genv' r L r' L'.
@@ -2412,14 +2919,6 @@ Theorem mem_read_LESS:
   ==> t < LENGTH M + 1
 Proof
   Cases >> fs[mem_read_def,AllCaseEqs(),PULL_EXISTS,mem_get_def,oEL_THM]
-QED
-
-Theorem FEVERY_FEVERY_FUPDATE:
-  !env P var val.
-  FEVERY (P o SND) env /\ P val
-  ==> FEVERY (P o SND) (env |+ (var, val))
-Proof
-  fs[FEVERY_STRENGTHEN_THM,FEVERY_FEMPTY]
 QED
 
 Theorem FEVERY_xclfail_update_viewenv_FEVERY:
