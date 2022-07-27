@@ -23,8 +23,8 @@ Theorem cstep_mem_IS_PREFIX:
   !p cid s M genv prom s' M' genv'.
     cstep p cid s M genv prom s' M' genv' ==> M <<= M'
 Proof
-  ho_match_mp_tac bir_cstep_ind
-  >> fs[rich_listTheory.IS_PREFIX_APPEND]
+  ho_match_mp_tac cstep_ind
+  >> fs[IS_PREFIX_APPEND]
 QED
 
 Theorem I_EQ_IDABS:
@@ -40,7 +40,7 @@ Theorem EL_FILTER:
   /\ (n + (LENGTH $ FILTER P $ TAKE n ls) - (LENGTH $ TAKE n ls)) < LENGTH $ FILTER P ls
 Proof
   Induct >> rw[] >> Cases_on `n` >> fs[]
-  >> drule_then assume_tac rich_listTheory.EL_MEM
+  >> drule_then assume_tac EL_MEM
   >> dxrule_then strip_assume_tac $ iffLR MEM_SPLIT
   >> pop_assum $ ONCE_REWRITE_TAC o single
   >> fs[FILTER_APPEND_DISTRIB]
@@ -60,13 +60,13 @@ Proof
     first_x_assum $ drule_then strip_assume_tac
     >> qmatch_asmsub_rename_tac `m < LENGTH ls`
     >> qexists_tac `m`
-    >> fs[rich_listTheory.EL_APPEND1,FILTER_APPEND_DISTRIB,TAKE_APPEND1]
+    >> fs[EL_APPEND1,FILTER_APPEND_DISTRIB,TAKE_APPEND1]
   )
-  >> gs[NOT_LESS,FILTER_APPEND_DISTRIB,rich_listTheory.EL_APPEND2]
+  >> gs[NOT_LESS,FILTER_APPEND_DISTRIB,EL_APPEND2]
   >> IF_CASES_TAC
   >> gs[]
   >> qexists_tac `LENGTH ls`
-  >> gs[rich_listTheory.EL_APPEND2,FILTER_APPEND_DISTRIB,TAKE_APPEND1,LESS_OR_EQ]
+  >> gs[EL_APPEND2,FILTER_APPEND_DISTRIB,TAKE_APPEND1,LESS_OR_EQ]
 QED
 
 Theorem EL_FILTER_LENGTH_LT:
@@ -83,7 +83,7 @@ Theorem LENGTH_FILTER_TAKE_LESS_SUC:
       (n < LENGTH ls /\ P $ EL n ls ==>
       LENGTH $ FILTER P $ TAKE n ls < LENGTH $ FILTER P $ TAKE (SUC n) ls)
 Proof
-  fs[GSYM rich_listTheory.SNOC_EL_TAKE,SNOC_APPEND,FILTER_APPEND_DISTRIB]
+  fs[GSYM SNOC_EL_TAKE,SNOC_APPEND,FILTER_APPEND_DISTRIB]
   >> Induct >- fs[]
   >> gen_tac >> Cases >> rw[TAKE_def]
 QED
@@ -108,13 +108,13 @@ Theorem offset_none_eq:
   offset_none M t
   = t - ((LENGTH $ TAKE (PRE t) M) - (LENGTH $ FILTER IS_SOME $ TAKE (PRE t) M))
 Proof
-  fs[offset_none_def,rich_listTheory.LENGTH_FILTER_LEQ,arithmeticTheory.SUB_SUB]
+  fs[offset_none_def,LENGTH_FILTER_LEQ,SUB_SUB]
 QED
 
 Theorem offset_none_GT_ZERO:
   !M n x. oEL n M = SOME $ SOME x ==> 0 < offset_none M (SUC n)
 Proof
-  rw[oEL_THM,offset_none_def,rich_listTheory.LENGTH_FILTER_LEQ]
+  rw[oEL_THM,offset_none_def,LENGTH_FILTER_LEQ]
 QED
 
 Theorem some_zero_offset_none_APPEND_EQ:
@@ -122,7 +122,7 @@ Theorem some_zero_offset_none_APPEND_EQ:
   ==> offset_none (M ++ M') t = offset_none M t
 Proof
   rw[offset_none_def,some_zero_def,is_some_some_def]
-  >> fs[rich_listTheory.TAKE_APPEND1]
+  >> fs[TAKE_APPEND1]
 QED
 
 Theorem offset_none_zero:
@@ -134,7 +134,7 @@ QED
 Theorem offset_none_LESS_OR_EQ:
   !M t. offset_none M t <= t
 Proof
-  fs[offset_none_def,rich_listTheory.LENGTH_FILTER_LEQ]
+  fs[offset_none_def,LENGTH_FILTER_LEQ]
 QED
 
 Theorem offset_none_GT_zero:
@@ -255,7 +255,7 @@ Theorem offset_none_MAX_is_some_some:
     is_some_some M a /\ is_some_some M b
     ==> (MAX (offset_none M a) (offset_none M b) = offset_none M (MAX a b))
 Proof
-  fs[arithmeticTheory.MAX_DEF,offset_none_COND,offset_none_LESS_eq']
+  fs[MAX_DEF,offset_none_COND,offset_none_LESS_eq']
 QED
 
 Theorem some_zero_COND:
@@ -438,7 +438,7 @@ Theorem timeshift_simps:
   /\ timeshift I s = s
 Proof
   fs[timeshift_def]
-  >> fs[FUN_EQ_THM,bir_state_t_component_equality,fwdb_t_component_equality,finite_mapTheory.o_f_id,I_EQ_IDABS]
+  >> fs[FUN_EQ_THM,bir_state_t_component_equality,fwdb_t_component_equality,o_f_id,I_EQ_IDABS]
   >> qmatch_goalsub_rename_tac `s.bst_xclb`
   >> Cases_on `s.bst_xclb`
   >> fs[optionTheory.OPTION_MAP_DEF,xclb_t_component_equality]
@@ -577,7 +577,7 @@ Theorem bir_eval_view_of_exp_offset_none:
 Proof
   Induct
   >> fs[bir_eval_view_of_exp_def,FLOOKUP_o_f,offset_none_zero,bir_eval_view_of_exp_some_zero,offset_none_MAX]
-  >> rw[arithmeticTheory.MAX_DEF,offset_none_def]
+  >> rw[MAX_DEF,offset_none_def]
   >> BasicProvers.every_case_tac >> fs[]
 QED
 
@@ -681,7 +681,7 @@ Theorem clstep_timeshift:
     /\ time_constraints (some_zero M) s'
 Proof
   fs[GSYM AND_IMP_INTRO]
-  >> ho_match_mp_tac bir_clstep_ind
+  >> ho_match_mp_tac clstep_ind
   >> conj_tac
   (* read *)
   >- (
@@ -724,7 +724,7 @@ Proof
       >> fs[]
     )
     >> gvs[]
-    >> irule $ cj 1 bir_clstep_rules
+    >> irule $ cj 1 clstep_rules
     >> qhdtm_assum `mem_read` $ irule_at Any
     >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM]
     >> conj_tac
@@ -791,7 +791,7 @@ Proof
   >- (
     rpt gen_tac >> ntac 2 strip_tac
     >> gvs[]
-    >> irule_at Any $ cj 2 bir_clstep_rules
+    >> irule_at Any $ cj 2 clstep_rules
     >> drule_then (qspec_then `offset_none M` assume_tac) $ GSYM xclfail_update_viewenv_f_o_f
     >> fs[timeshift_simps,xclfail_update_env_timeshift,offset_none_zero,time_constraints_def]
     >> simp[timeshift_def,bir_state_t_component_equality]
@@ -839,18 +839,18 @@ Proof
       qpat_x_assum `_ = fulfil_update_viewenv _ _ _ _` $ assume_tac o GSYM
       >> simp[time_constraints_def]
       >> drule_at_then Any (irule_at Any) FEVERY_fulfil_update_viewenv
-      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
       >> rw[some_zero_MAX]
     )
-    >> irule $ cj 3 bir_clstep_rules
+    >> irule $ cj 3 clstep_rules
     >> drule_then (irule_at Any) $ GSYM fulfil_update_viewenv_timeshift
     >> drule_then (irule_at Any) $ GSYM fulfil_update_env_timeshift
-    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
+    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
     >> qmatch_goalsub_abbrev_tac `MAP _ l1 = MAP _ l2`
     >> `l1 = l2` by (
       unabbrev_all_tac
       >> fs[EVERY_MEM]
-      >> rw[rich_listTheory.FILTER_EQ,offset_none_inj]
+      >> rw[FILTER_EQ,offset_none_inj]
     )
     >> pop_assum $ fs o single
     >> qmatch_goalsub_abbrev_tac `xcl ==> Atomic`
@@ -887,7 +887,7 @@ Proof
     )
     >> pop_assum $ REWRITE_TAC o single
     >> unabbrev_all_tac
-    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
+    >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP]
     (* fwdb and OPTION_MAP *)
     >> rw[]
   )
@@ -936,10 +936,10 @@ Proof
     >- (
       simp[time_constraints_def]
       >> drule_at_then Any (irule_at Any) FEVERY_FEVERY_FUPDATE
-      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP,combinTheory.APPLY_UPDATE_THM]
+      >> gs[time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_state_t_component_equality,bir_eval_exp_view_def,FUN_EQ_THM,FILTER_MAP,MEM_MAP_f,EVERY_FILTER_IMP,combinTheory.APPLY_UPDATE_THM]
       >> rw[some_zero_MAX]
     )
-    >> irule $ cj 4 bir_clstep_rules
+    >> irule $ cj 4 clstep_rules
     >> qhdtm_assum `mem_read` $ irule_at Any
     >> qhdtm_assum `mem_get` $ irule_at Any
     >> simp[bir_state_t_component_equality]
@@ -951,7 +951,7 @@ Proof
     )
     >> pop_assum $ REWRITE_TAC o single
     >> qunabbrev_tac `offset_bst_fwdb`
-    >> gs[iffLR time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_eval_exp_view_def,FUN_EQ_THM,rich_listTheory.FILTER_MAP,combinTheory.APPLY_UPDATE_THM,MEM_MAP_f]
+    >> gs[iffLR time_constraints_def,offset_none_LESS_eq,offset_none_EQ_LESS_OR_EQ,offset_none_COND0,offset_none_COND,offset_none_MAX,offset_none_zero,some_zero_COND,some_zero_MAX,some_zero_zero,timeshift_def,bir_eval_exp_view_def,FUN_EQ_THM,FILTER_MAP,combinTheory.APPLY_UPDATE_THM,MEM_MAP_f]
     >> conj_tac
     (* ~mem_is_loc *)
     >- (
@@ -980,7 +980,7 @@ Proof
     >> `l1 = l2` by (
       unabbrev_all_tac
       >> fs[time_constraints_def,EVERY_MEM]
-      >> rw[rich_listTheory.FILTER_EQ,offset_none_inj]
+      >> rw[FILTER_EQ,offset_none_inj]
     )
     >> pop_assum $ fs o single
     >> map_every qunabbrev_tac [`l1`,`l2`]
@@ -1015,7 +1015,7 @@ Proof
     >> reverse conj_asm2_tac
     >- fs[time_constraints_def,some_zero_MAX,some_zero_zero,some_zero_COND,some_zero_COND0]
     >> fs[]
-    >> irule $ cj 5 bir_clstep_rules
+    >> irule $ cj 5 clstep_rules
     >> simp[timeshift_def,bir_state_t_component_equality]
     >> dep_rewrite.DEP_REWRITE_TAC[offset_none_zero,offset_none_MAX,offset_none_COND,offset_none_COND0,some_zero_COND,some_zero_COND0,some_zero_MAX]
     >> gs[time_constraints_def,some_zero_zero]
@@ -1036,7 +1036,7 @@ Proof
       >> qpat_x_assum `bir_eval_view_of_exp _ _ = v_addr` $ assume_tac o GSYM
       >> fs[time_constraints_def,bir_eval_view_of_exp_some_zero]
     )
-    >> irule_at Any $ cj 6 bir_clstep_rules
+    >> irule_at Any $ cj 6 clstep_rules
     >> drule_then assume_tac bir_eval_view_of_exp_some_zero
     >> gvs[timeshift_simps,bir_exec_stmt_mix_timeshift,bir_eval_exp_view_def]
     >> simp[timeshift_def,bir_state_t_component_equality]
@@ -1056,7 +1056,7 @@ Proof
       >> drule_then (irule_at Any) FEVERY_FEVERY_FUPDATE
       >> gs[time_constraints_def]
     )
-    >> irule $ cj 7 bir_clstep_rules
+    >> irule $ cj 7 clstep_rules
     >> simp[bir_eval_exp_view_def,timeshift_def,bir_state_t_component_equality]
     >> irule_at Any EQ_REFL
     >> fs[]
@@ -1065,7 +1065,7 @@ Proof
   >> (
     rpt gen_tac >> ntac 2 strip_tac
     >> fs[]
-    >> irule_at Any $ cj 8 bir_clstep_rules
+    >> irule_at Any $ cj 8 clstep_rules
     >> simp[timeshift_simps,bir_exec_stmt_mix_timeshift]
     >> drule_all_then irule bir_exec_stmt_mix_time_constraints
   )
@@ -1081,12 +1081,12 @@ Theorem cstep_timeshift:
     /\ time_constraints (some_zero M') s'
 Proof
   fs[GSYM AND_IMP_INTRO]
-  >> ho_match_mp_tac bir_cstep_ind
+  >> ho_match_mp_tac cstep_ind
   >> conj_tac
   >- (
     rpt gen_tac >> ntac 2 strip_tac
     >> drule_all_then strip_assume_tac clstep_timeshift
-    >> fs[bir_cstep_cases]
+    >> fs[cstep_cases]
   )
   >> rpt gen_tac >> ntac 2 strip_tac
   >> reverse conj_tac
@@ -1095,17 +1095,17 @@ Proof
     >> drule_then (irule_at Any) FEVERY_MONOTONIC
     >> drule_at_then Any (irule_at Any) EVERY_MONOTONIC
     >> fs[combinTheory.o_DEF,some_zero_APPEND,pairTheory.ELIM_UNCURRY]
-    >> simp[some_zero_def,is_some_some_def,rich_listTheory.EL_APPEND2]
+    >> simp[some_zero_def,is_some_some_def,EL_APPEND2]
     >> qmatch_goalsub_abbrev_tac `EL m`
     >> `m = 0` by (unabbrev_all_tac >> decide_tac)
     >> fs[]
   )
-  >> dsimp[bir_cstep_cases,FILTER_APPEND_DISTRIB,iffRL TAKE_LENGTH_ID_rwt2]
+  >> dsimp[cstep_cases,FILTER_APPEND_DISTRIB,iffRL TAKE_LENGTH_ID_rwt2]
   >> qmatch_goalsub_abbrev_tac `FILTER IS_SOME ll = _`
   >> `FILTER IS_SOME ll = []` by (
     qunabbrev_tac `ll`
     >> irule $ iffRL FILTER_EQ_NIL
-    >> simp[rich_listTheory.EVERY_REPLICATE]
+    >> simp[EVERY_REPLICATE]
   )
   >> pop_assum $ fs o single
   >> qunabbrev_tac `ll`
@@ -1113,7 +1113,7 @@ Proof
   >> `n = m + 1` by (
     unabbrev_all_tac
     >> fs[offset_none_def,TAKE_APPEND1]
-    >> fs[rich_listTheory.TAKE_APPEND,FILTER_APPEND_DISTRIB,iffRL TAKE_LENGTH_ID_rwt2]
+    >> fs[TAKE_APPEND,FILTER_APPEND_DISTRIB,iffRL TAKE_LENGTH_ID_rwt2]
     >> qmatch_goalsub_abbrev_tac `LENGTH _ + LENGTH l`
     >> `l = []` by fs[FILTER_EQ_NIL,Abbr`l`]
     >> fs[]
@@ -1125,7 +1125,7 @@ Proof
   >> `offset_none (M ++ M') t = LENGTH (FILTER IS_SOME M) + 1` by (
     qunabbrev_tac `M'`
     >> fs[offset_none_def,TAKE_APPEND1]
-    >> fs[rich_listTheory.TAKE_APPEND,FILTER_APPEND_DISTRIB,iffRL TAKE_LENGTH_ID_rwt2]
+    >> fs[TAKE_APPEND,FILTER_APPEND_DISTRIB,iffRL TAKE_LENGTH_ID_rwt2]
     >> qmatch_goalsub_abbrev_tac `LENGTH _ + LENGTH l`
     >> `l = []` by fs[FILTER_EQ_NIL,Abbr`l`]
     >> fs[]
@@ -1148,9 +1148,9 @@ Proof
       /\ drop_none_rel (FST sMg') (FST $ SND sMg') r' L'`
   >- (rpt strip_tac >> first_x_assum drule >> fs[])
   >> fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
-  >> ho_match_mp_tac bir_cstep_seq_ind
+  >> ho_match_mp_tac cstep_seq_ind
   >> rpt strip_tac
-  >> simp[bir_cstep_seq_cases]
+  >> simp[cstep_seq_cases]
   >> gvs[drop_none_rel_def]
   (* clstep *)
   >- (
@@ -1214,9 +1214,9 @@ Theorem parstep_seq_bisim:
     /\ drop_none_rels cores' M' cores_some' L'
 Proof
   fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
-  >> ho_match_mp_tac bir_parstep_ind
+  >> ho_match_mp_tac parstep_ind
   >> rpt strip_tac
-  >> fs[bir_parstep_cases,PULL_EXISTS,drop_none_rels_def]
+  >> fs[parstep_cases,PULL_EXISTS,drop_none_rels_def]
   >> first_assum $ drule_then strip_assume_tac
   >> drule_all_then strip_assume_tac cstep_timeshift
   >> rpt $ goal_assum $ drule_at Any
@@ -1240,7 +1240,7 @@ Proof
     >> fs[drop_none_rel_def,timeshift_def]
   )
   >> rev_drule_then assume_tac cstep_mem_IS_PREFIX
-  >> fs[rich_listTheory.IS_PREFIX_APPEND]
+  >> fs[IS_PREFIX_APPEND]
   >> qmatch_asmsub_rename_tac `M' = M ++ l`
   >> rw[FLOOKUP_UPDATE] >> fs[]
   >- (
