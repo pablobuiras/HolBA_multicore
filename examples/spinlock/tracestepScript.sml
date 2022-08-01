@@ -23,14 +23,31 @@ Theorem LT5 =
     GSYM pred_setTheory.IN_COUNT]
     THENC EVAL) ``n < 5n``
 
-(*
-Theorem mem_read_thm:
-  !t l M. 0 < t
-  ==> mem_read M l t = mem_read_aux l (oEL (PRE t) M)
+Theorem mem_is_loc_thm:
+  !M t l. mem_is_loc M t l <=>
+    0 < t ==> PRE t < LENGTH M
+      /\ IS_SOME $ EL (PRE t) M
+      /\ (THE $ EL (PRE t) M).loc = l
 Proof
-  Cases >> fs[mem_read_def]
+  Cases_on `t`
+  >> fs[mem_is_loc_PRE,EQ_IMP_THM,cj 1 mem_is_loc_def,oEL_THM]
+  >> rw[]
+  >> BasicProvers.every_case_tac
+  >> fs[]
 QED
-*)
+
+Theorem mem_is_cid_thm:
+  !M t cid. mem_is_cid M t cid <=>
+    0 < t /\ PRE t < LENGTH M
+      /\ IS_SOME $ EL (PRE t) M
+      /\ (THE $ (EL (PRE t) M)).cid = cid
+Proof
+  Cases_on `t`
+  >> fs[mem_is_cid_PRE,EQ_IMP_THM,cj 1 mem_is_cid_def,oEL_THM]
+  >> rw[]
+  >> BasicProvers.every_case_tac
+  >> fs[]
+QED
 
 (*
  * equality of projection of states
@@ -305,7 +322,8 @@ Definition is_fulfil_def:
     /\ bir_get_stmt (p:string bir_program_t) st.bst_pc = BirStmt_Write a_e v_e xcl acq rel
     /\ t < (LENGTH $ FST $ SND $ sys1mem) + 1
     /\ 0 < t
-    /\ (EL (PRE t) $ FST $ SND $ sys1mem).cid = cid
+    /\ IS_SOME $ EL (PRE t) $ FST $ SND $ sys1mem
+    /\ (THE $ EL (PRE t) $ FST $ SND $ sys1mem).cid = cid
 End
 
 Theorem is_fulfil_MEM_bst_prom:
@@ -321,8 +339,8 @@ Definition is_promise_def:
     FLOOKUP (FST sys1) cid = SOME $ Core cid p st
     /\ FLOOKUP (FST sys2) cid = SOME $ Core cid p st'
     /\ t = LENGTH (FST $ SND sys1) + 1
-    /\ (FST $ SND sys2) = (FST $ SND sys1) ++ [<| loc := l; val := v; cid := cid  |>]
     /\ st'.bst_prom = st.bst_prom ++ [t]
+    /\ ?n. (FST $ SND sys2) = (FST $ SND sys1) ++ REPLICATE n NONE ++ [SOME $ <| loc := l; val := v; cid := cid  |>]
 End
 
 Theorem is_promise_FLOOKUP:
@@ -350,7 +368,8 @@ Definition is_amo_def:
     /\ bir_get_stmt (p:string bir_program_t) st.bst_pc = BirStmt_Amo var a_e v_e acq rel
     /\ t < (LENGTH $ FST $ SND $ sys1mem) + 1
     /\ 0 < t
-    /\ (EL (PRE t) $ FST $ SND $ sys1mem).cid = cid
+    /\ IS_SOME $ EL (PRE t) $ FST $ SND $ sys1mem
+    /\ (THE $ EL (PRE t) $ FST $ SND $ sys1mem).cid = cid
 End
 
 (* fulfil steps change the state *)
@@ -424,9 +443,10 @@ Theorem is_fulfil_memory:
 Proof
   rpt strip_tac
   >> imp_res_tac is_fulfil_parstep_nice_imp
-  >> gvs[parstep_nice_def,parstep_cases,cstep_cases,FLOOKUP_UPDATE,is_fulfil_def]
-  >> `MEM t $ FILTER ($<> t) s.bst_prom` by fs[EQ_SYM_EQ]
-  >> fs[MEM_FILTER]
+  >> gvs[parstep_nice_def,parstep_cases,cstep_cases,FLOOKUP_UPDATE,is_fulfil_def,LIST_EQ_REWRITE]
+  >> qmatch_assum_abbrev_tac `LENGTH $ FILTER f ls = LENGTH ls + 1`
+  >> qspecl_then [`f`,`ls`] mp_tac LENGTH_FILTER_LEQ
+  >> fs[]
 QED
 
 Theorem is_fulfil_parstep_nice_eq:
@@ -439,7 +459,8 @@ Theorem is_fulfil_parstep_nice_eq:
     /\ rel = is_rel p s.bst_pc
     /\ acq = is_acq p s.bst_pc
     /\ rel_acq = (rel /\ acq)
-    /\ cid = (EL (PRE t) (FST (SND (EL (SUC i) tr)))).cid
+    /\ cid = (THE $ EL (PRE t) (FST $ SND $ EL (SUC i) tr)).cid
+    /\ IS_SOME $ EL (PRE t) (FST $ SND $ EL (SUC i) tr)
     /\ MEM t s.bst_prom
     /\ (xcl ==> s.bst_xclb <> NONE /\ fulfil_atomic_ok (FST (SND (EL (SUC i) tr))) l cid (THE s.bst_xclb).xclb_time t)
     /\ bir_get_current_statement p s.bst_pc = SOME (BStmtB (BStmt_Assign var e))
@@ -487,8 +508,8 @@ Theorem is_fulfil_parstep_nice_eq:
                         fwdb_xcl := xcl|>
                     else s.bst_fwdb lo);
             bst_xclb := if xcl then NONE else s.bst_xclb|>))
-    /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
-    /\ atomicity_ok cid (FST (EL i tr))
+    /\ FLOOKUP (FST (EL i tr)) cid = SOME $ Core cid p s
+    /\ atomicity_ok cid $ FST (EL i tr)
 Proof
   rpt strip_tac
   >> drule_all_then assume_tac is_fulfil_parstep_nice_imp
@@ -537,26 +558,27 @@ QED
 Theorem is_promise_parstep_nice_eq:
   !tr i cid t. wf_trace tr /\ SUC i < LENGTH tr
   /\ is_promise cid t (EL i tr) (EL (SUC i) tr)
-  ==> ?msg p s. cid = msg.cid
-    /\ FLOOKUP (FST (EL i tr)) cid = SOME (Core cid p s)
-    /\ FST $ SND $ EL (SUC i) tr = (FST $ SND $ EL i tr) ++ [msg]
-    /\ FST (EL (SUC i) tr) =
+  ==> ?msg p s n. cid = msg.cid
+    /\ FLOOKUP (FST (EL i tr)) cid = SOME $ Core cid p s
+    /\ FST $ SND $ EL (SUC i) tr = (FST $ SND $ EL i tr) ++ REPLICATE n NONE ++ [SOME msg]
+    /\ FST $ EL (SUC i) tr =
        FST (EL i tr) |+
        (cid,
          Core cid p
            (s with
-           bst_prom updated_by (λpr. pr ++ [LENGTH (FST $ SND (EL i tr)) + 1])))
+           bst_prom updated_by (λpr. pr ++ [LENGTH (FST $ SND (EL (SUC i) tr))])))
     /\ atomicity_ok cid (FST (EL i tr))
     /\ is_certified p cid
         (s with
         bst_prom updated_by
-          (\pr. pr ++ [LENGTH (FST $ SND $ EL i tr) + 1]))
-          ((FST $ SND $ EL i tr) ++ [msg]) (SND $ SND $ EL i tr)
+          (\pr. pr ++ [LENGTH (FST $ SND (EL (SUC i) tr))]))
+          (FST $ SND $ EL (SUC i) tr) (SND $ SND $ EL i tr)
 Proof
   rpt strip_tac
   >> imp_res_tac is_promise_parstep_nice_imp
   >> fs[parstep_nice_def,parstep_cases,cstep_cases,clstep_cases,is_promise_def]
   >> gvs[]
+  >> irule_at Any EQ_REFL
 QED
 
 (* fulfil steps affect only the fulfiling core *)
@@ -647,6 +669,7 @@ QED
 
 (* a fulfil has an earlier promise *)
 
+(* TODO correct *)
 Theorem NOT_is_promise_NOT_MEM_bst_prom:
   !i tr cid p st st' t. wf_trace tr
   /\ ~is_promise cid t (EL i tr) (EL (SUC i) tr)
@@ -1362,8 +1385,9 @@ Proof
   >> dxrule $ iffLR fulfil_atomic_ok_def
   >> fs[Once DISJ_COMM,DISJ_EQ_IMP]
   >> qpat_x_assum `_ < _.xclb_time` $ irule_at Any
-  >> gvs[GSYM arithmeticTheory.PRE_SUB1,mem_is_loc_def,mem_is_cid_def]
+  >> gvs[GSYM arithmeticTheory.PRE_SUB1,mem_is_loc_thm,mem_is_cid_thm]
   >> fs[]
+  >> cheat
 QED
 
 (*
@@ -1555,17 +1579,16 @@ Proof
   >> `SUC i2 < LENGTH tr` by fs[lr_sc_def,is_fulfil_xcl_def]
   >> conj_tac
   >- (
-    fs[]
-    >> dxrule_then strip_assume_tac $ iffLR lr_sc_def
+    dxrule_then strip_assume_tac $ iffLR lr_sc_def
     >> qpat_x_assum `_:num <> _` mp_tac
     >> qspecl_then [`tr`,`j1`,`SUC i2`] assume_tac wf_trace_IS_PREFIX_SND_EL
-    >> gvs[is_read_xcl_def,IS_PREFIX_APPEND,EL_APPEND1]
+    >> gvs[is_read_xcl_def,IS_PREFIX_APPEND,EL_APPEND1,mem_is_cid_thm]
   )
   >> dxrule_then strip_assume_tac $ iffLR lr_sc_def
   >> qspecl_then [`tr`,`SUC j1`,`SUC j2`] assume_tac wf_trace_IS_PREFIX_SND_EL
   >> qspecl_then [`tr`,`SUC j2`,`SUC i2`] assume_tac wf_trace_IS_PREFIX_SND_EL
   >> drule_at_then (Pat `is_read_xcl _ _ _ _`) assume_tac is_read_xcl_LENGTH_SND_EL
-  >> gs[EL_APPEND1,IS_PREFIX_APPEND,is_read_xcl_def]
+  >> gs[EL_APPEND1,IS_PREFIX_APPEND,is_read_xcl_def,mem_is_loc_thm]
 QED
 
 (* disallowed interleaving if t1 < t1' < t2 *)
@@ -1577,8 +1600,8 @@ Theorem lr_sc_interleaved_pair:
   /\ lr_sc cid' tr t1' j1 t2' j2
   /\ t1 < t1' /\ t1' < t2
   /\ cid <> cid'
-  /\ (EL (PRE t2) $ SND $ EL (SUC i2) tr).loc
-    = (EL (PRE t2') $ SND $ EL (SUC j2) tr).loc
+  /\ (EL (PRE t2) $ FST $ SND $ EL (SUC i2) tr).loc
+    = (EL (PRE t2') $ FST $ SND $ EL (SUC j2) tr).loc
   ==> F
 Proof
   rpt strip_tac
@@ -1600,14 +1623,15 @@ Theorem lr_sc_interleaved_pair':
   /\ t1 < t2'
   /\ t2' < t2
   /\ cid <> cid'
-  /\ (EL (PRE t2) $ SND $ EL (SUC i2) tr).loc
-    = (EL (PRE t2') $ SND $ EL (SUC j2) tr).loc
+  /\ (EL (PRE t2) $ FST $ SND $ EL (SUC i2) tr).loc
+    = (EL (PRE t2') $ FST $ SND $ EL (SUC j2) tr).loc
   ==> F
 Proof
   rpt strip_tac
   >> `?p st. FLOOKUP (FST (EL i2 tr)) cid = SOME (Core cid p st)
-        /\ fulfil_atomic_ok (SND (EL (SUC i2) tr))
-          (EL (PRE t2) (SND (EL (SUC i2) tr))).loc cid st t2
+        /\ fulfil_atomic_ok (FST $ SND (EL (SUC i2) tr))
+          (EL (PRE t2) (FST $ SND (EL (SUC i2) tr))).loc cid
+          (THE st.bst_xclb).xclb_time t2
         /\ IS_SOME st.bst_xclb
     ` by (
     fs[lr_sc_def]
@@ -1624,11 +1648,12 @@ Proof
   )
   >> conj_asm1_tac
   >- (
-    strip_tac
+    fs[mem_is_loc_thm]
+    >> strip_tac
     >> rev_dxrule_then strip_assume_tac $ iffLR lr_sc_def
     >> qspecl_then [`tr`,`SUC i1`,`SUC i2`] assume_tac wf_trace_IS_PREFIX_SND_EL
     >> drule_at_then (Pat `is_read_xcl _ _ _ _`) assume_tac is_read_xcl_LENGTH_SND_EL
-    >> `PRE t1 < LENGTH $ SND $ EL (SUC i1) tr /\ i1 < i2` by (
+    >> `PRE t1 < LENGTH $ FST $ SND $ EL (SUC i1) tr /\ i1 < i2` by (
       gs[lr_sc_def,is_read_xcl_def]
     )
     >> gs[GSYM PRE_SUB1,EL_APPEND1,is_read_xcl_def,IS_PREFIX_APPEND]
@@ -1641,8 +1666,8 @@ Proof
   >> ntac 2 $ dxrule_then assume_tac is_fulfil_xcl_is_fulfil
   >> ntac 2 $ dxrule_at_then (Pat `is_fulfil`) assume_tac is_fulfil_to_memory
   >> qpat_x_assum `_:num <> _` mp_tac
-  >> gvs[]
-  >> cheat (* both PRE t2 and PRE t2' are smaller than the memory SND $ EL (MIN i2 j2) *)
+  >> gvs[mem_is_loc_thm]
+  >> cheat (* both PRE t2 and PRE t2' are smaller than the memory FST $ SND $ EL (MIN i2 j2) *)
 QED
 
 val _ = export_theory();

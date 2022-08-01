@@ -1,8 +1,7 @@
 open HolKernel Parse boolLib bossLib;
+open bir_promisingTheory rich_listTheory listTheory arithmeticTheory finite_mapTheory;
 
 val _ = new_theory "traces";
-
-open bir_promisingTheory rich_listTheory listTheory arithmeticTheory finite_mapTheory;
 
 (*
  * general lemmata
@@ -59,16 +58,20 @@ Definition parstep_nice_def:
   = parstep cid (FST s1) (FST $ SND s1) (SND $ SND s1) (FST s2) (FST $ SND s2) (SND $ SND s2)
 End
 
-(* memory is monotonic only ever increases, at most by one *)
+(* memory is monotonic only ever increases, at most by one SOME value *)
 
 Theorem parstep_nice_memory_imp:
   !cid s1 s2. parstep_nice cid s1 s2
-  ==> FST $ SND s1 = FST $ SND s2 \/ ?m. FST $ SND s2 = (FST $ SND s1) ++ [m] /\ m.cid = cid
+  ==> FST $ SND s1 = FST $ SND s2
+  \/ ?m n. FST $ SND s2 = (FST $ SND s1) ++ REPLICATE n NONE ++ [SOME m]
+    /\ m.cid = cid
 Proof
-  fs[gen_traces_def,parstep_nice_def,pairTheory.FORALL_PROD]
-  >> rw[cstep_cases,parstep_cases]
-  >> disj2_tac
-  >> rpt $ irule_at Any EQ_REFL
+  fs[parstep_nice_def,pairTheory.FORALL_PROD]
+  >> ho_match_mp_tac parstep_ind
+  >> rw[]
+  >> drule_then strip_assume_tac cstep_memory_imp
+  >> fs[]
+  >> irule_at Any EQ_REFL
 QED
 
 (* future promises are larger than current memory size *)
@@ -77,9 +80,9 @@ Theorem parstep_nice_EVERY_NOT_MEM_bst_prom_LENGTH_LESS_bst_prom:
   !cid cid' sys1 sys2 p p' st st'. parstep_nice cid sys1 sys2
   /\ FLOOKUP (FST sys1) cid = SOME $ Core cid p st
   /\ FLOOKUP (FST sys2) cid = SOME $ Core cid p st'
-  ==> EVERY (λx. ~MEM x st.bst_prom ==> LENGTH (FST $ SND sys1) < x) st'.bst_prom
+  ==> EVERY (λx. ~MEM x st.bst_prom ==>
+        LENGTH (FST $ SND sys1) < x) st'.bst_prom
 Proof
-(*
   rpt strip_tac
   >> gvs[parstep_nice_def,parstep_cases,FLOOKUP_UPDATE,cstep_cases]
   >> imp_res_tac clstep_LENGTH_prom >> gvs[]
@@ -88,8 +91,6 @@ Proof
     >> fs[EVERY_MEM]
   )
   >> fs[clstep_cases,EVERY_MEM,MEM_FILTER]
-*)
-  cheat
 QED
 
 (* set of all traces *)
@@ -283,6 +284,19 @@ Proof
   >> fs[]
 QED
 
+Theorem wf_trace_memory_imp:
+  !i tr. wf_trace tr /\ i < LENGTH tr
+  /\ ~(NULL $ FST $ SND $ EL i tr)
+  ==> IS_SOME $ LAST $ FST $ SND $ EL i tr
+Proof
+  Induct >- rw[wf_trace_def]
+  >> rw[]
+  >> drule_all_then strip_assume_tac wf_trace_parstep_EL
+  >> first_x_assum drule
+  >> imp_res_tac parstep_nice_memory_imp
+  >> fs[]
+QED
+
 Theorem progressing_trace_cid_eq:
   !tr i cid cid'.
     wf_trace tr /\ SUC i < LENGTH tr
@@ -301,14 +315,14 @@ QED
 
 Theorem wf_trace_LENGTH_SND'':
   !tr i cid. wf_trace tr /\ i < LENGTH tr
-  ==> LENGTH $ FST $ SND $ EL i tr <= i
+  ==> LENGTH $ FILTER IS_SOME $ FST $ SND $ EL i tr <= i
 Proof
   gen_tac >> Induct
   >- fs[wf_trace_def,NULL_EQ]
   >> rw[]
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
   >> dxrule_then strip_assume_tac parstep_nice_memory_imp
-  >> fs[]
+  >> fs[FILTER_APPEND_DISTRIB,iffRL FILTER_EQ_NIL,EVERY_REPLICATE]
 QED
 
 (* if a core writes to memory there is the corresponding parstep transition *)
@@ -316,29 +330,36 @@ QED
 Theorem wf_trace_adds_to_memory:
   !i tr k cid. wf_trace tr /\ i < LENGTH tr
   /\ k < LENGTH $ FST $ SND $ EL i tr
-  /\ (EL k $ FST $ SND $ EL i tr).cid = cid
+  /\ IS_SOME $ EL k $ FST $ SND $ EL i tr
+  /\ (THE $ EL k $ FST $ SND $ EL i tr).cid = cid
   ==> ?j. j < i /\ parstep_nice cid (EL j tr) (EL (SUC j) tr)
-    /\ k = LENGTH $ FST $ SND $ EL j tr
-    /\ SUC k = LENGTH $ FST $ SND $ EL (SUC j) tr
+    /\ k = PRE $ LENGTH $ FST $ SND $ EL (SUC j) tr
+    /\ IS_SOME $ EL k $ FST $ SND $ EL (SUC j) tr
 Proof
   Induct >> rw[DISJ_EQ_IMP]
-  >- fs[wf_trace_def,NULL_EQ,NOT_LESS]
+  >- gs[wf_trace_def,NULL_EQ,NOT_LESS]
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
   >> imp_res_tac parstep_nice_memory_imp
   >- (
     first_x_assum drule
     >> fs[]
-    >> disch_then $ drule_then strip_assume_tac
+    >> disch_then $ drule_all_then strip_assume_tac
     >> rpt $ goal_assum $ drule_at Any
     >> fs[]
   )
+  (* TODO : earlier proof reusable here? *)
   >> gvs[prim_recTheory.LESS_THM,GSYM ADD1,EL_APPEND2]
-  >> dsimp[]
+  >> dsimp[EL_APPEND2]
   >> first_x_assum drule
   >> fs[]
+  >> `k < LENGTH $ FST $ SND $ EL i tr` by (
+    spose_not_then assume_tac
+    >> gvs[NOT_LESS,EL_APPEND1,EL_APPEND2,LESS_OR_EQ,EL_REPLICATE]
+  )
   >> disch_then $ drule_then strip_assume_tac
+  >> gs[EL_APPEND1]
   >> rpt $ goal_assum $ drule_at Any
-  >> fs[EL_APPEND1]
+  >> fs[]
 QED
 
 (* same core id occurs in next step in the trace *)
@@ -633,11 +654,12 @@ Theorem wf_trace_view_monotone:
   /\ FLOOKUP (FST $ EL i tr) cid = SOME $ Core cid p st
   /\ FLOOKUP (FST $ EL (SUC i) tr) cid = SOME $ Core cid p st'
   ==>
-       st.bst_v_wOld <= st'.bst_v_wOld
-    /\ st.bst_v_CAP  <= st'.bst_v_CAP
+       st.bst_v_CAP  <= st'.bst_v_CAP
     /\ st.bst_v_Rel  <= st'.bst_v_Rel
     /\ st.bst_v_rNew <= st'.bst_v_rNew
+    /\ st.bst_v_rOld <= st'.bst_v_rOld
     /\ st.bst_v_wNew <= st'.bst_v_wNew
+    /\ st.bst_v_wOld <= st'.bst_v_wOld
 Proof
   rpt gen_tac >> strip_tac
   >> drule_all_then strip_assume_tac wf_trace_parstep_EL
