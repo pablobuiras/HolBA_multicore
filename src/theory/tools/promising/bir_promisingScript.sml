@@ -968,7 +968,7 @@ Theorem cstep_memory_imp:
       /\ m.cid = cid)
 Proof
   fs[GSYM AND_IMP_INTRO]
-  >> ho_match_mp_tac cstep_ind
+  >> ho_match_mp_tac bir_cstep_ind
   >> rw[]
   >> irule_at Any EQ_REFL
 QED
