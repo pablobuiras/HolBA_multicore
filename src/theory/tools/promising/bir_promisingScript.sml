@@ -959,11 +959,21 @@ val (bir_cstep_seq_rules, bir_cstep_seq_ind, bir_cstep_seq_cases) = Hol_reln`
 
 val cstep_seq_rtc_def = Define`cstep_seq_rtc p cid = (cstep_seq p cid)^*`
 
-(*
-(*
- * properties about cstep, clstep, cstep_seq
- *)
+(* properties about cstep, clstep, cstep_seq *)
 
+Theorem cstep_memory_imp:
+  !p cid s M genv prom s' M' genv'.
+    cstep p cid s M genv prom s' M' genv'
+    ==> ( M = M' \/ ?m n. M' = M ++ REPLICATE n NONE ++ [SOME m]
+      /\ m.cid = cid)
+Proof
+  fs[GSYM AND_IMP_INTRO]
+  >> ho_match_mp_tac cstep_ind
+  >> rw[]
+  >> irule_at Any EQ_REFL
+QED
+
+(*
 (* the timestamp of a fulfil is coupled to the fulfiled core *)
 
 Theorem cstep_fulfil_to_memory:
