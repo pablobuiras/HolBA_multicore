@@ -47,8 +47,11 @@ Definition spinlock_aprog_def:
         BStmt_Assign (BVar "_is_locked" $ BType_Imm Bit64)
           $ BExp_IfThenElse
               (BExp_BinExp BIExp_And
-                (BExp_Const $ Imm64 0w)
-                (BExp_Den $ BVar "_tmp" $ BType_Imm Bit64))
+               (BExp_Const $ Imm64 0w)
+               (BExp_Den $ BVar "_tmp" $ BType_Imm Bit64))
+               (* Mads: This is always 0w, right *)
+               (* Couldn't we just use _tmp as branch condition *)
+               (* Either 0w and lock is free or non-zero and lock is taken *)
               (BExp_Const $ Imm64 1w)
               (BExp_Const $ Imm64 0w);
         (* lock if possible *)
@@ -68,6 +71,10 @@ Definition spinlock_aprog_def:
           (BLE_Label $ BL_Address $ Imm64 0w)
           (BLE_Label $ BL_Address $ Imm64 4w);
   |>;
+
+  (* Mads: This lock deadlocks since lock is executed atomically *)
+  (* How to fix this *)
+      
   (* unlock *)
   <|bb_label := BL_Address_HC (Imm64 4w) "";
     bb_mc_tags := SOME <|mc_atomic := F; mc_acq := F; mc_rel := F|>;
