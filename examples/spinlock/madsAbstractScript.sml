@@ -21,7 +21,13 @@ Definition spinlock_aprog_def:
         bb_statements :=
         [
           (* if _GHOST.crit is non-zero, lock is busy *)
-          (* 0w: jnz _GHOST.crit fail *)
+          (* 0w: _tmp := _GHOST.crit *)
+          BStmt_Assign (BVar "_tmp" $ BType_Imm Bit64)
+          (* BExp_Load mem_e a_e endianness type *)
+          $ BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
+                      (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
+                      BEnd_LittleEndian Bit32;             
+          (* 4w: jnz _GHOST.crit fail *)
           BStmt_CJmp
           (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
           (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
@@ -30,21 +36,21 @@ Definition spinlock_aprog_def:
           (BLE_Label $ BL_Address $ Imm64 16w)
           (* zero? *)
           (BLE_Label $ BL_Address $ Imm64 4w);
-          (* 4w: _GHOST.crit := 1 *)
+          (* 8w: _GHOST.crit := 1 *)
           BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
             $ BExp_Store (BExp_Den $ (BVar "_GHOST" $ BType_Mem Bit64 Bit8)
               (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
               BEnd_LittleEndian
               $ (BExp_Const $ Imm64 1w) ;
-          (* 8w: success := 1w *)
+          (* 12w: success := 1w *)
           BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
             $ BExp_Store (BExp_Den $ BVar "success" $ BType_Imm Bit64)
               BEnd_LittleEndian
               $ (BExp_Const $ Imm64 1w) ;
-          (* 12w: jmp 20w *)
+          (* 16w: jmp 20w *)
           BStmt_Jmp
           (BLE_Label $ BL_Address $ Imm64 20w) ;
-          (* 16w: success := 0w *)
+          (* 20w: success := 0w *)
           BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
             $ BExp_Store (BExp_Den $ BVar "success" $ BType_Imm Bit64)
               BEnd_LittleEndian
@@ -54,7 +60,7 @@ Definition spinlock_aprog_def:
            BStmt_Jmp
            (BLE_Label $ BBreakAtomic_Address $ Imm64 0w) ;
     |> ;
-    <|bb_label := BL_Address (Imm64 24w) "" ;
+    <|bb_label := BL_Address (Imm64 28w) "" ;
     (* atomic or not, whatever is more convenient *)
       bb_mc_tags := SOME <| mc_atomic := T; mc_acq := F; mc_rel := F |> ;
       bb_statements :=
@@ -62,12 +68,12 @@ Definition spinlock_aprog_def:
           (* jz success BL_Address 0w *)
           BStmt_CJmp
            (BExp_Den $ BVar "success" $ BType_Imm Bit64)
-           (BLE_Label $ BL_Address $ Imm64 28w)
+           (BLE_Label $ BL_Address $ Imm64 32w)
            (BLE_Label $ BL_Address $ Imm64 0w);
         ] ;
       bb_last_statement :=
         BStmt_Jmp
-        (BLE_Label $ BL_Address $ Imm64 32w) ;
+        (BLE_Label $ BL_Address $ Imm64 36w) ;
         |> ;
            
            
