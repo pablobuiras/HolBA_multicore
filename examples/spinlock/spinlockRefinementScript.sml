@@ -47,56 +47,49 @@ Definition asl_slf_rel_def:
     /\ core_prog cid S = (bir_spinlockfull_prog: string bir_program_t)
     (* lock is free *)
     /\ is_free_slf cid S = is_free_asl agenv
-    (* pc outside lock and unlock *)
-    /\ (
-      outside_un_lock_asl apc
-      /\ outside_un_lock_slf pc
-      ==> same_pc_als_slf apc pc
 (*
 spinlock_aprog_def
 bir_spinlockfull_prog_def
 *)
-    )
     (* not taking the lock *)
     /\ (
-      (lbl < 20w
-      /\ (lbl = 20w ==>
+      lbl < 20w
+      /\ (lbl = 16w /\ index = 5 ==>
           bir_read_core_reg_zero "x6" cid S) (* unsuccessful store *)
-      ) ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 0w,0)
+      ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 0w,0)
     )
     (* future successful store *)
     /\ (
-        lbl = 20w
-        /\ ~bir_read_core_reg_zero "x6" cid S
-        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
-    )
-    (* successful store *)
-    /\ (
-        lbl = 24w
-        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
+      lbl = 16w
+      /\ ~bir_read_core_reg_zero "x6" cid S
+      ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
     )
     (* after lock, before unlock *)
     /\ (
-        24w < lbl /\ lbl < 40w
-        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
+      24w <= lbl /\ lbl <= 36w /\ (lbl = 36w ==> index = 2)
+      ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,0)
     )
     (* after unlock *)
     /\ (
-        lbl = 40w
-        ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 8w,0)
+      36w <= lbl /\ (lbl = 36w ==> 3 <= index)
+      ==> bst_pc_tuple $ core_pc cid aS = (BL_Address $ Imm64 4w,1)
     )
+    /\ atomicity_ok cid (FST aS)
+    /\ is_certified (core_prog cid aS) cid (core_state cid aS) aM agenv
   )
 End
 
-
 (*****************************************************************************)
-(* The refinemen theorem(s) **************************************************)
+(* Properties about spinlock programs ****************************************)
 (*****************************************************************************)
 
-Theorem bir_spinlockfull_prog_not_is_xcl_write:
+Theorem bir_spinlockfull_prog_write_props36w:
   pc.bpc_label = BL_Address (Imm64 36w)
   /\ pc.bpc_index = 2
   ==> ~is_xcl_write bir_spinlockfull_prog pc
+    /\ ~is_amo bir_spinlockfull_prog pc
+    /\ ~is_acq bir_spinlockfull_prog pc
+    /\ ~is_rel bir_spinlockfull_prog pc
 Proof
   rpt gen_tac >> strip_tac
   >> EVAL_TAC
@@ -124,9 +117,63 @@ Proof
   >> fs[]
 QED
 
+Theorem bir_spinlock_aprog_not_is_amo_is_xcl_write:
+  pc.bpc_label = BL_Address (Imm64 4w)
+  /\ pc.bpc_index = 0
+  ==> ~is_amo (spinlock_aprog cid) pc
+    /\ ~is_xcl_write (spinlock_aprog cid) pc
+    /\ ~is_rel (spinlock_aprog cid) pc
+    /\ ~is_acq (spinlock_aprog cid) pc
+Proof
+  rpt gen_tac >> strip_tac
+  >> EVAL_TAC
+  >> fs[]
+QED
+
+(* TODO adjust prerequisites for spinlock_refinement_Read *)
+Theorem env_update_cast64_thm:
+  !env new_env var x i v genv genv' mem.
+  env_update_cast64 (BVar var i) (BVal_Imm v) env genv = SOME (new_env,genv')
+  /\ var <> x
+  ==> bir_read_mem_var mem x new_env
+    = bir_read_mem_var mem x env
+Proof
+  Cases >> rw[env_update_cast64_def]
+  >> EVAL_TAC
+  >> BasicProvers.every_case_tac
+  >> fs[pairTheory.ELIM_UNCURRY,bir_envTheory.bir_env_update_def,bir_expTheory.bir_eval_load_def,bir_envTheory.bir_var_name_def]
+  >> rpt (
+    qmatch_asmsub_rename_tac `type_of_bir_val z`
+    >> Cases_on `z` >> fs[bir_valuesTheory.type_of_bir_val_def]
+  )
+  >> gvs[bir_expTheory.bir_eval_load_def,AllCaseEqs(),bir_envTheory.bir_env_lookup_def]
+  >> rpt (
+    qmatch_asmsub_rename_tac `type_of_bir_imm b`
+    >> Cases_on `b` >> fs[bir_immTheory.type_of_bir_imm_def]
+  )
+  >> fs[]
+  >> cheat (* TODO *)
+QED
+
+(* for memories obtained during parstep transitions *)
+(* TODO adjust prerequisites for spinlock_refinement_Read *)
+Theorem parstep_nice_mem_read_BVal_Imm:
+  mem_read M l t = SOME x ==> ?y. x = BVal_Imm y
+Proof
+  cheat
+QED
+
+Definition parsteps_def:
+  parsteps cid sys1 sys2 <=> ?n. NRC (λsys1 sys2. parstep_nice cid sys1 sys2) n sys1 sys2 
+End
+
+(*****************************************************************************)
+(* The refinemen theorem(s) **************************************************)
+(*****************************************************************************)
+
 (* read transitions *)
 Theorem spinlock_refinement_Read:
-  !cid tr i aS st var a_e opt_cast xcl acq rel.
+  !cid tr i aS st var a_e opt_cast xcl acq rel st'.
   wf_trace tr /\ SUC i < LENGTH tr
   /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
   /\ asl_slf_rel cid aS (EL i tr)
@@ -136,25 +183,23 @@ Theorem spinlock_refinement_Read:
         BirStmt_Read var a_e opt_cast xcl acq rel
   /\ FST (SND (EL i tr)) = FST (SND (EL (SUC i) tr))
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
   rpt strip_tac
-  >> disj1_tac
+  >> fs[parsteps_def,PULL_EXISTS]
+  >> irule_at Any $ iffRL NRC_0
   >> drule_then strip_assume_tac $ iffLR bir_get_stmt_bir_spinlockfull_prog_BirStmt_Read
   >> dxrule_then assume_tac $ iffLR parstep_nice_def
   >> gs[parstep_cases,cstep_cases,clstep_cases,get_core_state_def,FLOOKUP_UPDATE,core_zoo,asl_slf_rel_def,bir_spinlockfull_prog_is_xcl_read,bir_programTheory.bir_pc_next_def,get_core_prog_def]
   >> conj_tac
   >- simp[reachable_slf_def,bst_pc_tuple_def]
-  >> conj_tac
   >- (
-    qmatch_goalsub_abbrev_tac `_ = B`
-    >> qpat_x_assum `_ = B` $ fs o single o GSYM
-    >> fs[is_free_slf_def,core_zoo,bir_read_mem_var_def,FLOOKUP_UPDATE]
-    (* MEM8.x7 holds the default 0w before and after reading from *)
-    >> qpat_x_assum `_ = bir_eval_exp_view _ _ _ _` mp_tac
-    >> fs[bir_eval_exp_view_def,bir_eval_exp_mix_def,is_global_def]
+    qpat_x_assum `is_free_slf _ _ <=> _` $ REWRITE_TAC o single o GSYM
+    >> fs[is_free_slf_def,is_free_asl_def,core_zoo,get_core_state_def,FLOOKUP_UPDATE]
+    >> qmatch_asmsub_rename_tac `env_update_cast64 _ v _ _`
+    >> imp_res_tac parstep_nice_mem_read_BVal_Imm
+    >> gvs[]
+    >> drule_at Any $ GSYM env_update_cast64_thm
     >> fs[]
     >> cheat
   )
@@ -172,11 +217,55 @@ Theorem spinlock_refinement_Write:
     BirStmt_Write a_e v_e xcl acq rel
   /\ FST (SND (EL i tr)) = FST (SND (EL (SUC i) tr))
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
-  cheat
+  rpt strip_tac
+  >> drule_then strip_assume_tac $ iffLR bir_get_stmt_bir_spinlockfull_prog_BirStmt_Write
+  (*
+  >> dxrule_then assume_tac $ iffLR parstep_nice_def
+  >> gs[parstep_cases,cstep_cases,clstep_cases,get_core_state_def,FLOOKUP_UPDATE,core_zoo,bir_spinlockfull_prog_write_props36w,bir_programTheory.bir_pc_next_def,get_core_prog_def]
+  *)
+  >- (
+    (* 36w, 2: leaving lock section *)
+    `FLOOKUP (FST aS') cid = SOME $ Core cid (spinlock_aprog cid) st'` by (
+      cheat
+    )
+    >> `bst_pc_tuple $ core_pc cid aS' = (BL_Address $ Imm64 4w,0)` by (
+      fs[core_zoo,asl_slf_rel_def]
+    )
+    >> dsimp[parstep_nice_def,parstep_cases,cstep_cases,pairTheory.EXISTS_PROD]
+    >> fs[bst_pc_tuple_def,GSYM PULL_EXISTS,AC CONJ_ASSOC CONJ_COMM]
+    (*
+    >> conj_tac
+    >- fs[atomicity_ok_def,asl_slf_rel_def]
+    *)
+    >> `?a_e v_e xcl acq rel.
+      bir_get_stmt (spinlock_aprog cid) (core_pc cid aS')
+      = BirStmt_Write a_e v_e xcl acq rel` by (
+      fs[bir_get_stmt_spinlock_aprog_BirStmt_Write,bir_spinlock_aprog_not_is_amo_is_xcl_write]
+    )
+    >> dsimp[clstep_cases,FLOOKUP_UPDATE]
+    >> gs[core_zoo,get_core_state_def]
+    >> drule_then assume_tac $ iffLR bir_get_stmt_spinlock_aprog_BirStmt_Write
+    >> gs[core_zoo,bir_spinlock_aprog_not_is_amo_is_xcl_write,bir_spinlockfull_prog_write_props36w]
+    >> cheat
+  )
+  >- (
+    (* 16w 2 *)
+    (* case split on success of write *)
+    Cases_on `bir_read_core_reg_zero "x6" cid (EL (SUC i) tr)`
+    >- (
+      (* unsuccessful *)
+      cheat
+    )
+    (* successful *)
+    >> cheat
+  )
+  >- (
+    (* 4w 2 *)
+    drule_then assume_tac $ iffLR asl_slf_rel_def
+    >> gs[reachable_slf_def,core_zoo]
+  )
 QED
 
 (* generic transitions *)
@@ -189,11 +278,77 @@ Theorem spinlock_refinement_Generic:
   /\ bir_get_stmt bir_spinlockfull_prog st.bst_pc = BirStmt_Generic stm
   /\ FST (SND (EL i tr)) = FST (SND (EL (SUC i) tr))
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
-  cheat
+  rpt strip_tac
+  >> `reachable_slf (core_pc cid (EL i tr))` by fs[asl_slf_rel_def]
+  >> drule_then strip_assume_tac $ iffLR bir_get_stmt_bir_spinlockfull_prog_BirStmt_Generic
+  >> gs[reachable_slf_def,core_zoo]
+  >- (
+    (* 0w,1 *)
+    (* in lock *)
+    cheat
+  )
+  >- (
+    (* 4w,0 *)
+    (* in lock *)
+    cheat
+  )
+  >- (
+    (* 4w,3 *)
+    (* in lock *)
+    cheat
+  )
+  >- (
+    (* 12w,1 *)
+    (* in lock *)
+    cheat
+  )
+  >- (
+    (* 16w,0 *)
+    (* in lock *)
+    cheat
+  )
+  >- (
+    (* 16w,1 *)
+    (* in lock *)
+    cheat
+  )
+  >- (
+    (* 16w,5 *)
+    (* in crit *)
+    cheat
+  )
+  >- (
+    (* 24w,0 *)
+    (* in crit *)
+    cheat
+  )
+  >- (
+    (* 28w,1 *)
+    (* in crit *)
+    cheat
+  )
+  >- (
+    (* 32w,1 *)
+    (* in unlock - after fence *)
+    cheat
+  )
+  >- (
+    (* 36w,1 *)
+    (* in unlock - after fence *)
+    cheat
+  )
+  >- (
+    (* 36w,0 *)
+    (* in unlock - after fence *)
+    cheat
+  )
+  >- (
+    (* 36w,3 *)
+    (* leaving unlock *)
+    cheat
+  )
 QED
 
 (* fence transitions *)
@@ -206,9 +361,7 @@ Theorem spinlock_refinement_Fence:
   /\ bir_get_stmt (bir_spinlockfull_prog :string bir_program_t) st.bst_pc = BirStmt_Fence mo1 mo2
   /\ FST (SND (EL i tr)) = FST (SND (EL (SUC i) tr))
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
   cheat
 QED
@@ -223,9 +376,7 @@ Theorem spinlock_refinement_Expr:
   /\ bir_get_stmt bir_spinlockfull_prog st.bst_pc = BirStmt_Expr var e
   /\ FST (SND (EL i tr)) = FST (SND (EL (SUC i) tr))
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
   cheat
 QED
@@ -240,9 +391,7 @@ Theorem spinlock_refinement_Branch:
   /\ bir_get_stmt bir_spinlockfull_prog st.bst_pc = BirStmt_Branch a1 a2 a3
   /\ FST (SND (EL i tr)) = FST (SND (EL (SUC i) tr))
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
   cheat
 QED
@@ -260,25 +409,23 @@ Theorem spinlock_refinement_Amo:
     BirStmt_Amo var a_e v_e acq rel
   /\ FST (SND (EL i tr)) = FST (SND (EL (SUC i) tr))
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
   cheat
+(* bir_get_stmt_spinlock_aprog_BirStmt_Amo, bir_get_stmt_bir_spinlockfull_prog_BirStmt_Amo *)
 QED
 
 (* refinement theorem *)
 (* the abstract state is prefixed with "a" *)
 
+(* TODO change to parstep_nice^* *)
 Theorem spinlock_refinement:
   !cid tr i aS.
   wf_trace tr /\ SUC i < LENGTH tr
   /\ parstep_nice cid (EL i tr) (EL (SUC i) tr)
   /\ asl_slf_rel cid aS (EL i tr)
   ==>
-    asl_slf_rel cid aS (EL (SUC i) tr)
-    \/ ?aS'. parstep_nice cid aS aS'
-          /\ asl_slf_rel cid aS' (EL (SUC i) tr)
+    ?aS'. parsteps cid aS aS' /\ asl_slf_rel cid aS' (EL (SUC i) tr)
 Proof
   rpt strip_tac
   >> drule_then assume_tac $ iffLR asl_slf_rel_def
@@ -286,7 +433,9 @@ Proof
   >> reverse $ drule_then strip_assume_tac parstep_nice_memory_imp
   (* promise case *)
   >- (
-    disj1_tac
+    fs[parsteps_def,PULL_EXISTS]
+    >> irule_at Any $ iffRL NRC_0
+    >> fs[]
     >> cheat (* no relevant change of state *)
   )
   >> qmatch_asmsub_rename_tac `asl_slf_rel cid aS' _`
@@ -350,10 +499,6 @@ Proof
     >> fs[parstep_nice_def]
   )
 QED
-
-(*
-reachability for free for traces
-*)
 
 val _ = export_theory();
 
