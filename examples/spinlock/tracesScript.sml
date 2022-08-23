@@ -335,6 +335,7 @@ Theorem wf_trace_adds_to_memory:
   ==> ?j. j < i /\ parstep_nice cid (EL j tr) (EL (SUC j) tr)
     /\ k = PRE $ LENGTH $ FST $ SND $ EL (SUC j) tr
     /\ IS_SOME $ EL k $ FST $ SND $ EL (SUC j) tr
+    /\ LENGTH $ FST $ SND $ EL j tr <= k
 Proof
   Induct >> rw[DISJ_EQ_IMP]
   >- gs[wf_trace_def,NULL_EQ,NOT_LESS]
@@ -347,10 +348,9 @@ Proof
     >> rpt $ goal_assum $ drule_at Any
     >> fs[]
   )
-  (* TODO : earlier proof reusable here? *)
+  >> first_x_assum drule
   >> gvs[prim_recTheory.LESS_THM,GSYM ADD1,EL_APPEND2]
   >> dsimp[EL_APPEND2]
-  >> first_x_assum drule
   >> fs[]
   >> `k < LENGTH $ FST $ SND $ EL i tr` by (
     spose_not_then assume_tac
