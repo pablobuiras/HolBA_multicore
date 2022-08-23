@@ -88,6 +88,35 @@ Proof
   >> gen_tac >> Cases >> rw[TAKE_def]
 QED
 
+Theorem LENGTH_FILTER_IMP_EVERY:
+  !P ls. LENGTH $ FILTER P ls = LENGTH ls ==> EVERY P ls
+Proof
+  spose_not_then assume_tac
+  >> gs[EVERY_NOT_EXISTS]
+  >> dxrule LENGTH_FILTER_LESS
+  >> fs[]
+QED
+
+Theorem LESS_LENGTH_FILTER:
+  !P ls. LENGTH (FILTER P ls) < LENGTH ls ==> EXISTS ($~ o P) ls
+Proof
+  REWRITE_TAC[GSYM FILTER_EQ_ID,EXISTS_NOT_EVERY]
+  >> fs[ETA_AX]
+  >> spose_not_then assume_tac >> gs[]
+QED
+
+Theorem LENGTH_FILTER_EQ_EVERY:
+  !P ls. LENGTH $ FILTER P ls = LENGTH ls <=> EVERY P ls
+Proof
+  rw[EQ_IMP_THM,LENGTH_FILTER_IMP_EVERY]
+  >> spose_not_then assume_tac
+  >> dxrule_then strip_assume_tac $ iffLR EVERY_NOT_EXISTS
+  >> dxrule_at_then Concl irule $
+    SIMP_RULE(srw_ss())[combinTheory.o_DEF] LESS_LENGTH_FILTER
+  >> irule LESS_CASES_IMP
+  >> fs[NOT_LESS,LENGTH_FILTER_LEQ]
+QED
+
 Theorem FEVERY_FEVERY_FUPDATE:
   !env P var val.
   FEVERY (P o SND) env /\ P val
@@ -109,6 +138,15 @@ Theorem offset_none_eq:
   = t - ((LENGTH $ TAKE (PRE t) M) - (LENGTH $ FILTER IS_SOME $ TAKE (PRE t) M))
 Proof
   fs[offset_none_def,LENGTH_FILTER_LEQ,SUB_SUB]
+QED
+
+Theorem offset_none_id:
+  !M t. EVERY IS_SOME $ TAKE (PRE t) M <=> offset_none M t = t
+Proof
+  rw[GSYM LENGTH_FILTER_EQ_EVERY,offset_none_eq,EQ_IMP_THM]
+  >> qmatch_asmsub_abbrev_tac `l:'a option list`
+  >> qspecl_then [`IS_SOME`,`l`] assume_tac LENGTH_FILTER_LEQ
+  >> fs[SUB_EQ_EQ_0,Abbr`l`]
 QED
 
 Theorem offset_none_GT_ZERO:
@@ -436,6 +474,7 @@ Theorem timeshift_simps:
   (timeshift f s).bst_pc = s.bst_pc
   /\ (timeshift f s).bst_environ = s.bst_environ
   /\ timeshift I s = s
+  /\ (timeshift f s).bst_status = s.bst_status
 Proof
   fs[timeshift_def]
   >> fs[FUN_EQ_THM,bir_state_t_component_equality,fwdb_t_component_equality,o_f_id,I_EQ_IDABS]
@@ -668,11 +707,12 @@ QED
 
 Definition drop_none_rel_def:
   drop_none_rel s M s' M' <=>
-    M' = FILTER IS_SOME M /\ s' = timeshift (offset_none M) s
+    M' = FILTER IS_SOME M
+    /\ s' = timeshift (offset_none M) s
     /\ time_constraints (some_zero M) s
 End
 
-Theorem clstep_timeshift:
+Theorem clstep_sim1:
   !p cid s M genv prom s' genv'.
   clstep p cid s M genv prom s' genv'
   /\ time_constraints (some_zero M) s
@@ -1071,24 +1111,27 @@ Proof
   )
 QED
 
-Theorem cstep_timeshift:
-  !p cid s M genv prom s' M' genv'.
+Theorem cstep_sim1:
+  !p cid s M genv prom s' M' genv' prom' L r.
   cstep p cid s M genv prom s' M' genv'
-  /\ time_constraints (some_zero M) s
-  ==>
-    cstep p cid (timeshift (offset_none M) s) (FILTER IS_SOME M) genv
-      (MAP (offset_none M') prom) (timeshift (offset_none M') s') (FILTER IS_SOME M') genv'
-    /\ time_constraints (some_zero M') s'
+  /\ drop_none_rel s M r L
+  ==> ?L' r' prom'.
+    cstep p cid r L genv prom' r' L' genv'
+    /\ EVERY IS_SOME L'
+    /\ drop_none_rel s' M' r' L'
+    /\ prom' = MAP (offset_none M') prom
 Proof
-  fs[GSYM AND_IMP_INTRO]
+  fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
   >> ho_match_mp_tac cstep_ind
   >> conj_tac
   >- (
-    rpt gen_tac >> ntac 2 strip_tac
-    >> drule_all_then strip_assume_tac clstep_timeshift
-    >> fs[cstep_cases]
+    rpt strip_tac
+    >> gvs[drop_none_rel_def]
+    >> drule_all_then strip_assume_tac clstep_sim1
+    >> fs[cstep_cases,EVERY_MEM,MEM_FILTER]
   )
-  >> rpt gen_tac >> ntac 2 strip_tac
+  >> rpt strip_tac
+  >> gvs[drop_none_rel_def,EVERY_MEM,MEM_FILTER]
   >> reverse conj_tac
   >- (
     fs[time_constraints_def,some_zero_APPEND]
@@ -1134,7 +1177,7 @@ Proof
   >> fs[timeshift_def,bir_state_t_component_equality]
 QED
 
-Theorem cstep_seq_bisim:
+Theorem cstep_seq_sim1:
   !p cid s M genv s' M' genv' r L.
   cstep_seq p cid (s, M, genv) (s', M', genv')
   /\ drop_none_rel s M r L
@@ -1151,18 +1194,18 @@ Proof
   >> ho_match_mp_tac cstep_seq_ind
   >> rpt strip_tac
   >> simp[cstep_seq_cases]
-  >> gvs[drop_none_rel_def]
+  >> gvs[drop_none_rel_def,EVERY_MEM,MEM_FILTER]
   (* clstep *)
   >- (
-    drule_all_then strip_assume_tac clstep_timeshift
+    drule_all_then strip_assume_tac clstep_sim1
     >> rpt $ goal_assum $ drule_at Any
   )
   (* cstep; clstep *)
   >> dsimp[]
   >> disj2_tac
-  >> drule_all_then strip_assume_tac cstep_timeshift
-  >> drule_all_then strip_assume_tac clstep_timeshift
-  >> gs[FILTER_APPEND_DISTRIB]
+  >> drule_then assume_tac cstep_sim1
+  >> drule_then strip_assume_tac clstep_sim1
+  >> gs[FILTER_APPEND_DISTRIB,drop_none_rel_def,EVERY_MEM,MEM_FILTER]
   >> rpt $ goal_assum $ drule_at Any
 QED
 
@@ -1189,7 +1232,7 @@ Proof
   >> PairCases_on `sMg'`
   >> PairCases_on `sMg''`
   >> fs[]
-  >> drule_all_then strip_assume_tac cstep_seq_bisim
+  >> drule_all_then strip_assume_tac cstep_seq_sim1
   >> first_x_assum $ drule_then strip_assume_tac
   >> irule_at Any $ cj 2 RTC_RULES
   >> rpt $ goal_assum $ drule_at Any
@@ -1205,7 +1248,7 @@ Definition drop_none_rels_def:
       ==> ?s'. FLOOKUP cores cid = SOME $ Core cid p s' /\ s = timeshift (offset_none M) s')
 End
 
-Theorem parstep_seq_bisim:
+Theorem parstep_seq_sim1:
   !cid cores M genv cores' M' genv' cores_some L.
     parstep cid cores M genv cores' M' genv'
     /\ drop_none_rels cores M cores_some L
@@ -1216,10 +1259,12 @@ Proof
   fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
   >> ho_match_mp_tac parstep_ind
   >> rpt strip_tac
-  >> fs[parstep_cases,PULL_EXISTS,drop_none_rels_def]
+  >> fs[parstep_cases,PULL_EXISTS,drop_none_rels_def,EVERY_MEM,MEM_FILTER]
   >> first_assum $ drule_then strip_assume_tac
-  >> drule_all_then strip_assume_tac cstep_timeshift
+  >> drule_then assume_tac cstep_sim1
+  >> gs[drop_none_rel_def,EVERY_MEM,MEM_FILTER]
   >> rpt $ goal_assum $ drule_at Any
+  >> fs[]
   >> conj_tac
   (* atomicity_ok *)
   >- (
@@ -1234,7 +1279,7 @@ Proof
   >- (
     fs[is_certified_def]
     >> drule_then (qspecl_then [`timeshift (offset_none M') s'`,`FILTER IS_SOME M'`] mp_tac) cstep_seq_rtc_bisim
-    >> impl_tac >- fs[drop_none_rel_def]
+    >> impl_tac >- fs[drop_none_rel_def,EVERY_MEM,MEM_FILTER]
     >> disch_then strip_assume_tac
     >> goal_assum $ drule_at Any
     >> fs[drop_none_rel_def,timeshift_def]
@@ -1256,6 +1301,176 @@ Proof
     >> first_x_assum $ drule_then strip_assume_tac
     >> fs[time_constraints_offset_none_APPEND_EQ]
   )
+QED
+
+(* Other direction of bisimulation ********************************************)
+
+Definition stretch_none_def:
+  (stretch_none _ acc 0 = acc)
+  /\ (stretch_none M acc t =
+    let diff = (LENGTH $ TAKE t M)
+      - (LENGTH $ FILTER IS_SOME $ TAKE t M)
+    in
+      stretch_none (DROP t M) (diff + acc) diff)
+Termination
+  WF_REL_TAC `inv_image($< LEX $<) $ λ(a,b,c). (LENGTH a,c)`
+  >> rw[DISJ_EQ_IMP]
+End
+
+Theorem stretch_none_leq1:
+  !M acc t. acc <= stretch_none M acc t
+Proof
+  ho_match_mp_tac stretch_none_ind
+  >> fs[stretch_none_def]
+QED
+
+Theorem stretch_none_leq:
+  !M acc t acc'. acc <= acc' ==> acc <= stretch_none M acc' t
+Proof
+  ho_match_mp_tac stretch_none_ind
+  >> rw[stretch_none_def]
+  >> qmatch_goalsub_abbrev_tac `stretch_none _ acc'' _`
+  >> first_x_assum $ qspec_then `acc''` mp_tac
+  >> qunabbrev_tac `acc''` >> fs[]
+QED
+
+Theorem stretch_none_simps:
+  stretch_none M acc 0 = acc
+Proof
+  fs[stretch_none_def]
+QED
+
+Definition stretch_none_inv_def:
+  stretch_none_inv M acc t M' acc' <=>
+    M' = DROP t M
+    /\ acc <= acc':num
+    /\ f
+End
+
+Theorem stretch_none_inv_init:
+  stretch_none_inv M acc 0 M acc
+Proof
+  fs[stretch_none_inv_def]
+QED
+
+Theorem stretch_none_inv_stretch_none:
+  !M acc t M' acc' t' acc''.
+  stretch_none_inv M acc t M' acc'
+  /\ stretch_none M' acc' t' = acc''
+  ==> stretch_none_inv M acc t M acc''
+Proof
+  ho_match_mp_tac stretch_none_ind
+  >> conj_tac
+  >- fs[stretch_none_inv_def,stretch_none_leq]
+  >> rw[]
+  >> fs[stretch_none_inv_def,stretch_none_leq]
+  fs[GSYM AND_IMP_INTRO,GSYM PULL_FORALL]
+QED
+
+(* injectivity on M *)
+Definition inj_def:
+  inj f = !x y. f x = f y ==> x = y
+End
+
+Theorem inj_INJ_eq:
+ inj (f:'a -> 'b) = INJ f (univ(:'a)) (univ(:'b))
+Proof
+  fs[inj_def,pred_setTheory.INJ_DEF]
+QED
+
+Theorem inj_o_f:
+  !f x y. inj f /\ f o_f x = f o_f y ==> x = y
+Proof
+  rw[GSYM fmap_EQ_THM] >> gvs[]
+  >> first_x_assum drule
+  >> fs[inj_def]
+QED
+
+Theorem inj_MAP:
+  !f x y. inj f /\ MAP f x = MAP f y ==> x = y
+Proof
+  rpt strip_tac
+  >> dxrule_at_then Any irule INJ_MAP_EQ
+  >> irule pred_setTheory.INJ_SUBSET
+  >> dxrule_then (irule_at Any) $ iffLR inj_INJ_eq
+  >> fs[]
+QED
+
+Theorem inj_OPTION_MAP:
+  !f x y. inj f /\ OPTION_MAP f x = OPTION_MAP f y ==> x = y
+Proof
+  gen_tac >> ntac 2 Cases >> fs[inj_def]
+QED
+
+Theorem timeshift_inj:
+  !f s s'. inj f /\ timeshift f s = timeshift f s' ==> s = s'
+Proof
+  rpt strip_tac
+  >> fs[timeshift_def,bir_state_t_component_equality]
+  >> drule_then dxrule inj_o_f
+  >> drule_then dxrule inj_MAP
+  >> drule_at Any inj_OPTION_MAP
+  >> simp[inj_def,xclb_t_component_equality]
+  >> gs[bir_state_t_component_equality,combinTheory.APPLY_UPDATE_THM,fwdb_t_component_equality,FUN_EQ_THM,inj_def]
+QED
+
+Theorem timeshift_simps_with:
+  timeshift f s with bst_status := x = timeshift f (s with bst_status := x)
+  /\ timeshift f s with bst_pc := y = timeshift f (s with bst_pc := y)
+  /\ ((timeshift f s) with bst_pc updated_by f') = timeshift f (s with bst_pc updated_by f')
+Proof
+  fs[bir_state_t_accfupds,timeshift_def]
+QED
+
+Theorem bir_exec_stmtB_mix_timeshift2:
+  !b s s' s'' genv genv' oo f.
+  inj f
+  /\ bir_exec_stmtB_mix b (timeshift f s) genv = (oo, s'', genv')
+  /\ s'' = timeshift f s'
+  ==> bir_exec_stmtB_mix b s genv = (oo, s', genv')
+Proof
+  rpt gen_tac >> strip_tac
+  >> fs[bir_exec_stmtB_mix_timeshift]
+  >> qmatch_asmsub_abbrev_tac `FST $ SND x`
+  >> PairCases_on `x`
+  >> gvs[]
+  >> drule_all_then irule timeshift_inj
+QED
+
+Theorem bir_exec_stmtE_mix_timeshift2:
+  !e p s s' s'' f.
+    inj f
+    /\ bir_exec_stmtE p e (timeshift f s) = s''
+    /\ s'' = timeshift f s'
+    ==> bir_exec_stmtE p e s = s'
+Proof
+  Cases
+  >> rw[bir_exec_stmtE_def,bir_exec_stmt_halt_def,bir_exec_stmt_jmp_def,bir_exec_stmt_cjmp_def,timeshift_simps,bir_state_t_accfupds]
+  >> BasicProvers.every_case_tac
+  >> fs[bir_exec_stmt_jmp_to_label_def,bir_state_set_typeerror_def,timeshift_simps_with]
+  >> BasicProvers.every_case_tac
+  >> fs[timeshift_simps_with]
+  >> drule_all timeshift_inj
+  >> fs[]
+QED
+
+Theorem bir_exec_stmt_mix_timeshift2:
+  !e p s s' s'' genv genv' oo f.
+  inj f
+  /\ bir_exec_stmt_mix p e (timeshift f s) genv = (oo, s'', genv')
+  /\ s'' = timeshift f s'
+  ==> bir_exec_stmt_mix p e s genv = (oo, s', genv')
+Proof
+  Cases
+  >> rw[bir_exec_stmt_mix_def,bir_exec_stmtE_mix_timeshift2,pairTheory.ELIM_UNCURRY]
+  >> TRY $ (drule_all_then assume_tac bir_exec_stmtB_mix_timeshift2)
+    ORELSE (drule_all_then assume_tac bir_exec_stmtE_mix_timeshift2)
+  >> gs[]
+  >> gvs[timeshift_simps_with,timeshift_simps,bir_exec_stmtB_mix_timeshift,bir_exec_stmtB_mix_timeshift2,bir_state_is_terminated_def]
+  >> TRY $ drule_all_then assume_tac timeshift_inj
+  >> gvs[]
+  >> drule_then (drule_then irule) bir_exec_stmtE_mix_timeshift2
+  >> fs[]
 QED
 
 val _ = export_theory();
