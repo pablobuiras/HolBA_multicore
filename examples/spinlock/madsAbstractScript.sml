@@ -27,10 +27,9 @@ Definition spinlock_aprog_def:
           $ BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
                       (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
                       BEnd_LittleEndian Bit32;             
-          (* 4w: jnz _GHOST.crit fail *)
+          (* 4w: jnz _tmp fail *)
           BStmt_CJmp
-          (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-          (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
+          (BExp_Den $ BVar "_tmp" $ BType_Mem Bit64 Bit8)
           BEnd_LittleEndian ??
           (* not zero? *)
           (BLE_Label $ BL_Address $ Imm64 16w)
