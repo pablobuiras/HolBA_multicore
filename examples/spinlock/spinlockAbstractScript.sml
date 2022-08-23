@@ -3,9 +3,9 @@ open rich_listTheory listTheory arithmeticTheory finite_mapTheory ;
 open bir_lifter_interfaceLib ;
 open bir_promisingTheory ;
 open tracesTheory ;
-(* TODO currently some general definitions are in spinlockConcreteTheory *)
 open spinlockConcreteTheory ;
 
+(* TODO currently some general definitions are in spinlockConcreteTheory *)
 val _ = new_theory "spinlockAbstract";
 
 (*****************************************************************************)
@@ -37,11 +37,11 @@ Definition spinlock_aprog_def:
     bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
     bb_statements :=
       [
-        (* _tmp := _GHOST.crit *)
+        (* _tmp := _GHOST._crit *)
         BStmt_Assign (BVar "_tmp" $ BType_Imm Bit64)
           (* BExp_Load mem_e a_e endianness type *)
             $ BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-                      (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
+                      (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
                       BEnd_LittleEndian Bit32;
         (* _is_locked := (_tmp != 0) *)
         BStmt_Assign (BVar "_is_locked" $ BType_Imm Bit64)
@@ -57,7 +57,7 @@ Definition spinlock_aprog_def:
         (* lock if possible *)
         BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
           $ BExp_Store (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-            (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
+            (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
             BEnd_LittleEndian
             $ BExp_IfThenElse
                 (BExp_Den $ BVar "_is_locked" $ BType_Imm Bit64)
@@ -89,11 +89,11 @@ _GHOST.crit := (1...101...1   AND   _GHOST.crit)
       BStmt_Assign
         (BVar "_GHOST" $ BType_Mem Bit64 Bit8)
         $ BExp_Store (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-          (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
+          (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
           BEnd_LittleEndian
           $ BExp_BinExp BIExp_And
               (BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-                (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
+                (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
                 BEnd_LittleEndian Bit32)
               $ BExp_UnaryExp BIExp_Not $ cid2w cid;
       ];
@@ -199,7 +199,7 @@ Theorem bir_get_stmt_spinlock_aprog_BirStmt_Write =
   |> SIMP_RULE (bool_ss ++ boolSimps.DNF_ss) [EL,wordsTheory.NUMERAL_LESS_THM]
   |> SIMP_RULE (srw_ss() ++ boolSimps.CONJ_ss ++ boolSimps.DNF_ss) [EL,get_fulfil_args_def,get_read_args_def]
 
-Theorem bir_get_stmt_spinlock_thms =
+Theorem bir_get_stmt_spinlock_aprog_thms =
   LIST_CONJ $
   map (CONV_RULE (ONCE_DEPTH_CONV $ LHS_CONV SYM_CONV))
     [bir_get_stmt_spinlock_aprog_BirStmt_Generic,
@@ -211,8 +211,19 @@ Theorem bir_get_stmt_spinlock_thms =
     bir_get_stmt_spinlock_aprog_BirStmt_Write,
     bir_get_stmt_spinlock_aprog_BirStmt_Read]
 
-Theorem bir_spinlock_aprog_is_xcl_write:
-  !cid pc. pc.bpc_label = BL_Address (Imm64 0w) /\ pc.bpc_index = 0
+Theorem bir_spinlock_aprog_is_xcl_write1:
+  !cid pc. pc.bpc_label = BL_Address (Imm64 0w) /\ pc.bpc_index = 2
+  ==>
+    ~is_xcl_read (spinlock_aprog cid) pc
+      (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
+Proof
+  rpt gen_tac >> strip_tac
+  >> EVAL_TAC
+  >> fs[]
+QED
+
+Theorem bir_spinlock_aprog_is_xcl_write2:
+  !cid pc. pc.bpc_label = BL_Address (Imm64 4w) /\ pc.bpc_index = 0
   ==>
     ~is_xcl_read (spinlock_aprog cid) pc
       (BExp_Den $ BVar "crit" $ BType_Imm Bit64)
@@ -230,9 +241,11 @@ QED
 Inductive asl_step:
      asl_step (BL_Address $ Imm64 0w,0n) (BL_Address $ Imm64 0w,1n)
   /\ asl_step (BL_Address $ Imm64 0w,1)  (BL_Address $ Imm64 0w,2)
-  /\ asl_step (BL_Address $ Imm64 0w,2)  (BL_Address $ Imm64 0w,0)
-  /\ asl_step (BL_Address $ Imm64 0w,2)  (BL_Address $ Imm64 4w,0)
-  /\ asl_step (BL_Address $ Imm64 4w,0)  (BL_Address $ Imm64 8w,0)
+  /\ asl_step (BL_Address $ Imm64 0w,2)  (BL_Address $ Imm64 0w,3)
+  /\ asl_step (BL_Address $ Imm64 0w,3)  (BL_Address $ Imm64 0w,0)
+  /\ asl_step (BL_Address $ Imm64 0w,3)  (BL_Address $ Imm64 4w,0)
+  /\ asl_step (BL_Address $ Imm64 4w,0)  (BL_Address $ Imm64 4w,1)
+  /\ asl_step (BL_Address $ Imm64 4w,1)  (BL_Address $ Imm64 8w,1)
 End
 
 (* pc is reachable for bir_spinlock from its first pc *)
@@ -242,8 +255,8 @@ Definition reachable_asl_def:
   reachable_asl pc =
     !bpt. bpt = bst_pc_tuple pc ==>
     bpt = (BL_Address $ Imm64 0w,0) \/ bpt = (BL_Address $ Imm64 0w,1) \/
-    bpt = (BL_Address $ Imm64 0w,2) \/ bpt = (BL_Address $ Imm64 4w,0) \/
-    bpt = (BL_Address $ Imm64 8w,0)
+    bpt = (BL_Address $ Imm64 0w,2) \/ bpt = (BL_Address $ Imm64 0w,3) \/
+    bpt = (BL_Address $ Imm64 4w,0) \/ bpt = (BL_Address $ Imm64 8w,0)
 End
 
 
@@ -251,6 +264,8 @@ End
 (* the abstract program contains only one statement, thus behaves atomically *)
 Definition in_crit_asl_def:
   in_crit_asl pc <=> reachable_asl pc
+    /\ !bpt. bpt = bst_pc_tuple pc ==>
+      bpt = (BL_Address $ Imm64 4w,0)
 End
 
 (* pc within lock region *)
@@ -260,7 +275,15 @@ Definition in_lock_asl_def:
     /\ !n. bst_pc_tuple pc = (BL_Address $ Imm64 0w,n) ==> 0 < n
 End
 
+(* pc within lock region *)
+Definition in_unlock_asl_def:
+  in_unlock_asl pc <=>
+    reachable_asl pc
+    /\ !n. bst_pc_tuple pc = (BL_Address $ Imm64 4w,n) ==> 0 < n
+End
+
 (* pc not in lock or unlock region *)
+(*
 Definition outside_un_lock_asl_def:
   outside_un_lock_asl pc <=>
     !x n. bst_pc_tuple pc = (BL_Address $ Imm64 x,n)
@@ -268,5 +291,6 @@ Definition outside_un_lock_asl_def:
       \/ (x,n) = (4w,0)
       \/ (x,n) = (8w,0)
 End
+*)
 
 val _ = export_theory();
