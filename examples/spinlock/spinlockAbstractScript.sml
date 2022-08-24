@@ -12,48 +12,33 @@ val _ = new_theory "spinlockAbstract";
 (* Spinlock specification ****************************************************)
 (*****************************************************************************)
 
-(* returns the word with the cid's bit set to 1
-0...010...0 : word64
-     ^
-    cid
-
-requires cid < 64 *)
-
-Definition cid2w_def:
-  cid2w (cid : num) =
-    (* left shift of 1 by cid *)
-    BExp_BinExp BIExp_LeftShift (BExp_Const $ Imm64 1w) (BExp_Const $ Imm64 $ (n2w cid) :word64)
-End
-
 (* Abstract spinlock specification that is parametrised by its core id.
- * The core id is used to mark the lock as taken.
- * Requires a limited number of threads (inherited by cid2w) *)
+ * The core id is used to mark the lock as taken. *)
 
 Definition spinlock_aprog_def:
-  spinlock_aprog cid =
+  spinlock_aprog cid dummy_loc =
   BirProgram [
   (* lock block *)
   <|bb_label := BL_Address_HC (Imm64 0w) "";
     bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
     bb_statements :=
       [
-        (* _tmp := _GHOST._crit *)
-        BStmt_Assign (BVar "_tmp" $ BType_Imm Bit64)
+        BStmt_Assign (BVar "_is_locked" $ BType_Imm Bit64)
           (* BExp_Load mem_e a_e endianness type *)
             $ BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
                       (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
                       BEnd_LittleEndian Bit32;
-        (* _is_locked := (_tmp != 0) *)
-        BStmt_Assign (BVar "_is_locked" $ BType_Imm Bit64)
-          $ BExp_IfThenElse
-              (BExp_BinExp BIExp_And
-               (BExp_Const $ Imm64 0w)
-               (BExp_Den $ BVar "_tmp" $ BType_Imm Bit64))
-               (* Mads: This is always 0w, right *)
-               (* Couldn't we just use _tmp as branch condition *)
-               (* Either 0w and lock is free or non-zero and lock is taken *)
-              (BExp_Const $ Imm64 1w)
-              (BExp_Const $ Imm64 0w);
+        (* note core id in critical section *)
+        BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
+          $ BExp_Store (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
+            (BExp_Den $ BVar "_crit_cid" $ BType_Imm Bit64)
+            BEnd_LittleEndian
+            $ BExp_IfThenElse
+                (BExp_Den $ BVar "_is_locked" $ BType_Imm Bit64)
+                (BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
+                      (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
+                      BEnd_LittleEndian Bit32)
+                (BExp_Const $ Imm64 cid);
         (* lock if possible *)
         BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
           $ BExp_Store (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
@@ -61,8 +46,8 @@ Definition spinlock_aprog_def:
             BEnd_LittleEndian
             $ BExp_IfThenElse
                 (BExp_Den $ BVar "_is_locked" $ BType_Imm Bit64)
-                (BExp_Den $ BVar "_tmp" $ BType_Imm Bit64)
-                (cid2w cid);
+                (BExp_Den $ BVar "_is_locked" $ BType_Imm Bit64)
+                (BExp_Const $ Imm64 1w);
       ];
     (* spin on _is_locked *)
     bb_last_statement :=
@@ -72,33 +57,76 @@ Definition spinlock_aprog_def:
           (BLE_Label $ BL_Address $ Imm64 4w);
   |>;
 
-  (* Mads: This lock deadlocks since lock is executed atomically *)
-  (* How to fix this *)
-      
-  (* unlock *)
+  (* load reserved on fresh dummy variable *)
+
   <|bb_label := BL_Address_HC (Imm64 4w) "";
+    bb_mc_tags := SOME <|mc_atomic := F; mc_acq := T; mc_rel := F|>;
+    bb_statements :=
+      [BStmt_Assert
+          $ BExp_Aligned Bit64 2 $ BExp_Den $ BVar dummy_loc $ BType_Imm Bit64;
+        BStmt_Assign (BVar "_ignore" (BType_Imm Bit64))
+          $ BExp_Cast BIExp_SignedCast
+            (BExp_Load (BExp_Den $ BVar "MEM8" $ BType_Mem Bit64 Bit8)
+                (BExp_Den $ BVar dummy_loc $ BType_Imm Bit64)
+                BEnd_LittleEndian Bit32) Bit64;
+        BStmt_Assign (BVar "MEM8_R" $ BType_Mem Bit64 Bit8)
+          $ BExp_Store (BExp_Den $ BVar "MEM8_Z" $ BType_Mem Bit64 Bit8)
+            (BExp_Den $ BVar dummy_loc $ BType_Imm Bit64) BEnd_LittleEndian
+            $ BExp_Const $ Imm32 1w];
+    bb_last_statement := BStmt_Jmp (BLE_Label (BL_Address (Imm64 8w)))|>;
+
+  (* unlock *)
+  <|bb_label := BL_Address_HC (Imm64 8w) "";
     bb_mc_tags := SOME <|mc_atomic := F; mc_acq := F; mc_rel := F|>;
     bb_statements :=
       [
-(*
-reset lock availability for cid by writing
-_GHOST.crit := (1...101...1   AND   _GHOST.crit)
-                     ^
-                    cid
-*)
+      (* free reset *)
       BStmt_Assign
         (BVar "_GHOST" $ BType_Mem Bit64 Bit8)
         $ BExp_Store (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
           (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
           BEnd_LittleEndian
-          $ BExp_BinExp BIExp_And
-              (BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-                (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
-                BEnd_LittleEndian Bit32)
-              $ BExp_UnaryExp BIExp_Not $ cid2w cid;
+          $ BExp_Const $ Imm64 0w;
       ];
-    bb_last_statement := BStmt_Jmp $ BLE_Label $ BL_Address $ Imm64 8w
-  |>
+    bb_last_statement := BStmt_Jmp $ BLE_Label $ BL_Address $ Imm64 12w
+  |>;
+
+  (* store conditional on dummy variable *)
+  <|bb_label := BL_Address_HC (Imm64 12w) "";
+    bb_mc_tags := SOME <|mc_atomic := F; mc_acq := F; mc_rel := F|>;
+    bb_statements :=
+      [BStmt_Assert
+          (BExp_Aligned Bit64 2 $ BExp_Den $ BVar dummy_loc $ BType_Imm Bit64);
+        BStmt_Assert
+          (BExp_unchanged_mem_interval_distinct Bit64 0 16777216
+            (BExp_Den (BVar dummy_loc $ BType_Imm Bit64)) 4);
+        BStmt_Assign (BVar "MEM8" (BType_Mem Bit64 Bit8))
+          (BExp_IfThenElse
+            (BExp_BinPred BIExp_Equal
+                (BExp_Load
+                  (BExp_Den $ BVar "MEM8_R" $ BType_Mem Bit64 Bit8)
+                  (BExp_Den $ BVar dummy_loc $ BType_Imm Bit64)
+                  BEnd_LittleEndian Bit64)
+                (BExp_Const $ Imm32 0x1010101w))
+            (BExp_Store (BExp_Den $ BVar "MEM8" $ BType_Mem Bit64 Bit8)
+                (BExp_Den $ BVar dummy_loc $ BType_Imm Bit64)
+                BEnd_LittleEndian
+                (BExp_Cast BIExp_LowCast
+                  (BExp_Den $ BVar "_ignore" $ BType_Imm Bit64) Bit32))
+            (BExp_Den $ BVar "MEM8" $ BType_Mem Bit64 Bit8));
+        BStmt_Assign (BVar "_ignore" (BType_Imm Bit64))
+          (BExp_IfThenElse
+            (BExp_BinPred BIExp_Equal
+                (BExp_Load
+                  (BExp_Den (BVar "MEM8_R" (BType_Mem Bit64 Bit8)))
+                  (BExp_Den (BVar dummy_loc (BType_Imm Bit64)))
+                  BEnd_LittleEndian Bit64)
+                (BExp_Const (Imm32 0x1010101w))) (BExp_Const (Imm64 0w))
+            (BExp_Const (Imm64 0x101010101010101w)));
+        BStmt_Assign (BVar "MEM8_R" (BType_Mem Bit64 Bit8))
+          (BExp_Den (BVar "MEM8_Z" (BType_Mem Bit64 Bit8)))];
+    bb_last_statement := BStmt_Jmp (BLE_Label (BL_Address (Imm64 20w)))|>;
+
   ] : string bir_program_t
 End
 
