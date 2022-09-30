@@ -278,7 +278,7 @@ Induct_on ‘clstep’
   >> ‘t <= LENGTH M1’ by fs[well_formed_def] (* wf invariant *)
   >> rpt strip_tac
   >| [
-      fs[mem_is_cid_def] >> cheat (* proof obligation about mem_is_cide *)
+      fs[mem_is_cid_def] >> cheat (* proof obligation about mem_is_cid *)
       ,
       fs[mem_get_append]
       ,
