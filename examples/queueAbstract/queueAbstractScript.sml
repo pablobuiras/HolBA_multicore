@@ -1,3 +1,5 @@
+(* UNFINISHED *)
+
 open HolKernel Parse boolLib bossLib;
 open rich_listTheory listTheory arithmeticTheory finite_mapTheory ;
 open bir_lifter_interfaceLib ;
@@ -20,7 +22,7 @@ val _ = new_theory "queueAbstract";
 (*  - _tl: Queue tail location                                               *)
 (*  - _qmax: Max queue address                                               *)
 (*  - _qmin: Min queue address                                               *)
-(* To be completed                                                           *)
+(* TO BE COMPLETED                                                           *)
 
 Definition enq_aprog_def:
   enq_aprog cid hd tl =
