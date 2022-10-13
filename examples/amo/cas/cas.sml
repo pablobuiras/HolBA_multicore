@@ -3,18 +3,19 @@ open rich_listTheory listTheory arithmeticTheory finite_mapTheory ;
 open bir_lifter_interfaceLib ;
 open bir_promisingTheory ;
 
-val _ = new_theory "faaAbstract";
+val _ = new_theory "casAbstract";
 
 (* r1, r2, r3 registers *)
-(* r1: pointer to unsigned  *)
-(* r2: value to add          *)
-(* r3: the prior            *)
+(* r1: pointer to unsigned, r1' = r1, *r1' = r2			 *)
+(* r2: unsigned to compare, r3' = 1 if not(*r1 = r2)		 *)
+(* r3: success flag, r3' = 1 if not(*r1 = r2), r3' = 0 otherwise *)
     
-Definition faa_aprog_def:
-  faa_aprog =
+Definition cas_aprog_def:
+  cas_aprog =
   BirProgram [
       <|bb_label := BL_Address_HC (Imm64 0w) "";
         bb_mc_tags := SOME <|mc_atomic := T; mc_acq := F; mc_rel := F|>;
+	HERTIL
         bb_statements :=
         [
           (* 0w: r3 = *r1 *)
