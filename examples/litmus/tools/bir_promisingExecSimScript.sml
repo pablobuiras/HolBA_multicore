@@ -4,6 +4,9 @@ open bir_promisingTheory bir_promisingExecTheory bir_programTheory;
 open listTheory rich_listTheory;
 open arithmeticTheory;
 open relationTheory;
+open finite_mapTheory;
+open optionTheory;
+open quantHeuristicsTheory;
 
 val _ = new_theory "bir_promisingExecSim";
 
@@ -20,12 +23,6 @@ Theorem EL_SNOC2:
 Proof
   Induct_on ‘l’ >>
   (asm_rewrite_tac [LENGTH, SNOC, EL, HD, TL])
-QED
-
-Triviality IS_SOME_EQ_NOT_NONE:
-  !x. IS_SOME x <=> x <> NONE
-Proof
-  Cases_on ‘x’ >> fs[]
 QED
 
 Theorem mem_get_SNOC:
@@ -1114,6 +1111,149 @@ Proof
       fs []
     ]
   ]
+QED
+
+
+
+Definition bisim_view_def:
+  bisim_view i j v =
+  if v < i \/ v > j then v
+  else if v = i then j
+  else PRE v
+End
+
+Theorem bisim_view_MAX:
+  !i j v v'.
+    (v <> i) /\ (v' <> i) ==>
+    bisim_view i j (MAX v v') = MAX (bisim_view i j v) (bisim_view i j v')
+Proof
+  rpt strip_tac >>
+  REWRITE_TAC [bisim_view_def] >>
+  rpt CASE_TAC >> fs [MAX_DEF]
+QED
+
+Definition bisim_mem_def:
+  bisim_mem (i: num) (j: num) (k: num) (M: mem_msg_t list)  =
+  if k < i \/ j < k then EL k M
+  else if k = j then EL i M
+  else EL (SUC k) M
+End
+
+Definition own_timestamps_def:
+  promises_of cid M = MAP SND (mem_filter (\ (m, i). m.cid = cid) M)
+End
+
+Definition bisim_mono_def:
+  bisim_mono i j v v' = ?vs. v = MAXL vs /\ v' = MAXL (MAP (bisim_view i j) vs)
+End
+
+Theorem bisim_mono_1view:
+  !i j v.
+    bisim_mono i j v (bisim_view i j v)
+Proof
+  fs [bisim_mono_def] >>
+  rpt gen_tac >>
+  Q.EXISTS_TAC ‘[v]’ >>
+  fs [MAP, MAXL_def]
+QED
+    
+
+Theorem bisim_mono_MAX:
+  !i j v v' v''.
+  bisim_mono i j v v' ==>
+  bisim_mono i j (MAX v v'') (MAX v' (bisim_view i j v''))
+Proof
+  rpt strip_tac >>
+  fs [bisim_mono_def] >>
+  Q.EXISTS_TAC ‘v''::vs’ >>
+  fs [MAX_COMM, MAXL_def]
+QED
+
+Theorem MAX_MAXL2:
+  !vs vs'.
+    MAX (MAXL vs) (MAXL vs') = MAXL (vs ++ vs')
+Proof
+  Induct_on ‘vs’ >|
+  [
+    fs [MAXL_def]
+    ,
+    rpt gen_tac >>
+    fs [MAXL_def] >>
+    METIS_TAC [MAX_ASSOC]
+  ]
+QED
+
+Theorem bisim_mono_MAX_join:
+  !i j v v' w w'.
+  bisim_mono i j v v' 
+  /\ bisim_mono i j w w'
+  ==>
+  bisim_mono i j (MAX v w) (MAX v' w')
+Proof
+  rpt strip_tac >>
+  fs [bisim_mono_def] >>
+  Q.EXISTS_TAC ‘vs ++ vs'’ >>
+  fs [MAX_MAXL2]
+QED
+
+  
+
+val (bisim_rules, bisim_ind, bisim_cases) = Hol_reln ‘
+  (!i j s M s' M'.
+  0 < i /\ i <= j
+  /\ s.bst_pc = s'.bst_pc 
+  /\ bisim_mono i j s.bst_v_rOld s'.bst_v_rOld
+  /\ bisim_mono i j s.bst_v_wOld s'.bst_v_wOld
+  /\ bisim_mono i j s.bst_v_rNew s'.bst_v_rNew
+  /\ bisim_mono i j s.bst_v_wNew s'.bst_v_wNew
+  /\ bisim_mono i j s.bst_v_CAP  s'.bst_v_CAP
+  /\ (!l. bisim_mono i j (s.bst_coh l) (s'.bst_coh l))
+  ==>
+  bisim i j (s,M) (s',M'))
+’;
+
+Theorem bisim_fence_def:
+  !s0 s1 M s0' s1' M' i j p cid K1 K2.
+    bisim i j (s0,M) (s0',M') /\
+    bir_get_stmt p s0.bst_pc = BirStmt_Fence K1 K2 /\
+    clstep p cid s0 M [] s1 /\
+    clstep p cid s0' M' [] s1'
+    ==>
+    bisim i j (s1,M) (s1',M')
+Proof
+  rpt strip_tac >>
+  ‘bir_get_stmt p s0'.bst_pc = BirStmt_Fence K1 K2’ by (gvs [bisim_cases]) >>
+  gvs [clstep_cases, bisim_cases] >>
+  Cases_on ‘is_read K2’ >> Cases_on ‘is_write K2’ >> 
+  Cases_on ‘is_read K1’ >> Cases_on ‘is_write K1’ >> 
+  fs [bisim_mono_MAX_join]
+QED
+
+Theorem bisim_expr_def:
+  !s0 s1 M s0' s1' M' i j p cid var e.
+    bisim i j (s0,M) (s0',M') /\
+    bir_get_stmt p s0.bst_pc = BirStmt_Expr var e /\
+    clstep p cid s0 M [] s1 /\
+    clstep p cid s0' M' [] s1'
+    ==>
+    bisim i j (s1,M) (s1',M')
+Proof
+  rpt strip_tac >>
+  ‘bir_get_stmt p s0'.bst_pc = BirStmt_Expr var e’ by (fs [bisim_def]) >>
+  gvs [clstep_cases, bisim_def, bir_eval_exp_view_def] >>
+  ‘new_env = new_env'’ by cheat >>
+  fs [] >>
+  fs [bisim_viewenv_def] >>
+  conj_tac >|
+  [
+    gen_tac >>
+    fs [finite_mapTheory.FLOOKUP_UPDATE] >>
+    Cases_on ‘var = r’ >|
+    [
+      fs [] >>
+      imp_res_tac bir_eval_view_of_exp_NO_i
+      simp [bisim_view_def] >>
+
 QED
 
 val _ = export_theory();
