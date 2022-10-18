@@ -10,81 +10,67 @@ val _ = new_theory "fifolockAbstract";
 (*****************************************************************************)
 (* Pre:                                                                      *)
 (* Post:                                                                     *)
-(* Memory variables:                                                         *)
-(*  - _hd: Queue head location                                               *)
-(*  - _tl: Queue tail location                                               *)
-(*  - _crit: Critical region flag                                            *)
-(* Uses:                                                                     *)
-(*  - queueAbstractScript                                                    *)
+(* Model variables:                                                          *)
+(*  - queue: bool[32] list                                                   *)
+(*  - cid: bool[32]                                                          *)
+(*  - crit: bool initial 0 - Critical region flag                            *)
+(*****************************************************************************)
 
 Definition fifo_lock_aprog_def:
-  fifo_lock_aprog cid hd tl =
+  fifo_lock_aprog cid queue =
   BirProgram [
   <|bb_label := BL_Address (Imm64 0w) "";
     bb_mc_tags := SOME <|mc_atomic := F; mc_acq := F; mc_rel := F|>;
     bb_statements := 
       [
-        (* enq(cid,_tl) *)
-        enqueue_aprog (BExp_Den $ BVar "cid" $ BType_Imm Bit32)
-          (BExp_Den $ BVar "_tl" $ BType_Imm Bit64)
-          BEnd_LittleEndian Bit32 ;
+        (* queue := queue::[cid] *)        
+        BStmt_Gassign queue (queue::[cid]) ; 
       ];
     bb_last_statement :=
+      (* goto 4w *)
       BStmt_Jmp (BLE_Label (BL_Address (Imm64 4w)))
   |> ;
   <|bb_label := BL_Address (Imm64 4w) "";
     bb_mc_tags := SOME <| mc_atomic := F; mc_acq := F; mc_rel := F|>
     bb_statements :=
       [
-        (* _nxt = _hd(q) *)
-        BStmt_Assign (BVar "_nxt" $ BType_Imm Bit32)
-          $ BExp_Load (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-                      (BExp_Den $ BVar "_hd" $ BType_Imm Bit64)
-                      BEnd_LittleEndian Bit32;
-        (* _branch = nxt - cid *)
-        BStmt_Assign (BVar "_branch" $ BType_Imm Bit8)
-                     (BExp_BinExp BIExp_Minus
-                       (BExp_Den $ BVar "_nxt" $ BType_Imm Bit32)
-                       (BExp_Den $ BVar "cid" $ BType_Imm Bit32)) ;
       ];
     bb_last_statement :=
-      BStmt_CJmp (BLE_Label (BL_Address (Imm64 12w)))
+      (* if head(queue) = cid then goto 8w else goto 4w *)
+      BStmt_CJmp
+        (BExp_BinPred BIExp_Equal
+          (BExp_Const (BExp_Gexp (head queue)))
+          (BExp_Const (Imm32 cid)))
+        (BLE_Label (BL_Address (Imm64 8w)))
+        (BLE_Label (BL_Address (Imm64 4w)))
   |> ;
-  <|bb_label := BL_Address (Imm64 12w) "";
+  <|bb_label := BL_Address (Imm64 8w) "";
     bb_mc_tags := SOME <| mc_atomic := F; mc_acq := F; mc_rel := F|>
     bb_statements :=
       [
-        (* _crit = 1w *)                                                         
-        BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
-          $ BExp_Store (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-            (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
-            BEnd_LittleEndian
-            $ BExp_Const $ Imm64 1w ;
+        (* crit = 1 *)
+        BStmt_Gassign crit 1 ;
       ];
     bb_last_statement :=
-      BStmt_Jmp (BLE_Label (BL_Address (Imm64 16w)))
+      (* goto 12w *)
+      BStmt_Jmp (BLE_Label (BL_Address (Imm64 12w)))
   |> ;
 ] ;
-
+                
 Definition fifo_unlock_aprog_def:
-  fifo_unlock_aprog cid hd tl =
+  fifo_unlock_aprog cid queue =
   BirProgram [
   <|bb_label := BL_Address (Imm64 0w) "";
     bb_mc_tags := SOME <|mc_atomic := F; mc_acq := F; mc_rel := F|>;
     bb_statements := 
       [
-        (* _crit = 0w *)
-        BStmt_Assign (BVar "_ignore" $ BType_Imm Bit64)
-          $ BExp_Store (BExp_Den $ BVar "_GHOST" $ BType_Mem Bit64 Bit8)
-            (BExp_Den $ BVar "_crit" $ BType_Imm Bit64)
-            BEnd_LittleEndian
-            $ BExp_Const $ Imm64 0w ;
-        (* deq(cid,_tl)                           *)
-        dequeue_aprog (BExp_Den $ BVar "cid" $ BType_Imm Bit32)
-          (BExp_Den $ BVar "_hd" $ BType_Imm Bit64)
-          BEnd_LittleEndian Bit32 ;
+        (* crit = 0 *)
+        BStmt_Gassign crit 0 ;
+        (* queue := tail(queue) *)
+        BStmt_Gassign queue (tail queue) ;
       ];
     bb_last_statement :=
+      (* goto 4w *)
       BStmt_Jmp (BLE_Label (BL_Address (Imm64 4w)))
   |> ;
 
